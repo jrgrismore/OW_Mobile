@@ -5,7 +5,6 @@
 //  Created by John Grismore on 1/23/19.
 //  Copyright © 2019 John Grismore. All rights reserved.
 //
-//
 
 import UIKit
 import CoreData
