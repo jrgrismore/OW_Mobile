@@ -7,14 +7,16 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		529D9CD82200061F002A3428 /* EventsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 529D9CD72200061F002A3428 /* EventsController.swift */; };
 		52C8020921F9510D00E66A13 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52C8020821F9510D00E66A13 /* AppDelegate.swift */; };
-		52C8020B21F9510D00E66A13 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52C8020A21F9510D00E66A13 /* ViewController.swift */; };
+		52C8020B21F9510D00E66A13 /* LoginController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52C8020A21F9510D00E66A13 /* LoginController.swift */; };
 		52C8020E21F9510D00E66A13 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 52C8020C21F9510D00E66A13 /* Main.storyboard */; };
 		52C8021121F9510D00E66A13 /* OW_Mobile.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 52C8020F21F9510D00E66A13 /* OW_Mobile.xcdatamodeld */; };
 		52C8021321F9510F00E66A13 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 52C8021221F9510F00E66A13 /* Assets.xcassets */; };
 		52C8021621F9510F00E66A13 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 52C8021421F9510F00E66A13 /* LaunchScreen.storyboard */; };
 		52C8022121F9510F00E66A13 /* OW_MobileTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52C8022021F9510F00E66A13 /* OW_MobileTests.swift */; };
 		52C8022C21F9510F00E66A13 /* OW_MobileUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52C8022B21F9510F00E66A13 /* OW_MobileUITests.swift */; };
+		52E18E4021FD3D4F006ED3DA /* LunarEclipse.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 52E18E3F21FD3D4F006ED3DA /* LunarEclipse.jpg */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -35,9 +37,10 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		529D9CD72200061F002A3428 /* EventsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventsController.swift; sourceTree = "<group>"; };
 		52C8020521F9510D00E66A13 /* OW_Mobile.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = OW_Mobile.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		52C8020821F9510D00E66A13 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		52C8020A21F9510D00E66A13 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		52C8020A21F9510D00E66A13 /* LoginController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginController.swift; sourceTree = "<group>"; };
 		52C8020D21F9510D00E66A13 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		52C8021021F9510D00E66A13 /* OW_Mobile.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = OW_Mobile.xcdatamodel; sourceTree = "<group>"; };
 		52C8021221F9510F00E66A13 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -49,6 +52,7 @@
 		52C8022721F9510F00E66A13 /* OW_MobileUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = OW_MobileUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		52C8022B21F9510F00E66A13 /* OW_MobileUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OW_MobileUITests.swift; sourceTree = "<group>"; };
 		52C8022D21F9510F00E66A13 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		52E18E3F21FD3D4F006ED3DA /* LunarEclipse.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = LunarEclipse.jpg; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -76,6 +80,31 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		529D9CD221FF87BB002A3428 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		529D9CD321FF87C2002A3428 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				52C8020C21F9510D00E66A13 /* Main.storyboard */,
+				52C8021421F9510F00E66A13 /* LaunchScreen.storyboard */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		529D9CD421FF87DE002A3428 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				52C8020A21F9510D00E66A13 /* LoginController.swift */,
+				529D9CD72200061F002A3428 /* EventsController.swift */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
 		52C801FC21F9510D00E66A13 = {
 			isa = PBXGroup;
 			children = (
@@ -100,12 +129,13 @@
 			isa = PBXGroup;
 			children = (
 				52C8020821F9510D00E66A13 /* AppDelegate.swift */,
-				52C8020A21F9510D00E66A13 /* ViewController.swift */,
-				52C8020C21F9510D00E66A13 /* Main.storyboard */,
+				529D9CD221FF87BB002A3428 /* Model */,
+				529D9CD321FF87C2002A3428 /* View */,
+				529D9CD421FF87DE002A3428 /* Controller */,
 				52C8021221F9510F00E66A13 /* Assets.xcassets */,
-				52C8021421F9510F00E66A13 /* LaunchScreen.storyboard */,
 				52C8021721F9510F00E66A13 /* Info.plist */,
 				52C8020F21F9510D00E66A13 /* OW_Mobile.xcdatamodeld */,
+				52E18E3F21FD3D4F006ED3DA /* LunarEclipse.jpg */,
 			);
 			path = OW_Mobile;
 			sourceTree = "<group>";
@@ -234,6 +264,7 @@
 			files = (
 				52C8021621F9510F00E66A13 /* LaunchScreen.storyboard in Resources */,
 				52C8021321F9510F00E66A13 /* Assets.xcassets in Resources */,
+				52E18E4021FD3D4F006ED3DA /* LunarEclipse.jpg in Resources */,
 				52C8020E21F9510D00E66A13 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -259,8 +290,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				52C8020B21F9510D00E66A13 /* ViewController.swift in Sources */,
+				52C8020B21F9510D00E66A13 /* LoginController.swift in Sources */,
 				52C8021121F9510D00E66A13 /* OW_Mobile.xcdatamodeld in Sources */,
+				529D9CD82200061F002A3428 /* EventsController.swift in Sources */,
 				52C8020921F9510D00E66A13 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
