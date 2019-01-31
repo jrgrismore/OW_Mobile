@@ -7,9 +7,14 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		5287622F2202107100BDABEC /* AccountViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5287622E2202107100BDABEC /* AccountViewController.swift */; };
+		5287623922023BAB00BDABEC /* Schwassmann.png in Resources */ = {isa = PBXBuildFile; fileRef = 5287623622023BAA00BDABEC /* Schwassmann.png */; };
+		5287623A22023BAB00BDABEC /* 2004D30.png in Resources */ = {isa = PBXBuildFile; fileRef = 5287623722023BAA00BDABEC /* 2004D30.png */; };
+		5287623B22023BAB00BDABEC /* Chikatosh8.png in Resources */ = {isa = PBXBuildFile; fileRef = 5287623822023BAB00BDABEC /* Chikatosh8.png */; };
+		5287623D22024E1F00BDABEC /* OWCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5287623C22024E1F00BDABEC /* OWCollectionViewCell.swift */; };
+		5287623F220266BB00BDABEC /* ReminderViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5287623E220266BB00BDABEC /* ReminderViewController.swift */; };
 		529D9CD82200061F002A3428 /* EventsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 529D9CD72200061F002A3428 /* EventsController.swift */; };
 		52C8020921F9510D00E66A13 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52C8020821F9510D00E66A13 /* AppDelegate.swift */; };
-		52C8020B21F9510D00E66A13 /* LoginController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52C8020A21F9510D00E66A13 /* LoginController.swift */; };
 		52C8020E21F9510D00E66A13 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 52C8020C21F9510D00E66A13 /* Main.storyboard */; };
 		52C8021121F9510D00E66A13 /* OW_Mobile.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 52C8020F21F9510D00E66A13 /* OW_Mobile.xcdatamodeld */; };
 		52C8021321F9510F00E66A13 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 52C8021221F9510F00E66A13 /* Assets.xcassets */; };
@@ -37,10 +42,15 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		5287622E2202107100BDABEC /* AccountViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountViewController.swift; sourceTree = "<group>"; };
+		5287623622023BAA00BDABEC /* Schwassmann.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Schwassmann.png; sourceTree = "<group>"; };
+		5287623722023BAA00BDABEC /* 2004D30.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 2004D30.png; sourceTree = "<group>"; };
+		5287623822023BAB00BDABEC /* Chikatosh8.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Chikatosh8.png; sourceTree = "<group>"; };
+		5287623C22024E1F00BDABEC /* OWCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OWCollectionViewCell.swift; sourceTree = "<group>"; };
+		5287623E220266BB00BDABEC /* ReminderViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReminderViewController.swift; sourceTree = "<group>"; };
 		529D9CD72200061F002A3428 /* EventsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventsController.swift; sourceTree = "<group>"; };
 		52C8020521F9510D00E66A13 /* OW_Mobile.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = OW_Mobile.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		52C8020821F9510D00E66A13 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		52C8020A21F9510D00E66A13 /* LoginController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginController.swift; sourceTree = "<group>"; };
 		52C8020D21F9510D00E66A13 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		52C8021021F9510D00E66A13 /* OW_Mobile.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = OW_Mobile.xcdatamodel; sourceTree = "<group>"; };
 		52C8021221F9510F00E66A13 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -99,8 +109,10 @@
 		529D9CD421FF87DE002A3428 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
-				52C8020A21F9510D00E66A13 /* LoginController.swift */,
 				529D9CD72200061F002A3428 /* EventsController.swift */,
+				5287622E2202107100BDABEC /* AccountViewController.swift */,
+				5287623C22024E1F00BDABEC /* OWCollectionViewCell.swift */,
+				5287623E220266BB00BDABEC /* ReminderViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -133,6 +145,9 @@
 				529D9CD321FF87C2002A3428 /* View */,
 				529D9CD421FF87DE002A3428 /* Controller */,
 				52C8021221F9510F00E66A13 /* Assets.xcassets */,
+				5287623722023BAA00BDABEC /* 2004D30.png */,
+				5287623822023BAB00BDABEC /* Chikatosh8.png */,
+				5287623622023BAA00BDABEC /* Schwassmann.png */,
 				52C8021721F9510F00E66A13 /* Info.plist */,
 				52C8020F21F9510D00E66A13 /* OW_Mobile.xcdatamodeld */,
 				52E18E3F21FD3D4F006ED3DA /* LunarEclipse.jpg */,
@@ -262,10 +277,13 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5287623922023BAB00BDABEC /* Schwassmann.png in Resources */,
+				5287623A22023BAB00BDABEC /* 2004D30.png in Resources */,
 				52C8021621F9510F00E66A13 /* LaunchScreen.storyboard in Resources */,
 				52C8021321F9510F00E66A13 /* Assets.xcassets in Resources */,
 				52E18E4021FD3D4F006ED3DA /* LunarEclipse.jpg in Resources */,
 				52C8020E21F9510D00E66A13 /* Main.storyboard in Resources */,
+				5287623B22023BAB00BDABEC /* Chikatosh8.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -290,9 +308,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				52C8020B21F9510D00E66A13 /* LoginController.swift in Sources */,
 				52C8021121F9510D00E66A13 /* OW_Mobile.xcdatamodeld in Sources */,
+				5287623D22024E1F00BDABEC /* OWCollectionViewCell.swift in Sources */,
+				5287623F220266BB00BDABEC /* ReminderViewController.swift in Sources */,
 				529D9CD82200061F002A3428 /* EventsController.swift in Sources */,
+				5287622F2202107100BDABEC /* AccountViewController.swift in Sources */,
 				52C8020921F9510D00E66A13 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

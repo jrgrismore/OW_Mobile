@@ -11,19 +11,35 @@ import UIKit
 class EventsController: UIViewController, UICollectionViewDataSource,UICollectionViewDelegate, UICollectionViewDelegateFlowLayout
 {
   @IBOutlet weak var eventsCollection: UICollectionView!
-  
+ 
+   
   let reuseIdentifier = "OWEventCell"
   
   func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int
   {
     print("numberOfItemsInSection")
-    return 6
+    return 60
   }
   
   func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell
   {
-    let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath)
+    let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as! OWCollectionViewCell
+    let remainder = indexPath.row % 3
     cell.backgroundColor = #colorLiteral(red: 0.8039215803, green: 0.8039215803, blue: 0.8039215803, alpha: 1)
+    if remainder == 0
+    {
+      cell.owCellImg.image = UIImage(named: "2004FD30")
+    }
+    else if remainder == 1
+    {
+      cell.owCellImg.image = UIImage(named: "Chikatosh8")
+    }
+    else if remainder == 2
+    {
+      cell.owCellImg.image = UIImage(named: "Schwassmann")
+    }
+
+//    cell.image = UIImage(named: "Chikatosh8")
 //    print("return reuse cell")
     return cell
   }
@@ -34,7 +50,11 @@ class EventsController: UIViewController, UICollectionViewDataSource,UICollectio
     
     // Do any additional setup after loading the view.
     eventsCollection.backgroundColor = #colorLiteral(red: 0.501960814, green: 0.501960814, blue: 0.501960814, alpha: 1)
-    let cellsInRow = 3
+    eventsCollection.contentSize = CGSize(width: 10_000, height: 10_000)
+
+    let cellsInRow = 1
+    let cellHeight = 100
+    
     if let flowLayout = self.eventsCollection.collectionViewLayout as? UICollectionViewFlowLayout {
       flowLayout.minimumLineSpacing = 5
       flowLayout.minimumInteritemSpacing = 5
@@ -43,10 +63,11 @@ class EventsController: UIViewController, UICollectionViewDataSource,UICollectio
       print("totalHInsets=",totalHInsets)
       let totalInteritemSpace = flowLayout.minimumInteritemSpacing * CGFloat(cellsInRow - 1)
       print("totalInteritemSpace=",totalInteritemSpace)
-      let cellWidth = (self.eventsCollection.bounds.width - totalInteritemSpace - totalHInsets)/CGFloat(cellsInRow)
+//      let cellWidth = (self.eventsCollection.bounds.width - totalInteritemSpace - totalHInsets)/CGFloat(cellsInRow)
+      let cellWidth = (self.eventsCollection.bounds.size.width - totalInteritemSpace - totalHInsets)/CGFloat(cellsInRow)
       print("cellWidth=",cellWidth)
       print("self.eventsCollection.bounds.width=",self.eventsCollection.bounds.width)
-      flowLayout.itemSize = CGSize(width: cellWidth, height: cellWidth)
+      flowLayout.itemSize = CGSize(width: cellWidth, height: CGFloat(cellHeight))
     }
   }
 
