@@ -11,14 +11,12 @@ import UIKit
 class EventsController: UIViewController, UICollectionViewDataSource,UICollectionViewDelegate, UICollectionViewDelegateFlowLayout
 {
   @IBOutlet weak var eventsCollection: UICollectionView!
- 
    
   let reuseIdentifier = "OWEventCell"
   
   func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int
   {
-    print("numberOfItemsInSection")
-    return 60
+     return 60
   }
   
   func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell
@@ -38,9 +36,6 @@ class EventsController: UIViewController, UICollectionViewDataSource,UICollectio
     {
       cell.owCellImg.image = UIImage(named: "Schwassmann")
     }
-
-//    cell.image = UIImage(named: "Chikatosh8")
-//    print("return reuse cell")
     return cell
   }
   
@@ -60,13 +55,10 @@ class EventsController: UIViewController, UICollectionViewDataSource,UICollectio
       flowLayout.minimumInteritemSpacing = 5
       flowLayout.sectionInset = UIEdgeInsets(top: 10, left: 5, bottom: 10, right: 5)
       let totalHInsets = flowLayout.sectionInset.left + flowLayout.sectionInset.right
-      print("totalHInsets=",totalHInsets)
-      let totalInteritemSpace = flowLayout.minimumInteritemSpacing * CGFloat(cellsInRow - 1)
-      print("totalInteritemSpace=",totalInteritemSpace)
+       let totalInteritemSpace = flowLayout.minimumInteritemSpacing * CGFloat(cellsInRow - 1)
+
 //      let cellWidth = (self.eventsCollection.bounds.width - totalInteritemSpace - totalHInsets)/CGFloat(cellsInRow)
       let cellWidth = (self.eventsCollection.bounds.size.width - totalInteritemSpace - totalHInsets)/CGFloat(cellsInRow)
-      print("cellWidth=",cellWidth)
-      print("self.eventsCollection.bounds.width=",self.eventsCollection.bounds.width)
       flowLayout.itemSize = CGSize(width: cellWidth, height: CGFloat(cellHeight))
     }
   }
