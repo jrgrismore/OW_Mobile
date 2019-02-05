@@ -22,7 +22,6 @@
                     <connections>
                         <segue destination="BYZ-38-t0r" kind="relationship" relationship="viewControllers" id="ooJ-GH-0ab"/>
                         <segue destination="36a-yk-pEC" kind="relationship" relationship="viewControllers" id="8L6-1o-8Vy"/>
-                        <segue destination="tnb-8X-htF" kind="relationship" relationship="viewControllers" id="YcH-nE-5bs"/>
                         <segue destination="EDh-iT-nzC" kind="relationship" relationship="viewControllers" id="8wa-9B-MVC"/>
                     </connections>
                 </tabBarController>
@@ -333,7 +332,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="uPs-cp-vTp">
-                                <rect key="frame" x="0.0" y="63" width="375" height="539"/>
+                                <rect key="frame" x="0.0" y="63" width="375" height="588"/>
                                 <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="HhM-I2-ycR">
                                     <size key="itemSize" width="375" height="163"/>
@@ -456,29 +455,27 @@
                                                             <rect key="frame" x="0.0" y="0.0" width="375" height="60"/>
                                                             <subviews>
                                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="goc-bJ-aDw" userLabel="Sigma Img">
-                                                                    <rect key="frame" x="7" y="20" width="15" height="20"/>
-                                                                    <color key="backgroundColor" red="1" green="0.7394124245" blue="0.80484466610000005" alpha="1" colorSpace="calibratedRGB"/>
+                                                                    <rect key="frame" x="7" y="22" width="16" height="16"/>
                                                                     <constraints>
-                                                                        <constraint firstAttribute="width" constant="15" id="LHJ-CG-EMe"/>
-                                                                        <constraint firstAttribute="height" constant="20" id="Vjo-Ay-mLW"/>
+                                                                        <constraint firstAttribute="width" constant="16" id="LHJ-CG-EMe"/>
+                                                                        <constraint firstAttribute="height" constant="16" id="Vjo-Ay-mLW"/>
                                                                     </constraints>
                                                                 </imageView>
                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="(133868) 2004 FD30" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3lL-7q-SYa" userLabel="Object Text">
-                                                                    <rect key="frame" x="29" y="21.5" width="150" height="17"/>
+                                                                    <rect key="frame" x="30" y="21.5" width="150" height="17"/>
                                                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                                     <nil key="textColor"/>
                                                                     <nil key="highlightedColor"/>
                                                                 </label>
-                                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="mdf-fg-Frm" userLabel="Cloud Img">
-                                                                    <rect key="frame" x="199" y="20" width="15" height="20"/>
-                                                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                                <imageView userInteractionEnabled="NO" contentMode="redraw" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="cloud_100.png" translatesAutoresizingMaskIntoConstraints="NO" id="mdf-fg-Frm" userLabel="Cloud Img">
+                                                                    <rect key="frame" x="203" y="22" width="16" height="16"/>
                                                                     <constraints>
-                                                                        <constraint firstAttribute="height" constant="20" id="WF2-pB-oPN"/>
-                                                                        <constraint firstAttribute="width" constant="15" id="ezM-Vj-7LR"/>
+                                                                        <constraint firstAttribute="height" constant="16" id="WF2-pB-oPN"/>
+                                                                        <constraint firstAttribute="width" constant="16" id="ezM-Vj-7LR"/>
                                                                     </constraints>
                                                                 </imageView>
                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="100%" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="OMz-ve-LOT" userLabel="Cloud Text">
-                                                                    <rect key="frame" x="221" y="21.5" width="38" height="17"/>
+                                                                    <rect key="frame" x="226" y="21.5" width="38" height="17"/>
                                                                     <constraints>
                                                                         <constraint firstAttribute="width" constant="38" id="0gn-rS-PFY"/>
                                                                     </constraints>
@@ -487,23 +484,21 @@
                                                                     <nil key="highlightedColor"/>
                                                                 </label>
                                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="BnN-xC-jCs" userLabel="Wind Strength Img">
-                                                                    <rect key="frame" x="266" y="20" width="15" height="20"/>
-                                                                    <color key="backgroundColor" red="0.0" green="0.32852089410000002" blue="0.57488495110000004" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                                    <rect key="frame" x="271" y="22" width="16" height="16"/>
                                                                     <constraints>
-                                                                        <constraint firstAttribute="width" constant="15" id="ajh-Qs-v3k"/>
-                                                                        <constraint firstAttribute="height" constant="20" id="dKK-5D-QPZ"/>
+                                                                        <constraint firstAttribute="width" constant="16" id="ajh-Qs-v3k"/>
+                                                                        <constraint firstAttribute="height" constant="16" id="dKK-5D-QPZ"/>
                                                                     </constraints>
                                                                 </imageView>
                                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Ff1-cW-r7z" userLabel="Windy  Img">
-                                                                    <rect key="frame" x="286" y="20" width="15" height="20"/>
-                                                                    <color key="backgroundColor" red="0.0" green="0.32852089410000002" blue="0.57488495110000004" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                                    <rect key="frame" x="292" y="22" width="16" height="16"/>
                                                                     <constraints>
-                                                                        <constraint firstAttribute="width" constant="15" id="e14-Ae-GIU"/>
-                                                                        <constraint firstAttribute="height" constant="20" id="ueY-8z-ZQl"/>
+                                                                        <constraint firstAttribute="width" constant="16" id="e14-Ae-GIU"/>
+                                                                        <constraint firstAttribute="height" constant="16" id="ueY-8z-ZQl"/>
                                                                     </constraints>
                                                                 </imageView>
                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="18°" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Pkq-xT-rFf" userLabel="Temp Text">
-                                                                    <rect key="frame" x="308" y="21.5" width="38" height="17"/>
+                                                                    <rect key="frame" x="315" y="21.5" width="38" height="17"/>
                                                                     <constraints>
                                                                         <constraint firstAttribute="width" constant="38" id="xBA-pE-TlR"/>
                                                                     </constraints>
@@ -512,11 +507,10 @@
                                                                     <nil key="highlightedColor"/>
                                                                 </label>
                                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="zAQ-lb-Hoc" userLabel="Temp  Img">
-                                                                    <rect key="frame" x="353" y="20" width="15" height="20"/>
-                                                                    <color key="backgroundColor" red="0.36581671240000002" green="0.67824399469999996" blue="0.71765369180000005" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                                                    <rect key="frame" x="360" y="22" width="8" height="16"/>
                                                                     <constraints>
-                                                                        <constraint firstAttribute="height" constant="20" id="XbO-Wu-hdp"/>
-                                                                        <constraint firstAttribute="width" constant="15" id="uW0-7b-cSv"/>
+                                                                        <constraint firstAttribute="height" constant="16" id="XbO-Wu-hdp"/>
+                                                                        <constraint firstAttribute="width" constant="8" id="uW0-7b-cSv"/>
                                                                     </constraints>
                                                                 </imageView>
                                                             </subviews>
@@ -585,25 +579,23 @@
                                                             <rect key="frame" x="0.0" y="120" width="375" height="60"/>
                                                             <subviews>
                                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="tkh-xB-bkc" userLabel="Star Mag Img">
-                                                                    <rect key="frame" x="10" y="20" width="15" height="20"/>
-                                                                    <color key="backgroundColor" red="1" green="1" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                                    <rect key="frame" x="10" y="22" width="16" height="16"/>
                                                                     <constraints>
-                                                                        <constraint firstAttribute="width" constant="15" id="8Ef-GP-uLh"/>
-                                                                        <constraint firstAttribute="height" constant="20" id="8p8-6o-jAL"/>
+                                                                        <constraint firstAttribute="width" constant="16" id="8Ef-GP-uLh"/>
+                                                                        <constraint firstAttribute="height" constant="16" id="8p8-6o-jAL"/>
                                                                     </constraints>
                                                                 </imageView>
                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="12.3m" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="A5q-S3-1mE" userLabel="Star Mag Text">
-                                                                    <rect key="frame" x="32" y="21.5" width="39" height="17"/>
+                                                                    <rect key="frame" x="33" y="21.5" width="39" height="17"/>
                                                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                                     <nil key="textColor"/>
                                                                     <nil key="highlightedColor"/>
                                                                 </label>
                                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="kVP-mH-CGf" userLabel="Max Dur Img">
-                                                                    <rect key="frame" x="167.5" y="20" width="15" height="20"/>
-                                                                    <color key="backgroundColor" red="0.57414853570000002" green="0.57416242360000003" blue="0.57415497299999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                                    <rect key="frame" x="166.5" y="22" width="16" height="16"/>
                                                                     <constraints>
-                                                                        <constraint firstAttribute="height" constant="20" id="HSh-vB-Rd0"/>
-                                                                        <constraint firstAttribute="width" constant="15" id="W26-Cq-hxn"/>
+                                                                        <constraint firstAttribute="height" constant="16" id="HSh-vB-Rd0"/>
+                                                                        <constraint firstAttribute="width" constant="16" id="W26-Cq-hxn"/>
                                                                     </constraints>
                                                                 </imageView>
                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="6 sec" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jjJ-ZM-8LQ" userLabel="Max Dur Text">
@@ -613,11 +605,10 @@
                                                                     <nil key="highlightedColor"/>
                                                                 </label>
                                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="lP2-Ti-Od1" userLabel="Mag Drop Img">
-                                                                    <rect key="frame" x="310.5" y="20" width="15" height="20"/>
-                                                                    <color key="backgroundColor" red="0.57414853570000002" green="0.57416242360000003" blue="0.57415497299999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                                    <rect key="frame" x="317.5" y="22" width="8" height="16"/>
                                                                     <constraints>
-                                                                        <constraint firstAttribute="height" constant="20" id="CML-ib-4ee"/>
-                                                                        <constraint firstAttribute="width" constant="15" id="eun-1o-5F5"/>
+                                                                        <constraint firstAttribute="height" constant="16" id="CML-ib-4ee"/>
+                                                                        <constraint firstAttribute="width" constant="8" id="eun-1o-5F5"/>
                                                                     </constraints>
                                                                 </imageView>
                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0.6m" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="J0Y-mu-ovw" userLabel="Mag Drop Text">
@@ -726,7 +717,6 @@
                                 <nil key="highlightedColor"/>
                             </label>
                         </subviews>
-                        <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="3lv-ur-Dnz" firstAttribute="leading" secondItem="gbV-Qa-Z7Q" secondAttribute="leading" id="4Kz-wb-O16"/>
                             <constraint firstItem="RT4-ac-n5k" firstAttribute="centerY" secondItem="3lv-ur-Dnz" secondAttribute="centerY" id="Iw9-18-Ug5"/>
@@ -736,6 +726,7 @@
                             <constraint firstItem="gbV-Qa-Z7Q" firstAttribute="trailing" secondItem="SDS-j7-v4J" secondAttribute="trailing" id="X3e-v3-P5U"/>
                             <constraint firstItem="3lv-ur-Dnz" firstAttribute="trailing" secondItem="gbV-Qa-Z7Q" secondAttribute="trailing" id="dNz-ye-qL6"/>
                             <constraint firstItem="RT4-ac-n5k" firstAttribute="leading" secondItem="gbV-Qa-Z7Q" secondAttribute="leading" constant="7" id="jAQ-J5-36Q"/>
+                            <constraint firstItem="SDS-j7-v4J" firstAttribute="width" secondItem="6cp-u7-nfp" secondAttribute="width" id="rgT-QD-Lzy"/>
                             <constraint firstItem="gbV-Qa-Z7Q" firstAttribute="bottom" secondItem="SDS-j7-v4J" secondAttribute="bottom" constant="16" id="tou-Ya-8ER"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="gbV-Qa-Z7Q"/>
@@ -750,4 +741,7 @@
             <point key="canvasLocation" x="205.59999999999999" y="-848.72563718140941"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="cloud_100.png" width="16" height="16"/>
+    </resources>
 </document>

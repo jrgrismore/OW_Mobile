@@ -25,22 +25,22 @@ class MyEventsViewController: UIViewController, UICollectionViewDataSource,UICol
     let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as! MyEventsCollectionViewCell
     let remainder = indexPath.row % 10
 //    outlet tests
-//    cell.sigmaImg.backgroundColor = #colorLiteral(red: 0.8078431487, green: 0.02745098062, blue: 0.3333333433, alpha: 1)
+    cell.sigmaImg.image = #imageLiteral(resourceName: "spos_0")
 //    cell.objectText.text = "Test Object Text"
-//    cell.cloudImg.backgroundColor = #colorLiteral(red: 0.8078431487, green: 0.02745098062, blue: 0.3333333433, alpha: 1)
+    cell.cloudImg.image = #imageLiteral(resourceName: "cloud_100")
 //    cell.cloudText.text = "101%"
-//    cell.windStrengthImg.backgroundColor = #colorLiteral(red: 0.8078431487, green: 0.02745098062, blue: 0.3333333433, alpha: 1)
-//    cell.windyImg.backgroundColor =  colorLiteral(red: 0.8078431487, green: 0.02745098062, blue: 0.3333333433, alpha: 1)
+    cell.windStrengthImg.image = #imageLiteral(resourceName: "wind_2a")
+    cell.windyImg.image = #imageLiteral(resourceName: "wind_sign")
 //    cell.tempText.text = "99°"
-//      cell.tempImg.backgroundColor = #colorLiteral(red: 0.8078431487, green: 0.02745098062, blue: 0.3333333433, alpha: 1)
+      cell.tempImg.image = #imageLiteral(resourceName: "term_b")
 //    cell.leadTime.text = "61 min"
 //    cell.eventTime.text = "25:61:61"
 //    cell.timeError.text = "+/- 4 days😊"
-//    cell.starMagImg.backgroundColor = #colorLiteral(red: 0.8078431487, green: 0.02745098062, blue: 0.3333333433, alpha: 1)
+      cell.starMagImg.image = #imageLiteral(resourceName: "star_y")
 //    cell.starMagText.text = "25.3"
-//    cell.maxDurImg.backgroundColor = #colorLiteral(red: 0.8078431487, green: 0.02745098062, blue: 0.3333333433, alpha: 1)
+      cell.maxDurImg.image = #imageLiteral(resourceName: "max_sign")
 //    cell.maxDurText.text = "3.14 hours"
-//    cell.magDropImg.backgroundColor = #colorLiteral(red: 0.8078431487, green: 0.02745098062, blue: 0.3333333433, alpha: 1)
+      cell.magDropImg.image = #imageLiteral(resourceName: "drop_sign")
 //    cell.magDropText.text = "67.8"
     switch remainder {
     case 0:
@@ -103,7 +103,8 @@ class MyEventsViewController: UIViewController, UICollectionViewDataSource,UICol
       let totalInteritemSpace = flowLayout.minimumInteritemSpacing * CGFloat(cellsInRow - 1)
       
       //      let cellWidth = (self.eventsCollection.bounds.width - totalInteritemSpace - totalHInsets)/CGFloat(cellsInRow)
-      let cellWidth = (self.myEventsCollection.bounds.size.width - totalInteritemSpace - totalHInsets)/CGFloat(cellsInRow)
+//      var cellWidth = (self.myEventsCollection.bounds.size.width - totalInteritemSpace - totalHInsets)/CGFloat(cellsInRow)
+      let cellWidth = (UIScreen.main.bounds.width - totalInteritemSpace - totalHInsets)/CGFloat(cellsInRow)
       flowLayout.itemSize = CGSize(width: cellWidth, height: CGFloat(cellHeight))
     }
     
