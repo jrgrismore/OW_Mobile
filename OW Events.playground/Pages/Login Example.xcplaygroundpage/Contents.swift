@@ -1,7 +1,6 @@
 import Foundation
 import PlaygroundSupport
 
-import PlaygroundSupport
 
 PlaygroundPage.current.needsIndefiniteExecution = true
 

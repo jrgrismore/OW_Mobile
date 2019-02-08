@@ -2,8 +2,8 @@
 <playground version='6.0' target-platform='ios' display-mode='raw' executeOnSourceChanges='false'>
     <pages>
         <page name='Get Events and Parse'/>
-        <page name='Test'/>
         <page name='Login Get Events and Parse'/>
         <page name='Login Example'/>
+        <page name='test'/>
     </pages>
 </playground>
