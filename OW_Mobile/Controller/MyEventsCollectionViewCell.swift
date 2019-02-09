@@ -10,24 +10,33 @@ import UIKit
 
 class MyEventsCollectionViewCell: UICollectionViewCell
 {
-  //top view
-  @IBOutlet weak var sigmaImg: UIImageView!
+  // MARK: - Cell field outlets
+  
+  //top view text
   @IBOutlet weak var objectText: UILabel!
-  @IBOutlet weak var cloudImg: UIImageView!
   @IBOutlet weak var cloudText: UILabel!
+  @IBOutlet weak var tempText: UILabel!
+  
+  //top view images
+  @IBOutlet weak var sigmaImg: UIImageView!
+  @IBOutlet weak var cloudImg: UIImageView!
   @IBOutlet weak var windStrengthImg: UIImageView!
   @IBOutlet weak var windyImg: UIImageView!
-  @IBOutlet weak var tempText: UILabel!
   @IBOutlet weak var tempImg: UIImageView!
-  //middle view
+  
+  //middle view text
   @IBOutlet weak var leadTime: UILabel!
   @IBOutlet weak var eventTime: UILabel!
   @IBOutlet weak var timeError: UILabel!
-  //bottom view
-  @IBOutlet weak var starMagImg: UIImageView!
+  
+  //bottom view text
   @IBOutlet weak var starMagText: UILabel!
-  @IBOutlet weak var maxDurImg: UIImageView!
   @IBOutlet weak var maxDurText: UILabel!
-  @IBOutlet weak var magDropImg: UIImageView!
   @IBOutlet weak var magDropText: UILabel!
+  
+  //bottom view images
+  @IBOutlet weak var starMagImg: UIImageView!
+  @IBOutlet weak var maxDurImg: UIImageView!
+  @IBOutlet weak var magDropImg: UIImageView!
+  
 }
