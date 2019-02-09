@@ -13,7 +13,7 @@
         <!--Tab Bar-->
         <scene sceneID="mzY-na-Vmt">
             <objects>
-                <tabBarController title="Tab Bar" id="Hul-Nf-7m4" sceneMemberID="viewController">
+                <tabBarController title="Tab Bar" id="Hul-Nf-7m4" customClass="TabBarController" customModule="OW_Mobile" customModuleProvider="target" sceneMemberID="viewController">
                     <tabBar key="tabBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="2gw-pz-K2R">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="49"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -556,9 +556,9 @@
                                                                     <nil key="highlightedColor"/>
                                                                 </label>
                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="23:16:03 UT" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ugw-0S-H7K" userLabel="Event Time">
-                                                                    <rect key="frame" x="127.5" y="21.5" width="120" height="17"/>
+                                                                    <rect key="frame" x="97.5" y="21.5" width="180" height="17"/>
                                                                     <constraints>
-                                                                        <constraint firstAttribute="width" constant="120" id="yNL-uz-ZWw"/>
+                                                                        <constraint firstAttribute="width" constant="180" id="yNL-uz-ZWw"/>
                                                                     </constraints>
                                                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                                     <nil key="textColor"/>
@@ -724,6 +724,15 @@
                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6rY-Nl-7is">
+                                <rect key="frame" x="10" y="25" width="53" height="30"/>
+                                <state key="normal" title="Refresh">
+                                    <color key="titleColor" red="1" green="0.14913141730000001" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                </state>
+                                <connections>
+                                    <action selector="refreshEventCells:" destination="EDh-iT-nzC" eventType="touchUpInside" id="LAr-BK-2ZY"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <constraints>
                             <constraint firstItem="3lv-ur-Dnz" firstAttribute="leading" secondItem="gbV-Qa-Z7Q" secondAttribute="leading" id="4Kz-wb-O16"/>
@@ -734,7 +743,9 @@
                             <constraint firstItem="gbV-Qa-Z7Q" firstAttribute="trailing" secondItem="SDS-j7-v4J" secondAttribute="trailing" id="X3e-v3-P5U"/>
                             <constraint firstItem="3lv-ur-Dnz" firstAttribute="trailing" secondItem="gbV-Qa-Z7Q" secondAttribute="trailing" id="dNz-ye-qL6"/>
                             <constraint firstItem="RT4-ac-n5k" firstAttribute="leading" secondItem="gbV-Qa-Z7Q" secondAttribute="leading" constant="7" id="jAQ-J5-36Q"/>
+                            <constraint firstItem="6rY-Nl-7is" firstAttribute="leading" secondItem="gbV-Qa-Z7Q" secondAttribute="leading" constant="10" id="qwU-Rq-pnc"/>
                             <constraint firstItem="SDS-j7-v4J" firstAttribute="width" secondItem="6cp-u7-nfp" secondAttribute="width" id="rgT-QD-Lzy"/>
+                            <constraint firstItem="6rY-Nl-7is" firstAttribute="centerY" secondItem="3lv-ur-Dnz" secondAttribute="centerY" id="rqz-8h-v3I"/>
                             <constraint firstItem="gbV-Qa-Z7Q" firstAttribute="bottom" secondItem="SDS-j7-v4J" secondAttribute="bottom" constant="16" id="tou-Ya-8ER"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="gbV-Qa-Z7Q"/>

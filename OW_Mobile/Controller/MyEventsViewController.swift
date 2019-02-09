@@ -14,34 +14,22 @@ class MyEventsViewController: UIViewController, UICollectionViewDataSource,UICol
   @IBOutlet weak var myEventsCollection: UICollectionView!
   
   let reuseIdentifier = "MyEventCell"
+  var cellDataArray = [FullEvent?]()
   
   func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int
   {
-    return 60
+    print("numberOfItemsInSection=",cellDataArray.count)
+    print("cellDataArray=",cellDataArray )
+    return cellDataArray.count
   }
   
   func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell
   {
-    let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as! MyEventsCollectionViewCell
+    var cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as! MyEventsCollectionViewCell
     let remainder = indexPath.row % 10
-//    outlet tests
-    cell.sigmaImg.image = #imageLiteral(resourceName: "spos_0")
-//    cell.objectText.text = "Test Object Text"
-    cell.cloudImg.image = #imageLiteral(resourceName: "cloud_100")
-//    cell.cloudText.text = "101%"
-    cell.windStrengthImg.image = #imageLiteral(resourceName: "wind_2a")
-    cell.windyImg.image = #imageLiteral(resourceName: "wind_sign")
-//    cell.tempText.text = "99°"
-      cell.tempImg.image = #imageLiteral(resourceName: "term_b")
-//    cell.leadTime.text = "61 min"
-//    cell.eventTime.text = "25:61:61"
-//    cell.timeError.text = "+/- 4 days😊"
-      cell.starMagImg.image = #imageLiteral(resourceName: "star_y")
-//    cell.starMagText.text = "25.3"
-      cell.maxDurImg.image = #imageLiteral(resourceName: "max_sign")
-//    cell.maxDurText.text = "3.14 hours"
-      cell.magDropImg.image = #imageLiteral(resourceName: "drop_sign")
-//    cell.magDropText.text = "67.8"
+
+   fillCellFields(cell: &cell, indexPath: indexPath)
+    
     switch remainder {
     case 0:
       cell.backgroundColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 0.673458497)
@@ -66,10 +54,14 @@ class MyEventsViewController: UIViewController, UICollectionViewDataSource,UICol
     default:
       cell.backgroundColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 0.673458497)
     }
-    var r: CGFloat = 0, g: CGFloat = 0, b: CGFloat = 0, a: CGFloat = 0
-    cell.backgroundColor?.getRed(&r, green: &g, blue: &b, alpha: &a)
-    print("red: \(Int(r*255)), green: \(Int(g*255)), blue: \(Int(b*255))")
-    cell.eventTime.text = "\(Int(r*255)), \(Int(g*255)), \(Int(b*255))"
+    //test permanent cell background color
+    cell.backgroundColor = #colorLiteral(red: 0.9215686275, green: 0.9215686275, blue: 0.9215686275, alpha: 1)
+    
+    
+//    var r: CGFloat = 0, g: CGFloat = 0, b: CGFloat = 0, a: CGFloat = 0
+//    cell.backgroundColor?.getRed(&r, green: &g, blue: &b, alpha: &a)
+//    print("red: \(Int(r*255)), green: \(Int(g*255)), blue: \(Int(b*255))")
+//    cell.eventTime.text = "\(Int(r*255)), \(Int(g*255)), \(Int(b*255))"
 
 //    switch remainder {
 //    case 0:
@@ -108,6 +100,8 @@ class MyEventsViewController: UIViewController, UICollectionViewDataSource,UICol
 //    {
 //      cell.owCellImg.image = UIImage(named: "Schwassmann")
 //    }
+    
+    //populate cell fields
     return cell
   }
   
@@ -117,12 +111,10 @@ class MyEventsViewController: UIViewController, UICollectionViewDataSource,UICol
     super.viewDidLoad()
     
     // Do any additional setup after loading the view.
+
     myEventsCollection.backgroundColor = #colorLiteral(red: 0.03605184332, green: 0.2271486223, blue: 0.2422576547, alpha: 1)
 //    myEventsCollection.contentSize = CGSize(width: 10_000, height: 10_000)
-    
-    let fontAttributes = [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 16.0)]
-    UITabBarItem.appearance().setTitleTextAttributes(fontAttributes, for: .normal)
-    
+        
     let cellsInRow = 1
     let cellHeight = 180
     
@@ -139,17 +131,107 @@ class MyEventsViewController: UIViewController, UICollectionViewDataSource,UICol
       let cellWidth = (UIScreen.main.bounds.width - totalInteritemSpace - totalHInsets)/CGFloat(cellsInRow)
       flowLayout.itemSize = CGSize(width: cellWidth, height: CGFloat(cellHeight))
     }
-    
-    /*
-     // MARK: - Navigation
-     
-     // In a storyboard-based application, you will often want to do a little preparation before navigation
-     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-     // Get the new view controller using segue.destination.
-     // Pass the selected object to the new view controller.
-     }
-     */
-    
   }
   
+  //retrieve json, parse json, use closure to fill cells
+  func updateCellArray()
+  {
+//    retrieveEventList()
+//    cell.objectText =
+    let parsedJSON = JsonHandler()
+    parsedJSON.retrieveEventList(completion: { (owEvents, error) in
+//      for event in owEvents!
+//      {
+//        self.printFullEventJSON(eventItem: event)
+//      }
+      //fill the cells
+      print("download and parsing complete")
+      print("now update cell data array")
+      self.cellDataArray = owEvents!
+      print("\nreload collection view")
+      DispatchQueue.main.async{self.myEventsCollection.reloadData()}
+    })
+  }
+  
+  func printFullEventJSON(eventItem item: Event)
+  {
+    print()
+    print("Id =", item.Id)
+    print("Object =", item.Object)
+    print("StarMag =", item.StarMag)
+    print("MagDrop =", item.MagDrop)
+    print("MaxDurSec =", item.MaxDurSec)
+    print("EventTimeUtc =", item.EventTimeUtc)
+    print("ErrorInTimeSec =", item.ErrorInTimeSec)
+    print("WhetherInfoAvailable =", item.WhetherInfoAvailable)
+    print("CloudCover =", item.CloudCover)
+    print("Wind =", item.Wind)
+    print("TempDegC =", item.TempDegC)
+    print("HighCloud =", item.HighCloud)
+    print("BestStationPos =", item.BestStationPos)
+  }
+  
+  func formatEventTime(timeString: String) -> String
+  {
+    print("timeString=",timeString)
+    let eventTimeFormatter = DateFormatter()
+    eventTimeFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSS"
+    eventTimeFormatter.timeZone = TimeZone(abbreviation: "UTC")
+    if let formattedDate = eventTimeFormatter.date(from: timeString)
+    {
+//      print("formattedDate set")
+      eventTimeFormatter.dateFormat = "HH:mm:ss 'UT'"
+      return eventTimeFormatter.string(from: formattedDate)
+    }
+    return timeString
+  }
+  
+  func leadTime(timeString: String) -> String
+  {
+    let eventTimeFormatter = DateFormatter()
+    eventTimeFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSS"
+    eventTimeFormatter.timeZone = TimeZone(abbreviation: "UTC")
+    if let eventDate = eventTimeFormatter.date(from: timeString)
+    {
+      print("formattedDate=",eventDate)
+      let leadTimeSeconds = Int(eventDate.timeIntervalSinceNow)
+      print("leadTimeSeconds=",leadTimeSeconds)
+      let leadTimeMinutes = leadTimeSeconds / 60
+      print("leadTimeMinutes=",leadTimeMinutes)
+      let leadTimeHours = leadTimeMinutes / 60
+      print("leadTimeHous=",leadTimeHours)
+      let leadTimeDays = leadTimeHours / 24
+      print("leadTimeDays=",leadTimeDays)
+      return String(format: "in \(leadTimeHours) hrs")
+    }
+    return timeString
+  }
+  
+  func fillCellFields(cell: inout MyEventsCollectionViewCell, indexPath: IndexPath)
+  {
+    
+    cell.objectText.text = cellDataArray[indexPath.row]!.Object
+    cell.starMagText.text = String(format: "%.02f",cellDataArray[indexPath.row]!.StarMag)
+    cell.magDropText.text = String(format: "%.02f",cellDataArray[indexPath.row]!.MagDrop)
+    cell.maxDurText.text = String(format: "%.02f",cellDataArray[indexPath.row]!.MaxDurSec)
+    cell.leadTime.text = leadTime(timeString: cellDataArray[indexPath.row]!.EventTimeUtc)
+    cell.eventTime.text = formatEventTime(timeString: cellDataArray[indexPath.row]!.EventTimeUtc)
+    cell.timeError.text = String(format: "+/- %.02f",cellDataArray[indexPath.row]!.ErrorInTimeSec)
+    cell.cloudText.text = String(format: "%d",cellDataArray[indexPath.row]!.CloudCover)
+    cell.tempText.text = String(format: "%d",cellDataArray[indexPath.row]!.TempDegC)
+    
+    cell.sigmaImg.image =  #imageLiteral(resourceName: "spos_0")
+    cell.cloudImg.image = #imageLiteral(resourceName: "cloud_100")
+    cell.windStrengthImg.image = #imageLiteral(resourceName: "wind_2a")
+    cell.windyImg.image = #imageLiteral(resourceName: "wind_sign")
+    cell.tempImg.image = #imageLiteral(resourceName: "term_b")
+    cell.starMagImg.image = #imageLiteral(resourceName: "star_y")
+    cell.maxDurImg.image = #imageLiteral(resourceName: "max_sign")
+    cell.magDropImg.image = #imageLiteral(resourceName: "drop_sign")
+   }
+  
+  @IBAction func refreshEventCells(_ sender: Any)
+  {
+    updateCellArray()
+  }
 }

@@ -44,7 +44,7 @@ class EventsController: UIViewController, UICollectionViewDataSource,UICollectio
     super.viewDidLoad()
     
     // Do any additional setup after loading the view.
-    eventsCollection.backgroundColor = #colorLiteral(red: 0.501960814, green: 0.501960814, blue: 0.501960814, alpha: 1)
+     eventsCollection.backgroundColor = #colorLiteral(red: 0.501960814, green: 0.501960814, blue: 0.501960814, alpha: 1)
     eventsCollection.contentSize = CGSize(width: 10_000, height: 10_000)
 
     let cellsInRow = 1

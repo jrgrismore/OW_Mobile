@@ -28,6 +28,8 @@ class AccountViewController: UIViewController {
     let parsedJSON = JsonHandler()
     parsedJSON.downloadJSON(completion: { (owEvents, error) in
       print("AccountViewController")
+      print("error=",error)
+      print("owEvents=",owEvents)
       for item in owEvents!
       {
         self.printFullEventJSON(eventItem: item)

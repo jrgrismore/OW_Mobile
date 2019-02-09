@@ -12,6 +12,7 @@
 		5287623F220266BB00BDABEC /* ReminderViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5287623E220266BB00BDABEC /* ReminderViewController.swift */; };
 		5288B50C220A258B000002C6 /* JsonHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5288B50B220A258B000002C6 /* JsonHandler.swift */; };
 		5288B50E220A25C3000002C6 /* OWWebServiceHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5288B50D220A25C3000002C6 /* OWWebServiceHandler.swift */; };
+		5292753C220DD0CF009AD6D5 /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5292753B220DD0CF009AD6D5 /* TabBarController.swift */; };
 		529AD0592207C576001BEFC9 /* MyEventsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 529AD0582207C576001BEFC9 /* MyEventsViewController.swift */; };
 		529AD05B2207C8BC001BEFC9 /* MyEventsCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 529AD05A2207C8BC001BEFC9 /* MyEventsCollectionViewCell.swift */; };
 		529D9CD82200061F002A3428 /* EventsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 529D9CD72200061F002A3428 /* EventsController.swift */; };
@@ -48,6 +49,7 @@
 		5287623E220266BB00BDABEC /* ReminderViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReminderViewController.swift; sourceTree = "<group>"; };
 		5288B50B220A258B000002C6 /* JsonHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JsonHandler.swift; sourceTree = "<group>"; };
 		5288B50D220A25C3000002C6 /* OWWebServiceHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OWWebServiceHandler.swift; sourceTree = "<group>"; };
+		5292753B220DD0CF009AD6D5 /* TabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
 		529AD0582207C576001BEFC9 /* MyEventsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyEventsViewController.swift; sourceTree = "<group>"; };
 		529AD05A2207C8BC001BEFC9 /* MyEventsCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyEventsCollectionViewCell.swift; sourceTree = "<group>"; };
 		529D9CD72200061F002A3428 /* EventsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventsController.swift; sourceTree = "<group>"; };
@@ -126,6 +128,7 @@
 				5287623E220266BB00BDABEC /* ReminderViewController.swift */,
 				529AD0582207C576001BEFC9 /* MyEventsViewController.swift */,
 				529AD05A2207C8BC001BEFC9 /* MyEventsCollectionViewCell.swift */,
+				5292753B220DD0CF009AD6D5 /* TabBarController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -318,6 +321,7 @@
 			files = (
 				52C8021121F9510D00E66A13 /* OW_Mobile.xcdatamodeld in Sources */,
 				5288B50E220A25C3000002C6 /* OWWebServiceHandler.swift in Sources */,
+				5292753C220DD0CF009AD6D5 /* TabBarController.swift in Sources */,
 				5288B50C220A258B000002C6 /* JsonHandler.swift in Sources */,
 				5287623D22024E1F00BDABEC /* OWCollectionViewCell.swift in Sources */,
 				529AD05B2207C8BC001BEFC9 /* MyEventsCollectionViewCell.swift in Sources */,
