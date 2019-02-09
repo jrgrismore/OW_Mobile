@@ -15,24 +15,11 @@ class ReminderViewController: UIViewController
   @IBOutlet weak var prevDayView: UIView!
   
   override func viewDidLoad()
-    {
-        super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
-      self.alertsView.layer.cornerRadius = 10
-      self.alertsTimeView.layer.cornerRadius = 10
-      self.prevDayView.layer.cornerRadius = 10
-    }
-    
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
+  {
+    super.viewDidLoad()
+    self.alertsView.layer.cornerRadius = 10
+    self.alertsTimeView.layer.cornerRadius = 10
+    self.prevDayView.layer.cornerRadius = 10
+  }
+  
 }

@@ -13,7 +13,7 @@ class MyEventsViewController: UIViewController, UICollectionViewDataSource,UICol
   @IBOutlet weak var myEventsCollection: UICollectionView!
   
   let reuseIdentifier = "MyEventCell"
-  var cellDataArray = [FullEvent?]()
+  var cellDataArray = [Event?]()
   
   
   // MARK: - View functions
@@ -41,7 +41,6 @@ class MyEventsViewController: UIViewController, UICollectionViewDataSource,UICol
   func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int
   {
     print("numberOfItemsInSection=",cellDataArray.count)
-    print("cellDataArray=",cellDataArray )
     return cellDataArray.count
   }
   
@@ -83,10 +82,14 @@ class MyEventsViewController: UIViewController, UICollectionViewDataSource,UICol
   //retrieve json, parse json, use closure to fill cells
   func updateCellArray()
   {
-    let parsedJSON = JsonHandler()
+    let parsedJSON = WebService()
     parsedJSON.retrieveEventList(completion: { (owEvents, error) in
       //fill cells
       print("download and parsing complete")
+      //      for item in owEvents!
+      //      {
+      //        self.printEventInfo(eventItem: item)
+      //      }
       self.cellDataArray = owEvents!
       print("cell data array updated")
       print("\nreloading collection view")
@@ -152,7 +155,7 @@ class MyEventsViewController: UIViewController, UICollectionViewDataSource,UICol
     return timeString
   }
   
-  func printFullEventJSON(eventItem item: Event)
+  func printEventInfo(eventItem item: Event)
   {
     print()
     print("Id =", item.Id)

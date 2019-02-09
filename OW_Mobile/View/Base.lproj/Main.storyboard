@@ -113,14 +113,6 @@
                                     <constraint firstItem="rE7-Zx-RpM" firstAttribute="trailing" secondItem="KOM-E2-56Z" secondAttribute="trailing" id="yet-Xc-Tpt"/>
                                 </constraints>
                             </view>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Vcf-A0-isd">
-                                <rect key="frame" x="246" y="268" width="73" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="Test JSON"/>
-                                <connections>
-                                    <action selector="testJsonParser:" destination="BYZ-38-t0r" eventType="touchUpInside" id="ccG-DM-usV"/>
-                                </connections>
-                            </button>
                         </subviews>
                         <color key="backgroundColor" red="0.77657884359359741" green="0.79993695020675659" blue="0.8274492621421814" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                         <constraints>

@@ -10,7 +10,7 @@
 		5287622F2202107100BDABEC /* AccountViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5287622E2202107100BDABEC /* AccountViewController.swift */; };
 		5287623D22024E1F00BDABEC /* OWCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5287623C22024E1F00BDABEC /* OWCollectionViewCell.swift */; };
 		5287623F220266BB00BDABEC /* ReminderViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5287623E220266BB00BDABEC /* ReminderViewController.swift */; };
-		5288B50C220A258B000002C6 /* JsonHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5288B50B220A258B000002C6 /* JsonHandler.swift */; };
+		5288B50C220A258B000002C6 /* WebService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5288B50B220A258B000002C6 /* WebService.swift */; };
 		5288B50E220A25C3000002C6 /* OWWebServiceHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5288B50D220A25C3000002C6 /* OWWebServiceHandler.swift */; };
 		5292753C220DD0CF009AD6D5 /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5292753B220DD0CF009AD6D5 /* TabBarController.swift */; };
 		529AD0592207C576001BEFC9 /* MyEventsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 529AD0582207C576001BEFC9 /* MyEventsViewController.swift */; };
@@ -47,7 +47,7 @@
 		5287622E2202107100BDABEC /* AccountViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountViewController.swift; sourceTree = "<group>"; };
 		5287623C22024E1F00BDABEC /* OWCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OWCollectionViewCell.swift; sourceTree = "<group>"; };
 		5287623E220266BB00BDABEC /* ReminderViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReminderViewController.swift; sourceTree = "<group>"; };
-		5288B50B220A258B000002C6 /* JsonHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JsonHandler.swift; sourceTree = "<group>"; };
+		5288B50B220A258B000002C6 /* WebService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebService.swift; sourceTree = "<group>"; };
 		5288B50D220A25C3000002C6 /* OWWebServiceHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OWWebServiceHandler.swift; sourceTree = "<group>"; };
 		5292753B220DD0CF009AD6D5 /* TabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
 		529AD0582207C576001BEFC9 /* MyEventsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyEventsViewController.swift; sourceTree = "<group>"; };
@@ -104,8 +104,7 @@
 		529D9CD221FF87BB002A3428 /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				5288B50B220A258B000002C6 /* JsonHandler.swift */,
-				5288B50D220A25C3000002C6 /* OWWebServiceHandler.swift */,
+				5288B50B220A258B000002C6 /* WebService.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -122,13 +121,11 @@
 		529D9CD421FF87DE002A3428 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
-				529D9CD72200061F002A3428 /* EventsController.swift */,
-				5287622E2202107100BDABEC /* AccountViewController.swift */,
-				5287623C22024E1F00BDABEC /* OWCollectionViewCell.swift */,
-				5287623E220266BB00BDABEC /* ReminderViewController.swift */,
+				5292753B220DD0CF009AD6D5 /* TabBarController.swift */,
 				529AD0582207C576001BEFC9 /* MyEventsViewController.swift */,
 				529AD05A2207C8BC001BEFC9 /* MyEventsCollectionViewCell.swift */,
-				5292753B220DD0CF009AD6D5 /* TabBarController.swift */,
+				5287622E2202107100BDABEC /* AccountViewController.swift */,
+				5287623E220266BB00BDABEC /* ReminderViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -160,6 +157,7 @@
 				529D9CD221FF87BB002A3428 /* Model */,
 				529D9CD321FF87C2002A3428 /* View */,
 				529D9CD421FF87DE002A3428 /* Controller */,
+				52FF339D220F4BAB00A2AC11 /* Unneeded? */,
 				52C8021221F9510F00E66A13 /* Assets.xcassets */,
 				5288B50F220A260B000002C6 /* OW Images */,
 				52C8021721F9510F00E66A13 /* Info.plist */,
@@ -185,6 +183,16 @@
 				52C8022D21F9510F00E66A13 /* Info.plist */,
 			);
 			path = OW_MobileUITests;
+			sourceTree = "<group>";
+		};
+		52FF339D220F4BAB00A2AC11 /* Unneeded? */ = {
+			isa = PBXGroup;
+			children = (
+				529D9CD72200061F002A3428 /* EventsController.swift */,
+				5288B50D220A25C3000002C6 /* OWWebServiceHandler.swift */,
+				5287623C22024E1F00BDABEC /* OWCollectionViewCell.swift */,
+			);
+			path = "Unneeded?";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -322,7 +330,7 @@
 				52C8021121F9510D00E66A13 /* OW_Mobile.xcdatamodeld in Sources */,
 				5288B50E220A25C3000002C6 /* OWWebServiceHandler.swift in Sources */,
 				5292753C220DD0CF009AD6D5 /* TabBarController.swift in Sources */,
-				5288B50C220A258B000002C6 /* JsonHandler.swift in Sources */,
+				5288B50C220A258B000002C6 /* WebService.swift in Sources */,
 				5287623D22024E1F00BDABEC /* OWCollectionViewCell.swift in Sources */,
 				529AD05B2207C8BC001BEFC9 /* MyEventsCollectionViewCell.swift in Sources */,
 				529AD0592207C576001BEFC9 /* MyEventsViewController.swift in Sources */,

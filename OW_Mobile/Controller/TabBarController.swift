@@ -11,14 +11,13 @@ import UIKit
 var someURLSession: URLSession = URLSession()
 
 class TabBarController: UITabBarController {
-
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        // Do any additional setup after loading the view.
-      let fontAttributes = [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 16.0)]
-      UITabBarItem.appearance().setTitleTextAttributes(fontAttributes, for: .normal)
-      print("TabBarController > viewDidLoad")
-    }
-    
-
+  
+  override func viewDidLoad() {
+    super.viewDidLoad()
+    // Do any additional setup after loading the view.
+    let fontAttributes = [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 16.0)]
+    UITabBarItem.appearance().setTitleTextAttributes(fontAttributes, for: .normal)
+    print("TabBarController > viewDidLoad")
+  }
+  
 }
