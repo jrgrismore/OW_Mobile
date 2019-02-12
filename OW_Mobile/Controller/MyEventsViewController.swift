@@ -74,7 +74,7 @@ class MyEventsViewController: UIViewController, UICollectionViewDataSource,UICol
       cell.backgroundColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 0.673458497)
     }
     //test permanent cell background color
-    cell.backgroundColor = #colorLiteral(red: 0.9215686275, green: 0.9215686275, blue: 0.9215686275, alpha: 1)
+    cell.backgroundColor = #colorLiteral(red: 0.9215686275, green: 0.9215686275, blue: 0.9215686275, alpha: 0.67)
     return cell
   }
   
