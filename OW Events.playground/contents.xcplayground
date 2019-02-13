@@ -6,5 +6,6 @@
         <page name='Login Example'/>
         <page name='test'/>
         <page name='Date and Time'/>
+        <page name='General Tests'/>
     </pages>
 </playground>

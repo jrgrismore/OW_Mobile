@@ -47,34 +47,9 @@ class MyEventsViewController: UIViewController, UICollectionViewDataSource,UICol
   func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell
   {
     var cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as! MyEventsCollectionViewCell
-    let remainder = indexPath.row % 10
+    //set permanent cell background color to 235_255_235_67
+    cell.backgroundColor = #colorLiteral(red: 0.9215686275, green: 1, blue: 0.9215686275, alpha: 0.67)
     fillCellFields(cell: &cell, indexPath: indexPath)
-    switch remainder {
-    case 0:
-      cell.backgroundColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 0.673458497)
-    case 1:
-      cell.backgroundColor = #colorLiteral(red: 1, green: 0.9215686275, blue: 0.9215686275, alpha: 1)
-    case 2:
-      cell.backgroundColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 0.673458497)
-    case 3:
-      cell.backgroundColor = #colorLiteral(red: 1, green: 0.8392156863, blue: 0.8392156863, alpha: 1)
-    case 4:
-      cell.backgroundColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 0.673458497)
-    case 5:
-      cell.backgroundColor = #colorLiteral(red: 1, green: 0.7529411765, blue: 0.7529411765, alpha: 1)
-    case 6:
-      cell.backgroundColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 0.673458497)
-    case 7:
-      cell.backgroundColor = #colorLiteral(red: 1, green: 0.662745098, blue: 0.662745098, alpha: 1)
-    case 8:
-      cell.backgroundColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 0.673458497)
-    case 9:
-      cell.backgroundColor = #colorLiteral(red: 1, green: 0.5725490196, blue: 0.5725490196, alpha: 1)
-    default:
-      cell.backgroundColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 0.673458497)
-    }
-    //test permanent cell background color
-    cell.backgroundColor = #colorLiteral(red: 0.9215686275, green: 0.9215686275, blue: 0.9215686275, alpha: 0.67)
     return cell
   }
   
@@ -141,18 +116,35 @@ class MyEventsViewController: UIViewController, UICollectionViewDataSource,UICol
   
   func leadTime(timeString: String) -> String
   {
+    var leadTimeString = ""
     let eventTimeFormatter = DateFormatter()
     eventTimeFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSS"
     eventTimeFormatter.timeZone = TimeZone(abbreviation: "UTC")
     if let eventDate = eventTimeFormatter.date(from: timeString)
     {
-      let leadTimeSeconds = Int(eventDate.timeIntervalSinceNow)
+      var leadTimeSeconds = Int(eventDate.timeIntervalSinceNow)
       let leadTimeMinutes = leadTimeSeconds / 60
       let leadTimeHours = leadTimeMinutes / 60
       let leadTimeDays = leadTimeHours / 24
-      return String(format: "in \(leadTimeHours) hrs")
+      
+      if leadTimeMinutes > 0
+      {
+        if leadTimeMinutes < 90
+        {
+          leadTimeString = String(format: "in \(leadTimeMinutes) min")
+        }
+        else if leadTimeHours < 48
+        {
+          leadTimeString = String(format: "in \(leadTimeHours) hours")
+        }
+        else
+        {
+          leadTimeString = String(format: "in \(leadTimeDays) days")
+        }
+      }
+      return leadTimeString
     }
-    return timeString
+    return leadTimeString
   }
   
   func printEventInfo(eventItem item: Event)

@@ -26,6 +26,11 @@ struct Event: Codable
   var BestStationPos: Int
 }
 
+struct Events: Codable
+{
+  var events: [Event]
+}
+
 class WebService: NSObject
 {
   let host = "www.occultwatcher.net"
@@ -72,14 +77,14 @@ class WebService: NSObject
         return
       }
       print("data retrieved")
-      let owEvents = self.parseJSONData(jsonData: dataResponse)
+      let owEvents = self.parseEventData(jsonData: dataResponse)
       completion(owEvents,nil)
     }
     print("...owTask.resume()")
     owTask.resume()
   }
   
-  func parseJSONData(jsonData: Data) -> [Event]
+  func parseEventData(jsonData: Data) -> [Event]
   {
     //create decoder instance
     let decoder = JSONDecoder()
@@ -93,6 +98,33 @@ class WebService: NSObject
       print(error as Any)
     }
     return parsedJSON
+  }
+  
+  //save events to UserDefaults
+  func saveEventData(owEvents: [Event])
+  {
+    //encode then assign to user defaults
+    let events = Events(events: owEvents)
+    let jsonEncoder = JSONEncoder()
+    do
+    {
+    let jsonData = try jsonEncoder.encode(events)
+      let jsonString = String(data: jsonData, encoding: .utf8)!
+      print("\nJSON encoding")
+      print(jsonString)
+    }
+    catch let error
+    {
+      print(error as Any)
+    }
+
+    
+  }
+  
+  //restore events from UserDefaults
+  func restorEventData() -> [Event]
+  {
+    return []
   }
   
 }
