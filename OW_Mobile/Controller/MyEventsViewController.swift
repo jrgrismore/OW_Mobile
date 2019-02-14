@@ -136,7 +136,7 @@ class MyEventsViewController: UIViewController, UICollectionViewDataSource,UICol
     eventTimeFormatter.timeZone = TimeZone(abbreviation: "UTC")
     if let formattedDate = eventTimeFormatter.date(from: timeString)
     {
-      eventTimeFormatter.dateFormat = "MMM dd, HH:mm:ss 'UT'"
+      eventTimeFormatter.dateFormat = "dd MMM, HH:mm:ss 'UT'"
       return eventTimeFormatter.string(from: formattedDate)
     }
     return timeString
