@@ -92,6 +92,7 @@ class MyEventsViewController: UIViewController, UICollectionViewDataSource,UICol
     cell.windyImg.image = #imageLiteral(resourceName: "wind_sign")
     cell.tempImg.image = #imageLiteral(resourceName: "term_b")
     cell.starMagImg.image = #imageLiteral(resourceName: "star_y")
+//    cell.starMagImg.image = #imageLiteral(resourceName: "star_o")
     cell.maxDurImg.image = #imageLiteral(resourceName: "max_sign")
     cell.magDropImg.image = #imageLiteral(resourceName: "drop_sign")
   }
