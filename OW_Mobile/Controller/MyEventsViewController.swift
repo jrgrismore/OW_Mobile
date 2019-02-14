@@ -74,27 +74,57 @@ class MyEventsViewController: UIViewController, UICollectionViewDataSource,UICol
   
   func fillCellFields(cell: inout MyEventsCollectionViewCell, indexPath: IndexPath)
   {
-    //cell text
+     //cell text
     cell.objectText.text = cellDataArray[indexPath.row]!.Object
     cell.starMagText.text = String(format: "%.02f",cellDataArray[indexPath.row]!.StarMag)
     cell.magDropText.text = String(format: "%.02f",cellDataArray[indexPath.row]!.MagDrop)
     cell.maxDurText.text = String(format: "%.02f",cellDataArray[indexPath.row]!.MaxDurSec)
     cell.leadTime.text = leadTime(timeString: cellDataArray[indexPath.row]!.EventTimeUtc)
     cell.eventTime.text = formatEventTime(timeString: cellDataArray[indexPath.row]!.EventTimeUtc)
-    cell.timeError.text = String(format: "+/- %.02f",cellDataArray[indexPath.row]!.ErrorInTimeSec)
-    cell.cloudText.text = String(format: "%d",cellDataArray[indexPath.row]!.CloudCover)
-    cell.tempText.text = String(format: "%d",cellDataArray[indexPath.row]!.TempDegC)
+    let timeError = cellDataArray[indexPath.row]!.ErrorInTimeSec
+     if timeError > 90
+    {
+      let errorInMin = timeError / 60
+      cell.timeError.text = String(format: "+/- %.01f min",errorInMin)
+    }
+    else
+    {
+      if timeError == -1
+      {
+        cell.timeError.text = "N/A"
+      }
+      else
+      {
+        cell.timeError.text = String(format: "+/- %.f sec",timeError)
+      }
+    }
     
     //cell images
     cell.sigmaImg.image =  #imageLiteral(resourceName: "spos_0")
-    cell.cloudImg.image = #imageLiteral(resourceName: "cloud_100")
-    cell.windStrengthImg.image = #imageLiteral(resourceName: "wind_2a")
-    cell.windyImg.image = #imageLiteral(resourceName: "wind_sign")
-    cell.tempImg.image = #imageLiteral(resourceName: "term_b")
     cell.starMagImg.image = #imageLiteral(resourceName: "star_y")
 //    cell.starMagImg.image = #imageLiteral(resourceName: "star_o")
     cell.maxDurImg.image = #imageLiteral(resourceName: "max_sign")
     cell.magDropImg.image = #imageLiteral(resourceName: "drop_sign")
+    
+    //display weather info if forecast available, no display if no forecast
+    if cellDataArray[indexPath.row]!.WhetherInfoAvailable
+    {
+      cell.cloudImg.image =  #imageLiteral(resourceName: "cloud_100")
+      cell.windStrengthImg.image =  #imageLiteral(resourceName: "wind_2a")
+      cell.windyImg.image =  #imageLiteral(resourceName: "wind_sign")
+      cell.tempImg.image =  #imageLiteral(resourceName: "term_b")
+      cell.cloudText.text = String(format: "%d",cellDataArray[indexPath.row]!.CloudCover)
+      cell.tempText.text = String(format: "%d",cellDataArray[indexPath.row]!.TempDegC)
+   }
+    else
+    {
+      cell.cloudImg.image =  nil
+      cell.windStrengthImg.image =  nil
+      cell.windyImg.image =  nil
+      cell.tempImg.image =  nil
+      cell.cloudText.text = ""
+      cell.tempText.text = ""
+    }
   }
   
   @IBAction func refreshEventCells(_ sender: Any)
