@@ -538,7 +538,7 @@
                                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Rdx-GA-llC" userLabel="MiddleView">
                                                             <rect key="frame" x="0.0" y="60" width="375" height="60"/>
                                                             <subviews>
-                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="in 23 min" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lmq-pr-kU8" userLabel="Lead Time">
+                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="in 23 min" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lmq-pr-kU8" userLabel="Lead Time">
                                                                     <rect key="frame" x="10" y="21.5" width="90" height="17"/>
                                                                     <constraints>
                                                                         <constraint firstAttribute="width" constant="90" id="jS0-Gs-Qtn"/>

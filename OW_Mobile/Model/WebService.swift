@@ -94,8 +94,8 @@ class WebService: NSObject
       decoder.keyDecodingStrategy = .convertFromSnakeCase
       //apply decoder to json data to create entire array of To Do items
       parsedJSON = try decoder.decode([Event].self, from: jsonData)
-      //sort by event data/time
-      
+      //sort by event data/time (earliest first)
+      parsedJSON.sort(by: { $0.EventTimeUtc < $1.EventTimeUtc })
     } catch let error {
       print(error as Any)
     }

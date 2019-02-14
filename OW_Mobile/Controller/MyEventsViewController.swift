@@ -150,7 +150,7 @@ class MyEventsViewController: UIViewController, UICollectionViewDataSource,UICol
     eventTimeFormatter.timeZone = TimeZone(abbreviation: "UTC")
     if let eventDate = eventTimeFormatter.date(from: timeString)
     {
-      var leadTimeSeconds = Int(eventDate.timeIntervalSinceNow)
+      let leadTimeSeconds = Int(eventDate.timeIntervalSinceNow)
       let leadTimeMinutes = leadTimeSeconds / 60
       let leadTimeHours = leadTimeMinutes / 60
       let leadTimeDays = leadTimeHours / 24
