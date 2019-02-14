@@ -94,6 +94,8 @@ class WebService: NSObject
       decoder.keyDecodingStrategy = .convertFromSnakeCase
       //apply decoder to json data to create entire array of To Do items
       parsedJSON = try decoder.decode([Event].self, from: jsonData)
+      //sort by event data/time
+      
     } catch let error {
       print(error as Any)
     }
@@ -117,8 +119,6 @@ class WebService: NSObject
     {
       print(error as Any)
     }
-
-    
   }
   
   //restore events from UserDefaults
