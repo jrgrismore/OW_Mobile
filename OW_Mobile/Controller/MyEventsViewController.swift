@@ -14,6 +14,7 @@ class MyEventsViewController: UIViewController, UICollectionViewDataSource,UICol
   
   let reuseIdentifier = "MyEventCell"
   var cellDataArray = [Event?]()
+  let parsedJSON = WebService()
   
   
   // MARK: - View functions
@@ -34,6 +35,15 @@ class MyEventsViewController: UIViewController, UICollectionViewDataSource,UICol
       let totalInteritemSpace = flowLayout.minimumInteritemSpacing * CGFloat(cellsInRow - 1)
       let cellWidth = (UIScreen.main.bounds.width - totalInteritemSpace - totalHInsets)/CGFloat(cellsInRow)
       flowLayout.itemSize = CGSize(width: cellWidth, height: CGFloat(cellHeight))
+    }
+    cellDataArray = self.parsedJSON.load()
+    //test
+//    cellDataArray = []
+    
+    DispatchQueue.main.async{self.myEventsCollection.reloadData()}
+    if cellDataArray.count == 0
+    {
+      updateCellArray()
     }
   }
   
@@ -57,15 +67,16 @@ class MyEventsViewController: UIViewController, UICollectionViewDataSource,UICol
   //retrieve json, parse json, use closure to fill cells
   func updateCellArray()
   {
-    let parsedJSON = WebService()
-    parsedJSON.retrieveEventList(completion: { (owEvents, error) in
+    //    let parsedJSON = WebService()
+    parsedJSON.retrieveEventList(completion: { (myEvents, error) in
       //fill cells
       print("download and parsing complete")
       //      for item in owEvents!
       //      {
       //        self.printEventInfo(eventItem: item)
       //      }
-      self.cellDataArray = owEvents!
+      self.parsedJSON.save(myEvents!)
+      self.cellDataArray = myEvents!
       print("cell data array updated")
       print("\nreloading collection view")
       DispatchQueue.main.async{self.myEventsCollection.reloadData()}
@@ -74,7 +85,7 @@ class MyEventsViewController: UIViewController, UICollectionViewDataSource,UICol
   
   func fillCellFields(cell: inout MyEventsCollectionViewCell, indexPath: IndexPath)
   {
-     //cell text
+    //cell text
     cell.objectText.text = cellDataArray[indexPath.row]!.Object
     cell.starMagText.text = String(format: "%.02f",cellDataArray[indexPath.row]!.StarMag)
     cell.magDropText.text = String(format: "%.02f",cellDataArray[indexPath.row]!.MagDrop)
@@ -111,7 +122,7 @@ class MyEventsViewController: UIViewController, UICollectionViewDataSource,UICol
       //set weather text to appropriate text
       cell.cloudText.text = String(format: "%d",cellDataArray[indexPath.row]!.CloudCover)
       cell.tempText.text = String(format: "%d",cellDataArray[indexPath.row]!.TempDegC)
-   } else {
+    } else {
       //set weather images and text empty because no forecast info is available
       cell.cloudImg.image =  nil
       cell.windStrengthImg.image =  nil

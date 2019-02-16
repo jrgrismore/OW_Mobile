@@ -8,6 +8,12 @@
 
 import Foundation
 
+//UserDefaults Keys Enum
+struct UDKeys
+{
+  static let myEventList = "myEventList"
+}
+
 //Event structure matching JSON keys
 struct Event: Codable
 {
@@ -26,7 +32,7 @@ struct Event: Codable
   var BestStationPos: Int
 }
 
-struct Events: Codable
+struct MyEvents: Codable
 {
   var events: [Event]
 }
@@ -77,8 +83,8 @@ class WebService: NSObject
         return
       }
       print("data retrieved")
-      let owEvents = self.parseEventData(jsonData: dataResponse)
-      completion(owEvents,nil)
+      let myEvents = self.parseEventData(jsonData: dataResponse)
+      completion(myEvents,nil)
     }
     print("...owTask.resume()")
     owTask.resume()
@@ -96,35 +102,55 @@ class WebService: NSObject
       parsedJSON = try decoder.decode([Event].self, from: jsonData)
       //sort by event data/time (earliest first)
       parsedJSON.sort(by: { $0.EventTimeUtc < $1.EventTimeUtc })
+      //test
+      testUserDefaults(parsedJSON)
+
     } catch let error {
       print(error as Any)
     }
     return parsedJSON
   }
+   
   
-  //save events to UserDefaults
-  func saveEventData(owEvents: [Event])
+  func testUserDefaults(_ events: [Event])
   {
-    //encode then assign to user defaults
-    let events = Events(events: owEvents)
-    let jsonEncoder = JSONEncoder()
-    do
-    {
-    let jsonData = try jsonEncoder.encode(events)
-      let jsonString = String(data: jsonData, encoding: .utf8)!
-      print("\nJSON encoding")
-      print(jsonString)
-    }
-    catch let error
-    {
-      print(error as Any)
-    }
+    save(events)
+    print("events saved to userdefaults")
+//    UserDefaults.standard.removeObject(forKey: UDKeys.myEventList)
+    let restoredEvents = load()
+ //    for item in restoredEvents
+//    {
+//      print()
+//      print("Id =", item.Id)
+//      print("Object =", item.Object)
+//      print("StarMag =", item.StarMag)
+//      print("MagDrop =", item.MagDrop)
+//      print("MaxDurSec =", item.MaxDurSec)
+//      print("EventTimeUtc =", item.EventTimeUtc)
+//      print("ErrorInTimeSec =", item.ErrorInTimeSec)
+//      print("WhetherInfoAvailable =", item.WhetherInfoAvailable)
+//      print("CloudCover =", item.CloudCover)
+//      print("Wind =", item.Wind)
+//      print("TempDegC =", item.TempDegC)
+//      print("HighCloud =", item.HighCloud)
+//      print("BestStationPos =", item.BestStationPos)
+//   }
   }
   
-  //restore events from UserDefaults
-  func restorEventData() -> [Event]
+  func load() -> [Event]
   {
-    return []
+    guard let encodedData = UserDefaults.standard.array(forKey: UDKeys.myEventList) as? [Data] else {
+      return []
+    }
+    
+    return encodedData.map { try! JSONDecoder().decode(Event.self, from: $0) }
   }
+
+  func save(_ events: [Event])
+  {
+    let data = events.map { try? JSONEncoder().encode($0) }
+    UserDefaults.standard.set(data, forKey: UDKeys.myEventList)
+  }
+
   
 }
