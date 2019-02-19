@@ -24,7 +24,7 @@ struct Event: Codable
   var MaxDurSec: Double
   var EventTimeUtc: String
   var ErrorInTimeSec: Double
-  var WhetherInfoAvailable: Bool   //weather info available
+  var WeatherInfoAvailable: Bool   //weather info available
   var CloudCover: Int
   var Wind: Int
   var TempDegC: Int
@@ -128,7 +128,7 @@ class WebService: NSObject
 //      print("MaxDurSec =", item.MaxDurSec)
 //      print("EventTimeUtc =", item.EventTimeUtc)
 //      print("ErrorInTimeSec =", item.ErrorInTimeSec)
-//      print("WhetherInfoAvailable =", item.WhetherInfoAvailable)
+//      print("WeatherInfoAvailable =", item.WeatherInfoAvailable)
 //      print("CloudCover =", item.CloudCover)
 //      print("Wind =", item.Wind)
 //      print("TempDegC =", item.TempDegC)

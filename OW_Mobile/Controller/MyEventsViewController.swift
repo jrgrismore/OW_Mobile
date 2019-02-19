@@ -112,7 +112,7 @@ class MyEventsViewController: UIViewController, UICollectionViewDataSource,UICol
     cell.maxDurImg.image = #imageLiteral(resourceName: "max_sign")
     cell.magDropImg.image = #imageLiteral(resourceName: "drop_sign")
     //display weather info if forecast available, no display if no forecast
-    if cellDataArray[indexPath.row]!.WhetherInfoAvailable
+    if cellDataArray[indexPath.row]!.WeatherInfoAvailable
     {
       //set weather images to appropriate image
       cell.cloudImg.image =  #imageLiteral(resourceName: "cloud_100")
@@ -196,7 +196,7 @@ class MyEventsViewController: UIViewController, UICollectionViewDataSource,UICol
     print("MaxDurSec =", item.MaxDurSec)
     print("EventTimeUtc =", item.EventTimeUtc)
     print("ErrorInTimeSec =", item.ErrorInTimeSec)
-    print("WhetherInfoAvailable =", item.WhetherInfoAvailable)
+    print("WeatherInfoAvailable =", item.WeatherInfoAvailable)
     print("CloudCover =", item.CloudCover)
     print("Wind =", item.Wind)
     print("TempDegC =", item.TempDegC)

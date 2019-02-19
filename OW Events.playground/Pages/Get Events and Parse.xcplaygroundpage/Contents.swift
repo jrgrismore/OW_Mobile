@@ -43,6 +43,7 @@ let owTask = owWebSession.dataTask(with: urlComponents.url!)
     print("Error:", error as Any)
     return
   }
+  print("data=",String(data: data!, encoding: .utf8) )
   print("\n\nin task trailing closure after parse function")
   let owEvents = parseJSONData(jsonData: dataResponse)
   print("owEvents=",owEvents)
