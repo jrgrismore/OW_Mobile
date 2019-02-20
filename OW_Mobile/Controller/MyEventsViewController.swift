@@ -87,14 +87,28 @@ class MyEventsViewController: UIViewController, UICollectionViewDataSource,UICol
   {
     //cell text
     cell.objectText.text = cellDataArray[indexPath.row]!.Object
-    cell.starMagText.text = String(format: "%.01fm",cellDataArray[indexPath.row]!.StarMag)
+    let calloutFont =   UIFont.preferredFont(forTextStyle: .callout)
+    let captionFont =   UIFont.preferredFont(forTextStyle: .caption1)
+    //create "m" superscript for star magnitude and magnitude drop
+    let magAttrStr = NSMutableAttributedString(string:"m", attributes:[NSAttributedString.Key.font : captionFont,
+                                                                       NSAttributedString.Key.baselineOffset: 5])
+    let starMagStr = String(format: "%.01f",cellDataArray[indexPath.row]!.StarMag)
+    let starMagAttrStr = NSMutableAttributedString(string:starMagStr, attributes:[NSAttributedString.Key.font : calloutFont])
+    starMagAttrStr.append(magAttrStr)
+    cell.starMagText.attributedText = starMagAttrStr
     if cellDataArray[indexPath.row]!.MagDrop >= 0.2
     {
-    cell.magDropText.text = String(format: "%.01fm",cellDataArray[indexPath.row]!.MagDrop)
+      let magDropStr = String(format: "%.01f",cellDataArray[indexPath.row]!.MagDrop)
+      let magDropAttrStr = NSMutableAttributedString(string:magDropStr, attributes:[NSAttributedString.Key.font : calloutFont])
+      magDropAttrStr.append(magAttrStr)
+      cell.magDropText.attributedText = magDropAttrStr
     }
     else
     {
-      cell.magDropText.text = String(format: "%.02fm",cellDataArray[indexPath.row]!.MagDrop)
+      let magDropStr = String(format: "%.02f",cellDataArray[indexPath.row]!.MagDrop)
+      let magDropAttrStr = NSMutableAttributedString(string:magDropStr, attributes:[NSAttributedString.Key.font : calloutFont])
+      magDropAttrStr.append(magAttrStr)
+      cell.magDropText.attributedText = magDropAttrStr
     }
     cell.maxDurText.text = String(format: "%.01f sec",cellDataArray[indexPath.row]!.MaxDurSec)
     cell.leadTime.text = leadTime(timeString: cellDataArray[indexPath.row]!.EventTimeUtc)
