@@ -87,9 +87,16 @@ class MyEventsViewController: UIViewController, UICollectionViewDataSource,UICol
   {
     //cell text
     cell.objectText.text = cellDataArray[indexPath.row]!.Object
-    cell.starMagText.text = String(format: "%.02f",cellDataArray[indexPath.row]!.StarMag)
-    cell.magDropText.text = String(format: "%.02f",cellDataArray[indexPath.row]!.MagDrop)
-    cell.maxDurText.text = String(format: "%.02f",cellDataArray[indexPath.row]!.MaxDurSec)
+    cell.starMagText.text = String(format: "%.01fm",cellDataArray[indexPath.row]!.StarMag)
+    if cellDataArray[indexPath.row]!.MagDrop >= 0.2
+    {
+    cell.magDropText.text = String(format: "%.01fm",cellDataArray[indexPath.row]!.MagDrop)
+    }
+    else
+    {
+      cell.magDropText.text = String(format: "%.02fm",cellDataArray[indexPath.row]!.MagDrop)
+    }
+    cell.maxDurText.text = String(format: "%.01f sec",cellDataArray[indexPath.row]!.MaxDurSec)
     cell.leadTime.text = leadTime(timeString: cellDataArray[indexPath.row]!.EventTimeUtc)
     cell.eventTime.text = formatEventTime(timeString: cellDataArray[indexPath.row]!.EventTimeUtc)
     //set time error field
@@ -120,8 +127,8 @@ class MyEventsViewController: UIViewController, UICollectionViewDataSource,UICol
       cell.windyImg.image =  #imageLiteral(resourceName: "wind_sign")
       cell.tempImg.image =  #imageLiteral(resourceName: "term_b")
       //set weather text to appropriate text
-      cell.cloudText.text = String(format: "%d",cellDataArray[indexPath.row]!.CloudCover)
-      cell.tempText.text = String(format: "%d",cellDataArray[indexPath.row]!.TempDegC)
+      cell.cloudText.text = String(format: "%d%%",cellDataArray[indexPath.row]!.CloudCover)
+      cell.tempText.text = String(format: "%d°",cellDataArray[indexPath.row]!.TempDegC)
     } else {
       //set weather images and text empty because no forecast info is available
       cell.cloudImg.image =  nil
