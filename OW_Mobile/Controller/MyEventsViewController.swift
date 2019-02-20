@@ -28,9 +28,9 @@ class MyEventsViewController: UIViewController, UICollectionViewDataSource,UICol
     //set layout attributes
     if let flowLayout = self.myEventsCollection.collectionViewLayout as? UICollectionViewFlowLayout
     {
-      flowLayout.minimumLineSpacing = 15
-      flowLayout.minimumInteritemSpacing = 5
-      flowLayout.sectionInset = UIEdgeInsets(top: 10, left: 5, bottom: 10, right: 5)
+      flowLayout.minimumLineSpacing = 5
+      flowLayout.minimumInteritemSpacing = 3
+      flowLayout.sectionInset = UIEdgeInsets(top: 5, left: 5, bottom: 7, right: 5)
       let totalHInsets = flowLayout.sectionInset.left + flowLayout.sectionInset.right
       let totalInteritemSpace = flowLayout.minimumInteritemSpacing * CGFloat(cellsInRow - 1)
       let cellWidth = (UIScreen.main.bounds.width - totalInteritemSpace - totalHInsets)/CGFloat(cellsInRow)
