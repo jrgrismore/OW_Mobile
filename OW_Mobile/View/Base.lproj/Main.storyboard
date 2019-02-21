@@ -484,58 +484,38 @@
                                                         <stackView opaque="NO" contentMode="scaleToFill" distribution="equalCentering" alignment="center" spacing="7" translatesAutoresizingMaskIntoConstraints="NO" id="804-zc-Dn9" userLabel="Top HStack">
                                                             <rect key="frame" x="0.0" y="0.0" width="359" height="60"/>
                                                             <subviews>
-                                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="spos_0" translatesAutoresizingMaskIntoConstraints="NO" id="goc-bJ-aDw" userLabel="Sigma Img">
-                                                                    <rect key="frame" x="0.0" y="22" width="16" height="16"/>
-                                                                    <constraints>
-                                                                        <constraint firstAttribute="width" constant="16" id="LHJ-CG-EMe"/>
-                                                                        <constraint firstAttribute="height" constant="16" id="Vjo-Ay-mLW"/>
-                                                                    </constraints>
+                                                                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="spos_0" translatesAutoresizingMaskIntoConstraints="NO" id="goc-bJ-aDw" userLabel="Sigma Img">
+                                                                    <rect key="frame" x="0.0" y="24" width="12" height="12"/>
                                                                 </imageView>
                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="(133868) 2004 FD30" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3lL-7q-SYa" userLabel="Object Text">
-                                                                    <rect key="frame" x="23" y="20.5" width="155" height="19.5"/>
+                                                                    <rect key="frame" x="19" y="20.5" width="155" height="19.5"/>
                                                                     <fontDescription key="fontDescription" style="UICTFontTextStyleCallout"/>
                                                                     <nil key="textColor"/>
                                                                     <nil key="highlightedColor"/>
                                                                 </label>
-                                                                <imageView userInteractionEnabled="NO" contentMode="redraw" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="cloud_100" translatesAutoresizingMaskIntoConstraints="NO" id="mdf-fg-Frm" userLabel="Cloud Img">
-                                                                    <rect key="frame" x="185" y="22" width="16" height="16"/>
-                                                                    <constraints>
-                                                                        <constraint firstAttribute="height" constant="16" id="WF2-pB-oPN"/>
-                                                                        <constraint firstAttribute="width" constant="16" id="ezM-Vj-7LR"/>
-                                                                    </constraints>
+                                                                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="cloud_100" translatesAutoresizingMaskIntoConstraints="NO" id="mdf-fg-Frm" userLabel="Cloud Img">
+                                                                    <rect key="frame" x="181" y="24" width="12" height="12"/>
                                                                 </imageView>
                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="100%" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="OMz-ve-LOT" userLabel="Cloud Text">
-                                                                    <rect key="frame" x="233" y="22" width="33.5" height="16"/>
+                                                                    <rect key="frame" x="243" y="22" width="33.5" height="16"/>
                                                                     <fontDescription key="fontDescription" style="UICTFontTextStyleFootnote"/>
                                                                     <nil key="textColor"/>
                                                                     <nil key="highlightedColor"/>
                                                                 </label>
-                                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="wind_2c" translatesAutoresizingMaskIntoConstraints="NO" id="BnN-xC-jCs" userLabel="Wind Strength Img">
-                                                                    <rect key="frame" x="273.5" y="22" width="16" height="16"/>
-                                                                    <constraints>
-                                                                        <constraint firstAttribute="width" constant="16" id="ajh-Qs-v3k"/>
-                                                                        <constraint firstAttribute="height" constant="16" id="dKK-5D-QPZ"/>
-                                                                    </constraints>
+                                                                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="wind_2c" translatesAutoresizingMaskIntoConstraints="NO" id="BnN-xC-jCs" userLabel="Wind Strength Img">
+                                                                    <rect key="frame" x="283.5" y="24" width="12" height="12"/>
                                                                 </imageView>
-                                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="wind_sign" translatesAutoresizingMaskIntoConstraints="NO" id="Ff1-cW-r7z" userLabel="Windy  Img">
-                                                                    <rect key="frame" x="296.5" y="22" width="16" height="16"/>
-                                                                    <constraints>
-                                                                        <constraint firstAttribute="width" constant="16" id="e14-Ae-GIU"/>
-                                                                        <constraint firstAttribute="height" constant="16" id="ueY-8z-ZQl"/>
-                                                                    </constraints>
+                                                                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="wind_sign" translatesAutoresizingMaskIntoConstraints="NO" id="Ff1-cW-r7z" userLabel="Windy  Img">
+                                                                    <rect key="frame" x="302.5" y="24" width="12" height="12"/>
                                                                 </imageView>
                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="18°" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Pkq-xT-rFf" userLabel="Temp Text">
-                                                                    <rect key="frame" x="319.5" y="20.5" width="24.5" height="19.5"/>
+                                                                    <rect key="frame" x="321.5" y="20.5" width="24.5" height="19.5"/>
                                                                     <fontDescription key="fontDescription" style="UICTFontTextStyleCallout"/>
                                                                     <nil key="textColor"/>
                                                                     <nil key="highlightedColor"/>
                                                                 </label>
-                                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="term_b" translatesAutoresizingMaskIntoConstraints="NO" id="zAQ-lb-Hoc" userLabel="Temp  Img">
-                                                                    <rect key="frame" x="351" y="22" width="8" height="16"/>
-                                                                    <constraints>
-                                                                        <constraint firstAttribute="height" constant="16" id="XbO-Wu-hdp"/>
-                                                                        <constraint firstAttribute="width" constant="8" id="uW0-7b-cSv"/>
-                                                                    </constraints>
+                                                                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="term_b" translatesAutoresizingMaskIntoConstraints="NO" id="zAQ-lb-Hoc" userLabel="Temp  Img">
+                                                                    <rect key="frame" x="353" y="24" width="6" height="12"/>
                                                                 </imageView>
                                                             </subviews>
                                                         </stackView>
@@ -562,48 +542,60 @@
                                                                 </label>
                                                             </subviews>
                                                         </stackView>
-                                                        <stackView opaque="NO" contentMode="scaleToFill" distribution="equalCentering" alignment="center" spacing="35" translatesAutoresizingMaskIntoConstraints="NO" id="LS2-4J-3oM" userLabel="Bottom HStack">
+                                                        <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" alignment="center" spacing="35" translatesAutoresizingMaskIntoConstraints="NO" id="LS2-4J-3oM" userLabel="Bottom HStack">
                                                             <rect key="frame" x="0.0" y="120" width="359" height="60"/>
                                                             <subviews>
-                                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="star_y" translatesAutoresizingMaskIntoConstraints="NO" id="tkh-xB-bkc" userLabel="Star Mag Img">
-                                                                    <rect key="frame" x="0.0" y="22" width="16" height="16"/>
+                                                                <view contentMode="center" translatesAutoresizingMaskIntoConstraints="NO" id="5Yn-Yg-XJ1" userLabel="Star Mag View">
+                                                                    <rect key="frame" x="0.0" y="0.5" width="96.5" height="59.5"/>
+                                                                    <subviews>
+                                                                        <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" image="star_y" adjustsImageSizeForAccessibilityContentSizeCategory="YES" translatesAutoresizingMaskIntoConstraints="NO" id="tkh-xB-bkc" userLabel="Star Mag Img">
+                                                                            <rect key="frame" x="20" y="23.5" width="12" height="12"/>
+                                                                        </imageView>
+                                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="12.3m" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="A5q-S3-1mE" userLabel="Star Mag Text">
+                                                                            <rect key="frame" x="71" y="20" width="44" height="19.5"/>
+                                                                            <fontDescription key="fontDescription" style="UICTFontTextStyleCallout"/>
+                                                                            <nil key="textColor"/>
+                                                                            <nil key="highlightedColor"/>
+                                                                        </label>
+                                                                    </subviews>
                                                                     <constraints>
-                                                                        <constraint firstAttribute="width" constant="16" id="8Ef-GP-uLh"/>
-                                                                        <constraint firstAttribute="height" constant="16" id="8p8-6o-jAL"/>
+                                                                        <constraint firstItem="A5q-S3-1mE" firstAttribute="leading" secondItem="tkh-xB-bkc" secondAttribute="trailing" constant="8" id="Y5m-R5-d9L"/>
                                                                     </constraints>
-                                                                </imageView>
-                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="12.3m" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="A5q-S3-1mE" userLabel="Star Mag Text">
-                                                                    <rect key="frame" x="52.5" y="20.5" width="44" height="19.5"/>
-                                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleCallout"/>
-                                                                    <nil key="textColor"/>
-                                                                    <nil key="highlightedColor"/>
-                                                                </label>
-                                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="max_sign" translatesAutoresizingMaskIntoConstraints="NO" id="kVP-mH-CGf" userLabel="Max Dur Img">
-                                                                    <rect key="frame" x="133" y="22" width="16" height="16"/>
+                                                                </view>
+                                                                <view contentMode="scaleAspectFit" translatesAutoresizingMaskIntoConstraints="NO" id="8jK-fp-ntk" userLabel="Max Dur View">
+                                                                    <rect key="frame" x="131.5" y="0.5" width="96" height="59.5"/>
+                                                                    <subviews>
+                                                                        <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" image="max_sign" translatesAutoresizingMaskIntoConstraints="NO" id="kVP-mH-CGf" userLabel="Max Dur Img">
+                                                                            <rect key="frame" x="20" y="23.5" width="12" height="12"/>
+                                                                        </imageView>
+                                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="6 sec" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jjJ-ZM-8LQ" userLabel="Max Dur Text">
+                                                                            <rect key="frame" x="67" y="20" width="40" height="19.5"/>
+                                                                            <fontDescription key="fontDescription" style="UICTFontTextStyleCallout"/>
+                                                                            <nil key="textColor"/>
+                                                                            <nil key="highlightedColor"/>
+                                                                        </label>
+                                                                    </subviews>
                                                                     <constraints>
-                                                                        <constraint firstAttribute="height" constant="16" id="HSh-vB-Rd0"/>
-                                                                        <constraint firstAttribute="width" constant="16" id="W26-Cq-hxn"/>
+                                                                        <constraint firstItem="jjJ-ZM-8LQ" firstAttribute="leading" secondItem="kVP-mH-CGf" secondAttribute="trailing" constant="16" id="Pbs-rj-5pU"/>
                                                                     </constraints>
-                                                                </imageView>
-                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="6 sec" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jjJ-ZM-8LQ" userLabel="Max Dur Text">
-                                                                    <rect key="frame" x="187.5" y="20.5" width="40" height="19.5"/>
-                                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleCallout"/>
-                                                                    <nil key="textColor"/>
-                                                                    <nil key="highlightedColor"/>
-                                                                </label>
-                                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="drop_sign" translatesAutoresizingMaskIntoConstraints="NO" id="lP2-Ti-Od1" userLabel="Mag Drop Img">
-                                                                    <rect key="frame" x="270" y="22" width="8" height="16"/>
+                                                                </view>
+                                                                <view contentMode="scaleAspectFit" translatesAutoresizingMaskIntoConstraints="NO" id="uL2-C2-J78" userLabel="Mag Drop View">
+                                                                    <rect key="frame" x="262.5" y="0.5" width="96.5" height="59.5"/>
+                                                                    <subviews>
+                                                                        <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" image="drop_sign" translatesAutoresizingMaskIntoConstraints="NO" id="lP2-Ti-Od1" userLabel="Mag Drop Img">
+                                                                            <rect key="frame" x="20" y="23.5" width="6" height="12"/>
+                                                                        </imageView>
+                                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="0.6m" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="J0Y-mu-ovw" userLabel="Mag Drop Text">
+                                                                            <rect key="frame" x="61" y="20" width="36.5" height="19.5"/>
+                                                                            <fontDescription key="fontDescription" style="UICTFontTextStyleCallout"/>
+                                                                            <nil key="textColor"/>
+                                                                            <nil key="highlightedColor"/>
+                                                                        </label>
+                                                                    </subviews>
                                                                     <constraints>
-                                                                        <constraint firstAttribute="height" constant="16" id="CML-ib-4ee"/>
-                                                                        <constraint firstAttribute="width" constant="8" id="eun-1o-5F5"/>
+                                                                        <constraint firstItem="J0Y-mu-ovw" firstAttribute="leading" secondItem="lP2-Ti-Od1" secondAttribute="trailing" constant="16" id="KNR-HL-R7B"/>
                                                                     </constraints>
-                                                                </imageView>
-                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0.6m" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="J0Y-mu-ovw" userLabel="Mag Drop Text">
-                                                                    <rect key="frame" x="322.5" y="20.5" width="36.5" height="19.5"/>
-                                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleCallout"/>
-                                                                    <nil key="textColor"/>
-                                                                    <nil key="highlightedColor"/>
-                                                                </label>
+                                                                </view>
                                                             </subviews>
                                                         </stackView>
                                                     </subviews>
@@ -685,6 +677,7 @@
                             <constraint firstItem="RT4-ac-n5k" firstAttribute="centerY" secondItem="3lv-ur-Dnz" secondAttribute="centerY" id="Iw9-18-Ug5"/>
                             <constraint firstItem="SDS-j7-v4J" firstAttribute="top" secondItem="3lv-ur-Dnz" secondAttribute="bottom" constant="3" id="J6D-uF-ukC"/>
                             <constraint firstItem="3lv-ur-Dnz" firstAttribute="top" secondItem="gbV-Qa-Z7Q" secondAttribute="top" id="Lbc-dN-1Dq"/>
+                            <constraint firstItem="SDS-j7-v4J" firstAttribute="leading" secondItem="gbV-Qa-Z7Q" secondAttribute="leading" id="QEf-Xv-v5y"/>
                             <constraint firstItem="SDS-j7-v4J" firstAttribute="centerX" secondItem="6cp-u7-nfp" secondAttribute="centerX" id="QiN-v4-1vO"/>
                             <constraint firstItem="gbV-Qa-Z7Q" firstAttribute="trailing" secondItem="SDS-j7-v4J" secondAttribute="trailingMargin" constant="8" id="X3e-v3-P5U"/>
                             <constraint firstItem="3lv-ur-Dnz" firstAttribute="trailing" secondItem="gbV-Qa-Z7Q" secondAttribute="trailing" id="dNz-ye-qL6"/>
