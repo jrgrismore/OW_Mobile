@@ -32,8 +32,11 @@ class MyEventsViewController: UIViewController, UICollectionViewDataSource,UICol
       flowLayout.minimumInteritemSpacing = 3
       flowLayout.sectionInset = UIEdgeInsets(top: 5, left: 5, bottom: 7, right: 5)
       let totalHInsets = flowLayout.sectionInset.left + flowLayout.sectionInset.right
+      print("totalHInsets=",totalHInsets)
       let totalInteritemSpace = flowLayout.minimumInteritemSpacing * CGFloat(cellsInRow - 1)
+      print("totalInteritemSpace=",totalInteritemSpace)
       let cellWidth = (UIScreen.main.bounds.width - totalInteritemSpace - totalHInsets)/CGFloat(cellsInRow)
+      print("cellWidth=",cellWidth)
       flowLayout.itemSize = CGSize(width: cellWidth, height: CGFloat(cellHeight))
     }
     cellDataArray = self.parsedJSON.load()
