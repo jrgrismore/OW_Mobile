@@ -18,16 +18,18 @@ class MyEventsViewController: UIViewController, UICollectionViewDataSource,UICol
   
   
   // MARK: - View functions
-  override func viewDidLoad()
+  override func viewWillLayoutSubviews()
   {
-    super.viewDidLoad()
-    myEventsCollection.backgroundColor =  _ColorLiteralType(red: 0.03605184332, green: 0.2271486223, blue: 0.2422576547, alpha: 1)
+   super.viewWillLayoutSubviews()
+    myEventsCollection.collectionViewLayout.invalidateLayout()
     //set cell size
     let cellsInRow = 1
     let cellHeight = 180
     //set layout attributes
     if let flowLayout = self.myEventsCollection.collectionViewLayout as? UICollectionViewFlowLayout
     {
+      print("UIScreen.main.bounds.width=",UIScreen.main.bounds.width)
+      print("myEventsCollection.bounds.width=",myEventsCollection.bounds.width)
       flowLayout.minimumLineSpacing = 5
       flowLayout.minimumInteritemSpacing = 3
       flowLayout.sectionInset = UIEdgeInsets(top: 5, left: 5, bottom: 7, right: 5)
@@ -36,9 +38,36 @@ class MyEventsViewController: UIViewController, UICollectionViewDataSource,UICol
       let totalInteritemSpace = flowLayout.minimumInteritemSpacing * CGFloat(cellsInRow - 1)
       print("totalInteritemSpace=",totalInteritemSpace)
       let cellWidth = (UIScreen.main.bounds.width - totalInteritemSpace - totalHInsets)/CGFloat(cellsInRow)
-      print("cellWidth=",cellWidth)
+      //            let cellWidth = (myEventsCollection.bounds.width - totalInteritemSpace - totalHInsets)/CGFloat(cellsInRow)
+      //      print("cellWidth=",cellWidth)
       flowLayout.itemSize = CGSize(width: cellWidth, height: CGFloat(cellHeight))
     }
+  }
+  
+  override func viewDidLoad()
+  {
+    super.viewDidLoad()
+    myEventsCollection.backgroundColor =  _ColorLiteralType(red: 0.03605184332, green: 0.2271486223, blue: 0.2422576547, alpha: 1)
+//    //set cell size
+//    let cellsInRow = 1
+//    let cellHeight = 180
+//    //set layout attributes
+//    if let flowLayout = self.myEventsCollection.collectionViewLayout as? UICollectionViewFlowLayout
+//    {
+//      print("UIScreen.main.bounds.width=",UIScreen.main.bounds.width)
+//      print("myEventsCollection.bounds.width=",myEventsCollection.bounds.width)
+//      flowLayout.minimumLineSpacing = 5
+//      flowLayout.minimumInteritemSpacing = 3
+//      flowLayout.sectionInset = UIEdgeInsets(top: 5, left: 5, bottom: 7, right: 5)
+//      let totalHInsets = flowLayout.sectionInset.left + flowLayout.sectionInset.right
+//      print("totalHInsets=",totalHInsets)
+//      let totalInteritemSpace = flowLayout.minimumInteritemSpacing * CGFloat(cellsInRow - 1)
+//      print("totalInteritemSpace=",totalInteritemSpace)
+//      let cellWidth = (UIScreen.main.bounds.width - totalInteritemSpace - totalHInsets)/CGFloat(cellsInRow)
+////      let cellWidth = (myEventsCollection.bounds.width - totalInteritemSpace - totalHInsets)/CGFloat(cellsInRow)
+////      print("cellWidth=",cellWidth)
+//      flowLayout.itemSize = CGSize(width: cellWidth, height: CGFloat(cellHeight))
+//    }
     cellDataArray = self.parsedJSON.load()
     //test
 //    cellDataArray = []
@@ -50,6 +79,30 @@ class MyEventsViewController: UIViewController, UICollectionViewDataSource,UICol
     }
   }
   
+  override func viewWillAppear(_ animated: Bool)
+  {
+    //set cell size
+    let cellsInRow = 1
+    let cellHeight = 180
+    //set layout attributes
+    if let flowLayout = self.myEventsCollection.collectionViewLayout as? UICollectionViewFlowLayout
+    {
+      print("UIScreen.main.bounds.width=",UIScreen.main.bounds.width)
+      print("myEventsCollection.bounds.width=",myEventsCollection.bounds.width)
+      flowLayout.minimumLineSpacing = 5
+      flowLayout.minimumInteritemSpacing = 3
+      flowLayout.sectionInset = UIEdgeInsets(top: 5, left: 5, bottom: 7, right: 5)
+      let totalHInsets = flowLayout.sectionInset.left + flowLayout.sectionInset.right
+      print("totalHInsets=",totalHInsets)
+      let totalInteritemSpace = flowLayout.minimumInteritemSpacing * CGFloat(cellsInRow - 1)
+      print("totalInteritemSpace=",totalInteritemSpace)
+      let cellWidth = (UIScreen.main.bounds.width - totalInteritemSpace - totalHInsets)/CGFloat(cellsInRow)
+//            let cellWidth = (myEventsCollection.bounds.width - totalInteritemSpace - totalHInsets)/CGFloat(cellsInRow)
+      //      print("cellWidth=",cellWidth)
+      flowLayout.itemSize = CGSize(width: cellWidth, height: CGFloat(cellHeight))
+    }
+
+  }
   // MARK: - Collection delegate functions
   func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int
   {

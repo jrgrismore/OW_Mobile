@@ -69,7 +69,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Tiu-jh-Obt">
-                                <rect key="frame" x="168.66666666666663" y="228" width="77" height="40"/>
+                                <rect key="frame" x="168.66666666666666" y="228" width="77" height="40"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="40" id="upD-Sb-DzG"/>
                                 </constraints>
@@ -687,8 +687,7 @@
                             <constraint firstItem="RT4-ac-n5k" firstAttribute="centerY" secondItem="3lv-ur-Dnz" secondAttribute="centerY" id="Iw9-18-Ug5"/>
                             <constraint firstItem="SDS-j7-v4J" firstAttribute="top" secondItem="3lv-ur-Dnz" secondAttribute="bottom" constant="3" id="J6D-uF-ukC"/>
                             <constraint firstItem="3lv-ur-Dnz" firstAttribute="top" secondItem="gbV-Qa-Z7Q" secondAttribute="top" id="Lbc-dN-1Dq"/>
-                            <constraint firstItem="SDS-j7-v4J" firstAttribute="leading" secondItem="gbV-Qa-Z7Q" secondAttribute="leading" id="QEf-Xv-v5y"/>
-                            <constraint firstItem="SDS-j7-v4J" firstAttribute="centerX" secondItem="6cp-u7-nfp" secondAttribute="centerX" id="QiN-v4-1vO"/>
+                            <constraint firstItem="SDS-j7-v4J" firstAttribute="leadingMargin" secondItem="gbV-Qa-Z7Q" secondAttribute="leading" constant="8" id="QEf-Xv-v5y"/>
                             <constraint firstItem="gbV-Qa-Z7Q" firstAttribute="trailing" secondItem="SDS-j7-v4J" secondAttribute="trailingMargin" constant="8" id="X3e-v3-P5U"/>
                             <constraint firstItem="3lv-ur-Dnz" firstAttribute="trailing" secondItem="gbV-Qa-Z7Q" secondAttribute="trailing" id="dNz-ye-qL6"/>
                             <constraint firstItem="RT4-ac-n5k" firstAttribute="leading" secondItem="gbV-Qa-Z7Q" secondAttribute="leading" constant="7" id="jAQ-J5-36Q"/>
