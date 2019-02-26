@@ -18,24 +18,56 @@ class MyEventsViewController: UIViewController, UICollectionViewDataSource,UICol
   
   
   // MARK: - View functions
-  override func viewDidLoad()
+  override func viewWillLayoutSubviews()
   {
-    super.viewDidLoad()
-    myEventsCollection.backgroundColor =  _ColorLiteralType(red: 0.03605184332, green: 0.2271486223, blue: 0.2422576547, alpha: 1)
+   super.viewWillLayoutSubviews()
+    myEventsCollection.collectionViewLayout.invalidateLayout()
     //set cell size
     let cellsInRow = 1
     let cellHeight = 180
     //set layout attributes
     if let flowLayout = self.myEventsCollection.collectionViewLayout as? UICollectionViewFlowLayout
     {
-      flowLayout.minimumLineSpacing = 15
-      flowLayout.minimumInteritemSpacing = 5
-      flowLayout.sectionInset = UIEdgeInsets(top: 10, left: 5, bottom: 10, right: 5)
+      print("UIScreen.main.bounds.width=",UIScreen.main.bounds.width)
+      print("myEventsCollection.bounds.width=",myEventsCollection.bounds.width)
+      flowLayout.minimumLineSpacing = 5
+      flowLayout.minimumInteritemSpacing = 3
+      flowLayout.sectionInset = UIEdgeInsets(top: 5, left: 5, bottom: 7, right: 5)
       let totalHInsets = flowLayout.sectionInset.left + flowLayout.sectionInset.right
+      print("totalHInsets=",totalHInsets)
       let totalInteritemSpace = flowLayout.minimumInteritemSpacing * CGFloat(cellsInRow - 1)
+      print("totalInteritemSpace=",totalInteritemSpace)
       let cellWidth = (UIScreen.main.bounds.width - totalInteritemSpace - totalHInsets)/CGFloat(cellsInRow)
+      //            let cellWidth = (myEventsCollection.bounds.width - totalInteritemSpace - totalHInsets)/CGFloat(cellsInRow)
+      //      print("cellWidth=",cellWidth)
       flowLayout.itemSize = CGSize(width: cellWidth, height: CGFloat(cellHeight))
     }
+  }
+  
+  override func viewDidLoad()
+  {
+    super.viewDidLoad()
+    myEventsCollection.backgroundColor =  _ColorLiteralType(red: 0.03605184332, green: 0.2271486223, blue: 0.2422576547, alpha: 1)
+//    //set cell size
+//    let cellsInRow = 1
+//    let cellHeight = 180
+//    //set layout attributes
+//    if let flowLayout = self.myEventsCollection.collectionViewLayout as? UICollectionViewFlowLayout
+//    {
+//      print("UIScreen.main.bounds.width=",UIScreen.main.bounds.width)
+//      print("myEventsCollection.bounds.width=",myEventsCollection.bounds.width)
+//      flowLayout.minimumLineSpacing = 5
+//      flowLayout.minimumInteritemSpacing = 3
+//      flowLayout.sectionInset = UIEdgeInsets(top: 5, left: 5, bottom: 7, right: 5)
+//      let totalHInsets = flowLayout.sectionInset.left + flowLayout.sectionInset.right
+//      print("totalHInsets=",totalHInsets)
+//      let totalInteritemSpace = flowLayout.minimumInteritemSpacing * CGFloat(cellsInRow - 1)
+//      print("totalInteritemSpace=",totalInteritemSpace)
+//      let cellWidth = (UIScreen.main.bounds.width - totalInteritemSpace - totalHInsets)/CGFloat(cellsInRow)
+////      let cellWidth = (myEventsCollection.bounds.width - totalInteritemSpace - totalHInsets)/CGFloat(cellsInRow)
+////      print("cellWidth=",cellWidth)
+//      flowLayout.itemSize = CGSize(width: cellWidth, height: CGFloat(cellHeight))
+//    }
     cellDataArray = self.parsedJSON.load()
     //test
 //    cellDataArray = []
@@ -47,6 +79,30 @@ class MyEventsViewController: UIViewController, UICollectionViewDataSource,UICol
     }
   }
   
+  override func viewWillAppear(_ animated: Bool)
+  {
+    //set cell size
+    let cellsInRow = 1
+    let cellHeight = 180
+    //set layout attributes
+    if let flowLayout = self.myEventsCollection.collectionViewLayout as? UICollectionViewFlowLayout
+    {
+      print("UIScreen.main.bounds.width=",UIScreen.main.bounds.width)
+      print("myEventsCollection.bounds.width=",myEventsCollection.bounds.width)
+      flowLayout.minimumLineSpacing = 5
+      flowLayout.minimumInteritemSpacing = 3
+      flowLayout.sectionInset = UIEdgeInsets(top: 5, left: 5, bottom: 7, right: 5)
+      let totalHInsets = flowLayout.sectionInset.left + flowLayout.sectionInset.right
+      print("totalHInsets=",totalHInsets)
+      let totalInteritemSpace = flowLayout.minimumInteritemSpacing * CGFloat(cellsInRow - 1)
+      print("totalInteritemSpace=",totalInteritemSpace)
+      let cellWidth = (UIScreen.main.bounds.width - totalInteritemSpace - totalHInsets)/CGFloat(cellsInRow)
+//            let cellWidth = (myEventsCollection.bounds.width - totalInteritemSpace - totalHInsets)/CGFloat(cellsInRow)
+      //      print("cellWidth=",cellWidth)
+      flowLayout.itemSize = CGSize(width: cellWidth, height: CGFloat(cellHeight))
+    }
+
+  }
   // MARK: - Collection delegate functions
   func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int
   {
@@ -87,9 +143,30 @@ class MyEventsViewController: UIViewController, UICollectionViewDataSource,UICol
   {
     //cell text
     cell.objectText.text = cellDataArray[indexPath.row]!.Object
-    cell.starMagText.text = String(format: "%.02f",cellDataArray[indexPath.row]!.StarMag)
-    cell.magDropText.text = String(format: "%.02f",cellDataArray[indexPath.row]!.MagDrop)
-    cell.maxDurText.text = String(format: "%.02f",cellDataArray[indexPath.row]!.MaxDurSec)
+    let calloutFont =   UIFont.preferredFont(forTextStyle: .callout)
+    let captionFont =   UIFont.preferredFont(forTextStyle: .caption1)
+    //create "m" superscript for star magnitude and magnitude drop
+    let magAttrStr = NSMutableAttributedString(string:"m", attributes:[NSAttributedString.Key.font : captionFont,
+                                                                       NSAttributedString.Key.baselineOffset: 5])
+    let starMagStr = String(format: "%.01f",cellDataArray[indexPath.row]!.StarMag)
+    let starMagAttrStr = NSMutableAttributedString(string:starMagStr, attributes:[NSAttributedString.Key.font : calloutFont])
+    starMagAttrStr.append(magAttrStr)
+    cell.starMagText.attributedText = starMagAttrStr
+    if cellDataArray[indexPath.row]!.MagDrop >= 0.2
+    {
+      let magDropStr = String(format: "%.01f",cellDataArray[indexPath.row]!.MagDrop)
+      let magDropAttrStr = NSMutableAttributedString(string:magDropStr, attributes:[NSAttributedString.Key.font : calloutFont])
+      magDropAttrStr.append(magAttrStr)
+      cell.magDropText.attributedText = magDropAttrStr
+    }
+    else
+    {
+      let magDropStr = String(format: "%.02f",cellDataArray[indexPath.row]!.MagDrop)
+      let magDropAttrStr = NSMutableAttributedString(string:magDropStr, attributes:[NSAttributedString.Key.font : calloutFont])
+      magDropAttrStr.append(magAttrStr)
+      cell.magDropText.attributedText = magDropAttrStr
+    }
+    cell.maxDurText.text = String(format: "%.01f sec",cellDataArray[indexPath.row]!.MaxDurSec)
     cell.leadTime.text = leadTime(timeString: cellDataArray[indexPath.row]!.EventTimeUtc)
     cell.eventTime.text = formatEventTime(timeString: cellDataArray[indexPath.row]!.EventTimeUtc)
     //set time error field
@@ -120,8 +197,8 @@ class MyEventsViewController: UIViewController, UICollectionViewDataSource,UICol
       cell.windyImg.image =  #imageLiteral(resourceName: "wind_sign")
       cell.tempImg.image =  #imageLiteral(resourceName: "term_b")
       //set weather text to appropriate text
-      cell.cloudText.text = String(format: "%d",cellDataArray[indexPath.row]!.CloudCover)
-      cell.tempText.text = String(format: "%d",cellDataArray[indexPath.row]!.TempDegC)
+      cell.cloudText.text = String(format: "%d%%",cellDataArray[indexPath.row]!.CloudCover)
+      cell.tempText.text = String(format: "%d°",cellDataArray[indexPath.row]!.TempDegC)
     } else {
       //set weather images and text empty because no forecast info is available
       cell.cloudImg.image =  nil

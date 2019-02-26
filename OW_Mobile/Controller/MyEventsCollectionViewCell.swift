@@ -39,4 +39,4 @@ class MyEventsCollectionViewCell: UICollectionViewCell
   @IBOutlet weak var maxDurImg: UIImageView!
   @IBOutlet weak var magDropImg: UIImageView!
   
-}
+ }
