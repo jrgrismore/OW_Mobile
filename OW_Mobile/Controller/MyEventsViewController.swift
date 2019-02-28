@@ -48,26 +48,6 @@ class MyEventsViewController: UIViewController, UICollectionViewDataSource,UICol
   {
     super.viewDidLoad()
     myEventsCollection.backgroundColor =  _ColorLiteralType(red: 0.03605184332, green: 0.2271486223, blue: 0.2422576547, alpha: 1)
-//    //set cell size
-//    let cellsInRow = 1
-//    let cellHeight = 180
-//    //set layout attributes
-//    if let flowLayout = self.myEventsCollection.collectionViewLayout as? UICollectionViewFlowLayout
-//    {
-//      print("UIScreen.main.bounds.width=",UIScreen.main.bounds.width)
-//      print("myEventsCollection.bounds.width=",myEventsCollection.bounds.width)
-//      flowLayout.minimumLineSpacing = 5
-//      flowLayout.minimumInteritemSpacing = 3
-//      flowLayout.sectionInset = UIEdgeInsets(top: 5, left: 5, bottom: 7, right: 5)
-//      let totalHInsets = flowLayout.sectionInset.left + flowLayout.sectionInset.right
-//      print("totalHInsets=",totalHInsets)
-//      let totalInteritemSpace = flowLayout.minimumInteritemSpacing * CGFloat(cellsInRow - 1)
-//      print("totalInteritemSpace=",totalInteritemSpace)
-//      let cellWidth = (UIScreen.main.bounds.width - totalInteritemSpace - totalHInsets)/CGFloat(cellsInRow)
-////      let cellWidth = (myEventsCollection.bounds.width - totalInteritemSpace - totalHInsets)/CGFloat(cellsInRow)
-////      print("cellWidth=",cellWidth)
-//      flowLayout.itemSize = CGSize(width: cellWidth, height: CGFloat(cellHeight))
-//    }
     cellDataArray = self.parsedJSON.load()
     //test
 //    cellDataArray = []
@@ -102,21 +82,6 @@ class MyEventsViewController: UIViewController, UICollectionViewDataSource,UICol
       flowLayout.itemSize = CGSize(width: cellWidth, height: CGFloat(cellHeight))
     }
 
-  }
-  // MARK: - Collection delegate functions
-  func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int
-  {
-    print("numberOfItemsInSection=",cellDataArray.count)
-    return cellDataArray.count
-  }
-  
-  func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell
-  {
-    var cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as! MyEventsCollectionViewCell
-    //set permanent cell background color to 235_255_235_67
-    cell.backgroundColor = #colorLiteral(red: 0.9215686275, green: 1, blue: 0.9215686275, alpha: 0.67)
-    fillCellFields(cell: &cell, indexPath: indexPath)
-    return cell
   }
   
   // MARK: - Event data functions
@@ -279,6 +244,26 @@ class MyEventsViewController: UIViewController, UICollectionViewDataSource,UICol
     print("TempDegC =", item.TempDegC)
     print("HighCloud =", item.HighCloud)
     print("BestStationPos =", item.BestStationPos)
+  }
+  
+}
+
+extension MyEventsViewController
+{
+  // MARK: - Collection delegate functions
+  func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int
+  {
+    print("numberOfItemsInSection=",cellDataArray.count)
+    return cellDataArray.count
+  }
+  
+  func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell
+  {
+    var cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as! MyEventsCollectionViewCell
+    //set permanent cell background color to 235_255_235_67
+    cell.backgroundColor = #colorLiteral(red: 0.9215686275, green: 1, blue: 0.9215686275, alpha: 0.67)
+    fillCellFields(cell: &cell, indexPath: indexPath)
+    return cell
   }
   
 }

@@ -103,38 +103,12 @@ class WebService: NSObject
       //sort by event data/time (earliest first)
       parsedJSON.sort(by: { $0.EventTimeUtc < $1.EventTimeUtc })
       //test
-      testUserDefaults(parsedJSON)
-
+      //      testUserDefaults(parsedJSON)
+      
     } catch let error {
       print(error as Any)
     }
     return parsedJSON
-  }
-   
-  
-  func testUserDefaults(_ events: [Event])
-  {
-    save(events)
-    print("events saved to userdefaults")
-//    UserDefaults.standard.removeObject(forKey: UDKeys.myEventList)
-    let restoredEvents = load()
- //    for item in restoredEvents
-//    {
-//      print()
-//      print("Id =", item.Id)
-//      print("Object =", item.Object)
-//      print("StarMag =", item.StarMag)
-//      print("MagDrop =", item.MagDrop)
-//      print("MaxDurSec =", item.MaxDurSec)
-//      print("EventTimeUtc =", item.EventTimeUtc)
-//      print("ErrorInTimeSec =", item.ErrorInTimeSec)
-//      print("WeatherInfoAvailable =", item.WeatherInfoAvailable)
-//      print("CloudCover =", item.CloudCover)
-//      print("Wind =", item.Wind)
-//      print("TempDegC =", item.TempDegC)
-//      print("HighCloud =", item.HighCloud)
-//      print("BestStationPos =", item.BestStationPos)
-//   }
   }
   
   func load() -> [Event]
@@ -145,12 +119,40 @@ class WebService: NSObject
     
     return encodedData.map { try! JSONDecoder().decode(Event.self, from: $0) }
   }
-
+  
   func save(_ events: [Event])
   {
     let data = events.map { try? JSONEncoder().encode($0) }
     UserDefaults.standard.set(data, forKey: UDKeys.myEventList)
   }
+  
+}
 
+extension WebService: URLSessionDelegate, URLSessionTaskDelegate
+{
+  //URLSession delegates
+  func urlSession(
+    _ session: URLSession,
+    task: URLSessionTask,
+    didSendBodyData bytesSent: Int64,
+    totalBytesSent: Int64,
+    totalBytesExpectedToSend: Int64)
+  {
+    print("didSendBodyData")
+    //    print("bytesSent=",bytesSent)
+    //    print("totalBytesSent=",totalBytesSent)
+    //    print("totalBytesExpectedToSend=",totalBytesExpectedToSend)
+  }
+  
+  func urlSession(_ session: URLSession, task: URLSessionTask, didCompleteWithError error: Error?)
+  {
+    print("didCompleteWithError")
+  }
+  
+  func urlSession(_ session: URLSession, dataTask: URLSessionDataTask, didReceive data: Data)
+  {
+    print("didReceive data")
+  }
+  
   
 }
