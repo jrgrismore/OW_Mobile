@@ -37,9 +37,11 @@ class MyEventsViewController: UIViewController, UICollectionViewDataSource,UICol
       print("totalHInsets=",totalHInsets)
       let totalInteritemSpace = flowLayout.minimumInteritemSpacing * CGFloat(cellsInRow - 1)
       print("totalInteritemSpace=",totalInteritemSpace)
-      let cellWidth = (UIScreen.main.bounds.width - totalInteritemSpace - totalHInsets)/CGFloat(cellsInRow)
-      //            let cellWidth = (myEventsCollection.bounds.width - totalInteritemSpace - totalHInsets)/CGFloat(cellsInRow)
-      //      print("cellWidth=",cellWidth)
+//      let cellWidth = (UIScreen.main.bounds.width - totalInteritemSpace - totalHInsets)/CGFloat(cellsInRow)
+//      let cellWidth = (myEventsCollection.bounds.width - totalInteritemSpace - totalHInsets)/CGFloat(cellsInRow)
+       //      print("cellWidth=",cellWidth)
+      //? is this the right way to do this ?
+      let cellWidth = view.safeAreaLayoutGuide.layoutFrame.size.width
       flowLayout.itemSize = CGSize(width: cellWidth, height: CGFloat(cellHeight))
     }
   }
