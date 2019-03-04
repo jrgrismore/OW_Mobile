@@ -16,6 +16,10 @@ class MyEventsViewController: UIViewController, UICollectionViewDataSource,UICol
   var cellDataArray = [Event?]()
   let parsedJSON = WebService()
   
+  @IBAction func switchToLogin(_ sender: Any)
+  {
+    tabBarController?.selectedIndex = 1
+  }
   
   // MARK: - View functions
   override func viewWillLayoutSubviews()

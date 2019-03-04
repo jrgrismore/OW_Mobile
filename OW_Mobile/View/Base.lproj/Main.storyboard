@@ -591,6 +591,16 @@
                                     <action selector="refreshEventCells:" destination="EDh-iT-nzC" eventType="touchUpInside" id="LAr-BK-2ZY"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="AMt-Kc-fBz">
+                                <rect key="frame" x="284" y="27" width="66" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="LoginTest">
+                                    <color key="titleColor" red="1" green="0.14913141730000001" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                </state>
+                                <connections>
+                                    <action selector="switchToLogin:" destination="EDh-iT-nzC" eventType="touchUpInside" id="hn5-fl-xi6"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <constraints>
                             <constraint firstItem="3lv-ur-Dnz" firstAttribute="leading" secondItem="gbV-Qa-Z7Q" secondAttribute="leading" id="4Kz-wb-O16"/>
