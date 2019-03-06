@@ -51,7 +51,8 @@ class WebService: NSObject
   // MARK: - OW Web Service Functions
   func creatURL(owSession: URLSession) -> URL
   {
-    let credential = URLCredential(user: user, password: password, persistence: .forSession)
+    //let credential = URLCredential(user: user, password: password, persistence: .synchronizable)  for use with iCloud across devices
+    let credential = URLCredential(user: user, password: password, persistence: .permanent)
     //create url
     let protectionSpace = URLProtectionSpace(host: host, port: 443, protocol: scheme, realm: "Restricted", authenticationMethod: NSURLAuthenticationMethodHTTPBasic)
     URLCredentialStorage.shared.setDefaultCredential(credential, for: protectionSpace)
