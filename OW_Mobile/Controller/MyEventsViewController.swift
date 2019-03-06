@@ -163,7 +163,31 @@ class MyEventsViewController: UIViewController, UICollectionViewDataSource,UICol
     if cellDataArray[indexPath.row]!.WeatherInfoAvailable
     {
       //set weather images to appropriate image
-      cell.cloudImg.image =  #imageLiteral(resourceName: "cloud_100")
+      switch cellDataArray[indexPath.row]!.CloudCover
+      {
+      case 0...9:
+        cell.cloudImg.image =  #imageLiteral(resourceName: "cloud_0")
+      case 10...19:
+        cell.cloudImg.image =  #imageLiteral(resourceName: "cloud_10")
+      case 20...29:
+        cell.cloudImg.image =  #imageLiteral(resourceName: "cloud_20")
+      case 30...39:
+        cell.cloudImg.image =  #imageLiteral(resourceName: "cloud_30")
+      case 40...49:
+        cell.cloudImg.image =  #imageLiteral(resourceName: "cloud_40.png")
+      case 50...59:
+        cell.cloudImg.image =  #imageLiteral(resourceName: "cloud_50.png")
+      case 60...69:
+        cell.cloudImg.image =  #imageLiteral(resourceName: "cloud_60.png")
+      case 70...79:
+        cell.cloudImg.image =  #imageLiteral(resourceName: "cloud_70.png")
+      case 80...89:
+        cell.cloudImg.image =  #imageLiteral(resourceName: "cloud_80.png")
+      case 90...100:
+        cell.cloudImg.image =  #imageLiteral(resourceName: "cloud_90.png")
+      default:
+        cell.cloudImg.image =  #imageLiteral(resourceName: "cloud_100.png")
+      }
       cell.windStrengthImg.image =  #imageLiteral(resourceName: "wind_2a")
       cell.windyImg.image =  #imageLiteral(resourceName: "wind_sign")
       cell.tempImg.image =  #imageLiteral(resourceName: "term_b")
