@@ -30,6 +30,7 @@ struct Event: Codable
   var TempDegC: Int
   var HighCloud: Bool
   var BestStationPos: Int
+  var StarColour: Int
 }
 
 struct MyEvents: Codable

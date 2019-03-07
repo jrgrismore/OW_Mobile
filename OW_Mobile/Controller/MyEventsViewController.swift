@@ -98,10 +98,10 @@ class MyEventsViewController: UIViewController, UICollectionViewDataSource,UICol
     parsedJSON.retrieveEventList(completion: { (myEvents, error) in
       //fill cells
       print("download and parsing complete")
-      //      for item in owEvents!
-      //      {
-      //        self.printEventInfo(eventItem: item)
-      //      }
+//            for item in myEvents!
+//            {
+//              self.printEventInfo(eventItem: item)
+//            }
       self.parsedJSON.save(myEvents!)
       self.cellDataArray = myEvents!
       print("cell data array updated")
@@ -274,6 +274,7 @@ class MyEventsViewController: UIViewController, UICollectionViewDataSource,UICol
     print("TempDegC =", item.TempDegC)
     print("HighCloud =", item.HighCloud)
     print("BestStationPos =", item.BestStationPos)
+    print("StarColour =",item.StarColour)
   }
   
 }
