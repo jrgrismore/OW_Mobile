@@ -110,6 +110,79 @@ class MyEventsViewController: UIViewController, UICollectionViewDataSource,UICol
     })
   }
   
+  @IBAction func refreshEventCells(_ sender: Any)
+  {
+    updateCellArray()
+  }
+  
+}
+
+extension MyEventsViewController
+{
+  // MARK: - Collection delegate functions
+  func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int
+  {
+    print("numberOfItemsInSection=",cellDataArray.count)
+    return cellDataArray.count
+  }
+  
+  func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell
+  {
+    var cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as! MyEventsCollectionViewCell
+    //set permanent cell background color to 235_255_235_67
+    cell.backgroundColor = #colorLiteral(red: 0.9215686275, green: 1, blue: 0.9215686275, alpha: 0.67)
+    fillCellFields(cell: &cell, indexPath: indexPath)
+    return cell
+  }
+  
+  // MARK: - Collection cell data functions
+  
+  func formatEventTime(timeString: String) -> String
+  {
+    let eventTimeFormatter = DateFormatter()
+    eventTimeFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSS"
+    eventTimeFormatter.timeZone = TimeZone(abbreviation: "UTC")
+    if let formattedDate = eventTimeFormatter.date(from: timeString)
+    {
+      eventTimeFormatter.dateFormat = "dd MMM, HH:mm:ss 'UT'"
+      return eventTimeFormatter.string(from: formattedDate)
+    }
+    return timeString
+  }
+  
+  func leadTime(timeString: String) -> String
+  {
+    var leadTimeString = ""
+    let eventTimeFormatter = DateFormatter()
+    eventTimeFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSS"
+    eventTimeFormatter.timeZone = TimeZone(abbreviation: "UTC")
+    if let eventDate = eventTimeFormatter.date(from: timeString)
+    {
+      let leadTimeSeconds = Int(eventDate.timeIntervalSinceNow)
+      let leadTimeMinutes = leadTimeSeconds / 60
+      let leadTimeHours = leadTimeMinutes / 60
+      let leadTimeDays = leadTimeHours / 24
+      
+      if leadTimeMinutes > 0
+      {
+        if leadTimeMinutes < 90
+        {
+          leadTimeString = String(format: "in \(leadTimeMinutes) min")
+        }
+        else if leadTimeHours < 48
+        {
+          leadTimeString = String(format: "in \(leadTimeHours) hours")
+        }
+        else
+        {
+          leadTimeString = String(format: "in \(leadTimeDays) days")
+        }
+      }
+      return leadTimeString
+    }
+    return leadTimeString
+  }
+
   func fillCellFields(cell: inout MyEventsCollectionViewCell, indexPath: IndexPath)
   {
     //cell text
@@ -204,97 +277,24 @@ class MyEventsViewController: UIViewController, UICollectionViewDataSource,UICol
       cell.tempText.text = ""
     }
     
-    
-  }
-  
-  @IBAction func refreshEventCells(_ sender: Any)
-  {
-    updateCellArray()
-  }
-  
-  func formatEventTime(timeString: String) -> String
-  {
-    let eventTimeFormatter = DateFormatter()
-    eventTimeFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSS"
-    eventTimeFormatter.timeZone = TimeZone(abbreviation: "UTC")
-    if let formattedDate = eventTimeFormatter.date(from: timeString)
+    func printEventInfo(eventItem item: Event)
     {
-      eventTimeFormatter.dateFormat = "dd MMM, HH:mm:ss 'UT'"
-      return eventTimeFormatter.string(from: formattedDate)
+      print()
+      print("Id =", item.Id)
+      print("Object =", item.Object)
+      print("StarMag =", item.StarMag)
+      print("MagDrop =", item.MagDrop)
+      print("MaxDurSec =", item.MaxDurSec)
+      print("EventTimeUtc =", item.EventTimeUtc)
+      print("ErrorInTimeSec =", item.ErrorInTimeSec)
+      print("WeatherInfoAvailable =", item.WeatherInfoAvailable)
+      print("CloudCover =", item.CloudCover)
+      print("Wind =", item.Wind)
+      print("TempDegC =", item.TempDegC)
+      print("HighCloud =", item.HighCloud)
+      print("BestStationPos =", item.BestStationPos)
+      print("StarColour =",item.StarColour)
     }
-    return timeString
-  }
-  
-  func leadTime(timeString: String) -> String
-  {
-    var leadTimeString = ""
-    let eventTimeFormatter = DateFormatter()
-    eventTimeFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSS"
-    eventTimeFormatter.timeZone = TimeZone(abbreviation: "UTC")
-    if let eventDate = eventTimeFormatter.date(from: timeString)
-    {
-      let leadTimeSeconds = Int(eventDate.timeIntervalSinceNow)
-      let leadTimeMinutes = leadTimeSeconds / 60
-      let leadTimeHours = leadTimeMinutes / 60
-      let leadTimeDays = leadTimeHours / 24
-      
-      if leadTimeMinutes > 0
-      {
-        if leadTimeMinutes < 90
-        {
-          leadTimeString = String(format: "in \(leadTimeMinutes) min")
-        }
-        else if leadTimeHours < 48
-        {
-          leadTimeString = String(format: "in \(leadTimeHours) hours")
-        }
-        else
-        {
-          leadTimeString = String(format: "in \(leadTimeDays) days")
-        }
-      }
-      return leadTimeString
-    }
-    return leadTimeString
-  }
-  
-  func printEventInfo(eventItem item: Event)
-  {
-    print()
-    print("Id =", item.Id)
-    print("Object =", item.Object)
-    print("StarMag =", item.StarMag)
-    print("MagDrop =", item.MagDrop)
-    print("MaxDurSec =", item.MaxDurSec)
-    print("EventTimeUtc =", item.EventTimeUtc)
-    print("ErrorInTimeSec =", item.ErrorInTimeSec)
-    print("WeatherInfoAvailable =", item.WeatherInfoAvailable)
-    print("CloudCover =", item.CloudCover)
-    print("Wind =", item.Wind)
-    print("TempDegC =", item.TempDegC)
-    print("HighCloud =", item.HighCloud)
-    print("BestStationPos =", item.BestStationPos)
-    print("StarColour =",item.StarColour)
-  }
-  
-}
 
-extension MyEventsViewController
-{
-  // MARK: - Collection delegate functions
-  func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int
-  {
-    print("numberOfItemsInSection=",cellDataArray.count)
-    return cellDataArray.count
   }
-  
-  func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell
-  {
-    var cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as! MyEventsCollectionViewCell
-    //set permanent cell background color to 235_255_235_67
-    cell.backgroundColor = #colorLiteral(red: 0.9215686275, green: 1, blue: 0.9215686275, alpha: 0.67)
-    fillCellFields(cell: &cell, indexPath: indexPath)
-    return cell
-  }
-  
 }
