@@ -12,11 +12,13 @@ import Foundation
 class AccountViewController: UIViewController
 {
   
-  @IBOutlet weak var loginView: UIView!
+  @IBOutlet weak var emailView: UIView!
+  @IBOutlet weak var passwordView: UIView!
   
   override func viewDidLoad()
   {
     super.viewDidLoad()
-    self.loginView.layer.cornerRadius = 10
+    self.emailView.layer.cornerRadius = 10
+    self.passwordView.layer.cornerRadius = 10
   }
 }
