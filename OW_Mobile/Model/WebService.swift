@@ -43,17 +43,22 @@ class WebService: NSObject
   let host = "www.occultwatcher.net"
   let path = "/api/v1/events/list"
   let scheme = "https"
-  let user = "Alex Pratt"
-  //  let user = "JohnG"
-  let password = "qwerty123456"
+//  let user = "Alex Pratt"
+//  let password = "qwerty123456"
+//    let user = "JohnG"
+//  let password = "qwerty123456"
+//    let password = "dei77mos"
   
   var parsedJSON = [Event]()
   
   // MARK: - OW Web Service Functions
   func creatURL(owSession: URLSession) -> URL
   {
-    //let credential = URLCredential(user: user, password: password, persistence: .synchronizable)  for use with iCloud across devices
-    let credential = URLCredential(user: user, password: password, persistence: .permanent)
+    let user = Credentials.username
+    let password = Credentials.password
+   //let credential = URLCredential(user: user, password: password, persistence: .synchronizable)  for use with iCloud across devices
+//    let credential = URLCredential(user: user, password: password, persistence: .permanent)
+    let credential = URLCredential(user: user, password: password, persistence: .forSession)
     //create url
     let protectionSpace = URLProtectionSpace(host: host, port: 443, protocol: scheme, realm: "Restricted", authenticationMethod: NSURLAuthenticationMethodHTTPBasic)
     URLCredentialStorage.shared.setDefaultCredential(credential, for: protectionSpace)
@@ -86,6 +91,7 @@ class WebService: NSObject
       }
       print("data retrieved")
       let myEvents = self.parseEventData(jsonData: dataResponse)
+      print("myEvents count=", myEvents.count)
       completion(myEvents,nil)
     }
     print("...owTask.resume()")

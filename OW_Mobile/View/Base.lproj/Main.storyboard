@@ -21,7 +21,7 @@
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     </tabBar>
                     <connections>
-                        <segue destination="EDh-iT-nzC" kind="relationship" relationship="viewControllers" id="8wa-9B-MVC"/>
+                        <segue destination="EDh-iT-nzC" kind="relationship" relationship="viewControllers" id="Llj-c9-vSh"/>
                         <segue destination="BYZ-38-t0r" kind="relationship" relationship="viewControllers" id="ooJ-GH-0ab"/>
                         <segue destination="36a-yk-pEC" kind="relationship" relationship="viewControllers" id="8L6-1o-8Vy"/>
                     </connections>
@@ -44,11 +44,11 @@
                                     <view contentMode="center" translatesAutoresizingMaskIntoConstraints="NO" id="qts-wP-BWi" userLabel="Email View">
                                         <rect key="frame" x="0.0" y="0.0" width="335" height="56"/>
                                         <subviews>
-                                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="KOM-E2-56Z" userLabel="Email Field">
+                                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" adjustsFontForContentSizeCategory="YES" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="KOM-E2-56Z" userLabel="Email Field">
                                                 <rect key="frame" x="106.5" y="13" width="208.5" height="30"/>
                                                 <nil key="textColor"/>
-                                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                <textInputTraits key="textInputTraits" keyboardType="emailAddress" textContentType="email"/>
+                                                <fontDescription key="fontDescription" style="UICTFontTextStyleCallout"/>
+                                                <textInputTraits key="textInputTraits" keyboardType="emailAddress" textContentType="username"/>
                                             </textField>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Email:" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="141-dx-Nje">
                                                 <rect key="frame" x="53" y="18" width="45.5" height="20.5"/>
@@ -75,11 +75,11 @@
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
-                                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="rE7-Zx-RpM" userLabel="Password Field">
+                                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" adjustsFontForContentSizeCategory="YES" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="rE7-Zx-RpM" userLabel="Password Field">
                                                 <rect key="frame" x="106.5" y="13" width="208.5" height="30"/>
                                                 <nil key="textColor"/>
-                                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                <textInputTraits key="textInputTraits" secureTextEntry="YES" textContentType="password"/>
+                                                <fontDescription key="fontDescription" style="UICTFontTextStyleCallout"/>
+                                                <textInputTraits key="textInputTraits" keyboardType="alphabet" secureTextEntry="YES" textContentType="password"/>
                                             </textField>
                                         </subviews>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -180,7 +180,9 @@
                     </view>
                     <tabBarItem key="tabBarItem" title="Account" id="uHX-vV-sFm" userLabel="Account"/>
                     <connections>
+                        <outlet property="emailFld" destination="KOM-E2-56Z" id="5c4-Sn-Mpw"/>
                         <outlet property="emailView" destination="qts-wP-BWi" id="MFh-f1-70M"/>
+                        <outlet property="passwordFld" destination="rE7-Zx-RpM" id="dfs-EV-MF5"/>
                         <outlet property="passwordView" destination="rcS-6X-rK4" id="FHY-Oy-wdT"/>
                     </connections>
                 </viewController>
@@ -384,10 +386,10 @@
             </objects>
             <point key="canvasLocation" x="-810.39999999999998" y="-101.19940029985008"/>
         </scene>
-        <!--MyEvents-->
+        <!--MyEvcents-->
         <scene sceneID="A9B-GJ-FB0">
             <objects>
-                <viewController title="MyEvents" id="EDh-iT-nzC" customClass="MyEventsViewController" customModule="OW_Mobile" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController title="MyEvcents" id="EDh-iT-nzC" customClass="MyEventsViewController" customModule="OW_Mobile" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="6cp-u7-nfp">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -586,6 +588,7 @@
                                             <outlet property="timeError" destination="DTl-EM-68k" id="ORu-vk-gqC"/>
                                             <outlet property="windStrengthImg" destination="BnN-xC-jCs" id="873-uH-YmP"/>
                                             <outlet property="windyImg" destination="Ff1-cW-r7z" id="buS-bo-gU9"/>
+                                            <segue destination="CsV-hu-Udn" kind="showDetail" id="ugf-yI-Zoj"/>
                                         </connections>
                                     </collectionViewCell>
                                 </cells>
@@ -647,14 +650,29 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="gbV-Qa-Z7Q"/>
                     </view>
-                    <tabBarItem key="tabBarItem" title="MyEvents" id="sBe-Uw-5Wd" userLabel="Events"/>
+                    <tabBarItem key="tabBarItem" title="MyEvents" id="Wkh-qp-hyE" userLabel="MyEvents"/>
                     <connections>
                         <outlet property="myEventsCollection" destination="SDS-j7-v4J" id="zD3-Sx-59K"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="sOo-ur-tWp" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="31" y="-101"/>
+            <point key="canvasLocation" x="-26" y="-101"/>
+        </scene>
+        <!--Event Detail Scene-->
+        <scene sceneID="dBr-Mp-zNY">
+            <objects>
+                <viewController title="Event Detail Scene" id="CsV-hu-Udn" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="qQd-SM-58Q">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <viewLayoutGuide key="safeArea" id="59Y-Iy-TB2"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Ioa-Vq-uWl" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1871.2" y="-101.19940029985008"/>
         </scene>
     </scenes>
     <resources>
