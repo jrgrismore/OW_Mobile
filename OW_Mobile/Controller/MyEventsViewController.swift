@@ -90,6 +90,17 @@ class MyEventsViewController: UIViewController, UICollectionViewDataSource,UICol
 
   }
   
+  override func prepare(for segue: UIStoryboardSegue, sender: Any?)
+  {
+    if segue.identifier == "DetailSegue"
+    {
+      if let dest = segue.destination as? DetailViewController,
+        let index = myEventsCollection.indexPathsForSelectedItems?.first
+      {
+        dest.selection = cellDataArray[index.row]!.Object
+      }
+    }
+  }
   // MARK: - Event data functions
   //retrieve json, parse json, use closure to fill cells
   func updateCellArray()
