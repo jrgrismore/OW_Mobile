@@ -43,7 +43,7 @@ class DetailViewController: UIViewController {
   override func viewWillAppear(_ animated: Bool)
   {
     self.title = detailData.Object
-  }
+   }
   func eventInfoToString(eventItem item: Event) -> String
   {
     let idStr = String(format: "Id = %@",item.Id)
