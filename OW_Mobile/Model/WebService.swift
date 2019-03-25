@@ -38,6 +38,7 @@ struct MyEvents: Codable
   var events: [Event]
 }
 
+
 class WebService: NSObject
 {
   let host = "www.occultwatcher.net"

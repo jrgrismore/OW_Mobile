@@ -57,7 +57,7 @@ class MyEventsViewController: UIViewController, UICollectionViewDataSource,UICol
     cellDataArray = self.parsedJSON.load()
     //test
 //    cellDataArray = []
-    
+
     DispatchQueue.main.async{self.myEventsCollection.reloadData()}
     if cellDataArray.count == 0
     {
@@ -87,7 +87,6 @@ class MyEventsViewController: UIViewController, UICollectionViewDataSource,UICol
       //      print("cellWidth=",cellWidth)
       flowLayout.itemSize = CGSize(width: cellWidth, height: CGFloat(cellHeight))
     }
-
   }
   
   override func prepare(for segue: UIStoryboardSegue, sender: Any?)
@@ -98,6 +97,7 @@ class MyEventsViewController: UIViewController, UICollectionViewDataSource,UICol
         let index = myEventsCollection.indexPathsForSelectedItems?.first
       {
         dest.selection = cellDataArray[index.row]!.Object
+        dest.detailData = cellDataArray[index.row]!
       }
     }
   }
