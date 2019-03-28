@@ -37,7 +37,7 @@ class DetailViewController: UIViewController {
 //    detailLbl.text = selection
     print("detail data =")
     let detailStr = eventInfoToString(eventItem: detailData)
-    detailLbl.text = detailStr
+//    detailLbl.text = detailStr
   }
   
   override func viewWillAppear(_ animated: Bool)
