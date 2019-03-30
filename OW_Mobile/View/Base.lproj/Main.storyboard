@@ -665,22 +665,22 @@
                                 <rect key="frame" x="5" y="69" width="365" height="544"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="GUQ-5D-Osz" userLabel="View 1">
-                                        <rect key="frame" x="0.0" y="0.0" width="365" height="55.5"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="365" height="86.5"/>
                                         <subviews>
-                                            <stackView contentMode="scaleToFill" axis="vertical" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="jU3-zf-owI">
-                                                <rect key="frame" x="8" y="0.0" width="349" height="55.5"/>
+                                            <stackView contentMode="scaleToFill" axis="vertical" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="jU3-zf-owI" userLabel="Event Info VStack View">
+                                                <rect key="frame" x="8" y="0.0" width="349" height="86.5"/>
                                                 <subviews>
-                                                    <stackView opaque="NO" contentMode="scaleToFill" distribution="fillProportionally" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="Rdg-PA-2Mk" userLabel="HStack View 1">
-                                                        <rect key="frame" x="0.0" y="0.0" width="349" height="28"/>
+                                                    <stackView opaque="NO" contentMode="scaleToFill" distribution="fillProportionally" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="Rdg-PA-2Mk" userLabel="Rank HStack View">
+                                                        <rect key="frame" x="0.0" y="0.0" width="349" height="43.5"/>
                                                         <subviews>
                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" text="occults UCAC4 702-047231" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Bxb-g6-GRG">
-                                                                <rect key="frame" x="0.0" y="4" width="268" height="20"/>
+                                                                <rect key="frame" x="0.0" y="11.5" width="268" height="20"/>
                                                                 <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="17"/>
                                                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                 <nil key="highlightedColor"/>
                                                             </label>
                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" text="Rank: 38" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="b2e-3J-HL7">
-                                                                <rect key="frame" x="268" y="4" width="81" height="19.5"/>
+                                                                <rect key="frame" x="268" y="12" width="81" height="19.5"/>
                                                                 <fontDescription key="fontDescription" style="UICTFontTextStyleCallout"/>
                                                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                 <nil key="highlightedColor"/>
@@ -693,17 +693,17 @@
                                                             <constraint firstItem="Bxb-g6-GRG" firstAttribute="centerY" secondItem="Rdg-PA-2Mk" secondAttribute="centerY" id="q9v-iE-h1i"/>
                                                         </constraints>
                                                     </stackView>
-                                                    <stackView opaque="NO" contentMode="scaleToFill" distribution="fillProportionally" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="PkI-Hu-aI0" userLabel="HStack View 2">
-                                                        <rect key="frame" x="0.0" y="28" width="349" height="27.5"/>
+                                                    <stackView opaque="NO" contentMode="scaleToFill" distribution="fillProportionally" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="PkI-Hu-aI0" userLabel="Feed HStack View">
+                                                        <rect key="frame" x="0.0" y="43.5" width="349" height="43"/>
                                                         <subviews>
                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" text="in 29 hours on 2 Feb 2019" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HIB-G2-7ts">
-                                                                <rect key="frame" x="0.0" y="4" width="272" height="19.5"/>
+                                                                <rect key="frame" x="0.0" y="11.5" width="272" height="19.5"/>
                                                                 <fontDescription key="fontDescription" style="UICTFontTextStyleCallout"/>
                                                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                 <nil key="highlightedColor"/>
                                                             </label>
                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" text="UKOCL" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Sfx-M4-Kzx">
-                                                                <rect key="frame" x="272" y="4" width="77" height="19.5"/>
+                                                                <rect key="frame" x="272" y="11.5" width="77" height="19.5"/>
                                                                 <fontDescription key="fontDescription" style="UICTFontTextStyleCallout"/>
                                                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                 <nil key="highlightedColor"/>
@@ -728,7 +728,7 @@
                                         </constraints>
                                     </view>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="HuD-ai-6Aw" userLabel="View 2">
-                                        <rect key="frame" x="0.0" y="58.5" width="365" height="55.5"/>
+                                        <rect key="frame" x="0.0" y="89.5" width="365" height="60"/>
                                         <subviews>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="RoV-Cl-X5I" userLabel="Weather Bar View">
                                                 <rect key="frame" x="0.0" y="0.0" width="365" height="20"/>
@@ -777,15 +777,15 @@
                                         </constraints>
                                     </view>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3EZ-5s-Kxd" userLabel="View 3">
-                                        <rect key="frame" x="0.0" y="117" width="365" height="75"/>
+                                        <rect key="frame" x="0.0" y="152.5" width="365" height="86"/>
                                         <subviews>
-                                            <stackView opaque="NO" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" axis="vertical" distribution="fillProportionally" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="Tqu-Kr-t2u" userLabel="InfoStack View">
+                                            <stackView opaque="NO" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" axis="vertical" distribution="fillProportionally" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="Tqu-Kr-t2u" userLabel="Info VStack">
                                                 <rect key="frame" x="8" y="8" width="349" height="74.5"/>
                                                 <subviews>
                                                     <stackView opaque="NO" contentMode="scaleToFill" distribution="equalSpacing" alignment="center" spacing="7" translatesAutoresizingMaskIntoConstraints="NO" id="Udl-Y6-ga9" userLabel="Top HStack">
                                                         <rect key="frame" x="0.0" y="0.0" width="349" height="19.5"/>
                                                         <subviews>
-                                                            <stackView opaque="NO" contentMode="scaleToFill" alignment="center" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="h0A-cR-My7" userLabel="Locstion View">
+                                                            <stackView opaque="NO" contentMode="scaleToFill" alignment="center" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="h0A-cR-My7" userLabel="Locstion HStack">
                                                                 <rect key="frame" x="0.0" y="0.0" width="131.5" height="19.5"/>
                                                                 <subviews>
                                                                     <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" image="spos_0" translatesAutoresizingMaskIntoConstraints="NO" id="f7N-mE-RWE" userLabel="Sigma Img">
@@ -803,7 +803,7 @@
                                                                     <constraint firstItem="f7N-mE-RWE" firstAttribute="centerY" secondItem="h0A-cR-My7" secondAttribute="centerY" id="erA-oy-FUt"/>
                                                                 </constraints>
                                                             </stackView>
-                                                            <stackView opaque="NO" contentMode="scaleToFill" alignment="center" spacing="2" translatesAutoresizingMaskIntoConstraints="NO" id="xjI-Hk-7ef" userLabel="Cloud Stack View">
+                                                            <stackView opaque="NO" contentMode="scaleToFill" alignment="center" spacing="2" translatesAutoresizingMaskIntoConstraints="NO" id="xjI-Hk-7ef" userLabel="Cloud HStack">
                                                                 <rect key="frame" x="162" y="0.0" width="58" height="19.5"/>
                                                                 <subviews>
                                                                     <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" image="cloud_100" translatesAutoresizingMaskIntoConstraints="NO" id="lcc-MA-WyE" userLabel="Cloud Img">
@@ -821,7 +821,7 @@
                                                                     <constraint firstItem="lcc-MA-WyE" firstAttribute="centerY" secondItem="xjI-Hk-7ef" secondAttribute="centerY" id="bsU-GI-GXd"/>
                                                                 </constraints>
                                                             </stackView>
-                                                            <stackView opaque="NO" contentMode="scaleToFill" alignment="center" spacing="2" translatesAutoresizingMaskIntoConstraints="NO" id="QuG-hL-5lG" userLabel="Wind Stack View">
+                                                            <stackView opaque="NO" contentMode="scaleToFill" alignment="center" spacing="2" translatesAutoresizingMaskIntoConstraints="NO" id="QuG-hL-5lG" userLabel="Wind HStack">
                                                                 <rect key="frame" x="250" y="2" width="34" height="16"/>
                                                                 <subviews>
                                                                     <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" image="wind_2c" translatesAutoresizingMaskIntoConstraints="NO" id="oYy-99-jES" userLabel="Wind Strength Img">
@@ -836,7 +836,7 @@
                                                                     <constraint firstItem="oYy-99-jES" firstAttribute="centerY" secondItem="QuG-hL-5lG" secondAttribute="centerY" id="r8d-Vu-voT"/>
                                                                 </constraints>
                                                             </stackView>
-                                                            <stackView opaque="NO" contentMode="scaleToFill" alignment="center" spacing="2" translatesAutoresizingMaskIntoConstraints="NO" id="yT2-5Y-mc9" userLabel="Temp Stack View">
+                                                            <stackView opaque="NO" contentMode="scaleToFill" alignment="center" spacing="2" translatesAutoresizingMaskIntoConstraints="NO" id="yT2-5Y-mc9" userLabel="Temp HStack">
                                                                 <rect key="frame" x="314.5" y="0.0" width="34.5" height="19.5"/>
                                                                 <subviews>
                                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" text="18°" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZSq-QI-SlO" userLabel="Temp Text">
@@ -887,7 +887,7 @@
                                                     <stackView opaque="NO" contentMode="scaleToFill" distribution="equalSpacing" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="wTr-pE-quH" userLabel="Bottom HStack">
                                                         <rect key="frame" x="0.0" y="55" width="349" height="19.5"/>
                                                         <subviews>
-                                                            <stackView opaque="NO" contentMode="scaleToFill" alignment="center" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="U7v-4r-65G" userLabel="Star Alt Stack View">
+                                                            <stackView opaque="NO" contentMode="scaleToFill" alignment="center" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="U7v-4r-65G" userLabel="Star Alt HStack">
                                                                 <rect key="frame" x="0.0" y="0.0" width="56.5" height="19.5"/>
                                                                 <subviews>
                                                                     <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" translatesAutoresizingMaskIntoConstraints="NO" id="XKy-gC-OYs" userLabel="Star Alt Img">
@@ -910,7 +910,7 @@
                                                                     <constraint firstItem="YHx-pp-hd1" firstAttribute="centerY" secondItem="U7v-4r-65G" secondAttribute="centerY" id="g6V-ap-Hsw"/>
                                                                 </constraints>
                                                             </stackView>
-                                                            <stackView opaque="NO" contentMode="scaleToFill" alignment="center" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="8LX-JT-3DF" userLabel="Sun  Alt Stack View">
+                                                            <stackView opaque="NO" contentMode="scaleToFill" alignment="center" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="8LX-JT-3DF" userLabel="Sun  Alt HStack">
                                                                 <rect key="frame" x="98.5" y="0.0" width="63.5" height="19.5"/>
                                                                 <subviews>
                                                                     <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" translatesAutoresizingMaskIntoConstraints="NO" id="sQT-p9-pck" userLabel="Sun Alt Img">
@@ -934,7 +934,7 @@
                                                                 </constraints>
                                                                 <viewLayoutGuide key="safeArea" id="aU2-gi-pNu"/>
                                                             </stackView>
-                                                            <stackView opaque="NO" contentMode="scaleToFill" alignment="center" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="maa-WR-bh0" userLabel="Moon  Alt Stack View">
+                                                            <stackView opaque="NO" contentMode="scaleToFill" alignment="center" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="maa-WR-bh0" userLabel="Moon  Alt HStack">
                                                                 <rect key="frame" x="204" y="0.0" width="57.5" height="19.5"/>
                                                                 <subviews>
                                                                     <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" translatesAutoresizingMaskIntoConstraints="NO" id="Oly-DR-BDl" userLabel="Moon Alt Img">
@@ -958,7 +958,7 @@
                                                                 </constraints>
                                                                 <viewLayoutGuide key="safeArea" id="R6q-Jw-UPs"/>
                                                             </stackView>
-                                                            <stackView opaque="NO" contentMode="scaleToFill" alignment="center" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="0Pm-Nd-mm6" userLabel="Moon  Sep Stack View">
+                                                            <stackView opaque="NO" contentMode="scaleToFill" alignment="center" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="0Pm-Nd-mm6" userLabel="Moon  Sep HStack">
                                                                 <rect key="frame" x="303.5" y="0.0" width="45.5" height="19.5"/>
                                                                 <subviews>
                                                                     <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" translatesAutoresizingMaskIntoConstraints="NO" id="Utg-Kl-gus" userLabel="Moon Sep Img">
@@ -1008,22 +1008,22 @@
                                         </constraints>
                                     </view>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="8kR-kG-KhO" userLabel="View 4">
-                                        <rect key="frame" x="0.0" y="195" width="365" height="55.5"/>
+                                        <rect key="frame" x="0.0" y="241.5" width="365" height="86.5"/>
                                         <subviews>
-                                            <stackView contentMode="scaleToFill" axis="vertical" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="NGQ-Me-PRM">
-                                                <rect key="frame" x="8" y="0.0" width="349" height="55.5"/>
+                                            <stackView contentMode="scaleToFill" axis="vertical" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="NGQ-Me-PRM" userLabel="Star Info VStack">
+                                                <rect key="frame" x="8" y="0.0" width="349" height="86.5"/>
                                                 <subviews>
-                                                    <stackView opaque="NO" contentMode="scaleToFill" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="EYo-j8-VAk" userLabel="HStack View 1">
-                                                        <rect key="frame" x="0.0" y="0.0" width="349" height="28"/>
+                                                    <stackView opaque="NO" contentMode="scaleToFill" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="EYo-j8-VAk" userLabel="RA/Dec HStack">
+                                                        <rect key="frame" x="0.0" y="0.0" width="349" height="43.5"/>
                                                         <subviews>
                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" text="RA  07h 08m 05.6s" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qHW-5v-fWt">
-                                                                <rect key="frame" x="0.0" y="4" width="139" height="19.5"/>
+                                                                <rect key="frame" x="0.0" y="12" width="139" height="19.5"/>
                                                                 <fontDescription key="fontDescription" style="UICTFontTextStyleCallout"/>
                                                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                 <nil key="highlightedColor"/>
                                                             </label>
                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" text="Dec  +20° 06' 50.9&quot;" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QrG-cJ-86B">
-                                                                <rect key="frame" x="139" y="4" width="210" height="19.5"/>
+                                                                <rect key="frame" x="139" y="12" width="210" height="19.5"/>
                                                                 <fontDescription key="fontDescription" style="UICTFontTextStyleCallout"/>
                                                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                 <nil key="highlightedColor"/>
@@ -1036,17 +1036,17 @@
                                                             <constraint firstItem="QrG-cJ-86B" firstAttribute="centerY" secondItem="qHW-5v-fWt" secondAttribute="centerY" id="wd1-zA-1K6"/>
                                                         </constraints>
                                                     </stackView>
-                                                    <stackView opaque="NO" contentMode="scaleToFill" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="SeI-hh-4GI" userLabel="HStack View 2">
-                                                        <rect key="frame" x="0.0" y="28" width="349" height="27.5"/>
+                                                    <stackView opaque="NO" contentMode="scaleToFill" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="SeI-hh-4GI" userLabel="BV HStack">
+                                                        <rect key="frame" x="0.0" y="43.5" width="349" height="43"/>
                                                         <subviews>
                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" text="BV  0.861" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4Oq-hn-pVL">
-                                                                <rect key="frame" x="0.0" y="4" width="211" height="19.5"/>
+                                                                <rect key="frame" x="0.0" y="11.5" width="211" height="19.5"/>
                                                                 <fontDescription key="fontDescription" style="UICTFontTextStyleCallout"/>
                                                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                 <nil key="highlightedColor"/>
                                                             </label>
                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Stella Dia.  0.0 mas" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vPb-Rx-DhT">
-                                                                <rect key="frame" x="211" y="4" width="138" height="19.5"/>
+                                                                <rect key="frame" x="211" y="11.5" width="138" height="19.5"/>
                                                                 <fontDescription key="fontDescription" style="UICTFontTextStyleCallout"/>
                                                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                 <nil key="highlightedColor"/>
@@ -1071,22 +1071,22 @@
                                         </constraints>
                                     </view>
                                     <view contentMode="center" translatesAutoresizingMaskIntoConstraints="NO" id="hu9-44-4Gp" userLabel="View 5">
-                                        <rect key="frame" x="0.0" y="253.5" width="365" height="144"/>
+                                        <rect key="frame" x="0.0" y="331" width="365" height="105"/>
                                         <subviews>
-                                            <stackView contentMode="scaleToFill" axis="vertical" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="H9P-lK-oLH">
-                                                <rect key="frame" x="8" y="0.0" width="349" height="144"/>
+                                            <stackView contentMode="scaleToFill" axis="vertical" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="H9P-lK-oLH" userLabel="Aster VStack">
+                                                <rect key="frame" x="8" y="0.0" width="349" height="105"/>
                                                 <subviews>
-                                                    <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="uVe-H2-ekN" userLabel="HStack View 1">
-                                                        <rect key="frame" x="0.0" y="0.0" width="349" height="48"/>
+                                                    <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="uVe-H2-ekN" userLabel="Aster Diam HStack">
+                                                        <rect key="frame" x="0.0" y="0.0" width="349" height="35"/>
                                                         <subviews>
                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" text="Main Asteroid Belt" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ncY-ji-tEs">
-                                                                <rect key="frame" x="0.0" y="0.0" width="132" height="48"/>
+                                                                <rect key="frame" x="0.0" y="0.0" width="132" height="35"/>
                                                                 <fontDescription key="fontDescription" style="UICTFontTextStyleCallout"/>
                                                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                 <nil key="highlightedColor"/>
                                                             </label>
                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" text="Diameter 7.0 km" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RX4-MR-uvs">
-                                                                <rect key="frame" x="132" y="0.0" width="217" height="48"/>
+                                                                <rect key="frame" x="132" y="0.0" width="217" height="35"/>
                                                                 <fontDescription key="fontDescription" style="UICTFontTextStyleCallout"/>
                                                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                 <nil key="highlightedColor"/>
@@ -1099,17 +1099,17 @@
                                                             <constraint firstItem="ncY-ji-tEs" firstAttribute="centerY" secondItem="uVe-H2-ekN" secondAttribute="centerY" id="fSF-76-GUX"/>
                                                         </constraints>
                                                     </stackView>
-                                                    <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="bux-Q1-B81" userLabel="HStack View 2">
-                                                        <rect key="frame" x="0.0" y="48" width="349" height="48"/>
+                                                    <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="bux-Q1-B81" userLabel="Aster Mag HStack">
+                                                        <rect key="frame" x="0.0" y="35" width="349" height="35"/>
                                                         <subviews>
                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" text="Star Mag 11.90" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7hI-nL-0Ep">
-                                                                <rect key="frame" x="0.0" y="0.0" width="227.5" height="48"/>
+                                                                <rect key="frame" x="0.0" y="0.0" width="227.5" height="35"/>
                                                                 <fontDescription key="fontDescription" style="UICTFontTextStyleCallout"/>
                                                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                 <nil key="highlightedColor"/>
                                                             </label>
                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Aster. Mag 15.90" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dVX-Qz-Run">
-                                                                <rect key="frame" x="227.5" y="0.0" width="121.5" height="48"/>
+                                                                <rect key="frame" x="227.5" y="0.0" width="121.5" height="35"/>
                                                                 <fontDescription key="fontDescription" style="UICTFontTextStyleCallout"/>
                                                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                 <nil key="highlightedColor"/>
@@ -1122,17 +1122,17 @@
                                                             <constraint firstAttribute="trailing" secondItem="dVX-Qz-Run" secondAttribute="trailing" id="ibc-9Z-6Dt"/>
                                                         </constraints>
                                                     </stackView>
-                                                    <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="46l-Gg-6LX" userLabel="HStack View 3">
-                                                        <rect key="frame" x="0.0" y="96" width="349" height="48"/>
+                                                    <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="46l-Gg-6LX" userLabel="Mag Drop HStack">
+                                                        <rect key="frame" x="0.0" y="70" width="349" height="35"/>
                                                         <subviews>
                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" text="Comb. Mag  11.87" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UXk-A1-aT8">
-                                                                <rect key="frame" x="0.0" y="0.0" width="236.5" height="48"/>
+                                                                <rect key="frame" x="0.0" y="0.0" width="236.5" height="35"/>
                                                                 <fontDescription key="fontDescription" style="UICTFontTextStyleCallout"/>
                                                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                 <nil key="highlightedColor"/>
                                                             </label>
                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Mag Drop  4.03" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cqt-Iv-OMa">
-                                                                <rect key="frame" x="236.5" y="0.0" width="112.5" height="48"/>
+                                                                <rect key="frame" x="236.5" y="0.0" width="112.5" height="35"/>
                                                                 <fontDescription key="fontDescription" style="UICTFontTextStyleCallout"/>
                                                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                 <nil key="highlightedColor"/>
@@ -1157,12 +1157,12 @@
                                         </constraints>
                                     </view>
                                     <view contentMode="center" translatesAutoresizingMaskIntoConstraints="NO" id="ks6-Ka-4BI" userLabel="View 6">
-                                        <rect key="frame" x="0.0" y="400.5" width="365" height="143.5"/>
+                                        <rect key="frame" x="0.0" y="439" width="365" height="105"/>
                                         <subviews>
-                                            <stackView contentMode="scaleToFill" axis="vertical" distribution="fillProportionally" spacing="1" translatesAutoresizingMaskIntoConstraints="NO" id="hlS-NS-1nk">
+                                            <stackView contentMode="scaleToFill" axis="vertical" distribution="fillProportionally" spacing="1" translatesAutoresizingMaskIntoConstraints="NO" id="hlS-NS-1nk" userLabel="Camera VStack">
                                                 <rect key="frame" x="8" y="0.0" width="349" height="91"/>
                                                 <subviews>
-                                                    <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="pYt-l3-Psb" userLabel="HStack View 1">
+                                                    <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="pYt-l3-Psb" userLabel="Cam HStack">
                                                         <rect key="frame" x="0.0" y="0.0" width="349" height="50"/>
                                                         <subviews>
                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" text="WAT-120N+ Magnitudes:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WUW-PI-DT4">
@@ -1185,7 +1185,7 @@
                                                             <constraint firstItem="WUW-PI-DT4" firstAttribute="centerY" secondItem="pYt-l3-Psb" secondAttribute="centerY" id="Ndm-D7-ndq"/>
                                                         </constraints>
                                                     </stackView>
-                                                    <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ms8-ox-RwS" userLabel="HStack View 2">
+                                                    <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ms8-ox-RwS" userLabel="Cam Mag Drop HStack">
                                                         <rect key="frame" x="0.0" y="51" width="349" height="19.5"/>
                                                         <subviews>
                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" text="Comb. Mag  12.13" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NmR-Ch-0Hk">
@@ -1208,7 +1208,7 @@
                                                             <constraint firstAttribute="trailing" secondItem="St9-Rf-o5T" secondAttribute="trailing" id="uPB-B0-fVD"/>
                                                         </constraints>
                                                     </stackView>
-                                                    <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="GgE-i9-KDU" userLabel="HStack View 3">
+                                                    <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="GgE-i9-KDU" userLabel="Rotation HStack">
                                                         <rect key="frame" x="0.0" y="71.5" width="349" height="19.5"/>
                                                         <subviews>
                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" text="Rotation  6.107 h" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iG2-N3-nzj">
