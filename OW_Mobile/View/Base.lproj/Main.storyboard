@@ -770,17 +770,17 @@
                                             <constraint firstItem="qFM-b9-xCf" firstAttribute="centerX" secondItem="HuD-ai-6Aw" secondAttribute="centerX" id="YiJ-yK-bAv"/>
                                             <constraint firstItem="Zlt-mA-YQ5" firstAttribute="centerX" secondItem="HuD-ai-6Aw" secondAttribute="centerX" id="ZjN-wR-ccV"/>
                                             <constraint firstItem="c4Z-ek-M3c" firstAttribute="width" secondItem="RoV-Cl-X5I" secondAttribute="width" multiplier="0.25" id="dzB-Uz-Z9Z"/>
-                                            <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="60" id="f0N-sn-dZ8"/>
                                             <constraint firstItem="Zlt-mA-YQ5" firstAttribute="width" secondItem="RoV-Cl-X5I" secondAttribute="width" multiplier="0.9" id="lfr-3C-Mxd"/>
                                             <constraint firstItem="c4Z-ek-M3c" firstAttribute="centerY" secondItem="Zlt-mA-YQ5" secondAttribute="centerY" id="noL-x6-gLC"/>
                                             <constraint firstItem="Zlt-mA-YQ5" firstAttribute="bottom" secondItem="qFM-b9-xCf" secondAttribute="bottom" id="qLn-uO-iAH"/>
+                                            <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="60" id="rLW-kp-P15"/>
                                         </constraints>
                                     </view>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3EZ-5s-Kxd" userLabel="View 3">
                                         <rect key="frame" x="0.0" y="152.5" width="365" height="86"/>
                                         <subviews>
-                                            <stackView opaque="NO" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" axis="vertical" distribution="fillProportionally" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="Tqu-Kr-t2u" userLabel="Info VStack">
-                                                <rect key="frame" x="8" y="8" width="349" height="74.5"/>
+                                            <stackView opaque="NO" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" axis="vertical" distribution="fillProportionally" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="Tqu-Kr-t2u" userLabel="Info VStack">
+                                                <rect key="frame" x="8" y="5" width="349" height="68.5"/>
                                                 <subviews>
                                                     <stackView opaque="NO" contentMode="scaleToFill" distribution="equalSpacing" alignment="center" spacing="7" translatesAutoresizingMaskIntoConstraints="NO" id="Udl-Y6-ga9" userLabel="Top HStack">
                                                         <rect key="frame" x="0.0" y="0.0" width="349" height="19.5"/>
@@ -857,7 +857,7 @@
                                                         </subviews>
                                                     </stackView>
                                                     <stackView opaque="NO" contentMode="scaleToFill" distribution="equalSpacing" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="cpP-oo-hgN" userLabel="Middle HStack">
-                                                        <rect key="frame" x="0.0" y="27.5" width="349" height="19.5"/>
+                                                        <rect key="frame" x="0.0" y="24.5" width="349" height="19.5"/>
                                                         <subviews>
                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" text="Chord: 128 km" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rX0-B6-dsR" userLabel="Chord Dist">
                                                                 <rect key="frame" x="0.0" y="0.0" width="106" height="19.5"/>
@@ -885,7 +885,7 @@
                                                         </constraints>
                                                     </stackView>
                                                     <stackView opaque="NO" contentMode="scaleToFill" distribution="equalSpacing" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="wTr-pE-quH" userLabel="Bottom HStack">
-                                                        <rect key="frame" x="0.0" y="55" width="349" height="19.5"/>
+                                                        <rect key="frame" x="0.0" y="49" width="349" height="19.5"/>
                                                         <subviews>
                                                             <stackView opaque="NO" contentMode="scaleToFill" alignment="center" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="U7v-4r-65G" userLabel="Star Alt HStack">
                                                                 <rect key="frame" x="0.0" y="0.0" width="56.5" height="19.5"/>
@@ -1001,10 +1001,10 @@
                                         </subviews>
                                         <color key="backgroundColor" red="0.33827376365661621" green="0.62727898359298706" blue="0.66275101900100708" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                         <constraints>
-                                            <constraint firstItem="Tqu-Kr-t2u" firstAttribute="top" secondItem="3EZ-5s-Kxd" secondAttribute="top" constant="8" id="Djw-Eb-1ex"/>
+                                            <constraint firstItem="Tqu-Kr-t2u" firstAttribute="top" secondItem="3EZ-5s-Kxd" secondAttribute="top" constant="5" id="Djw-Eb-1ex"/>
                                             <constraint firstItem="Tqu-Kr-t2u" firstAttribute="leading" secondItem="3EZ-5s-Kxd" secondAttribute="leadingMargin" id="MmK-W0-TLh"/>
                                             <constraint firstAttribute="trailingMargin" secondItem="Tqu-Kr-t2u" secondAttribute="trailing" id="hFO-vU-LlV"/>
-                                            <constraint firstAttribute="bottom" secondItem="Tqu-Kr-t2u" secondAttribute="bottom" constant="8" id="zFz-uF-oK4"/>
+                                            <constraint firstAttribute="bottom" secondItem="Tqu-Kr-t2u" secondAttribute="bottom" constant="5" id="zFz-uF-oK4"/>
                                         </constraints>
                                     </view>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="8kR-kG-KhO" userLabel="View 4">
