@@ -206,13 +206,15 @@ extension MyEventsViewController
     let magAttrStr = NSMutableAttributedString(string:"m", attributes:[NSAttributedString.Key.font : captionFont,
                                                                        NSAttributedString.Key.baselineOffset: 5])
     let starMagStr = String(format: "%.01f",cellDataArray[indexPath.row]!.StarMag)
-    let starMagAttrStr = NSMutableAttributedString(string:starMagStr, attributes:[NSAttributedString.Key.font : calloutFont])
+//    let starMagAttrStr = NSMutableAttributedString(string:starMagStr, attributes:[NSAttributedString.Key.font : calloutFont])
+    let starMagAttrStr = NSMutableAttributedString(string:starMagStr)
     starMagAttrStr.append(magAttrStr)
     cell.starMagText.attributedText = starMagAttrStr
     if cellDataArray[indexPath.row]!.MagDrop >= 0.2
     {
       let magDropStr = String(format: "%.01f",cellDataArray[indexPath.row]!.MagDrop)
-      let magDropAttrStr = NSMutableAttributedString(string:magDropStr, attributes:[NSAttributedString.Key.font : calloutFont])
+//      let magDropAttrStr = NSMutableAttributedString(string:magDropStr, attributes:[NSAttributedString.Key.font : calloutFont])
+      let magDropAttrStr = NSMutableAttributedString(string:magDropStr)
       magDropAttrStr.append(magAttrStr)
       cell.magDropText.attributedText = magDropAttrStr
     }
