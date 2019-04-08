@@ -14,6 +14,12 @@ struct UDKeys
   static let myEventList = "myEventList"
 }
 
+//delegate protocol
+protocol webServiceDelegate: class
+{
+  func webLogTextDidChange(text: String)
+}
+
 //Event structure matching JSON keys
 struct Event: Codable
 {
@@ -41,6 +47,8 @@ struct MyEvents: Codable
 
 class WebService: NSObject
 {
+  weak var delegate: webServiceDelegate?
+  
   let host = "www.occultwatcher.net"
   let path = "/api/v1/events/list"
   let scheme = "https"
@@ -51,7 +59,8 @@ class WebService: NSObject
 //    let password = "dei77mos"
   
   var parsedJSON = [Event]()
-  
+  let second: Double = 1000000
+
   // MARK: - OW Web Service Functions
   func creatURL(owSession: URLSession) -> URL
   {
@@ -71,16 +80,20 @@ class WebService: NSObject
     urlComponents.password = password
     
     let owURL = urlComponents.url!
-    print("owURL = ",owURL)
+//    print("owURL = ",owURL)
     return owURL
   }
   
   func retrieveEventList(completion: @escaping ([Event]?, Error?) -> Void)
   {
+    delegate?.webLogTextDidChange(text: "Connecting to OW")
     let config = URLSessionConfiguration.default
     let owSession = URLSession(configuration: config)
     let owURL = creatURL(owSession: owSession)
     print("owURL=",owURL)
+//    delegate?.webLogTextDidChange(text: "Connecting to " + owURL.description)
+
+//    delegate?.webLogTextDidChange(text: "Begin...")
     let owTask = owSession.dataTask(with: owURL)
     {
       (data,response,error) in
@@ -88,11 +101,17 @@ class WebService: NSObject
         else
       {
         print("\n*******Error:", error as Any)
+        self.delegate?.webLogTextDidChange(text: "\n*******Error:" + error!.localizedDescription)
+        usleep(useconds_t(0.5 * 1000000)) //will sleep for 0.5 seconds)
         return
       }
       print("data retrieved")
+      self.delegate?.webLogTextDidChange(text: "Data Retrieved")
+      usleep(useconds_t(0.5 * 1000000)) //will sleep for 0.5 seconds)
       let myEvents = self.parseEventData(jsonData: dataResponse)
       print("myEvents count=", myEvents.count)
+      self.delegate?.webLogTextDidChange(text: "myEvents count= \(myEvents.count)")
+      usleep(useconds_t(0.5 * 1000000)) //will sleep for 0.5 seconds)
       completion(myEvents,nil)
     }
     print("...owTask.resume()")

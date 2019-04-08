@@ -17,7 +17,7 @@ class TabBarController: UITabBarController {
     // Do any additional setup after loading the view.
     let fontAttributes = [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 16.0)]
     UITabBarItem.appearance().setTitleTextAttributes(fontAttributes, for: .normal)
-    print("TabBarController > viewDidLoad")
+
   }
   
 }

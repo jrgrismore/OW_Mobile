@@ -11,6 +11,9 @@ import UIKit
 class MyEventsViewController: UIViewController, UICollectionViewDataSource,UICollectionViewDelegate, UICollectionViewDelegateFlowLayout
 {
   @IBOutlet weak var myEventsCollection: UICollectionView!
+  @IBOutlet weak var activitySpinner: UIActivityIndicatorView!
+  @IBOutlet weak var spinnerLbl: UILabel!
+  @IBOutlet weak var spinnerView: UIView!
   
   let reuseIdentifier = "MyEventCell"
   var cellDataArray = [Event?]()
@@ -32,15 +35,15 @@ class MyEventsViewController: UIViewController, UICollectionViewDataSource,UICol
     //set layout attributes
     if let flowLayout = self.myEventsCollection.collectionViewLayout as? UICollectionViewFlowLayout
     {
-      print("UIScreen.main.bounds.width=",UIScreen.main.bounds.width)
-      print("myEventsCollection.bounds.width=",myEventsCollection.bounds.width)
+//      print("UIScreen.main.bounds.width=",UIScreen.main.bounds.width)
+//      print("myEventsCollection.bounds.width=",myEventsCollection.bounds.width)
       flowLayout.minimumLineSpacing = 5
       flowLayout.minimumInteritemSpacing = 3
       flowLayout.sectionInset = UIEdgeInsets(top: 5, left: 5, bottom: 7, right: 5)
       let totalHInsets = flowLayout.sectionInset.left + flowLayout.sectionInset.right
-      print("totalHInsets=",totalHInsets)
+//      print("totalHInsets=",totalHInsets)
       let totalInteritemSpace = flowLayout.minimumInteritemSpacing * CGFloat(cellsInRow - 1)
-      print("totalInteritemSpace=",totalInteritemSpace)
+//      print("totalInteritemSpace=",totalInteritemSpace)
 //      let cellWidth = (UIScreen.main.bounds.width - totalInteritemSpace - totalHInsets)/CGFloat(cellsInRow)
 //      let cellWidth = (myEventsCollection.bounds.width - totalInteritemSpace - totalHInsets)/CGFloat(cellsInRow)
        //      print("cellWidth=",cellWidth)
@@ -55,10 +58,13 @@ class MyEventsViewController: UIViewController, UICollectionViewDataSource,UICol
   override func viewDidLoad()
   {
     super.viewDidLoad()
+    parsedJSON.delegate = self
     myEventsCollection.backgroundColor =  _ColorLiteralType(red: 0.03605184332, green: 0.2271486223, blue: 0.2422576547, alpha: 1)
     cellDataArray = self.parsedJSON.load()
     //test
 //    cellDataArray = []
+    
+    self.spinnerView.layer.cornerRadius = 20
     
     DispatchQueue.main.async{self.myEventsCollection.reloadData()}
     if cellDataArray.count == 0
@@ -70,8 +76,8 @@ class MyEventsViewController: UIViewController, UICollectionViewDataSource,UICol
   override func viewWillAppear(_ animated: Bool)
   {
     //set cell size
-    let cellsInRow = 1
-    let cellHeight = 180
+//    let cellsInRow = 1
+//    let cellHeight = 180
     //set layout attributes
 //    if let flowLayout = self.myEventsCollection.collectionViewLayout as? UICollectionViewFlowLayout
 //    {
@@ -89,6 +95,8 @@ class MyEventsViewController: UIViewController, UICollectionViewDataSource,UICol
 //      //      print("cellWidth=",cellWidth)
 //      flowLayout.itemSize = CGSize(width: cellWidth, height: CGFloat(cellHeight))
 //    }
+    
+ 
   }
   
   override func prepare(for segue: UIStoryboardSegue, sender: Any?)
@@ -107,10 +115,19 @@ class MyEventsViewController: UIViewController, UICollectionViewDataSource,UICol
   //retrieve json, parse json, use closure to fill cells
   func updateCellArray()
   {
+    DispatchQueue.main.async
+      {
+        self.spinnerView.isHidden = false
+        self.activitySpinner.startAnimating()
+      }
+
     //    let parsedJSON = WebService()
+    DispatchQueue.main.async{self.spinnerLbl.text = "Fetching Event Data..."}
+    usleep(useconds_t(0.5 * 1000000)) //will sleep for 0.5 seconds)
     parsedJSON.retrieveEventList(completion: { (myEvents, error) in
       //fill cells
-      print("download and parsing complete")
+      DispatchQueue.main.async{self.spinnerLbl.text = "download and parsing complete"}
+      usleep(useconds_t(0.5 * 1000000)) //will sleep for 0.5 seconds)
 //            for item in myEvents!
 //            {
 //              self.printEventInfo(eventItem: item)
@@ -118,8 +135,14 @@ class MyEventsViewController: UIViewController, UICollectionViewDataSource,UICol
       self.parsedJSON.save(myEvents!)
       self.cellDataArray = myEvents!
       print("cell data array updated")
-      print("\nreloading collection view")
+      DispatchQueue.main.async{self.spinnerLbl.text = "Updating Events..."}
       DispatchQueue.main.async{self.myEventsCollection.reloadData()}
+      usleep(useconds_t(0.5 * 1000000)) //will sleep for 0.5 seconds)
+      DispatchQueue.main.async
+        {
+        self.activitySpinner.stopAnimating()
+        self.spinnerView.isHidden = true
+        }
     })
   }
   
@@ -128,14 +151,20 @@ class MyEventsViewController: UIViewController, UICollectionViewDataSource,UICol
     updateCellArray()
   }
   
+  // MARK: - Utility functions
+  
+
 }
+
+
+
 
 extension MyEventsViewController
 {
   // MARK: - Collection delegate functions
   func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int
   {
-    print("numberOfItemsInSection=",cellDataArray.count)
+//    print("numberOfItemsInSection=",cellDataArray.count)
     return cellDataArray.count
   }
   
@@ -311,5 +340,18 @@ extension MyEventsViewController
       print("StarColour =",item.StarColour)
     }
 
+  }
+
+}
+
+extension MyEventsViewController: webServiceDelegate
+{
+  func webLogTextDidChange(text: String)
+  {
+    DispatchQueue.main.async
+      {
+        print("webLogTextDidChange>text to: ",text)
+        self.spinnerLbl.text = text
+    }
   }
 }
