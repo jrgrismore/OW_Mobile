@@ -22,6 +22,7 @@ class AccountViewController: UIViewController, UITextFieldDelegate
   @IBOutlet weak var passwordView: UIView!
   @IBOutlet weak var emailFld: UITextField!
   @IBOutlet weak var passwordFld: UITextField!
+  @IBOutlet weak var versionLbl: UILabel!
   
   override func viewDidLoad()
   {
@@ -34,6 +35,12 @@ class AccountViewController: UIViewController, UITextFieldDelegate
     passwordFld.textContentType = .password
   }
   
+  override func viewWillAppear(_ animated: Bool)
+  {
+    super.viewWillAppear(true)
+    versionLbl.text = versionBuild()
+  }
+  
   func textFieldShouldReturn(_ textField: UITextField) -> Bool
   {
     textField.resignFirstResponder()
@@ -43,4 +50,12 @@ class AccountViewController: UIViewController, UITextFieldDelegate
     print("Credentials=",Credentials.username,"   ",Credentials.password)
     return true
   }
+  
+  func versionBuild() -> String {
+    let dictionary = Bundle.main.infoDictionary!
+    let version = dictionary["CFBundleShortVersionString"] as! String
+    let build = dictionary["CFBundleVersion"] as! String
+    return "v\(version)b\(build)"
+  }
+
 }

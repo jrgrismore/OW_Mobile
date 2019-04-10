@@ -161,11 +161,18 @@
                                     <constraint firstAttribute="height" constant="25" id="NIf-D6-0Kb"/>
                                 </constraints>
                             </view>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fIO-Fp-Cvr">
+                                <rect key="frame" x="166.5" y="589.5" width="42" height="20.5"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" red="0.77657884359359741" green="0.79993695020675659" blue="0.8274492621421814" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                         <constraints>
                             <constraint firstItem="IjN-u9-65v" firstAttribute="top" secondItem="FIc-7P-eEO" secondAttribute="bottom" constant="30" id="1TW-1B-u98"/>
                             <constraint firstItem="FIc-7P-eEO" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="B7l-uM-7U2"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="fIO-Fp-Cvr" secondAttribute="bottom" constant="8" id="DbS-2d-5AB"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="IjN-u9-65v" secondAttribute="trailing" constant="20" id="FHf-uL-jkZ">
                                 <variation key="widthClass=compact" constant="8"/>
                             </constraint>
@@ -173,6 +180,7 @@
                             <constraint firstItem="Ygo-cg-NVd" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="7" id="WKt-tf-DUe"/>
                             <constraint firstItem="IjN-u9-65v" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="cKb-xp-yiq"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="FIc-7P-eEO" secondAttribute="trailing" id="hFZ-qr-8Uz"/>
+                            <constraint firstItem="fIO-Fp-Cvr" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="jsp-Du-2aA"/>
                             <constraint firstItem="Ygo-cg-NVd" firstAttribute="centerY" secondItem="FIc-7P-eEO" secondAttribute="centerY" id="mfA-vq-tjw"/>
                             <constraint firstItem="FIc-7P-eEO" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="yHv-Qh-Qno"/>
                         </constraints>
@@ -196,6 +204,7 @@
                         <outlet property="emailView" destination="qts-wP-BWi" id="MFh-f1-70M"/>
                         <outlet property="passwordFld" destination="rE7-Zx-RpM" id="dfs-EV-MF5"/>
                         <outlet property="passwordView" destination="rcS-6X-rK4" id="FHY-Oy-wdT"/>
+                        <outlet property="versionLbl" destination="fIO-Fp-Cvr" id="Qux-pv-X2h"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
