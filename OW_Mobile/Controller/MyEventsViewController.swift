@@ -282,8 +282,9 @@ extension MyEventsViewController
     {
       cloudIcon(indexPath, cell)   // set cloud % icon
       
-      cell.windStrengthImg.image =  #imageLiteral(resourceName: "wind_3")
-      cell.windyImg.image =  #imageLiteral(resourceName: "wind_sign")
+      windStrengthIcon(indexPath, cell)   //set wind strength icon
+      windSignIcon(indexPath, cell)
+      
       cell.tempImg.image =  #imageLiteral(resourceName: "term_b")
       //set weather text to appropriate text
       cell.cloudText.text = String(format: "%d%%",cellDataArray[indexPath.row]!.CloudCover)
@@ -369,10 +370,10 @@ extension MyEventsViewController
 
   func stationSigmaIcon(_ indexPath: IndexPath, _ cell: MyEventsCollectionViewCell)
   {
-//    Shadow (0) = spos_0.png,
-//    OneSigma (1) = spos_1_2.png,
-//    ThreeSigma (2) = spos_1_2.png,
-//    Outside (3) = = spos_3.png
+    //    Shadow (0) = spos_0.png,
+    //    OneSigma (1) = spos_1_2.png,
+    //    ThreeSigma (2) = spos_1_2.png,
+    //    Outside (3) = = spos_3.png
     switch cellDataArray[indexPath.row]!.BestStationPos
     {
     case 0:
@@ -387,7 +388,48 @@ extension MyEventsViewController
       cell.sigmaImg.image =  #imageLiteral(resourceName: "spos_3")
     }
   }
-  
+
+  func windStrengthIcon(_ indexPath: IndexPath, _ cell: MyEventsCollectionViewCell)
+  {
+//    0 = wind_0.png;
+//    1 = wind_1.png;
+//    2 = wind_2.png;
+//    3 = wind_3.png;
+//    4 = wind_4.png;
+//    5, 6, 7 = wind_5_6_7.png;
+    switch cellDataArray[indexPath.row]!.Wind
+    {
+    case 0:
+      cell.windStrengthImg.image =  #imageLiteral(resourceName: "wind_0")
+    case 1:
+      cell.windStrengthImg.image =  #imageLiteral(resourceName: "wind_1")
+    case 2:
+      cell.windStrengthImg.image =  #imageLiteral(resourceName: "wind_2")
+    case 3:
+      cell.windStrengthImg.image =  #imageLiteral(resourceName: "wind_3")
+    case 4:
+      cell.windStrengthImg.image =  #imageLiteral(resourceName: "wind_4")
+    case 5...7:
+      cell.windStrengthImg.image =  #imageLiteral(resourceName: "wind_5_6_7")
+    default:
+      cell.windStrengthImg.image =  #imageLiteral(resourceName: "wind_0")
+    }
+  }
+
+  func windSignIcon(_ indexPath: IndexPath, _ cell: MyEventsCollectionViewCell)
+  {
+    //if there is wind use wind_sign.png, if no wind use wind_sign_gray.png
+    if cellDataArray[indexPath.row]!.Wind > 0
+    {
+      print("wind sign black")
+      cell.windyImg.image = #imageLiteral(resourceName: "wind_sign")
+    }
+    else
+    {
+      print("wind sign gray")
+      cell.windyImg.image = #imageLiteral(resourceName: "wind_sign_gray")
+    }
+  }
   
   func printEventInfo(eventItem item: Event)
   {
