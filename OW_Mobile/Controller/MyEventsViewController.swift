@@ -223,7 +223,7 @@ extension MyEventsViewController
     }
     return leadTimeString
   }
-
+  
   func fillCellFields(cell: inout MyEventsCollectionViewCell, indexPath: IndexPath)
   {
     //cell text
@@ -271,40 +271,18 @@ extension MyEventsViewController
       }
     }
     //cell images
-    cell.sigmaImg.image =  #imageLiteral(resourceName: "spos_0")
-    cell.starMagImg.image = #imageLiteral(resourceName: "star_y")
     cell.maxDurImg.image = #imageLiteral(resourceName: "max_sign")
     cell.magDropImg.image = #imageLiteral(resourceName: "drop_sign")
+
+    stationSigmaIcon(indexPath, cell)   //set station sigma icon
+    starColorIcon(indexPath, cell)   //set star color icon
+    
     //display weather info if forecast available, no display if no forecast
     if cellDataArray[indexPath.row]!.WeatherInfoAvailable
     {
-      //set weather images to appropriate image
-      switch cellDataArray[indexPath.row]!.CloudCover
-      {
-      case 0...9:
-        cell.cloudImg.image =  #imageLiteral(resourceName: "cloud_0")
-      case 10...19:
-        cell.cloudImg.image =  #imageLiteral(resourceName: "cloud_10")
-      case 20...29:
-        cell.cloudImg.image =  #imageLiteral(resourceName: "cloud_20")
-      case 30...39:
-        cell.cloudImg.image =  #imageLiteral(resourceName: "cloud_30")
-      case 40...49:
-        cell.cloudImg.image =  #imageLiteral(resourceName: "cloud_40.png")
-      case 50...59:
-        cell.cloudImg.image =  #imageLiteral(resourceName: "cloud_50.png")
-      case 60...69:
-        cell.cloudImg.image =  #imageLiteral(resourceName: "cloud_60.png")
-      case 70...79:
-        cell.cloudImg.image =  #imageLiteral(resourceName: "cloud_70.png")
-      case 80...89:
-        cell.cloudImg.image =  #imageLiteral(resourceName: "cloud_80.png")
-      case 90...100:
-        cell.cloudImg.image =  #imageLiteral(resourceName: "cloud_90.png")
-      default:
-        cell.cloudImg.image =  #imageLiteral(resourceName: "cloud_100.png")
-      }
-      cell.windStrengthImg.image =  #imageLiteral(resourceName: "wind_2a")
+      cloudIcon(indexPath, cell)   // set cloud % icon
+      
+      cell.windStrengthImg.image =  #imageLiteral(resourceName: "wind_3")
       cell.windyImg.image =  #imageLiteral(resourceName: "wind_sign")
       cell.tempImg.image =  #imageLiteral(resourceName: "term_b")
       //set weather text to appropriate text
@@ -319,26 +297,115 @@ extension MyEventsViewController
       cell.cloudText.text = ""
       cell.tempText.text = ""
     }
-    
-    func printEventInfo(eventItem item: Event)
-    {
-      print()
-      print("Id =", item.Id)
-      print("Object =", item.Object)
-      print("StarMag =", item.StarMag)
-      print("MagDrop =", item.MagDrop)
-      print("MaxDurSec =", item.MaxDurSec)
-      print("EventTimeUtc =", item.EventTimeUtc)
-      print("ErrorInTimeSec =", item.ErrorInTimeSec)
-      print("WeatherInfoAvailable =", item.WeatherInfoAvailable)
-      print("CloudCover =", item.CloudCover)
-      print("Wind =", item.Wind)
-      print("TempDegC =", item.TempDegC)
-      print("HighCloud =", item.HighCloud)
-      print("BestStationPos =", item.BestStationPos)
-      print("StarColour =",item.StarColour)
-    }
 
+  }
+
+  func cloudIcon(_ indexPath: IndexPath, _ cell: MyEventsCollectionViewCell)
+  {
+    //set appropriate cloud image
+//      0% -  9%   cloud_0.png
+//    10% - 19%    cloud_10.png
+//    20% - 29%    cloud_20.png
+//    30% - 39%    cloud_30.png
+//    40% - 49%    cloud_40.png
+//    50% - 59%    cloud_50.png
+//    60% - 69%    cloud_60.png
+//    70% - 79%    cloud_70.png
+//    80% - 89%    cloud_80.png
+//    90% - 100%   cloud_90.png
+    switch cellDataArray[indexPath.row]!.CloudCover
+    {
+    case 0...9:
+      cell.cloudImg.image =  #imageLiteral(resourceName: "cloud_0")
+    case 10...19:
+      cell.cloudImg.image =  #imageLiteral(resourceName: "cloud_10")
+    case 20...29:
+      cell.cloudImg.image =  #imageLiteral(resourceName: "cloud_20")
+    case 30...39:
+      cell.cloudImg.image =  #imageLiteral(resourceName: "cloud_30")
+    case 40...49:
+      cell.cloudImg.image =  #imageLiteral(resourceName: "cloud_40.png")
+    case 50...59:
+      cell.cloudImg.image =  #imageLiteral(resourceName: "cloud_50.png")
+    case 60...69:
+      cell.cloudImg.image =  #imageLiteral(resourceName: "cloud_60.png")
+    case 70...79:
+      cell.cloudImg.image =  #imageLiteral(resourceName: "cloud_70.png")
+    case 80...89:
+      cell.cloudImg.image =  #imageLiteral(resourceName: "cloud_80.png")
+    case 90...100:
+      cell.cloudImg.image =  #imageLiteral(resourceName: "cloud_90.png")
+    default:
+      cell.cloudImg.image =  #imageLiteral(resourceName: "cloud_100.png")
+    }
+  }
+
+  func starColorIcon(_ indexPath: IndexPath, _ cell: MyEventsCollectionViewCell)
+  {
+//    Unknown (0) = star_black.png,
+//    Blue (1) = star_b.png,
+//    White (2) = star_w.png,
+//    Yellow (3) = star_y.png,
+//    Orange (4) = star_o.png,
+//    Red (5) = star_r.png
+    switch cellDataArray[indexPath.row]!.StarColour
+    {
+    case 0:
+      cell.starMagImg.image =  #imageLiteral(resourceName: "star_black")
+    case 1:
+      cell.starMagImg.image =  #imageLiteral(resourceName: "star_b")
+    case 2:
+      cell.starMagImg.image =  #imageLiteral(resourceName: "star_w")
+    case 3:
+      cell.starMagImg.image =  #imageLiteral(resourceName: "star_y")
+    case 4:
+      cell.starMagImg.image =  #imageLiteral(resourceName: "star_o")
+    case 5:
+      cell.starMagImg.image =  #imageLiteral(resourceName: "star_r")
+     default:
+      cell.starMagImg.image =  #imageLiteral(resourceName: "star_black")
+    }
+  }
+
+  func stationSigmaIcon(_ indexPath: IndexPath, _ cell: MyEventsCollectionViewCell)
+  {
+//    Shadow (0) = spos_0.png,
+//    OneSigma (1) = spos_1_2.png,
+//    ThreeSigma (2) = spos_1_2.png,
+//    Outside (3) = = spos_3.png
+    switch cellDataArray[indexPath.row]!.BestStationPos
+    {
+    case 0:
+      cell.sigmaImg.image =  #imageLiteral(resourceName: "spos_0")
+    case 1:
+      cell.sigmaImg.image =  #imageLiteral(resourceName: "spos_1_2")
+    case 2:
+      cell.sigmaImg.image =  #imageLiteral(resourceName: "spos_1_2")
+    case 3:
+      cell.sigmaImg.image =  #imageLiteral(resourceName: "spos_3")
+    default:
+      cell.sigmaImg.image =  #imageLiteral(resourceName: "spos_3")
+    }
+  }
+  
+  
+  func printEventInfo(eventItem item: Event)
+  {
+    print()
+    print("Id =", item.Id)
+    print("Object =", item.Object)
+    print("StarMag =", item.StarMag)
+    print("MagDrop =", item.MagDrop)
+    print("MaxDurSec =", item.MaxDurSec)
+    print("EventTimeUtc =", item.EventTimeUtc)
+    print("ErrorInTimeSec =", item.ErrorInTimeSec)
+    print("WeatherInfoAvailable =", item.WeatherInfoAvailable)
+    print("CloudCover =", item.CloudCover)
+    print("Wind =", item.Wind)
+    print("TempDegC =", item.TempDegC)
+    print("HighCloud =", item.HighCloud)
+    print("BestStationPos =", item.BestStationPos)
+    print("StarColour =",item.StarColour)
   }
 
 }
