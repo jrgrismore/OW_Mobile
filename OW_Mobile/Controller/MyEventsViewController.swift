@@ -285,7 +285,7 @@ extension MyEventsViewController
       windStrengthIcon(indexPath, cell)   //set wind strength icon
       windSignIcon(indexPath, cell)
       
-      cell.tempImg.image =  #imageLiteral(resourceName: "term_b")
+      thermIcon(indexPath, cell)
       //set weather text to appropriate text
       cell.cloudText.text = String(format: "%d%%",cellDataArray[indexPath.row]!.CloudCover)
       cell.tempText.text = String(format: "%d°",cellDataArray[indexPath.row]!.TempDegC)
@@ -428,6 +428,30 @@ extension MyEventsViewController
     {
       print("wind sign gray")
       cell.windyImg.image = #imageLiteral(resourceName: "wind_sign_gray")
+    }
+  }
+
+  func thermIcon(_ indexPath: IndexPath, _ cell: MyEventsCollectionViewCell)
+  {
+    // temp <= 0, blue
+    // temp 0...16, yellow
+    // temp 0...32, orange
+    // temp > 32, red
+    if cellDataArray[indexPath.row]!.TempDegC <= 0
+    {
+      cell.tempImg.image = #imageLiteral(resourceName: "term_b")
+    }
+    else if cellDataArray[indexPath.row]!.TempDegC < 16
+    {
+      cell.tempImg.image = #imageLiteral(resourceName: "term_y")
+    }
+    else if cellDataArray[indexPath.row]!.TempDegC < 32
+    {
+      cell.tempImg.image = #imageLiteral(resourceName: "term_o")
+    }
+    else if cellDataArray[indexPath.row]!.TempDegC >= 32
+    {
+      cell.tempImg.image = #imageLiteral(resourceName: "term_r")
     }
   }
   
