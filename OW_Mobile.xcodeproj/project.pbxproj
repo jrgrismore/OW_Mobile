@@ -117,12 +117,11 @@
 		529D9CD421FF87DE002A3428 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
-				5292753B220DD0CF009AD6D5 /* TabBarController.swift */,
+				528F2887224693F000CAD9AE /* DetailViewController.swift */,
 				529AD0582207C576001BEFC9 /* MyEventsViewController.swift */,
 				529AD05A2207C8BC001BEFC9 /* MyEventsCollectionViewCell.swift */,
 				5287622E2202107100BDABEC /* AccountViewController.swift */,
 				5287623E220266BB00BDABEC /* ReminderViewController.swift */,
-				528F2887224693F000CAD9AE /* DetailViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -154,6 +153,7 @@
 				529D9CD221FF87BB002A3428 /* Model */,
 				529D9CD321FF87C2002A3428 /* View */,
 				529D9CD421FF87DE002A3428 /* Controller */,
+				5292753B220DD0CF009AD6D5 /* TabBarController.swift */,
 				52C8021221F9510F00E66A13 /* Assets.xcassets */,
 				5288B50F220A260B000002C6 /* OW Images */,
 				52C8021721F9510F00E66A13 /* Info.plist */,

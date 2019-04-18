@@ -421,18 +421,17 @@ extension MyEventsViewController
     //if there is wind use wind_sign.png, if no wind use wind_sign_gray.png
     if cellDataArray[indexPath.row]!.Wind > 0
     {
-      print("wind sign black")
       cell.windyImg.image = #imageLiteral(resourceName: "wind_sign")
     }
     else
     {
-      print("wind sign gray")
       cell.windyImg.image = #imageLiteral(resourceName: "wind_sign_gray")
     }
   }
 
   func thermIcon(_ indexPath: IndexPath, _ cell: MyEventsCollectionViewCell)
   {
+    
     // temp <= 0, blue
     // temp 0...16, yellow
     // temp 0...32, orange

@@ -1448,6 +1448,41 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="59Y-Iy-TB2"/>
                     </view>
+                    <connections>
+                        <outlet property="centerBarView" destination="qFM-b9-xCf" id="NVd-Cg-hVg"/>
+                        <outlet property="evenkRank" destination="b2e-3J-HL7" id="MQO-t1-nor"/>
+                        <outlet property="eventAsteroidDiameter" destination="RX4-MR-uvs" id="MbB-9d-Zdz"/>
+                        <outlet property="eventAsteroidMagnitude" destination="dVX-Qz-Run" id="33b-Gy-dZ1"/>
+                        <outlet property="eventAsteroidOrigin" destination="ncY-ji-tEs" id="hHi-ZG-LZX"/>
+                        <outlet property="eventCamAseroidRotation" destination="iG2-N3-nzj" id="8SG-7z-FbX"/>
+                        <outlet property="eventCamCombinedMag" destination="NmR-Ch-0Hk" id="iSJ-gq-3FG"/>
+                        <outlet property="eventCamMagDrop" destination="St9-Rf-o5T" id="6Fe-AH-37h"/>
+                        <outlet property="eventCamRotationAmplitude" destination="NsS-pb-9cN" id="3ZE-Br-gFV"/>
+                        <outlet property="eventCameraSectionTitle" destination="WUW-PI-DT4" id="QF4-vy-ddb"/>
+                        <outlet property="eventChordDistance" destination="rX0-B6-dsR" id="oq3-zh-I3a"/>
+                        <outlet property="eventClouds" destination="5om-MT-amS" id="7eI-mt-h70"/>
+                        <outlet property="eventCombinedMagnitude" destination="UXk-A1-aT8" id="KQZ-vz-DM2"/>
+                        <outlet property="eventDec" destination="QrG-cJ-86B" id="0M1-SP-H4D"/>
+                        <outlet property="eventFeed" destination="Sfx-M4-Kzx" id="lfz-mI-Wat"/>
+                        <outlet property="eventLocation" destination="CdI-oS-6ow" id="Gps-62-ssD"/>
+                        <outlet property="eventMagnitudeDrop" destination="cqt-Iv-OMa" id="g4O-c1-tMU"/>
+                        <outlet property="eventMoonAlt" destination="qiE-F0-yQF" id="5T2-EW-hsT"/>
+                        <outlet property="eventMoonSeparation" destination="DsN-fr-ZtQ" id="EmX-dL-QlN"/>
+                        <outlet property="eventRA" destination="qHW-5v-fWt" id="C9B-HQ-d3g"/>
+                        <outlet property="eventStarAlt" destination="YHx-pp-hd1" id="Xqh-10-eU4"/>
+                        <outlet property="eventStarBV" destination="4Oq-hn-pVL" id="GBh-7a-vFh"/>
+                        <outlet property="eventStarDiameter" destination="vPb-Rx-DhT" id="f1h-Ae-6L6"/>
+                        <outlet property="eventStarMagnitude" destination="7hI-nL-0Ep" id="dE2-vB-bF8"/>
+                        <outlet property="eventSunAlt" destination="EDy-C2-OMW" id="ejW-4t-DMB"/>
+                        <outlet property="eventTemperature" destination="ZSq-QI-SlO" id="vys-ai-yrY"/>
+                        <outlet property="eventTime" destination="OdL-bt-4bG" id="sm0-k7-8Qz"/>
+                        <outlet property="eventTimeError" destination="pfa-K8-r9y" id="dsF-Qf-1HG"/>
+                        <outlet property="eventTimeRemaining" destination="HIB-G2-7ts" id="Od8-TO-c2K"/>
+                        <outlet property="eventTitle" destination="Bxb-g6-GRG" id="mlk-Bq-qVg"/>
+                        <outlet property="sigma1BarView" destination="c4Z-ek-M3c" id="Nyi-hp-bUY"/>
+                        <outlet property="sigma2BarView" destination="Zlt-mA-YQ5" id="6hy-QB-cvQ"/>
+                        <outlet property="weatherBarView" destination="RoV-Cl-X5I" id="Hvn-UQ-dkk"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Ioa-Vq-uWl" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
