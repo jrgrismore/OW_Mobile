@@ -59,7 +59,7 @@ class MyEventsViewController: UIViewController, UICollectionViewDataSource,UICol
     super.viewDidLoad()
     parsedJSON.delegate = self
     myEventsCollection.backgroundColor =  _ColorLiteralType(red: 0.03605184332, green: 0.2271486223, blue: 0.2422576547, alpha: 1)
-    cellDataArray = self.parsedJSON.load()
+    cellDataArray = self.parsedJSON.loadEvents()
     //test
 //    cellDataArray = []
     
@@ -70,6 +70,8 @@ class MyEventsViewController: UIViewController, UICollectionViewDataSource,UICol
     {
       updateCellArray()
     }
+    
+    parsedJSON.getCookieData()
   }
   
   override func viewWillAppear(_ animated: Bool)
@@ -131,7 +133,7 @@ class MyEventsViewController: UIViewController, UICollectionViewDataSource,UICol
 //            {
 //              self.printEventInfo(eventItem: item)
 //            }
-      self.parsedJSON.save(myEvents!)
+      self.parsedJSON.saveEvents(myEvents!)
       self.cellDataArray = myEvents!
       print("cell data array updated")
       DispatchQueue.main.async{self.spinnerLbl.text = "Updating Events..."}

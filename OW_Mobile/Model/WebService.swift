@@ -64,11 +64,11 @@ class WebService: NSObject
   // MARK: - OW Web Service Functions
   func creatURL(owSession: URLSession) -> URL
   {
-    let user = Credentials.username
+     let user = Credentials.username
     let password = Credentials.password
    //let credential = URLCredential(user: user, password: password, persistence: .synchronizable)  for use with iCloud across devices
-//    let credential = URLCredential(user: user, password: password, persistence: .permanent)
-    let credential = URLCredential(user: user, password: password, persistence: .forSession)
+    let credential = URLCredential(user: user, password: password, persistence: .permanent)
+//    let credential = URLCredential(user: user, password: password, persistence: .forSession)
     //create url
     let protectionSpace = URLProtectionSpace(host: host, port: 443, protocol: scheme, realm: "Restricted", authenticationMethod: NSURLAuthenticationMethodHTTPBasic)
     URLCredentialStorage.shared.setDefaultCredential(credential, for: protectionSpace)
@@ -94,6 +94,7 @@ class WebService: NSObject
 //    delegate?.webLogTextDidChange(text: "Connecting to " + owURL.description)
 
 //    delegate?.webLogTextDidChange(text: "Begin...")
+    
     let owTask = owSession.dataTask(with: owURL)
     {
       (data,response,error) in
@@ -139,7 +140,7 @@ class WebService: NSObject
     return parsedJSON
   }
   
-  func load() -> [Event]
+  func loadEvents() -> [Event]
   {
     guard let encodedData = UserDefaults.standard.array(forKey: UDKeys.myEventList) as? [Data] else {
       return []
@@ -148,10 +149,22 @@ class WebService: NSObject
     return encodedData.map { try! JSONDecoder().decode(Event.self, from: $0) }
   }
   
-  func save(_ events: [Event])
+  func saveEvents(_ events: [Event])
   {
     let data = events.map { try? JSONEncoder().encode($0) }
     UserDefaults.standard.set(data, forKey: UDKeys.myEventList)
+  }
+  
+  func getCookieData()
+  {
+    let cookieStorage = HTTPCookieStorage.shared
+    let cookies = cookieStorage.cookies
+    print("cookies.count=",cookies?.count)
+    for cookie in cookies as! [HTTPCookie]
+    {
+      print("cookie.name=",cookie.name)
+      print("cookie.description=",cookie.description)
+    }
   }
   
 }
