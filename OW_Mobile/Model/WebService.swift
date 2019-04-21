@@ -44,6 +44,8 @@ struct MyEvents: Codable
   var events: [Event]
 }
 
+let config = URLSessionConfiguration.default
+var owSession = URLSession(configuration: config)
 
 class WebService: NSObject
 {
@@ -88,7 +90,8 @@ class WebService: NSObject
   {
     delegate?.webLogTextDidChange(text: "Connecting to OW")
     let config = URLSessionConfiguration.default
-    let owSession = URLSession(configuration: config)
+//    let owSession = URLSession(configuration: config)
+    owSession = URLSession(configuration: config)
     let owURL = creatURL(owSession: owSession)
     print("owURL=",owURL)
 //    delegate?.webLogTextDidChange(text: "Connecting to " + owURL.description)

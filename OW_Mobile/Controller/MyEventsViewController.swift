@@ -71,8 +71,7 @@ class MyEventsViewController: UIViewController, UICollectionViewDataSource,UICol
       updateCellArray()
     }
     
-    parsedJSON.getCookieData()
-  }
+   }
   
   override func viewWillAppear(_ animated: Bool)
   {
@@ -144,12 +143,18 @@ class MyEventsViewController: UIViewController, UICollectionViewDataSource,UICol
         self.activitySpinner.stopAnimating()
         self.spinnerView.isHidden = true
         }
+      print("invalidate owSession")
+      owSession.invalidateAndCancel()
     })
   }
   
   @IBAction func refreshEventCells(_ sender: Any)
   {
     updateCellArray()
+    
+    //get cookie info
+//    parsedJSON.getCookieData()
+
   }
   
   // MARK: - Utility functions

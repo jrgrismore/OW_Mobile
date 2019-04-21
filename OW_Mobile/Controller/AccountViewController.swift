@@ -65,20 +65,25 @@ class AccountViewController: UIViewController, UITextFieldDelegate
   
   func textFieldDidEndEditing(_ textField: UITextField, reason: UITextField.DidEndEditingReason)
   {
-    print("\ntextFieldDidEndEditing\n")
+    print("textFieldDidEndEditing")
     if textField == emailFld
     {
+      print("set username")
       Credentials.username = emailFld.text!
     }
     else if textField == passwordFld
     {
-      Credentials.username = passwordFld.text!
+      print("set password")
+      Credentials.password = passwordFld.text!
     }
+    print("Credentials=",Credentials.username,"   ",Credentials.password)
   }
   
   func saveCredentailsToKeyChain()
   {
+    print("")
     let server = "www.occultwatcher.net"
+    print("Credentials=",Credentials.username,"   ",Credentials.password)
     let username = Credentials.username
     print("save username=",username)
     let password = Credentials.password.data(using: .utf8)
@@ -103,17 +108,19 @@ class AccountViewController: UIViewController, UITextFieldDelegate
   
   func deleteCredentailsFromKeyChain()
   {
+    print("deleteCredentailsFromKeyChain")
     let server = "www.occultwatcher.net"
+    print("Credentials=",Credentials.username,"   ",Credentials.password)
     let username = Credentials.username
-    print("save username=",username)
+    print("delete username=",username)
     let password = Credentials.password.data(using: .utf8)
-    print("save password=",password)
+    print("delete password=",password)
     let attributes: [String : Any] =
       [
         (kSecClass as String): kSecClassInternetPassword,
-        (kSecAttrServer as String): server,
-        (kSecAttrAccount as String): username,
-        (kSecValueData as String): password
+        (kSecAttrServer as String): server
+//        (kSecAttrAccount as String): username,
+//        (kSecValueData as String): password
     ]
     //delete preexisting item
     let itemDeleteStatus = SecItemDelete(attributes as CFDictionary)
@@ -122,11 +129,13 @@ class AccountViewController: UIViewController, UITextFieldDelegate
 
   func updateCredentailsOnKeyChain()
   {
+    print("updateCredentailsOnKeyChain")
     let server = "www.occultwatcher.net"
+    print("Credentials=",Credentials.username,"   ",Credentials.password)
     let username = Credentials.username
-    print("save username=",username)
+    print("update username=",username)
     let password = Credentials.password.data(using: .utf8)
-    print("save password=",password)
+    print("update password=",password)
     let query: [String : Any] =
       [
         (kSecClass as String): kSecClassInternetPassword,
@@ -147,6 +156,7 @@ class AccountViewController: UIViewController, UITextFieldDelegate
 
   func loadCredentailsFromKeyChain()
   {
+    print("loadCredentailsFromKeyChain")
     let server = "www.occultwatcher.net"
    //query for item in keychain
     let query: [String: Any] =
@@ -169,13 +179,17 @@ class AccountViewController: UIViewController, UITextFieldDelegate
     {
       print("from keychain:")
       print("username=",username,"   password=",password)
+      Credentials.username = username
+      Credentials.password = password
     }
   }
   
   @IBAction func updateUserandPassword(_ sender: Any)
   {
-//    saveCredentailsToKeyChain()
-    updateCredentailsOnKeyChain()
+    print("updateUserandPassword")
+    deleteCredentailsFromKeyChain()
+    saveCredentailsToKeyChain()
+//    updateCredentailsOnKeyChain()
     loadCredentailsFromKeyChain()
   }
   
