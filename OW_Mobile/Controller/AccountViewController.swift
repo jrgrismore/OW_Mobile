@@ -169,7 +169,7 @@ class AccountViewController: UIViewController, UITextFieldDelegate
       Credentials.username = emailFld.text!
       Credentials.password = passwordFld.text!
       saveCredentailsToKeyChain()
-      
+      OWWebAPI.shared.deleteCookie()
     }
   }
   
