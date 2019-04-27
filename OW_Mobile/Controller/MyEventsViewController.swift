@@ -96,7 +96,8 @@ class MyEventsViewController: UIViewController, UICollectionViewDataSource,UICol
 //      flowLayout.itemSize = CGSize(width: cellWidth, height: CGFloat(cellHeight))
 //    }
     
- 
+    loadCredentailsFromKeyChain()
+    print("Credentials=",Credentials.username,"   ",Credentials.password)
   }
   
   override func prepare(for segue: UIStoryboardSegue, sender: Any?)
@@ -134,7 +135,7 @@ class MyEventsViewController: UIViewController, UICollectionViewDataSource,UICol
 //            }
       self.parsedJSON.saveEvents(myEvents!)
       self.cellDataArray = myEvents!
-      print("cell data array updated")
+//      print("cell data array updated")
       DispatchQueue.main.async{self.spinnerLbl.text = "Updating Events..."}
       DispatchQueue.main.async{self.myEventsCollection.reloadData()}
       usleep(useconds_t(0.5 * 1000000)) //will sleep for 0.5 seconds)
@@ -143,7 +144,7 @@ class MyEventsViewController: UIViewController, UICollectionViewDataSource,UICol
         self.activitySpinner.stopAnimating()
         self.spinnerView.isHidden = true
         }
-      print("invalidate owSession")
+//      print("invalidate owSession")
       owSession.invalidateAndCancel()
     })
   }
@@ -153,7 +154,7 @@ class MyEventsViewController: UIViewController, UICollectionViewDataSource,UICol
     updateCellArray()
     
     //get cookie info
-//    parsedJSON.getCookieData()
+    parsedJSON.getCookieData()
 
   }
   

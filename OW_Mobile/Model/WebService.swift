@@ -97,7 +97,7 @@ class WebService: NSObject
 //    delegate?.webLogTextDidChange(text: "Connecting to " + owURL.description)
 
 //    delegate?.webLogTextDidChange(text: "Begin...")
-    
+ //   deleteCookie()  this was just here as a test
     let owTask = owSession.dataTask(with: owURL)
     {
       (data,response,error) in
@@ -170,6 +170,20 @@ class WebService: NSObject
     }
   }
   
+  func deleteCookie()
+  {
+    let cookieStorage = HTTPCookieStorage.shared
+    let cookies = cookieStorage.cookies
+    print("cookies.count=",cookies?.count)
+    for cookie in cookies as! [HTTPCookie]
+    {
+      print("cookie.name=",cookie.name)
+      print("cookie.description=",cookie.description)
+      HTTPCookieStorage.shared.deleteCookie(cookie)
+      print("cookie deleted")
+    }
+  }
+
 }
 
 extension WebService: URLSessionDelegate, URLSessionTaskDelegate
