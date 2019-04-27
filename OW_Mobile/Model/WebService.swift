@@ -1,5 +1,5 @@
 //
-//  WebService.swift
+//  OWWebAPI.swift
 //  OW_Mobile
 //
 //  Created by John Grismore on 2/5/19.
@@ -15,7 +15,7 @@ struct UDKeys
 }
 
 //delegate protocol
-protocol webServiceDelegate: class
+protocol OWWebAPIDelegate: class
 {
   func webLogTextDidChange(text: String)
 }
@@ -44,12 +44,17 @@ struct MyEvents: Codable
   var events: [Event]
 }
 
-let config = URLSessionConfiguration.default
-var owSession = URLSession(configuration: config)
 
-class WebService: NSObject
+class OWWebAPI: NSObject
 {
-  weak var delegate: webServiceDelegate?
+  weak var delegate: OWWebAPIDelegate?
+  static let owConfig = URLSessionConfiguration.default
+  static var owSession = URLSession(configuration: owConfig)
+
+  //create singleton for managing session during app lifetime
+  static let shared = OWWebAPI()
+ 
+//  private init() {}
   
   let host = "www.occultwatcher.net"
   let path = "/api/v1/events/list"
@@ -66,7 +71,7 @@ class WebService: NSObject
   // MARK: - OW Web Service Functions
   func creatURL(owSession: URLSession) -> URL
   {
-     let user = Credentials.username
+    let user = Credentials.username
     let password = Credentials.password
    //let credential = URLCredential(user: user, password: password, persistence: .synchronizable)  for use with iCloud across devices
     let credential = URLCredential(user: user, password: password, persistence: .permanent)
@@ -91,14 +96,14 @@ class WebService: NSObject
     delegate?.webLogTextDidChange(text: "Connecting to OW")
     let config = URLSessionConfiguration.default
 //    let owSession = URLSession(configuration: config)
-    owSession = URLSession(configuration: config)
-    let owURL = creatURL(owSession: owSession)
+    OWWebAPI.owSession = URLSession(configuration: config)
+    let owURL = creatURL(owSession: OWWebAPI.owSession)
     print("owURL=",owURL)
 //    delegate?.webLogTextDidChange(text: "Connecting to " + owURL.description)
 
 //    delegate?.webLogTextDidChange(text: "Begin...")
  //   deleteCookie()  this was just here as a test
-    let owTask = owSession.dataTask(with: owURL)
+    let owTask = OWWebAPI.owSession.dataTask(with: owURL)
     {
       (data,response,error) in
       guard let dataResponse = data, error == nil
@@ -186,7 +191,7 @@ class WebService: NSObject
 
 }
 
-extension WebService: URLSessionDelegate, URLSessionTaskDelegate
+extension OWWebAPI: URLSessionDelegate, URLSessionTaskDelegate
 {
   //URLSession delegates
   func urlSession(

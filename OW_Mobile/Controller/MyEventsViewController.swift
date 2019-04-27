@@ -17,7 +17,7 @@ class MyEventsViewController: UIViewController, UICollectionViewDataSource,UICol
   
   let reuseIdentifier = "MyEventCell"
   var cellDataArray = [Event?]()
-  let parsedJSON = WebService()
+//  let OWWebAPI.shared = OWWebAPI.shared
   
   @IBAction func switchToLogin(_ sender: Any)
   {
@@ -57,9 +57,9 @@ class MyEventsViewController: UIViewController, UICollectionViewDataSource,UICol
   override func viewDidLoad()
   {
     super.viewDidLoad()
-    parsedJSON.delegate = self
+    OWWebAPI.shared.delegate = self
     myEventsCollection.backgroundColor =  _ColorLiteralType(red: 0.03605184332, green: 0.2271486223, blue: 0.2422576547, alpha: 1)
-    cellDataArray = self.parsedJSON.loadEvents()
+    cellDataArray = OWWebAPI.shared.loadEvents()
     //test
 //    cellDataArray = []
     
@@ -122,10 +122,10 @@ class MyEventsViewController: UIViewController, UICollectionViewDataSource,UICol
         self.activitySpinner.startAnimating()
       }
 
-    //    let parsedJSON = WebService()
+    //    let OWWebAPI.shared = OWWebAPI()
     DispatchQueue.main.async{self.spinnerLbl.text = "Fetching Event Data..."}
     usleep(useconds_t(0.5 * 1000000)) //will sleep for 0.5 seconds)
-    parsedJSON.retrieveEventList(completion: { (myEvents, error) in
+    OWWebAPI.shared.retrieveEventList(completion: { (myEvents, error) in
       //fill cells
       DispatchQueue.main.async{self.spinnerLbl.text = "download and parsing complete"}
       usleep(useconds_t(0.5 * 1000000)) //will sleep for 0.5 seconds)
@@ -133,7 +133,7 @@ class MyEventsViewController: UIViewController, UICollectionViewDataSource,UICol
 //            {
 //              self.printEventInfo(eventItem: item)
 //            }
-      self.parsedJSON.saveEvents(myEvents!)
+      OWWebAPI.shared.saveEvents(myEvents!)
       self.cellDataArray = myEvents!
 //      print("cell data array updated")
       DispatchQueue.main.async{self.spinnerLbl.text = "Updating Events..."}
@@ -145,7 +145,7 @@ class MyEventsViewController: UIViewController, UICollectionViewDataSource,UICol
         self.spinnerView.isHidden = true
         }
 //      print("invalidate owSession")
-      owSession.invalidateAndCancel()
+      OWWebAPI.owSession.invalidateAndCancel()
     })
   }
   
@@ -154,7 +154,7 @@ class MyEventsViewController: UIViewController, UICollectionViewDataSource,UICol
     updateCellArray()
     
     //get cookie info
-    parsedJSON.getCookieData()
+    OWWebAPI.shared.getCookieData()
 
   }
   
@@ -483,7 +483,7 @@ extension MyEventsViewController
 
 }
 
-extension MyEventsViewController: webServiceDelegate
+extension MyEventsViewController: OWWebAPIDelegate
 {
   func webLogTextDidChange(text: String)
   {
