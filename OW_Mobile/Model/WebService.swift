@@ -175,7 +175,7 @@ class OWWebAPI: NSObject
     }
   }
   
-  func deleteCookie()
+  func deleteCookies()
   {
     let cookieStorage = HTTPCookieStorage.shared
     let cookies = cookieStorage.cookies

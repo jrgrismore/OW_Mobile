@@ -129,6 +129,16 @@ func loadCredentailsFromKeyChain()
   }
 }
 
+func deleteAllSecItemsFromKeychain()
+{
+  let secItemClasses =  [kSecClassGenericPassword, kSecClassInternetPassword, kSecClassCertificate, kSecClassKey, kSecClassIdentity]
+  for itemClass in secItemClasses
+  {
+    let itemKeyVal: NSDictionary = [kSecClass : itemClass]
+    SecItemDelete(itemKeyVal)
+  }
+}
+
 class AccountViewController: UIViewController, UITextFieldDelegate
 {
   
@@ -168,10 +178,11 @@ class AccountViewController: UIViewController, UITextFieldDelegate
     {
       Credentials.username = emailFld.text!
       Credentials.password = passwordFld.text!
-//      saveCredentailsToKeyChain()
-      updateCredentailsOnKeyChain()
+      deleteAllSecItemsFromKeychain()
+      saveCredentailsToKeyChain()
+//      updateCredentailsOnKeyChain()
 //      deleteCredentailsFromKeyChain()
-      OWWebAPI.shared.deleteCookie()
+      OWWebAPI.shared.deleteCookies()
     }
   }
   
