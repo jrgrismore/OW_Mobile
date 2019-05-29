@@ -34,7 +34,7 @@ class DetailViewController: UIViewController {
   var selectedEventDetails = EventDetails()
 
   @IBOutlet weak var eventTitle: UILabel!
-  @IBOutlet weak var evenkRank: UILabel!
+  @IBOutlet weak var eventRank: UILabel!
   @IBOutlet weak var eventTimeRemaining: UILabel!
   @IBOutlet weak var eventFeed: UILabel!
   
@@ -91,6 +91,8 @@ class DetailViewController: UIViewController {
   
    override func viewWillAppear(_ animated: Bool)
   {
+    clearFieldsAndIcons()
+    
     let detailEndpoint = OWWebAPI.shared.createEventDetailURL(owSession: OWWebAPI.owSession, eventID: detailData.Id!)
     print("detailEndpoint=",detailEndpoint)
     self.title = detailData.Object
@@ -100,6 +102,48 @@ class DetailViewController: UIViewController {
        self.setEventInfoFields(eventItem: self.selectedEventDetails)
     }   //??????????
     
+  }
+
+  override func viewDidAppear(_ animated: Bool)
+  {
+    print("viewDidAppear")
+  }
+  
+  func clearFieldsAndIcons()
+  {
+    self.eventTitle.text = "—"
+    self.eventRank.text = "Rank: —"
+    self.eventTimeRemaining.text = "_"
+    self.eventFeed.text = "—"
+    self.sigmaImg.image = nil
+    self.eventStationID.text = "—"
+    self.eventCloudImg.image = nil
+    self.eventClouds.text = "—"
+    self.eventWindStrengthImg.image = nil
+    self.eventWindSignImg.image = nil
+    self.eventTempImg.image = nil
+    self.eventTemperature.text = "—"
+    self.eventChordDistance.text = "Chord: — km"
+    self.eventTime.text = "—"
+    self.eventTimeError.text = "—"
+    self.eventStarAlt.text = "—"
+    self.eventSunAlt.text = "—"
+    self.eventMoonAlt.text = "—"
+    self.eventMoonSeparation.text = "—"
+    self.eventRA.text = "RA —"
+    self.eventDec.text = "DE   —"
+    self.eventStarBV.text = "B-V   —"
+    self.eventStarDiameter.text = "Stellar Dia.          —"
+    self.eventAsteroidOrigin.text = "—"
+    self.eventAsteroidDiameter.text = "Diameter        —"
+    self.eventStarMagnitude.text = "Star Mag     —"
+    self.eventAsteroidMagnitude.text = "Aster. Mag     —"
+    self.eventCombinedMagnitude.text = "Comb. Mag       —"
+    self.eventMagnitudeDrop.text = "Mag Drop       —"
+    self.eventCamAseroidRotation.text = "Rotation       —"
+    self.eventCamRotationAmplitude.text = "Amplitude       —"
+    self.eventCamCombinedMag.text = "Comb. Mag  —"
+    self.eventCamMagDrop.text = "Mag Drop  —"
   }
   
   func setEventInfoFields(eventItem itm: EventDetails)
@@ -117,7 +161,7 @@ class DetailViewController: UIViewController {
     {
       rankStr = String(format: "Rank: %d",item.Rank!)
     }
-    DispatchQueue.main.async{self.evenkRank.text = rankStr}
+    DispatchQueue.main.async{self.eventRank.text = rankStr}
 
     var feedStr = "—"
     if item.Feed != nil
@@ -383,7 +427,7 @@ class DetailViewController: UIViewController {
   func printEventDetails()
   {
     print("eventTitle=\(eventTitle!.text!)")
-    print("evenkRank=\(evenkRank!.text!)")
+    print("eventRank=\(eventRank!.text!)")
     print("eventTimeRemaining=\(eventTimeRemaining!.text!)")
     print("eventFeed=\(eventFeed!.text!)")
     print("weatherBarView=\(weatherBarView!)")

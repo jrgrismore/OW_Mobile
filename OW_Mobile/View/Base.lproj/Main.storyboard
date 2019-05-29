@@ -1456,7 +1456,6 @@
                     </view>
                     <connections>
                         <outlet property="centerBarView" destination="qFM-b9-xCf" id="NVd-Cg-hVg"/>
-                        <outlet property="evenkRank" destination="b2e-3J-HL7" id="MQO-t1-nor"/>
                         <outlet property="eventAsteroidDiameter" destination="RX4-MR-uvs" id="MbB-9d-Zdz"/>
                         <outlet property="eventAsteroidMagnitude" destination="dVX-Qz-Run" id="33b-Gy-dZ1"/>
                         <outlet property="eventAsteroidOrigin" destination="ncY-ji-tEs" id="hHi-ZG-LZX"/>
@@ -1475,6 +1474,7 @@
                         <outlet property="eventMoonAlt" destination="qiE-F0-yQF" id="5T2-EW-hsT"/>
                         <outlet property="eventMoonSeparation" destination="DsN-fr-ZtQ" id="EmX-dL-QlN"/>
                         <outlet property="eventRA" destination="qHW-5v-fWt" id="C9B-HQ-d3g"/>
+                        <outlet property="eventRank" destination="b2e-3J-HL7" id="MQO-t1-nor"/>
                         <outlet property="eventStarAlt" destination="YHx-pp-hd1" id="Xqh-10-eU4"/>
                         <outlet property="eventStarBV" destination="4Oq-hn-pVL" id="GBh-7a-vFh"/>
                         <outlet property="eventStarDiameter" destination="vPb-Rx-DhT" id="f1h-Ae-6L6"/>
