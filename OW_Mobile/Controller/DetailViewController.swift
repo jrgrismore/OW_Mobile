@@ -285,50 +285,58 @@ class DetailViewController: UIViewController {
     DispatchQueue.main.async{self.eventTimeError.text = errorTimeStr}
 
     //determine if there's weather info available
-    var weatherStr = ""
-    if item.Stations![0].WeatherInfoAvailable != nil
+    print("weather info available = ",item.Stations![0].WeatherInfoAvailable)
+    if item.Stations![0].WeatherInfoAvailable != nil && item.Stations![0].WeatherInfoAvailable!
     {
-      weatherStr = String(format: "WeatherInfoAvailable = %@",item.Stations![0].WeatherInfoAvailable!.description)
-    }
-
-    //need code to set icon
-    var cloudCoverStr = " —"
-    var cloudIconValue: Int?
-    if item.Stations![0].CloudCover != nil
-    {
-      cloudCoverStr = String(format: " %d%%",item.Stations![0].CloudCover!)
-      cloudIconValue = item.Stations![0].CloudCover!
-    }
-    DispatchQueue.main.async{self.eventClouds.text = cloudCoverStr}
-    DispatchQueue.main.async{self.eventCloudImg.image = cloudIcon(cloudIconValue)}
-
-    //need code to set icon
-    
-    var windSpeedIconValue: Int?
-    var windSignIconValue: Int?
-    if item.Stations![0].Wind != nil
-    {
-//      windStr = String(format: "%d",item.Stations![0].Wind!)
-      windSignIconValue = item.Stations![0].Wind!
-      windSpeedIconValue = item.Stations![0].Wind!
-    }
-    DispatchQueue.main.async{self.eventWindStrengthImg.image = windStrengthIcon(windSpeedIconValue) }
-    DispatchQueue.main.async{self.eventWindSignImg.image = windSignIcon(windSignIconValue)}
-
-    var tempStr = "—"
-    if item.Stations![0].TempDegC != nil
-    {
-      tempStr = String(format: "%d",item.Stations![0].TempDegC!)
-     }
-    DispatchQueue.main.async{self.eventTemperature.text = tempStr}
-    DispatchQueue.main.async{self.eventTempImg.image = thermIcon(item.Stations![0].TempDegC!)}
-
-    //need code to set icon
-    var highCloudStr = ""
-    if item.Stations![0].HighCloud != nil
-    {
-      highCloudStr = String(format: "%@",item.Stations![0].HighCloud!.description)
-    }
+      print("weather info IS available")
+      //cloud info
+      var cloudCoverStr = " —"
+      var cloudIconValue: Int?
+      if item.Stations![0].CloudCover != nil
+      {
+        cloudCoverStr = String(format: " %d%%",item.Stations![0].CloudCover!)
+        cloudIconValue = item.Stations![0].CloudCover!
+      }
+      DispatchQueue.main.async{self.eventClouds.text = cloudCoverStr}
+      DispatchQueue.main.async{self.eventCloudImg.image = cloudIcon(cloudIconValue)}
+      
+      //wind info
+      var windSpeedIconValue: Int?
+      var windSignIconValue: Int?
+      if item.Stations![0].Wind != nil
+      {
+        windSignIconValue = item.Stations![0].Wind!
+        windSpeedIconValue = item.Stations![0].Wind!
+      }
+      DispatchQueue.main.async{self.eventWindStrengthImg.image = windStrengthIcon(windSpeedIconValue) }
+      DispatchQueue.main.async{self.eventWindSignImg.image = windSignIcon(windSignIconValue)}
+      
+      //temp info
+      var tempStr = "—"
+      if item.Stations![0].TempDegC != nil
+      {
+        tempStr = String(format: "%d",item.Stations![0].TempDegC!)
+      }
+      DispatchQueue.main.async{self.eventTemperature.text = tempStr}
+      DispatchQueue.main.async{self.eventTempImg.image = thermIcon(item.Stations![0].TempDegC!)}
+      
+      //high cloud info
+      //need code to set icon
+      var highCloudStr = ""
+      if item.Stations![0].HighCloud != nil
+      {
+        highCloudStr = String(format: "%@",item.Stations![0].HighCloud!.description)
+      }
+      
+    } else {
+      print("weather info NOT available")
+      DispatchQueue.main.async{self.eventCloudImg.image = nil}
+      DispatchQueue.main.async{self.eventClouds.text = ""}
+      DispatchQueue.main.async{self.eventWindStrengthImg.image = nil}
+      DispatchQueue.main.async{self.eventWindSignImg.image = nil}
+      DispatchQueue.main.async{self.eventTempImg.image = nil}
+      DispatchQueue.main.async{self.eventTemperature.text = ""}
+   }
 
     var starAltStr = "—"
     if item.StarAlt != nil

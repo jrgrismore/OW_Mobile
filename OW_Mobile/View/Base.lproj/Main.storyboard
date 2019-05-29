@@ -484,7 +484,7 @@
                                                                 <stackView opaque="NO" contentMode="scaleToFill" alignment="center" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="KOz-Gl-YiC" userLabel="Cloud Stack">
                                                                     <rect key="frame" x="197.5" y="20.5" width="65" height="19.5"/>
                                                                     <subviews>
-                                                                        <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="cloud_100" translatesAutoresizingMaskIntoConstraints="NO" id="mdf-fg-Frm" userLabel="Cloud Img">
+                                                                        <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="cloud_0" translatesAutoresizingMaskIntoConstraints="NO" id="mdf-fg-Frm" userLabel="Cloud Img">
                                                                             <rect key="frame" x="0.0" y="1.5" width="16" height="16"/>
                                                                         </imageView>
                                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" text="100%" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="OMz-ve-LOT" userLabel="Cloud Text">
@@ -1529,6 +1529,7 @@
         </scene>
     </scenes>
     <resources>
+        <image name="cloud_0" width="16" height="16"/>
         <image name="cloud_100" width="16" height="16"/>
         <image name="drop_sign" width="8" height="16"/>
         <image name="max_sign" width="16" height="16"/>
