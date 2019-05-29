@@ -11,6 +11,9 @@ import UIKit
 class DetailViewController: UIViewController {
 
   var selection: String!
+  var detailStr: String = ""
+  var eventID: String = ""
+   
 //  var detailData = [Event?]()
   var detailData = Event(Id:"",
                          Object:"",
@@ -27,6 +30,8 @@ class DetailViewController: UIViewController {
                          BestStationPos:0,
                          StarColour:0
                         )
+  
+  var selectedEventDetails = EventDetails()
 
   @IBOutlet weak var eventTitle: UILabel!
   @IBOutlet weak var evenkRank: UILabel!
@@ -38,7 +43,7 @@ class DetailViewController: UIViewController {
   @IBOutlet weak var sigma1BarView: UIView!
   @IBOutlet weak var centerBarView: UIView!
   
-  @IBOutlet weak var eventLocation: UILabel!
+  @IBOutlet weak var eventStationID: UILabel!
   @IBOutlet weak var eventClouds: UILabel!
   @IBOutlet weak var eventTemperature: UILabel!
   @IBOutlet weak var eventChordDistance: UILabel!
@@ -67,6 +72,11 @@ class DetailViewController: UIViewController {
   @IBOutlet weak var eventCamAseroidRotation: UILabel!
   @IBOutlet weak var eventCamRotationAmplitude: UILabel!
   
+  @IBOutlet weak var eventCloudImg: UIImageView!
+  @IBOutlet weak var eventWindStrengthImg: UIImageView!
+  @IBOutlet weak var eventWindSignImg: UIImageView!
+  @IBOutlet weak var eventTempImg: UIImageView!
+  @IBOutlet weak var sigmaImg: UIImageView!
   
   override func viewDidLoad()
   {
@@ -74,49 +84,282 @@ class DetailViewController: UIViewController {
     
 //    detailLbl.text = selection
 //    print("detail data =")
-    let detailStr = eventInfoToString(eventItem: detailData)
+//    let detailStr = eventInfoToString(eventItem: detailData)
 //    detailLbl.text = detailStr
+    
   }
   
-  override func viewWillAppear(_ animated: Bool)
+   override func viewWillAppear(_ animated: Bool)
   {
+    let detailEndpoint = OWWebAPI.shared.createEventDetailURL(owSession: OWWebAPI.owSession, eventID: detailData.Id!)
+    print("detailEndpoint=",detailEndpoint)
     self.title = detailData.Object
-   }
-  func eventInfoToString(eventItem item: Event) -> String
+    
+    OWWebAPI.shared.retrieveEventDetails(eventID: detailData.Id!) { (myDetails, error) in
+      self.selectedEventDetails = myDetails!
+       self.setEventInfoFields(eventItem: self.selectedEventDetails)
+    }   //??????????
+    
+  }
+  
+  func setEventInfoFields(eventItem itm: EventDetails)
   {
-    let idStr = String(format: "Id = %@",item.Id)
-    let objectStr = String(format: "Object = %@",item.Object)
-    let starmagStr = String(format: "StarMag = %0.2f",item.StarMag)
-    let magdropStr = String(format: "MagDrop = %0.2f",item.MagDrop)
-    let maxdurStr = String(format: "MaxDurSec = %0.2f",item.MaxDurSec)
-    let eventutcStr = String(format: "EventTimeUtc = %@",item.EventTimeUtc)
-    let errortimeStr = String(format: "ErrorInTimeSec = %0.2f",item.ErrorInTimeSec  )
-    let weatherStr = String(format: "WeatherInfoAvailable = %@",item.WeatherInfoAvailable.description)
-    let cloudcoverStr = String(format: "CloudCover = %d",item.CloudCover)
-    let windStr = String(format: "Wind = %d",item.Wind)
-    let tempStr = String(format: "TempDegC = %d",item.TempDegC)
-    let highcloudStr = String(format: "HighCloud = %@",item.HighCloud.description)
-    let stationposStr = String(format: "BestStationPos = %d",item.BestStationPos)
-    let starcolourStr = String(format: "StarColour = %d",item.StarColour)
+    var item = itm  //for testing
+    var objectStr = "—"
+    if item.StarName != nil
+    {
+      objectStr = "occults " + item.StarName!
+    }
+    DispatchQueue.main.async{self.eventTitle.text = objectStr}
+    
+    var rankStr = "Rank: —"
+    if item.Rank != nil
+    {
+      rankStr = String(format: "Rank: %d",item.Rank!)
+    }
+    DispatchQueue.main.async{self.evenkRank.text = rankStr}
 
-    let eventStr =  idStr + "\n" +
-    objectStr + "\n" +
-    starmagStr + "\n" +
-    magdropStr + "\n" +
-    maxdurStr + "\n" +
-    eventutcStr + "\n" +
-    errortimeStr + "\n" +
-    weatherStr + "\n" +
-    cloudcoverStr + "\n" +
-    windStr + "\n" +
-    tempStr + "\n" +
-    highcloudStr + "\n" +
-    stationposStr + "\n" +
-    starcolourStr + "\n"
+    var feedStr = "—"
+    if item.Feed != nil
+    {
+      feedStr = item.Feed!
+    }
+    DispatchQueue.main.async{self.eventFeed.text = feedStr}
+
+      var raStr = "RA   —"
+    if item.RAHours != nil
+    {
+      //******convert decimal hours to hh:mm:ss
+      raStr = String(format: "RA %0.2f",item.RAHours!)
+    }
+    DispatchQueue.main.async{self.eventRA.text = raStr}
+
+    var decStr = "DE   —"
+    if item.DEDeg != nil
+    {
+      //******convert decimal degrees to dd:mm:ss
+      decStr = String(format: "DE %0.2f",item.DEDeg!)
+    }
+    DispatchQueue.main.async{self.eventDec.text = decStr}
+
+    var bvStr = "B-V   —"
+    if item.BV != nil
+    {
+      bvStr = String(format: "B-V %0.3f",item.BV!)
+     }
+    DispatchQueue.main.async{self.eventStarBV.text = bvStr}
+
+    var stellarDiamStr = "Stellar Dia.          —"
+     if item.SellarDia != nil
+    {
+      stellarDiamStr = String(format: "Stellar Dia. %0.1f mas",item.SellarDia!)
+    }
+    DispatchQueue.main.async{self.eventStarDiameter.text =  stellarDiamStr}
+
+    var asteroidClassStr = "—"
+    if item.AstClass != nil
+    {
+      asteroidClassStr = item.AstClass!
+    }
+    DispatchQueue.main.async{self.eventAsteroidOrigin.text = asteroidClassStr}
+
+    var asteroidDiamStr = "Diameter        —"
+    if item.AstDia != nil
+    {
+      asteroidDiamStr = String(format: "Diameter %0.0f",item.AstDia!)
+    }
+    DispatchQueue.main.async{self.eventAsteroidDiameter.text = asteroidDiamStr}
+
+    var starMagStr = "Star Mag     —"
+    if item.StarMag != nil
+    {
+      starMagStr = String(format: "Star Mag %0.2f",item.StarMag!)
+    }
+    DispatchQueue.main.async{self.eventStarMagnitude.text = starMagStr}
+
+    var asterMagStr = "Aster. Mag     —"
+    if item.AstMag != nil
+    {
+      asterMagStr = String(format: "Aster. Mag %0.2f",item.AstMag!)
+    }
+    DispatchQueue.main.async{self.eventAsteroidMagnitude.text = asterMagStr}
+
+    var combMagStr = "Comb. Mag       —"
+     if item.CombMag != nil
+    {
+      combMagStr = String(format: "Comb. Mag %0.2f",item.CombMag!)
+    }
+    DispatchQueue.main.async{self.eventCombinedMagnitude.text = combMagStr}
+
+    var magDropStr = "Mag Drop       —"
+    if item.MagDrop != nil
+    {
+      magDropStr = String(format: "Mag Drop %0.2f",item.MagDrop!)
+
+    }
+    DispatchQueue.main.async{self.eventMagnitudeDrop.text = magDropStr}
     
-    printEventDetails()
+    var asterRotationStr = "Rotation       —"
+     if item.AstRotationHrs != nil
+    {
+      asterRotationStr = String(format: "Rotation %0.3fh",item.AstRotationHrs!)
+    }
+    DispatchQueue.main.async{self.eventCamAseroidRotation.text = asterRotationStr}
+
+    var asterAmpStr = "Amplitude       —"
+    if item.AstRotationAmplitude != nil
+    {
+      asterAmpStr = String(format: "Amplitude %0.2fm",item.AstRotationAmplitude!)
+    }
+    DispatchQueue.main.async{self.eventCamRotationAmplitude.text = asterAmpStr}
+
     
-   return eventStr
+    
+    //camera combined magnitude ???
+    DispatchQueue.main.async{self.eventCamCombinedMag.text = "??? Comb. Mag ???"}
+
+    //camera mag drop ???
+    DispatchQueue.main.async{self.eventCamMagDrop.text = "??? Mag Drop ???"}
+
+    
+ 
+//    var maxdurStr = ""
+//    if item.MaxDurSec != nil
+//    {
+//      maxdurStr = String(format: "%0.2f",item.MaxDurSec!)
+//      DispatchQueue.main.async{self.event.text = String(format: "%0.2f",item.MaxDurSec!)}
+//    }
+    
+    
+    //need code to set color
+    var stationPosIconVal : Int?
+    stationPosIconVal = 0
+    if item.Stations![0].StationPos != nil
+    {
+      stationPosIconVal = item.Stations![0].StationPos!
+    }
+    DispatchQueue.main.async{self.sigmaImg.image = stationSigmaIcon(stationPosIconVal)}
+    
+    var stationChordDistStr = "Chord: — km"
+    if item.Stations![0].ChordOffsetKm != nil
+    {
+      stationChordDistStr = String(format: "Chord: %0.0f km",item.Stations![0].ChordOffsetKm!)
+    }
+    DispatchQueue.main.async{self.eventChordDistance.text = stationChordDistStr}
+
+    var stationID = "Station ID   —"
+    if item.Stations![0].StationId != nil
+    {
+      stationID = String(format: "Station ID %d",item.Stations![0].StationId!)
+    }
+    DispatchQueue.main.async{self.eventStationID.text = stationID}
+
+    //need code to format time properly
+    var eventUtcStr = "—"
+    var leadTimeStr = "—"
+    var completionDateStr = "—"
+    if item.Stations![0].EventTimeUtc != nil
+    {
+      print("item.Stations![0].EventTimeUtc = ",item.Stations![0].EventTimeUtc!)
+      eventUtcStr = formatEventTime(timeString: item.Stations![0].EventTimeUtc!)
+      print("evnetUtcStr =",eventUtcStr)
+      leadTimeStr = leadTime(timeString: item.Stations![0].EventTimeUtc!)
+      print("leadTimeStr = ",leadTimeStr)
+      let eventDateFormatter = DateFormatter()
+      eventDateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSS"
+      eventDateFormatter.timeZone = TimeZone(abbreviation: "UTC")
+      let completionDate = eventDateFormatter.date(from: item.Stations![0].EventTimeUtc!)!
+      print("completion date = ",completionDate)
+      eventDateFormatter.dateFormat = "dd MMM yyyy"
+//      completionDateStr = eventDateFormatter.string(from: (eventDateFormatter.date(from: item.Stations![0].EventTimeUtc!)!) )
+      completionDateStr = eventDateFormatter.string(from: completionDate )
+    }
+    DispatchQueue.main.async{self.eventTime.text = eventUtcStr}
+    DispatchQueue.main.async{self.eventTimeRemaining.text = leadTimeStr + " on " + completionDateStr}
+
+    var errorTimeStr = "—"
+    if item.ErrorInTimeSec != nil
+    {
+      errorTimeStr = String(format: "+/-%0.0f",item.ErrorInTimeSec!)
+    }
+    DispatchQueue.main.async{self.eventTimeError.text = errorTimeStr}
+
+    //determine if there's weather info available
+    var weatherStr = ""
+    if item.Stations![0].WeatherInfoAvailable != nil
+    {
+      weatherStr = String(format: "WeatherInfoAvailable = %@",item.Stations![0].WeatherInfoAvailable!.description)
+    }
+
+    //need code to set icon
+    var cloudCoverStr = " —"
+    var cloudIconValue: Int?
+    if item.Stations![0].CloudCover != nil
+    {
+      cloudCoverStr = String(format: " %d%%",item.Stations![0].CloudCover!)
+      cloudIconValue = item.Stations![0].CloudCover!
+    }
+    DispatchQueue.main.async{self.eventClouds.text = cloudCoverStr}
+    DispatchQueue.main.async{self.eventCloudImg.image = cloudIcon(cloudIconValue)}
+
+    //need code to set icon
+    
+    var windSpeedIconValue: Int?
+    var windSignIconValue: Int?
+    if item.Stations![0].Wind != nil
+    {
+//      windStr = String(format: "%d",item.Stations![0].Wind!)
+      windSignIconValue = item.Stations![0].Wind!
+      windSpeedIconValue = item.Stations![0].Wind!
+    }
+    DispatchQueue.main.async{self.eventWindStrengthImg.image = windStrengthIcon(windSpeedIconValue) }
+    DispatchQueue.main.async{self.eventWindSignImg.image = windSignIcon(windSignIconValue)}
+
+    var tempStr = "—"
+    if item.Stations![0].TempDegC != nil
+    {
+      tempStr = String(format: "%d",item.Stations![0].TempDegC!)
+     }
+    DispatchQueue.main.async{self.eventTemperature.text = tempStr}
+    DispatchQueue.main.async{self.eventTempImg.image = thermIcon(item.Stations![0].TempDegC!)}
+
+    //need code to set icon
+    var highCloudStr = ""
+    if item.Stations![0].HighCloud != nil
+    {
+      highCloudStr = String(format: "%@",item.Stations![0].HighCloud!.description)
+    }
+
+    var starAltStr = "—"
+    if item.StarAlt != nil
+    {
+      starAltStr = String(format: "%0.0f°",item.StarAlt!)
+    }
+    DispatchQueue.main.async{self.eventStarAlt.text = starAltStr}
+
+    var sunAltStr = "—"
+    if item.SunAlt != nil
+    {
+      sunAltStr = String(format: "%0.0f°", item.SunAlt!)
+    }
+    DispatchQueue.main.async{self.eventSunAlt.text = sunAltStr}
+
+    var moonAltStr = "—"
+    if item.MoonAlt != nil
+    {
+      moonAltStr = String(format: "%0.0f°", item.MoonAlt!)
+    }
+    DispatchQueue.main.async{self.eventMoonAlt.text = moonAltStr}
+
+    
+    //need code to set icon
+    var starColourStr = ""
+    if item.StarColour != nil
+    {
+      starColourStr = String(format: "%d",item.StarColour!)
+    }
+//    print("selectedEventDetails = ",self.selectedEventDetails)
+    DispatchQueue.main.async {self.printEventDetails()}
   }
 
     /*
@@ -131,21 +374,21 @@ class DetailViewController: UIViewController {
 
   func printEventDetails()
   {
-    print("eventTitle=\(eventTitle.text)")
-    print("evenkRank=\(evenkRank.text)")
-    print("eventTimeRemaining=\(eventTimeRemaining.text)")
-    print("eventFeed=\(eventFeed.text)")
-    print("weatherBarView=\(weatherBarView)")
-    print("sigma2BarView=\(sigma2BarView)")
-    print("sigma1BarView=\(sigma1BarView)")
-    print("centerBarView=\(centerBarView)")
-    print("eventLocation=\(eventLocation.text)")
-    print("eventClouds=\(eventClouds.text)")
-    print("eventTemperature=\(eventTemperature.text)")
-    print("eventChordDistance=\(eventChordDistance.text)")
-    print("eventTime=\(eventTime.text)")
-    print("eventTimeError=\(eventTimeError.text)")
-    print("eventStarAlt=\(eventStarAlt.text)")
+    print("eventTitle=\(eventTitle!.text!)")
+    print("evenkRank=\(evenkRank!.text!)")
+    print("eventTimeRemaining=\(eventTimeRemaining!.text!)")
+    print("eventFeed=\(eventFeed!.text!)")
+    print("weatherBarView=\(weatherBarView!)")
+    print("sigma2BarView=\(sigma2BarView!)")
+    print("sigma1BarView=\(sigma1BarView!)")
+    print("centerBarView=\(centerBarView!)")
+    print("eventStationID=\(eventStationID!.text!)")
+    print("eventClouds=\(eventClouds!.text!)")
+    print("eventTemperature=\(eventTemperature!.text!)")
+    print("eventChordDistance=\(eventChordDistance!.text!)")
+    print("eventTime=\(eventTime!.text!)")
+    print("eventTimeError=\(eventTimeError!.text!)")
+    print("eventStarAlt=\(eventStarAlt!.text!)")
     print("eventSunAlt=\(eventSunAlt.text)")
     print("eventMoonAlt=\(eventMoonAlt.text)")
     print("eventMoonSeparation=\(eventMoonSeparation.text)")

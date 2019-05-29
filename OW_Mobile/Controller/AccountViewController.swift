@@ -115,7 +115,7 @@ func loadCredentailsFromKeyChain()
   var item: CFTypeRef?
   
   let itemCopyMatchingStatus = SecItemCopyMatching(query as CFDictionary, &item )
-  print("itemCopyMatchingStatus=",itemCopyMatchingStatus)
+//  print("itemCopyMatchingStatus=",itemCopyMatchingStatus)
   
   if let existingItem = item as? [String: Any],
     let username = existingItem[kSecAttrAccount as String] as? String,

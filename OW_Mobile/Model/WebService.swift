@@ -8,11 +8,6 @@
 
 import Foundation
 
-//UserDefaults Keys Enum
-struct UDKeys
-{
-  static let myEventList = "myEventList"
-}
 
 //delegate protocol
 protocol OWWebAPIDelegate: class
@@ -20,36 +15,14 @@ protocol OWWebAPIDelegate: class
   func webLogTextDidChange(text: String)
 }
 
-//Event structure matching JSON keys
-struct Event: Codable
-{
-  var Id: String
-  var Object: String
-  var StarMag: Double
-  var MagDrop: Double
-  var MaxDurSec: Double
-  var EventTimeUtc: String
-  var ErrorInTimeSec: Double
-  var WeatherInfoAvailable: Bool   //weather info available
-  var CloudCover: Int
-  var Wind: Int
-  var TempDegC: Int
-  var HighCloud: Bool
-  var BestStationPos: Int
-  var StarColour: Int
-}
-
-struct MyEvents: Codable
-{
-  var events: [Event]
-}
-
-
 class OWWebAPI: NSObject
 {
   weak var delegate: OWWebAPIDelegate?
   static let owConfig = URLSessionConfiguration.default
   static var owSession = URLSession(configuration: owConfig)
+  
+  static let owDetailConfig = URLSessionConfiguration.default
+  static var owDetailSession = URLSession(configuration: owDetailConfig)
 
   //create singleton for managing session during app lifetime
   static let shared = OWWebAPI()
@@ -57,7 +30,8 @@ class OWWebAPI: NSObject
 //  private init() {}
   
   let host = "www.occultwatcher.net"
-  let path = "/api/v1/events/list"
+  let myEventsPath = "/api/v1/events/list"
+  let eventDetailsPath = "/api/v1/events/"
   let scheme = "https"
 //  let user = "Alex Pratt"
 //  let password = "qwerty123456"
@@ -66,39 +40,65 @@ class OWWebAPI: NSObject
 //    let password = "dei77mos"
   
   var parsedJSON = [Event]()
+  var parsedDetails = EventDetails()
   let second: Double = 1000000
 
   // MARK: - OW Web Service Functions
-  func creatURL(owSession: URLSession) -> URL
+  func createMyEventsURL(owSession: URLSession) -> URL
   {
     let user = Credentials.username
     let password = Credentials.password
-   //let credential = URLCredential(user: user, password: password, persistence: .synchronizable)  for use with iCloud across devices
+    //let credential = URLCredential(user: user, password: password, persistence: .synchronizable)  for use with iCloud across devices
     let credential = URLCredential(user: user, password: password, persistence: .permanent)
-//    let credential = URLCredential(user: user, password: password, persistence: .forSession)
+    //    let credential = URLCredential(user: user, password: password, persistence: .forSession)
     //create url
     let protectionSpace = URLProtectionSpace(host: host, port: 443, protocol: scheme, realm: "Restricted", authenticationMethod: NSURLAuthenticationMethodHTTPBasic)
     URLCredentialStorage.shared.setDefaultCredential(credential, for: protectionSpace)
     var urlComponents = URLComponents()
     urlComponents.scheme = scheme
     urlComponents.host = host
-    urlComponents.path = path
+    urlComponents.path = myEventsPath
     urlComponents.user = user
     urlComponents.password = password
     
     let owURL = urlComponents.url!
-//    print("owURL = ",owURL)
+    //    print("owURL = ",owURL)
     return owURL
   }
   
-  func retrieveEventList(completion: @escaping ([Event]?, Error?) -> Void)
+  func createEventDetailURL(owSession: URLSession, eventID: String) -> URL
+  {
+    let user = Credentials.username
+    let password = Credentials.password
+    //let credential = URLCredential(user: user, password: password, persistence: .synchronizable)  for use with iCloud across devices
+    let credential = URLCredential(user: user, password: password, persistence: .permanent)
+    //    let credential = URLCredential(user: user, password: password, persistence: .forSession)
+    //create url
+    let protectionSpace = URLProtectionSpace(host: host, port: 443, protocol: scheme, realm: "Restricted", authenticationMethod: NSURLAuthenticationMethodHTTPBasic)
+    URLCredentialStorage.shared.setDefaultCredential(credential, for: protectionSpace)
+
+    var urlComponents = URLComponents()
+    urlComponents.scheme = scheme
+    urlComponents.host = host
+    urlComponents.path = eventDetailsPath + eventID
+    urlComponents.user = user
+    urlComponents.password = password
+//    print("credential = ",credential.user,"   ",credential.password)
+//    print("urlComponents=",urlComponents)
+    
+    let detailURL = urlComponents.url!
+//   print("create > detailURL = ",detailURL)
+    return detailURL
+  }
+
+  func retrieveEventList( completion: @escaping ([Event]?, Error?) -> Void)
   {
     delegate?.webLogTextDidChange(text: "Connecting to OW")
     let config = URLSessionConfiguration.default
 //    let owSession = URLSession(configuration: config)
     OWWebAPI.owSession = URLSession(configuration: config)
-    let owURL = creatURL(owSession: OWWebAPI.owSession)
-    print("owURL=",owURL)
+    let owURL = createMyEventsURL(owSession: OWWebAPI.owSession)
+//    print("owURL=",owURL)
 //    delegate?.webLogTextDidChange(text: "Connecting to " + owURL.description)
 
 //    delegate?.webLogTextDidChange(text: "Begin...")
@@ -138,7 +138,7 @@ class OWWebAPI: NSObject
       //apply decoder to json data to create entire array of To Do items
       parsedJSON = try decoder.decode([Event].self, from: jsonData)
       //sort by event data/time (earliest first)
-      parsedJSON.sort(by: { $0.EventTimeUtc < $1.EventTimeUtc })
+      parsedJSON.sort(by: { $0.EventTimeUtc! < $1.EventTimeUtc! })
       //test
       //      testUserDefaults(parsedJSON)
       
@@ -148,6 +148,27 @@ class OWWebAPI: NSObject
     return parsedJSON
   }
   
+  func parseDetailData(jsonData: Data) -> EventDetails
+  {
+    //create decoder instance
+    let decoder = JSONDecoder()
+    //use do try catch to trap any errors when decoding
+    do {
+      //set decoder to automatically convert from snake case to camel case
+      decoder.keyDecodingStrategy = .convertFromSnakeCase
+      //apply decoder to json data to create entire array of To Do items
+      parsedDetails = try decoder.decode(EventDetails.self, from: jsonData)
+      //sort by event data/time (earliest first)
+//      parsedJSON.sort(by: { $0.EventTimeUtc! < $1.EventTimeUtc! })
+      //test
+      //      testUserDefaults(parsedJSON)
+      
+    } catch let error {
+      print(error as Any)
+    }
+    return parsedDetails
+  }
+
   func loadEvents() -> [Event]
   {
     guard let encodedData = UserDefaults.standard.array(forKey: UDKeys.myEventList) as? [Data] else {
@@ -167,11 +188,11 @@ class OWWebAPI: NSObject
   {
     let cookieStorage = HTTPCookieStorage.shared
     let cookies = cookieStorage.cookies
-    print("cookies.count=",cookies?.count)
+//    print("cookies.count=",cookies?.count)
     for cookie in cookies as! [HTTPCookie]
     {
-      print("cookie.name=",cookie.name)
-      print("cookie.description=",cookie.description)
+//      print("cookie.name=",cookie.name)
+//      print("cookie.description=",cookie.description)
     }
   }
   
@@ -179,16 +200,52 @@ class OWWebAPI: NSObject
   {
     let cookieStorage = HTTPCookieStorage.shared
     let cookies = cookieStorage.cookies
-    print("cookies.count=",cookies?.count)
+//    print("cookies.count=",cookies?.count)
     for cookie in cookies as! [HTTPCookie]
     {
-      print("cookie.name=",cookie.name)
-      print("cookie.description=",cookie.description)
+//      print("cookie.name=",cookie.name)
+//      print("cookie.description=",cookie.description)
       HTTPCookieStorage.shared.deleteCookie(cookie)
-      print("cookie deleted")
+//      print("cookie deleted")
     }
   }
-
+ 
+  
+  
+  func retrieveEventDetails(eventID: String,  completion: @escaping (EventDetails?, Error?) -> Void)
+  {
+    delegate?.webLogTextDidChange(text: "Connecting to OW")
+     let config = URLSessionConfiguration.default
+    //    let owSession = URLSession(configuration: config)
+    let owDetailURL = createEventDetailURL(owSession: OWWebAPI.owSession, eventID: eventID)
+//    OWWebAPI.owSession = URLSession(configuration: config)
+//     print("owDetailURL=",owDetailURL)
+    
+    let owDetailTask = OWWebAPI.owSession.dataTask(with: owDetailURL)
+    {
+      (data,response,error) in
+//      print("data =",data)
+      guard let dataResponse = data, error == nil
+        else
+      {
+        print("\n*******Error:", error as Any)
+        self.delegate?.webLogTextDidChange(text: "\n*******Error:" + error!.localizedDescription)
+        usleep(useconds_t(0.5 * 1000000)) //will sleep for 0.5 seconds)
+        return
+      }
+      print("data retrieved")
+      self.delegate?.webLogTextDidChange(text: "Data Retrieved")
+      usleep(useconds_t(0.5 * 1000000)) //will sleep for 0.5 seconds)
+//      print("dataResponse=",dataResponse)
+      let detailEvents = self.parseDetailData(jsonData: dataResponse)
+//      print("detailEvents=", detailEvents)
+//      self.delegate?.webLogTextDidChange(text: "detailEvents count= \(detailEvents.count)")
+      usleep(useconds_t(0.5 * 1000000)) //will sleep for 0.5 seconds)
+      completion(detailEvents,nil)
+    }
+    print("...owDetailTask.resume()")
+    owDetailTask.resume()
+  }
 }
 
 extension OWWebAPI: URLSessionDelegate, URLSessionTaskDelegate
