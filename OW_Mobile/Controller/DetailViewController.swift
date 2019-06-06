@@ -404,7 +404,13 @@ class DetailViewController: UIViewController {
     }
     DispatchQueue.main.async{self.eventMoonAlt.text = moonAltStr}
 
-    
+    var moonDist = "—"
+    if item.MoonDist != nil
+    {
+      moonDist = String(format: "%0.0f", item.MoonDist!)
+    }
+    DispatchQueue.main.async{self.eventMoonSeparation.text = moonDist}
+
     //need code to set icon
     var starColourStr = ""
     if item.StarColour != nil
