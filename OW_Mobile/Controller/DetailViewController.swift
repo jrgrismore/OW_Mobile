@@ -91,7 +91,7 @@ class DetailViewController: UIViewController {
   
    override func viewWillAppear(_ animated: Bool)
   {
-    clearFieldsAndIcons()
+//    clearFieldsAndIcons()
     
     let detailEndpoint = OWWebAPI.shared.createEventDetailURL(owSession: OWWebAPI.owSession, eventID: detailData.Id!)
     print("detailEndpoint=",detailEndpoint)
@@ -106,7 +106,8 @@ class DetailViewController: UIViewController {
 
   override func viewDidAppear(_ animated: Bool)
   {
-    print("viewDidAppear")
+//    print("viewDidAppear")
+    clearFieldsAndIcons()
   }
   
   func clearFieldsAndIcons()
@@ -304,16 +305,16 @@ class DetailViewController: UIViewController {
     var completionDateStr = "—"
     if item.Stations![0].EventTimeUtc != nil
     {
-      print("item.Stations![0].EventTimeUtc = ",item.Stations![0].EventTimeUtc!)
+//      print("item.Stations![0].EventTimeUtc = ",item.Stations![0].EventTimeUtc!)
       eventUtcStr = formatEventTime(timeString: item.Stations![0].EventTimeUtc!)
-      print("evnetUtcStr =",eventUtcStr)
+//      print("evnetUtcStr =",eventUtcStr)
       leadTimeStr = leadTime(timeString: item.Stations![0].EventTimeUtc!)
-      print("leadTimeStr = ",leadTimeStr)
+//      print("leadTimeStr = ",leadTimeStr)
       let eventDateFormatter = DateFormatter()
       eventDateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSS"
       eventDateFormatter.timeZone = TimeZone(abbreviation: "UTC")
       let completionDate = eventDateFormatter.date(from: item.Stations![0].EventTimeUtc!)!
-      print("completion date = ",completionDate)
+//      print("completion date = ",completionDate)
       eventDateFormatter.dateFormat = "dd MMM yyyy"
 //      completionDateStr = eventDateFormatter.string(from: (eventDateFormatter.date(from: item.Stations![0].EventTimeUtc!)!) )
       completionDateStr = eventDateFormatter.string(from: completionDate )
@@ -329,10 +330,10 @@ class DetailViewController: UIViewController {
     DispatchQueue.main.async{self.eventTimeError.text = errorTimeStr}
 
     //determine if there's weather info available
-    print("weather info available = ",item.Stations![0].WeatherInfoAvailable)
+//    print("weather info available = ",item.Stations![0].WeatherInfoAvailable)
     if item.Stations![0].WeatherInfoAvailable != nil && item.Stations![0].WeatherInfoAvailable!
     {
-      print("weather info IS available")
+//      print("weather info IS available")
       //cloud info
       var cloudCoverStr = " —"
       var cloudIconValue: Int?
@@ -373,7 +374,7 @@ class DetailViewController: UIViewController {
       }
       
     } else {
-      print("weather info NOT available")
+//      print("weather info NOT available")
       DispatchQueue.main.async{self.eventCloudImg.image = nil}
       DispatchQueue.main.async{self.eventClouds.text = ""}
       DispatchQueue.main.async{self.eventWindStrengthImg.image = nil}
@@ -411,7 +412,7 @@ class DetailViewController: UIViewController {
       starColourStr = String(format: "%d",item.StarColour!)
     }
 //    print("selectedEventDetails = ",self.selectedEventDetails)
-    DispatchQueue.main.async {self.printEventDetails()}
+//    DispatchQueue.main.async {self.printEventDetails()}
   }
 
     /*

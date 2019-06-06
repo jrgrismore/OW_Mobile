@@ -215,3 +215,12 @@ func stationSigmaIcon(_ sigmaIconValue: Int?) -> UIImage
   return sigmaIconImage
 }
 
+func decimalRAtoHMS()
+{
+  
+}
+
+func decimalDecToDMS()
+{
+  
+}
