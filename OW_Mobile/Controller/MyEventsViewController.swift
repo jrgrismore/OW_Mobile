@@ -296,52 +296,74 @@ extension MyEventsViewController
     cell.leadTime.text = leadTime(timeString: cellStringArray[indexPath.row].EventTimeUtc)
     cell.eventTime.text = formatEventTime(timeString: cellStringArray[indexPath.row].EventTimeUtc)
     //set time error field
-    let timeError = cellDataArray[indexPath.row]!.ErrorInTimeSec
-    if timeError! > 90.0
+    if cellDataArray[indexPath.row]!.ErrorInTimeSec != nil
     {
-      let errorInMin = timeError! / 60.0
-      cell.timeError.text = String(format: "+/- %.01f min",errorInMin)
-    } else {
-      if timeError == -1
+      let timeError = cellDataArray[indexPath.row]!.ErrorInTimeSec
+      if timeError! > 90.0
       {
-        cell.timeError.text = "N/A"
+        let errorInMin = timeError! / 60.0
+        cell.timeError.text = String(format: "+/- %.01f min",errorInMin)
       } else {
-        cell.timeError.text = String(format: "+/- %.f sec",timeError!)
+        if timeError == -1
+        {
+          cell.timeError.text = "N/A"
+        } else {
+          cell.timeError.text = String(format: "+/- %.f sec",timeError!)
+        }
       }
     }
     //cell images
     cell.maxDurImg.image = #imageLiteral(resourceName: "max_sign")
     cell.magDropImg.image = #imageLiteral(resourceName: "drop_sign")
-
-    var sigmaIconValue = cellDataArray[indexPath.row]!.BestStationPos!
-    cell.sigmaImg.image = stationSigmaIcon(sigmaIconValue)   //set station sigma icon
     
-    starColorIcon(indexPath, cell)   //set star color icon
-    
-    //display weather info if forecast available, no display if no forecast
-    if cellDataArray[indexPath.row]!.WeatherInfoAvailable!
+    if cellDataArray[indexPath.row]!.BestStationPos != nil
     {
-      var cloudIconValue = cellDataArray[indexPath.row]!.CloudCover
-       cell.cloudImg.image = cloudIcon(cloudIconValue)   // set cloud % icon
+      var sigmaIconValue = cellDataArray[indexPath.row]!.BestStationPos!
+      cell.sigmaImg.image = stationSigmaIcon(sigmaIconValue)   //set station sigma icon
+    }
+    
+    if cellDataArray[indexPath.row]!.StarColour != nil
+    {
+      starColorIcon(indexPath, cell)   //set star color icon
+    }
+    
 
-      var windStrengthIconValue = cellDataArray[indexPath.row]!.Wind
-      windStrengthIconValue = 0
-      cell.windStrengthImg.image = windStrengthIcon(windStrengthIconValue)   //set wind strength icon
-      cell.windyImg.image = windSignIcon(windStrengthIconValue)   //set wind strength icon
-      
-      var thermIconValue = cellDataArray[indexPath.row]?.TempDegC
-      cell.tempImg.image = thermIcon(thermIconValue)
-      //set weather text to appropriate text
-      cell.cloudText.text = String(format: "%d%%",cellDataArray[indexPath.row]!.CloudCover!)
-      cell.tempText.text = String(format: "%d°",cellDataArray[indexPath.row]!.TempDegC!)
-    } else {
-      //set weather images and text empty because no forecast info is available
-      cell.cloudImg.image =  nil
-      cell.windStrengthImg.image =  nil
-      cell.windyImg.image =  nil
-      cell.tempImg.image =  nil
-      cell.cloudText.text = ""
-      cell.tempText.text = ""
+    if cellDataArray[indexPath.row]!.WeatherInfoAvailable != nil
+    {
+      //display weather info if forecast available, no display if no forecast
+      if cellDataArray[indexPath.row]!.WeatherInfoAvailable!
+      {
+        if cellDataArray[indexPath.row]!.CloudCover != nil
+        {
+          var cloudIconValue = cellDataArray[indexPath.row]!.CloudCover
+          cell.cloudImg.image = cloudIcon(cloudIconValue)   // set cloud % icon
+          cell.cloudText.text = String(format: "%d%%",cellDataArray[indexPath.row]!.CloudCover!)
+        }
+        
+        if cellDataArray[indexPath.row]!.Wind != nil
+        {
+          var windStrengthIconValue = cellDataArray[indexPath.row]!.Wind
+//          windStrengthIconValue = 0
+          cell.windStrengthImg.image = windStrengthIcon(windStrengthIconValue)   //set wind strength icon
+          cell.windyImg.image = windSignIcon(windStrengthIconValue)   //set wind strength icon
+        }
+
+         if cellDataArray[indexPath.row]!.TempDegC != nil
+        {
+          var thermIconValue = cellDataArray[indexPath.row]?.TempDegC
+          cell.tempImg.image = thermIcon(thermIconValue)
+          //set weather text to appropriate text
+          cell.tempText.text = String(format: "%d°",cellDataArray[indexPath.row]!.TempDegC!)
+        }
+      } else {
+        //set weather images and text empty because no forecast info is available
+        cell.cloudImg.image =  nil
+        cell.windStrengthImg.image =  nil
+        cell.windyImg.image =  nil
+        cell.tempImg.image =  nil
+        cell.cloudText.text = ""
+        cell.tempText.text = ""
+      }
     }
 
   }
@@ -544,8 +566,9 @@ extension MyEventsViewController
     let calloutFont =   UIFont.preferredFont(forTextStyle: .callout)
     let captionFont =   UIFont.preferredFont(forTextStyle: .caption1)
     var myEventStrings = [EventStrings]()
-    for (index, event) in myEvents.enumerated()
+    for (index, evnt) in myEvents.enumerated()
     {
+      var event = evnt
 //      print("myEvents: index =",index,"   event=",event)
 //      myEventStrings.append(EventStrings(Id: "", Object: "", StarMag: "", MagDrop: "", MaxDurSec: "", EventTimeUtc: "", ErrorInTimeSec: "", WeatherInfoAvailable: "", CloudCover: "", Wind: "", TempDegC: "", HighCloud: "", BestStationPos: "", StarColour: ""))
       var eventStrings = EventStrings()
@@ -555,7 +578,7 @@ extension MyEventsViewController
       
       //*******check precision
       
-      if event!.StarMag != nil
+       if event!.StarMag != nil
       {
 //        let magAttrStr = NSMutableAttributedString(string:"m", attributes:[NSAttributedString.Key.font : captionFont,
 //                                                                           NSAttributedString.Key.baselineOffset: 5])
@@ -599,11 +622,14 @@ extension MyEventsViewController
         eventStrings.MaxDurSec = String(format: "%.01f",event!.MaxDurSec!)
       }
       if event!.EventTimeUtc != nil { eventStrings.EventTimeUtc = event!.EventTimeUtc! }
-       if event!.ErrorInTimeSec != nil
+      //***test***
+      event!.ErrorInTimeSec = nil
+      //***test***
+      if event!.ErrorInTimeSec != nil
       {
         eventStrings.ErrorInTimeSec = String(format: "%.01f",event!.ErrorInTimeSec!)
       }
-      if event!.WeatherInfoAvailable != nil
+       if event!.WeatherInfoAvailable != nil
       {
         eventStrings.WeatherInfoAvailable = String(format: "%@",event!.WeatherInfoAvailable!.description)
       }
