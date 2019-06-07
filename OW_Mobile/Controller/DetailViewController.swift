@@ -126,6 +126,7 @@ class DetailViewController: UIViewController {
           self.activitySpinner.stopAnimating()
           self.spinnerView.isHidden = true
       }
+//      OWWebAPI.owSession.invalidateAndCancel()
     }   //??????????
     
   }

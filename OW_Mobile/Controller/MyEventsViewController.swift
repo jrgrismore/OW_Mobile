@@ -163,7 +163,7 @@ class MyEventsViewController: UIViewController, UICollectionViewDataSource,UICol
         self.spinnerView.isHidden = true
         }
 //      print("invalidate owSession")
-      OWWebAPI.owSession.invalidateAndCancel()
+//      OWWebAPI.owSession.invalidateAndCancel()
     })
   }
   
