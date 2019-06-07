@@ -13,7 +13,11 @@ class DetailViewController: UIViewController {
   var selection: String!
   var detailStr: String = ""
   var eventID: String = ""
-   
+  
+  @IBOutlet weak var spinnerView: UIView!
+  @IBOutlet weak var activitySpinner: UIActivityIndicatorView!
+  @IBOutlet weak var spinnerLbl: UILabel!
+  
 //  var detailData = [Event?]()
   var detailData = Event(Id:"",
                          Object:"",
@@ -81,6 +85,7 @@ class DetailViewController: UIViewController {
   override func viewDidLoad()
   {
     super.viewDidLoad()
+    self.spinnerView.layer.cornerRadius = 20
     
 //    detailLbl.text = selection
 //    print("detail data =")
@@ -97,9 +102,30 @@ class DetailViewController: UIViewController {
     print("detailEndpoint=",detailEndpoint)
     self.title = detailData.Object
     
+    DispatchQueue.main.async
+      {
+        print("start spinner")
+        self.spinnerView.isHidden = false
+        self.activitySpinner.startAnimating()
+    }
+    
+    //    let OWWebAPI.shared = OWWebAPI()
+    DispatchQueue.main.async{self.spinnerLbl.text = "Fetching Detail Data..."}
+    usleep(useconds_t(0.5 * 1000000)) //will sleep for 0.5 seconds
+    
     OWWebAPI.shared.retrieveEventDetails(eventID: detailData.Id!) { (myDetails, error) in
+      DispatchQueue.main.async{self.spinnerLbl.text = "download complete"}
+      usleep(useconds_t(0.5 * 1000000)) //will sleep for 0.5 seconds
+
       self.selectedEventDetails = myDetails!
+      DispatchQueue.main.async{self.spinnerLbl.text = "updating details"}
+      usleep(useconds_t(0.5 * 1000000)) //will sleep for 0.5 seconds
        self.setEventInfoFields(eventItem: self.selectedEventDetails)
+      DispatchQueue.main.async
+        {
+          self.activitySpinner.stopAnimating()
+          self.spinnerView.isHidden = true
+      }
     }   //??????????
     
   }
