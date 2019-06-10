@@ -204,7 +204,7 @@ class DetailViewController: UIViewController {
       //******convert decimal hours to hh:mm:ss
       let raTuple = floatRAtoHMS(floatRA: item.RAHours!)
 //      raStr = String(format: "RA %0.2f",item.RAHours!)
-      raStr = String(format: "RA %02dh %02dm %4.1fs",raTuple.hours,raTuple.minutes,raTuple.seconds)
+      raStr = String(format: "RA  %02dh %02dm %04.1fs",raTuple.hours,raTuple.minutes,raTuple.seconds)
     }
     DispatchQueue.main.async{self.eventRA.text = raStr}
 
@@ -214,7 +214,7 @@ class DetailViewController: UIViewController {
       //******convert decimal degrees to dd:mm:ss
       let decTuple = floatDecToDMS(floatDegrees: item.DEDeg!)
 //      decStr = String(format: "DE %0.2f",item.DEDeg!)
-      decStr = String(format: "DE %02d° %02d' %4.1f\"",decTuple.degrees,decTuple.minutes,decTuple.seconds)
+      decStr = String(format: "DE  %+03d° %02d' %04.1f\"",decTuple.degrees,labs(decTuple.minutes),fabs(decTuple.seconds))
     }
     DispatchQueue.main.async{self.eventDec.text = decStr}
 
