@@ -215,12 +215,101 @@ func stationSigmaIcon(_ sigmaIconValue: Int?) -> UIImage
   return sigmaIconImage
 }
 
-func decimalRAtoHMS()
+ //********************************************
+ // RA HH.hhh -> HH MM SS
+ //********************************************
+ func floatRAtoHMS(floatRA: Double) -> (hours: Int, minutes: Int, seconds: Double)
+ {
+ let restrictedRA = limitTo24Hours(floatHrs: floatRA)
+ let hms = floatHoursToHMS(floatHrs: restrictedRA)
+ return hms
+ }
+
+//********************************************
+//Dec DDD.ddd -> DD MM SS
+//********************************************
+func floatDecToDMS(floatDegrees: Double) -> (degrees: Int, minutes: Int, seconds: Double)
 {
-  
+  let dms = floatDegreesToDMS(floatDeg: floatDegrees)
+  return dms
 }
 
-func decimalDecToDMS()
+//********************************************
+// Limit time, 0 ≥ HH.hhh ≤ 24
+//********************************************
+func limitTo24Hours(floatHrs: Double) -> Double
 {
-  
+  let moduloTuple = remainderCycles(dividend: floatHrs, divisor: 24.0)
+  var remainderHrs = moduloTuple.remainder
+  //  let hrCycles = moduloTuple.cycles
+  //  print("remainder=",remainderHrs,"   cycles=",hrCycles)
+  if remainderHrs > 24.0
+  {
+    remainderHrs = remainderHrs - 24.0
+  }
+  if remainderHrs < 0.0
+  {
+    remainderHrs = remainderHrs + 24.0
+  }
+  return remainderHrs
 }
+
+//********************************************
+// Time HH.hhh -> HH MM SS
+//********************************************
+func floatHoursToHMS(floatHrs: Double) -> (hours: Int, minutes: Int, seconds: Double)
+{
+  var hours = Int(floatHrs)
+  let floatMinutes = (floatHrs - Double(hours)) * 60.0
+  var minutes = Int(floatMinutes)
+  var seconds = (floatMinutes - Double(minutes)) * 60.0
+  let secondsRoundOff = fabs(seconds - 60.0)
+  if secondsRoundOff > 0.0 && secondsRoundOff < 0.0000000001
+  {
+    minutes = minutes + 1
+    seconds = 0.0
+  }
+  if minutes == 60
+  {
+    hours = hours + 1
+    minutes = 0
+  }
+  seconds = trunc(seconds * 1e9) / 1e9
+  return (hours, minutes, seconds)
+}
+
+//********************************************
+// Degrees DDD.ddd -> DDD MM SS
+//********************************************
+func floatDegreesToDMS(floatDeg: Double) -> (degrees: Int, minutes: Int, seconds: Double)
+{
+  var degrees = Int(floatDeg)
+  let floatMinutes = (floatDeg - Double(degrees)) * 60.0
+  var minutes = Int(floatMinutes)
+  var seconds = (floatMinutes - Double(minutes)) * 60
+  let secondsRoundOff = fabs(seconds - 60.0)
+  if secondsRoundOff > 0.0 && secondsRoundOff < 0.0000000001
+  {
+    minutes = minutes + 1
+    seconds = 0.0
+  }
+  if minutes == 60
+  {
+    degrees = degrees + 1
+    minutes = 0
+  }
+  seconds = trunc(seconds * 1e9) / 1e9
+  return (degrees, minutes, seconds)
+}
+
+//********************************************
+// Remainder (modulo) and # of cycles from
+// dividend and divisor
+//********************************************
+func remainderCycles(dividend: Double, divisor: Double) -> (remainder: Double, cycles: Int)
+{
+  let remainder = dividend.truncatingRemainder(dividingBy: divisor)
+  let cycles = Int(dividend / divisor)
+  return (remainder, cycles)
+}
+

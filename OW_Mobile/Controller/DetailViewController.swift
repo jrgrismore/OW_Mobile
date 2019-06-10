@@ -198,11 +198,13 @@ class DetailViewController: UIViewController {
     }
     DispatchQueue.main.async{self.eventFeed.text = feedStr}
 
-      var raStr = "RA   —"
+    var raStr = "RA   —"
     if item.RAHours != nil
     {
       //******convert decimal hours to hh:mm:ss
-      raStr = String(format: "RA %0.2f",item.RAHours!)
+      let raTuple = floatRAtoHMS(floatRA: item.RAHours!)
+//      raStr = String(format: "RA %0.2f",item.RAHours!)
+      raStr = String(format: "RA %02dh %02dm %4.1fs",raTuple.hours,raTuple.minutes,raTuple.seconds)
     }
     DispatchQueue.main.async{self.eventRA.text = raStr}
 
@@ -210,7 +212,9 @@ class DetailViewController: UIViewController {
     if item.DEDeg != nil
     {
       //******convert decimal degrees to dd:mm:ss
-      decStr = String(format: "DE %0.2f",item.DEDeg!)
+      let decTuple = floatDecToDMS(floatDegrees: item.DEDeg!)
+//      decStr = String(format: "DE %0.2f",item.DEDeg!)
+      decStr = String(format: "DE %02d° %02d' %4.1f\"",decTuple.degrees,decTuple.minutes,decTuple.seconds)
     }
     DispatchQueue.main.async{self.eventDec.text = decStr}
 
