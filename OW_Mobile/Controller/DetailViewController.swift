@@ -356,7 +356,7 @@ class DetailViewController: UIViewController {
     var errorTimeStr = "—"
     if item.ErrorInTimeSec != nil
     {
-      errorTimeStr = String(format: "+/-%0.0f",item.ErrorInTimeSec!)
+      errorTimeStr = String(format: "+/-%0.0f sec",item.ErrorInTimeSec!)
     }
     DispatchQueue.main.async{self.eventTimeError.text = errorTimeStr}
 
