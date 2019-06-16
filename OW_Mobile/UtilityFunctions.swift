@@ -55,6 +55,52 @@ func leadTime(timeString: String) -> String
   return leadTimeString
 }
 
+
+func starColorIcon(_ starColorIconVal: Int?) -> UIImage
+{
+  var starColorImage: UIImage
+  if starColorIconVal != nil
+  {
+    //    Unknown (0) = star_black.png,
+    //    Blue (1) = star_b.png,
+    //    White (2) = star_w.png,
+    //    Yellow (3) = star_y.png,
+    //    Orange (4) = star_o.png,
+    //    Red (5) = star_r.png
+    print("starColorIconVal=",starColorIconVal)
+    switch starColorIconVal
+    {
+      case 0:
+      print("star color case 0")
+      starColorImage =  #imageLiteral(resourceName: "star_black")
+      case 1:
+        print("star color case 1")
+      starColorImage =  #imageLiteral(resourceName: "star_b")
+      case 2:
+        print("star color case 2")
+      starColorImage =  #imageLiteral(resourceName: "star_w")
+      case 3:
+        print("star color case 3")
+      starColorImage =  #imageLiteral(resourceName: "star_y")
+      case 4:
+        print("star color case 4")
+      starColorImage =  #imageLiteral(resourceName: "star_o")
+      case 5:
+        print("star color case 5")
+      starColorImage =  #imageLiteral(resourceName: "star_r")
+      default:
+        print("star color case default")
+     starColorImage =  #imageLiteral(resourceName: "star_black")
+    }
+  } else {
+    print("star color else clause")
+    starColorImage =  #imageLiteral(resourceName: "star_black")
+  }
+  print("starcolorImage =",starColorImage)
+  return starColorImage
+}
+
+
 func cloudIcon(_ cloudIconVal: Int?) -> UIImage
 {
   //set appropriate cloud image

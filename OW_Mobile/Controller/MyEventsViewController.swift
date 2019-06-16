@@ -324,7 +324,9 @@ extension MyEventsViewController
     
     if cellDataArray[indexPath.row]!.StarColour != nil
     {
-      starColorIcon(indexPath, cell)   //set star color icon
+//      starColorIcon(indexPath, cell)   //set star color icon
+      print("star color value = ",cellDataArray[indexPath.row]!.StarColour)
+      cell.starMagImg.image = starColorIcon(cellDataArray[indexPath.row]!.StarColour)
     }
     
 
@@ -413,37 +415,38 @@ extension MyEventsViewController
 //    }
 //  }
 
-  func starColorIcon(_ indexPath: IndexPath, _ cell: MyEventsCollectionViewCell)
-  {
-//    Unknown (0) = star_black.png,
-//    Blue (1) = star_b.png,
-//    White (2) = star_w.png,
-//    Yellow (3) = star_y.png,
-//    Orange (4) = star_o.png,
-//    Red (5) = star_r.png
-    if cellDataArray[indexPath.row]!.StarColour != nil
-    {
-      switch cellDataArray[indexPath.row]!.StarColour!
-      {
-      case 0:
-        cell.starMagImg.image =  #imageLiteral(resourceName: "star_black")
-      case 1:
-        cell.starMagImg.image =  #imageLiteral(resourceName: "star_b")
-      case 2:
-        cell.starMagImg.image =  #imageLiteral(resourceName: "star_w")
-      case 3:
-        cell.starMagImg.image =  #imageLiteral(resourceName: "star_y")
-      case 4:
-        cell.starMagImg.image =  #imageLiteral(resourceName: "star_o")
-      case 5:
-        cell.starMagImg.image =  #imageLiteral(resourceName: "star_r")
-      default:
-        cell.starMagImg.image =  #imageLiteral(resourceName: "star_black")
-      }
-    } else {
-      cell.starMagImg.image =  #imageLiteral(resourceName: "star_black")
-    }
-  }
+//  func starColorIcon(_ indexPath: IndexPath, _ cell: MyEventsCollectionViewCell)
+//  {
+//    if cellDataArray[indexPath.row]!.StarColour != nil
+//    {
+//    
+//      //    Unknown (0) = star_black.png,
+//      //    Blue (1) = star_b.png,
+//      //    White (2) = star_w.png,
+//      //    Yellow (3) = star_y.png,
+//      //    Orange (4) = star_o.png,
+//      //    Red (5) = star_r.png
+//      switch cellDataArray[indexPath.row]!.StarColour!
+//      {
+//      case 0:
+//        cell.starMagImg.image =  #imageLiteral(resourceName: "star_black")
+//      case 1:
+//        cell.starMagImg.image =  #imageLiteral(resourceName: "star_b")
+//      case 2:
+//        cell.starMagImg.image =  #imageLiteral(resourceName: "star_w")
+//      case 3:
+//        cell.starMagImg.image =  #imageLiteral(resourceName: "star_y")
+//      case 4:
+//        cell.starMagImg.image =  #imageLiteral(resourceName: "star_o")
+//      case 5:
+//        cell.starMagImg.image =  #imageLiteral(resourceName: "star_r")
+//      default:
+//        cell.starMagImg.image =  #imageLiteral(resourceName: "star_black")
+//      }
+//    } else {
+//      cell.starMagImg.image =  #imageLiteral(resourceName: "star_black")
+//    }
+//  }
 //
 //  func stationSigmaIcon(_ indexPath: IndexPath, _ cell: MyEventsCollectionViewCell)
 //  {

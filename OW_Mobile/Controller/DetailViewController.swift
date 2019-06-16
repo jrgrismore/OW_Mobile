@@ -81,6 +81,7 @@ class DetailViewController: UIViewController {
   @IBOutlet weak var eventWindSignImg: UIImageView!
   @IBOutlet weak var eventTempImg: UIImageView!
   @IBOutlet weak var sigmaImg: UIImageView!
+  @IBOutlet weak var starAltImg: UIImageView!
   
   override func viewDidLoad()
   {
@@ -391,7 +392,7 @@ class DetailViewController: UIViewController {
       var tempStr = "—"
       if item.Stations![0].TempDegC != nil
       {
-        tempStr = String(format: "%d",item.Stations![0].TempDegC!)
+        tempStr = String(format: "%d°C",item.Stations![0].TempDegC!)
       }
       DispatchQueue.main.async{self.eventTemperature.text = tempStr}
       DispatchQueue.main.async{self.eventTempImg.image = thermIcon(item.Stations![0].TempDegC!)}
@@ -443,11 +444,17 @@ class DetailViewController: UIViewController {
     DispatchQueue.main.async{self.eventMoonSeparation.text = moonDist}
 
     //need code to set icon
-    var starColourStr = ""
+    var starColorImage: UIImage
     if item.StarColour != nil
     {
-      starColourStr = String(format: "%d",item.StarColour!)
+      starColorImage = starColorIcon(item.StarColour)
+      DispatchQueue.main.async{self.starAltImg.image = starColorImage}
     }
+    else
+    {
+      DispatchQueue.main.async{self.starAltImg.image = nil}
+    }
+
 //    print("selectedEventDetails = ",self.selectedEventDetails)
 //    DispatchQueue.main.async {self.printEventDetails()}
   }

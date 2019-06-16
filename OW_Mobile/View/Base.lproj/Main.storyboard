@@ -1016,7 +1016,6 @@
                                                                 <subviews>
                                                                     <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" translatesAutoresizingMaskIntoConstraints="NO" id="XKy-gC-OYs" userLabel="Star Alt Img">
                                                                         <rect key="frame" x="0.0" y="3.5" width="16" height="16"/>
-                                                                        <color key="backgroundColor" red="0.99990969900000004" green="1" blue="0.94508165119999998" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                                                         <constraints>
                                                                             <constraint firstAttribute="height" constant="16" id="0Js-f6-E1q"/>
                                                                             <constraint firstAttribute="width" constant="16" id="nxP-zA-rn8"/>
@@ -1522,6 +1521,7 @@
                         <outlet property="sigmaImg" destination="f7N-mE-RWE" id="HRt-YM-oNt"/>
                         <outlet property="spinnerLbl" destination="rfp-J5-iaI" id="aRy-5Z-I6Y"/>
                         <outlet property="spinnerView" destination="bUk-xQ-arM" id="jqD-TJ-Hko"/>
+                        <outlet property="starAltImg" destination="XKy-gC-OYs" id="N2d-zp-CaB"/>
                         <outlet property="weatherBarView" destination="RoV-Cl-X5I" id="Hvn-UQ-dkk"/>
                     </connections>
                 </viewController>
