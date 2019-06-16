@@ -114,7 +114,7 @@ class OWWebAPI: NSObject
         usleep(useconds_t(0.5 * 1000000)) //will sleep for 0.5 seconds)
         return
       }
-      print("data retrieved")
+//      print("data retrieved")
       self.delegate?.webLogTextDidChange(text: "Data Retrieved")
       usleep(useconds_t(0.5 * 1000000)) //will sleep for 0.5 seconds)
       let myEvents = self.parseEventData(jsonData: dataResponse)
@@ -123,7 +123,7 @@ class OWWebAPI: NSObject
       usleep(useconds_t(0.5 * 1000000)) //will sleep for 0.5 seconds)
       completion(myEvents,nil)
     }
-    print("...owTask.resume()")
+//    print("...owTask.resume()")
     owTask.resume()
   }
   
@@ -233,7 +233,7 @@ class OWWebAPI: NSObject
         usleep(useconds_t(0.5 * 1000000)) //will sleep for 0.5 seconds)
         return
       }
-      print("data retrieved")
+//      print("data retrieved")
       self.delegate?.webLogTextDidChange(text: "Data Retrieved")
       usleep(useconds_t(0.5 * 1000000)) //will sleep for 0.5 seconds)
 //      print("dataResponse=",dataResponse)
@@ -243,7 +243,7 @@ class OWWebAPI: NSObject
       usleep(useconds_t(0.5 * 1000000)) //will sleep for 0.5 seconds)
       completion(detailEvents,nil)
     }
-    print("...owDetailTask.resume()")
+//    print("...owDetailTask.resume()")
     owDetailTask.resume()
   }
 }

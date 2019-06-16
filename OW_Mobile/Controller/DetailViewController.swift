@@ -43,8 +43,8 @@ class DetailViewController: UIViewController {
   @IBOutlet weak var eventFeed: UILabel!
   
   @IBOutlet weak var weatherBarView: UIView!
-  @IBOutlet weak var sigma2BarView: UIView!
   @IBOutlet weak var sigma1BarView: UIView!
+  @IBOutlet weak var shadowBarView: UIView!
   @IBOutlet weak var centerBarView: UIView!
   
   @IBOutlet weak var eventStationID: UILabel!
@@ -105,7 +105,6 @@ class DetailViewController: UIViewController {
     
     DispatchQueue.main.async
       {
-        print("start spinner")
         self.spinnerView.isHidden = false
         self.activitySpinner.startAnimating()
     }
@@ -241,9 +240,13 @@ class DetailViewController: UIViewController {
     DispatchQueue.main.async{self.eventAsteroidOrigin.text = asteroidClassStr}
 
     var asteroidDiamStr = "Diameter        —"
-    if item.AstDia != nil
+    if item.AstDiaKm != nil
     {
-      asteroidDiamStr = String(format: "Diameter %0.0f",item.AstDia!)
+      asteroidDiamStr = String(format: "Diameter %0.1f km",item.AstDiaKm!)
+      //set shadow bar width
+//      DispatchQueue.main.async {self.shadowBarView.frame.size.width = CGFloat(item.AstDia!)}
+      //test ??????????
+      DispatchQueue.main.async {self.shadowBarView.frame.size.width = 200.0}
     }
     DispatchQueue.main.async{self.eventAsteroidDiameter.text = asteroidDiamStr}
 
@@ -476,8 +479,8 @@ class DetailViewController: UIViewController {
     print("eventTimeRemaining=\(eventTimeRemaining!.text!)")
     print("eventFeed=\(eventFeed!.text!)")
     print("weatherBarView=\(weatherBarView!)")
-    print("sigma2BarView=\(sigma2BarView!)")
     print("sigma1BarView=\(sigma1BarView!)")
+    print("shadowBarView=\(shadowBarView!)")
     print("centerBarView=\(centerBarView!)")
     print("eventStationID=\(eventStationID!.text!)")
     print("eventClouds=\(eventClouds!.text!)")

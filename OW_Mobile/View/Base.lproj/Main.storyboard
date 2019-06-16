@@ -845,11 +845,11 @@
                                                 <rect key="frame" x="0.0" y="0.0" width="369" height="16.5"/>
                                                 <color key="backgroundColor" red="0.97609192132949829" green="0.86297106742858887" blue="0.73330008983612061" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                             </view>
-                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Zlt-mA-YQ5" userLabel="Sigma2 Bar View">
+                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Zlt-mA-YQ5" userLabel="Sigma1 Bar View">
                                                 <rect key="frame" x="46" y="16.5" width="277" height="54.5"/>
                                                 <color key="backgroundColor" red="0.83480781316757202" green="0.4983101487159729" blue="0.48625296354293823" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                             </view>
-                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="c4Z-ek-M3c" userLabel="Sigma1 Bar View">
+                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="c4Z-ek-M3c" userLabel="Shadow Bar View">
                                                 <rect key="frame" x="138.5" y="16.5" width="92" height="54.5"/>
                                                 <color key="backgroundColor" red="0.44024449586868286" green="0.79986923933029175" blue="0.78823524713516235" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                             </view>
@@ -1516,8 +1516,8 @@
                         <outlet property="eventTitle" destination="Bxb-g6-GRG" id="mlk-Bq-qVg"/>
                         <outlet property="eventWindSignImg" destination="xEL-jx-mOe" id="rx9-LA-Qqs"/>
                         <outlet property="eventWindStrengthImg" destination="oYy-99-jES" id="gVg-9R-WhS"/>
-                        <outlet property="sigma1BarView" destination="c4Z-ek-M3c" id="Nyi-hp-bUY"/>
-                        <outlet property="sigma2BarView" destination="Zlt-mA-YQ5" id="6hy-QB-cvQ"/>
+                        <outlet property="shadowBarView" destination="c4Z-ek-M3c" id="Nyi-hp-bUY"/>
+                        <outlet property="sigma1BarView" destination="Zlt-mA-YQ5" id="6hy-QB-cvQ"/>
                         <outlet property="sigmaImg" destination="f7N-mE-RWE" id="HRt-YM-oNt"/>
                         <outlet property="spinnerLbl" destination="rfp-J5-iaI" id="aRy-5Z-I6Y"/>
                         <outlet property="spinnerView" destination="bUk-xQ-arM" id="jqD-TJ-Hko"/>

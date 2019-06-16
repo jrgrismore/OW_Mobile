@@ -324,8 +324,6 @@ extension MyEventsViewController
     
     if cellDataArray[indexPath.row]!.StarColour != nil
     {
-//      starColorIcon(indexPath, cell)   //set star color icon
-      print("star color value = ",cellDataArray[indexPath.row]!.StarColour)
       cell.starMagImg.image = starColorIcon(cellDataArray[indexPath.row]!.StarColour)
     }
     

@@ -76,7 +76,7 @@ struct EventDetails: Codable
   var AstMag: Double?
   var MoonDist: Double?
   var MoonPhase: Int?
-  var AstDia: Double?
+  var AstDiaKm: Double?
   var AstDistUA: Double?
   var RAHours: Double?
   var DEDeg: Double?
