@@ -845,6 +845,14 @@
                                                 <rect key="frame" x="0.0" y="0.0" width="369" height="16.5"/>
                                                 <color key="backgroundColor" red="0.97609192132949829" green="0.86297106742858887" blue="0.73330008983612061" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                             </view>
+                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ITw-Gp-ShU" userLabel="Sigma3 Bar View">
+                                                <rect key="frame" x="0.0" y="16.5" width="369" height="54.5"/>
+                                                <color key="backgroundColor" red="0.83480781319999997" green="0.49831014870000001" blue="0.48625296350000002" alpha="0.59999999999999998" colorSpace="custom" customColorSpace="displayP3"/>
+                                            </view>
+                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Mhe-Il-VFc" userLabel="Sigma2 Bar View">
+                                                <rect key="frame" x="27.5" y="16.5" width="314" height="54.5"/>
+                                                <color key="backgroundColor" red="0.83480781319999997" green="0.49831014870000001" blue="0.48625296350000002" alpha="0.69999999999999996" colorSpace="custom" customColorSpace="displayP3"/>
+                                            </view>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Zlt-mA-YQ5" userLabel="Sigma1 Bar View">
                                                 <rect key="frame" x="46" y="16.5" width="277" height="54.5"/>
                                                 <color key="backgroundColor" red="0.83480781316757202" green="0.4983101487159729" blue="0.48625296354293823" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
@@ -866,9 +874,15 @@
                                             <constraint firstItem="RoV-Cl-X5I" firstAttribute="height" secondItem="Zlt-mA-YQ5" secondAttribute="height" multiplier="0.3" id="0te-33-Fns"/>
                                             <constraint firstItem="RoV-Cl-X5I" firstAttribute="top" secondItem="HuD-ai-6Aw" secondAttribute="top" id="3Zs-RO-hB0"/>
                                             <constraint firstItem="Zlt-mA-YQ5" firstAttribute="height" secondItem="HuD-ai-6Aw" secondAttribute="height" multiplier="0.6" id="432-fH-z7a"/>
+                                            <constraint firstItem="Mhe-Il-VFc" firstAttribute="width" secondItem="RoV-Cl-X5I" secondAttribute="width" multiplier="0.85" id="6ho-F9-CnW"/>
+                                            <constraint firstItem="ITw-Gp-ShU" firstAttribute="width" secondItem="RoV-Cl-X5I" secondAttribute="width" id="7LC-fC-zcT"/>
+                                            <constraint firstItem="ITw-Gp-ShU" firstAttribute="centerX" secondItem="HuD-ai-6Aw" secondAttribute="centerX" id="8Ov-5Z-IRg"/>
+                                            <constraint firstItem="Mhe-Il-VFc" firstAttribute="bottom" secondItem="Zlt-mA-YQ5" secondAttribute="bottom" id="BhI-3v-V23"/>
                                             <constraint firstItem="c4Z-ek-M3c" firstAttribute="bottom" secondItem="Zlt-mA-YQ5" secondAttribute="bottom" id="CvF-p1-1zc"/>
                                             <constraint firstItem="RoV-Cl-X5I" firstAttribute="leading" secondItem="HuD-ai-6Aw" secondAttribute="leading" id="G7S-Ma-GiA"/>
+                                            <constraint firstItem="Mhe-Il-VFc" firstAttribute="centerX" secondItem="HuD-ai-6Aw" secondAttribute="centerX" id="H3q-b7-4jN"/>
                                             <constraint firstItem="qFM-b9-xCf" firstAttribute="top" secondItem="HuD-ai-6Aw" secondAttribute="top" id="Kc5-uG-YxX"/>
+                                            <constraint firstItem="Mhe-Il-VFc" firstAttribute="top" secondItem="Zlt-mA-YQ5" secondAttribute="top" id="LQY-oc-GXl"/>
                                             <constraint firstItem="Zlt-mA-YQ5" firstAttribute="top" secondItem="RoV-Cl-X5I" secondAttribute="bottom" id="Nag-Ba-LYe"/>
                                             <constraint firstAttribute="trailing" secondItem="RoV-Cl-X5I" secondAttribute="trailing" id="QhR-HL-hhS"/>
                                             <constraint firstItem="Zlt-mA-YQ5" firstAttribute="width" secondItem="RoV-Cl-X5I" secondAttribute="width" multiplier="0.75" id="RDj-EB-Y14"/>
@@ -876,9 +890,13 @@
                                             <constraint firstItem="c4Z-ek-M3c" firstAttribute="top" secondItem="Zlt-mA-YQ5" secondAttribute="top" id="WHd-au-eB8"/>
                                             <constraint firstItem="qFM-b9-xCf" firstAttribute="centerX" secondItem="HuD-ai-6Aw" secondAttribute="centerX" id="YiJ-yK-bAv"/>
                                             <constraint firstItem="Zlt-mA-YQ5" firstAttribute="centerX" secondItem="HuD-ai-6Aw" secondAttribute="centerX" id="ZjN-wR-ccV"/>
+                                            <constraint firstItem="Zlt-mA-YQ5" firstAttribute="centerY" secondItem="Mhe-Il-VFc" secondAttribute="centerY" id="aA6-4X-vt7"/>
                                             <constraint firstItem="c4Z-ek-M3c" firstAttribute="width" secondItem="RoV-Cl-X5I" secondAttribute="width" multiplier="0.25" id="dzB-Uz-Z9Z"/>
+                                            <constraint firstItem="Zlt-mA-YQ5" firstAttribute="centerY" secondItem="ITw-Gp-ShU" secondAttribute="centerY" id="fVe-O3-BFM"/>
                                             <constraint firstItem="c4Z-ek-M3c" firstAttribute="centerY" secondItem="Zlt-mA-YQ5" secondAttribute="centerY" id="noL-x6-gLC"/>
+                                            <constraint firstItem="Zlt-mA-YQ5" firstAttribute="bottom" secondItem="ITw-Gp-ShU" secondAttribute="bottom" id="pUw-J6-POB"/>
                                             <constraint firstItem="Zlt-mA-YQ5" firstAttribute="bottom" secondItem="qFM-b9-xCf" secondAttribute="bottom" id="qLn-uO-iAH"/>
+                                            <constraint firstItem="Zlt-mA-YQ5" firstAttribute="top" secondItem="ITw-Gp-ShU" secondAttribute="top" id="x5q-Pi-uGe"/>
                                             <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="40" id="xoo-hY-CUW"/>
                                         </constraints>
                                     </view>
@@ -1517,7 +1535,10 @@
                         <outlet property="eventWindSignImg" destination="xEL-jx-mOe" id="rx9-LA-Qqs"/>
                         <outlet property="eventWindStrengthImg" destination="oYy-99-jES" id="gVg-9R-WhS"/>
                         <outlet property="shadowBarView" destination="c4Z-ek-M3c" id="Nyi-hp-bUY"/>
+                        <outlet property="shadowBarWidth" destination="dzB-Uz-Z9Z" id="cNn-Z5-Rmd"/>
                         <outlet property="sigma1BarView" destination="Zlt-mA-YQ5" id="6hy-QB-cvQ"/>
+                        <outlet property="sigma2BarView" destination="Mhe-Il-VFc" id="Vra-vz-fYp"/>
+                        <outlet property="sigma3BarView" destination="ITw-Gp-ShU" id="O0u-ag-rub"/>
                         <outlet property="sigmaImg" destination="f7N-mE-RWE" id="HRt-YM-oNt"/>
                         <outlet property="spinnerLbl" destination="rfp-J5-iaI" id="aRy-5Z-I6Y"/>
                         <outlet property="spinnerView" destination="bUk-xQ-arM" id="jqD-TJ-Hko"/>

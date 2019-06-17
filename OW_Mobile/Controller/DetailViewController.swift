@@ -43,6 +43,8 @@ class DetailViewController: UIViewController {
   @IBOutlet weak var eventFeed: UILabel!
   
   @IBOutlet weak var weatherBarView: UIView!
+  @IBOutlet weak var sigma3BarView: UIView!
+  @IBOutlet weak var sigma2BarView: UIView!
   @IBOutlet weak var sigma1BarView: UIView!
   @IBOutlet weak var shadowBarView: UIView!
   @IBOutlet weak var centerBarView: UIView!
@@ -82,6 +84,9 @@ class DetailViewController: UIViewController {
   @IBOutlet weak var eventTempImg: UIImageView!
   @IBOutlet weak var sigmaImg: UIImageView!
   @IBOutlet weak var starAltImg: UIImageView!
+  
+  @IBOutlet weak var shadowBarWidth: NSLayoutConstraint!
+  
   
   override func viewDidLoad()
   {
@@ -244,11 +249,56 @@ class DetailViewController: UIViewController {
     {
       asteroidDiamStr = String(format: "Diameter %0.1f km",item.AstDiaKm!)
       //set shadow bar width
-//      DispatchQueue.main.async {self.shadowBarView.frame.size.width = CGFloat(item.AstDia!)}
-      //test ??????????
-      DispatchQueue.main.async {self.shadowBarView.frame.size.width = 200.0}
+      print("asteroidDiameterStr=",asteroidDiamStr)
+      let shadowWidth = item.AstDiaKm!
+      print("shadwWidth=",shadowWidth)
+      //create teset sigma1 width until Hristo provides this
+      let sigwid = Double.random(in: (shadowWidth - shadowWidth*0.5)...(shadowWidth + shadowWidth*0.5) )
+      //      let sigwid = shadowWidth / 2
+      print("sigwid=",sigwid)
+      
+      let stationsExistBeyondSigma1:Bool = false
+      
+      var plotBarsTuple = shadowSigmaBarScales(astDiam: item.AstDiaKm!, sigma1Width: sigwid , stationsExistPastSigma1: stationsExistBeyondSigma1)
+      print("shadow factor=",plotBarsTuple.shadowBarWidthFactor)
+      //set bar views to full width before applying scale factor
+      DispatchQueue.main.sync
+      {
+        self.shadowBarView.bounds.size.width = self.weatherBarView.bounds.width
+        self.sigma1BarView.bounds.size.width = self.weatherBarView.bounds.width
+        self.sigma2BarView.bounds.size.width = self.weatherBarView.bounds.width
+      }
+      
+      print("sigma1 factor=",plotBarsTuple.sigma1BarWidthFactor)
+      print("sigma2 factor=",plotBarsTuple.sigma2BarWidthFactor)
+      
+      DispatchQueue.main.sync
+      {
+          self.shadowBarView.transform = CGAffineTransform(scaleX: CGFloat(plotBarsTuple.shadowBarWidthFactor), y: 1.0)
+          self.sigma1BarView.transform = CGAffineTransform(scaleX: CGFloat(plotBarsTuple.sigma1BarWidthFactor), y: 1.0)
+      }
+      
+      if stationsExistBeyondSigma1
+      {
+        DispatchQueue.main.sync
+          {
+            self.sigma2BarView.transform = CGAffineTransform(scaleX: CGFloat(plotBarsTuple.sigma2BarWidthFactor), y: 1.0)
+            self.sigma2BarView.isHidden = false
+            self.sigma3BarView.isHidden = false
+        }
+      }
+      else
+      {
+        DispatchQueue.main.sync
+          {
+            self.sigma2BarView.isHidden = true
+            self.sigma3BarView.isHidden = true
+        }
+      }
+      DispatchQueue.main.async {self.eventAsteroidDiameter.text = asteroidDiamStr}
     }
-    DispatchQueue.main.async{self.eventAsteroidDiameter.text = asteroidDiamStr}
+
+    
 
     var starMagStr = "Star Mag     —"
     if item.StarMag != nil

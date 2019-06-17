@@ -349,3 +349,20 @@ func remainderCycles(dividend: Double, divisor: Double) -> (remainder: Double, c
   return (remainder, cycles)
 }
 
+
+//calculate shadown and sigma bar width scales
+func shadowSigmaBarScales(astDiam: Double, sigma1Width: Double, stationsExistPastSigma1: Bool) -> (shadowBarWidthFactor: Double, sigma1BarWidthFactor: Double, sigma2BarWidthFactor: Double)
+{
+  var sigma1BarWidth =  astDiam + (2 * sigma1Width)
+  var sigma2BarWidth = sigma1BarWidth + (2 * sigma1Width)
+  var totalWidth = sigma1BarWidth
+  if stationsExistPastSigma1
+  {
+    totalWidth = sigma1BarWidth + (4 * sigma1Width)
+  }
+  let shadowBarFactor = astDiam / totalWidth
+  let sigma1BarFactor = sigma1BarWidth / totalWidth
+  let sigma2BarFactor = sigma2BarWidth / totalWidth
+  
+  return (shadowBarFactor,sigma1BarFactor,sigma2BarFactor)
+}
