@@ -48,6 +48,7 @@ class DetailViewController: UIViewController {
   @IBOutlet weak var sigma1BarView: UIView!
   @IBOutlet weak var shadowBarView: UIView!
   @IBOutlet weak var centerBarView: UIView!
+  @IBOutlet weak var userBarView: UIView!
   
   @IBOutlet weak var eventStationID: UILabel!
   @IBOutlet weak var eventClouds: UILabel!
@@ -260,29 +261,44 @@ class DetailViewController: UIViewController {
       let stationsExistBeyondSigma1:Bool = false
       
       var plotBarsTuple = shadowSigmaBarScales(astDiam: item.AstDiaKm!, sigma1Width: sigwid , stationsExistPastSigma1: stationsExistBeyondSigma1)
-      print("shadow factor=",plotBarsTuple.shadowBarWidthFactor)
+      print("total width = \(plotBarsTuple.totalWidthKm) Km")
+      
+      let totalBarsWidthKm = pathBarsTotalWidth(astDiamKm: item.AstDiaKm!, sigma1WidthKm: sigwid, stationsExistPastSigma1: stationsExistBeyondSigma1)
+      print("pathBarsTotslWidth = \(totalBarsWidthKm) Km")
+      
       //set bar views to full width before applying scale factor
       DispatchQueue.main.sync
       {
         self.shadowBarView.bounds.size.width = self.weatherBarView.bounds.width
         self.sigma1BarView.bounds.size.width = self.weatherBarView.bounds.width
         self.sigma2BarView.bounds.size.width = self.weatherBarView.bounds.width
+        
       }
-      
+      let shadowFactor = shadowWidth / totalBarsWidthKm
+      let sigma1Factor = (shadowWidth + (2 * sigwid)) / totalBarsWidthKm
+      let sigma2Factor = (shadowWidth + (4 * sigwid)) / totalBarsWidthKm
+      let sigma3Factor = (shadowWidth + (6 * sigwid)) / totalBarsWidthKm
+      print("shadow factor=",plotBarsTuple.shadowBarWidthFactor)
+      print("shadowFactor=",shadowFactor)
       print("sigma1 factor=",plotBarsTuple.sigma1BarWidthFactor)
+      print("sigma1Factor=",sigma1Factor)
       print("sigma2 factor=",plotBarsTuple.sigma2BarWidthFactor)
-      
+      print("sigma2Factor=",sigma2Factor)
+
       DispatchQueue.main.sync
       {
-          self.shadowBarView.transform = CGAffineTransform(scaleX: CGFloat(plotBarsTuple.shadowBarWidthFactor), y: 1.0)
-          self.sigma1BarView.transform = CGAffineTransform(scaleX: CGFloat(plotBarsTuple.sigma1BarWidthFactor), y: 1.0)
+//        self.shadowBarView.transform = CGAffineTransform(scaleX: CGFloat(plotBarsTuple.shadowBarWidthFactor), y: 1.0)
+//        self.sigma1BarView.transform = CGAffineTransform(scaleX: CGFloat(plotBarsTuple.sigma1BarWidthFactor), y: 1.0)
+        self.shadowBarView.transform = CGAffineTransform(scaleX: CGFloat(shadowFactor), y: 1.0)
+        self.sigma1BarView.transform = CGAffineTransform(scaleX: CGFloat(sigma1Factor), y: 1.0)
+        self.userBarView.frame.origin.x = self.centerBarView.frame.origin.x + (self.weatherBarView.bounds.width / 2) * CGFloat((item.Stations![0].ChordOffsetKm! / totalBarsWidthKm))
       }
       
       if stationsExistBeyondSigma1
       {
         DispatchQueue.main.sync
           {
-            self.sigma2BarView.transform = CGAffineTransform(scaleX: CGFloat(plotBarsTuple.sigma2BarWidthFactor), y: 1.0)
+            self.sigma2BarView.transform = CGAffineTransform(scaleX: CGFloat(sigma2Factor), y: 1.0)
             self.sigma2BarView.isHidden = false
             self.sigma3BarView.isHidden = false
         }
@@ -297,8 +313,6 @@ class DetailViewController: UIViewController {
       }
       DispatchQueue.main.async {self.eventAsteroidDiameter.text = asteroidDiamStr}
     }
-
-    
 
     var starMagStr = "Star Mag     —"
     if item.StarMag != nil

@@ -351,7 +351,7 @@ func remainderCycles(dividend: Double, divisor: Double) -> (remainder: Double, c
 
 
 //calculate shadown and sigma bar width scales
-func shadowSigmaBarScales(astDiam: Double, sigma1Width: Double, stationsExistPastSigma1: Bool) -> (shadowBarWidthFactor: Double, sigma1BarWidthFactor: Double, sigma2BarWidthFactor: Double)
+func shadowSigmaBarScales(astDiam: Double, sigma1Width: Double, stationsExistPastSigma1: Bool) -> (shadowBarWidthFactor: Double, sigma1BarWidthFactor: Double, sigma2BarWidthFactor: Double, totalWidthKm: Double)
 {
   var sigma1BarWidth =  astDiam + (2 * sigma1Width)
   var sigma2BarWidth = sigma1BarWidth + (2 * sigma1Width)
@@ -363,6 +363,19 @@ func shadowSigmaBarScales(astDiam: Double, sigma1Width: Double, stationsExistPas
   let shadowBarFactor = astDiam / totalWidth
   let sigma1BarFactor = sigma1BarWidth / totalWidth
   let sigma2BarFactor = sigma2BarWidth / totalWidth
-  
-  return (shadowBarFactor,sigma1BarFactor,sigma2BarFactor)
+  print("shadowSigmaBarScales return totalWidth = ", totalWidth)
+  return (shadowBarFactor,sigma1BarFactor,sigma2BarFactor,totalWidth)
+}
+
+//calculate total width of path bars
+func pathBarsTotalWidth(astDiamKm: Double, sigma1WidthKm: Double, stationsExistPastSigma1: Bool) -> Double
+{
+  let sigma1BarWidth =  astDiamKm + (2 * sigma1WidthKm)
+  var totalWidth = sigma1BarWidth
+  if stationsExistPastSigma1
+  {
+    totalWidth = sigma1BarWidth + (4 * sigma1WidthKm)
+  }
+  print("pathBarsTotalWidth return totalWidth = ", totalWidth)
+  return totalWidth
 }

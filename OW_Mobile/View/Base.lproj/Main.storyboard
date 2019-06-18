@@ -868,6 +868,13 @@
                                                     <constraint firstAttribute="width" constant="3" id="g1g-i6-fIa"/>
                                                 </constraints>
                                             </view>
+                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="KZq-4J-gy2" userLabel="User Station Bar View">
+                                                <rect key="frame" x="138.5" y="0.0" width="3" height="71"/>
+                                                <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="width" constant="3" id="M7M-OZ-B1T"/>
+                                                </constraints>
+                                            </view>
                                         </subviews>
                                         <color key="backgroundColor" red="0.098501719534397125" green="0.2234555184841156" blue="0.23921835422515869" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                         <constraints>
@@ -888,11 +895,14 @@
                                             <constraint firstItem="Zlt-mA-YQ5" firstAttribute="width" secondItem="RoV-Cl-X5I" secondAttribute="width" multiplier="0.75" id="RDj-EB-Y14"/>
                                             <constraint firstItem="c4Z-ek-M3c" firstAttribute="centerX" secondItem="HuD-ai-6Aw" secondAttribute="centerX" id="TT2-GX-9Lw"/>
                                             <constraint firstItem="c4Z-ek-M3c" firstAttribute="top" secondItem="Zlt-mA-YQ5" secondAttribute="top" id="WHd-au-eB8"/>
+                                            <constraint firstItem="KZq-4J-gy2" firstAttribute="top" secondItem="HuD-ai-6Aw" secondAttribute="top" id="Y7w-4B-LgY"/>
                                             <constraint firstItem="qFM-b9-xCf" firstAttribute="centerX" secondItem="HuD-ai-6Aw" secondAttribute="centerX" id="YiJ-yK-bAv"/>
                                             <constraint firstItem="Zlt-mA-YQ5" firstAttribute="centerX" secondItem="HuD-ai-6Aw" secondAttribute="centerX" id="ZjN-wR-ccV"/>
                                             <constraint firstItem="Zlt-mA-YQ5" firstAttribute="centerY" secondItem="Mhe-Il-VFc" secondAttribute="centerY" id="aA6-4X-vt7"/>
                                             <constraint firstItem="c4Z-ek-M3c" firstAttribute="width" secondItem="RoV-Cl-X5I" secondAttribute="width" multiplier="0.25" id="dzB-Uz-Z9Z"/>
                                             <constraint firstItem="Zlt-mA-YQ5" firstAttribute="centerY" secondItem="ITw-Gp-ShU" secondAttribute="centerY" id="fVe-O3-BFM"/>
+                                            <constraint firstItem="KZq-4J-gy2" firstAttribute="bottom" secondItem="Zlt-mA-YQ5" secondAttribute="bottom" id="kTa-0V-ZfQ"/>
+                                            <constraint firstItem="KZq-4J-gy2" firstAttribute="leading" secondItem="c4Z-ek-M3c" secondAttribute="leading" id="kZj-By-6w1"/>
                                             <constraint firstItem="c4Z-ek-M3c" firstAttribute="centerY" secondItem="Zlt-mA-YQ5" secondAttribute="centerY" id="noL-x6-gLC"/>
                                             <constraint firstItem="Zlt-mA-YQ5" firstAttribute="bottom" secondItem="ITw-Gp-ShU" secondAttribute="bottom" id="pUw-J6-POB"/>
                                             <constraint firstItem="Zlt-mA-YQ5" firstAttribute="bottom" secondItem="qFM-b9-xCf" secondAttribute="bottom" id="qLn-uO-iAH"/>
@@ -1543,6 +1553,7 @@
                         <outlet property="spinnerLbl" destination="rfp-J5-iaI" id="aRy-5Z-I6Y"/>
                         <outlet property="spinnerView" destination="bUk-xQ-arM" id="jqD-TJ-Hko"/>
                         <outlet property="starAltImg" destination="XKy-gC-OYs" id="N2d-zp-CaB"/>
+                        <outlet property="userBarView" destination="KZq-4J-gy2" id="yQe-hN-5f4"/>
                         <outlet property="weatherBarView" destination="RoV-Cl-X5I" id="Hvn-UQ-dkk"/>
                     </connections>
                 </viewController>
