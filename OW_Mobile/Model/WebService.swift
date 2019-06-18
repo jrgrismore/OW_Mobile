@@ -236,7 +236,7 @@ class OWWebAPI: NSObject
 //      print("data retrieved")
       self.delegate?.webLogTextDidChange(text: "Data Retrieved")
       usleep(useconds_t(0.5 * 1000000)) //will sleep for 0.5 seconds)
-//      print("dataResponse=",dataResponse)
+      print("dataResponse=",String(decoding: dataResponse, as: UTF8.self))
       let detailEvents = self.parseDetailData(jsonData: dataResponse)
       print("detailEvents=", detailEvents)
 //      self.delegate?.webLogTextDidChange(text: "detailEvents count= \(detailEvents.count)")

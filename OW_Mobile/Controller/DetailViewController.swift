@@ -87,6 +87,7 @@ class DetailViewController: UIViewController {
   @IBOutlet weak var starAltImg: UIImageView!
   
   @IBOutlet weak var shadowBarWidth: NSLayoutConstraint!
+  @IBOutlet weak var asterRotAmpView: UIStackView!
   
   
   override func viewDidLoad()
@@ -258,7 +259,7 @@ class DetailViewController: UIViewController {
       //      let sigwid = shadowWidth / 2
       print("sigwid=",sigwid)
       
-      let stationsExistBeyondSigma1:Bool = false
+      let stationsExistBeyondSigma1:Bool = true
       
       var plotBarsTuple = shadowSigmaBarScales(astDiam: item.AstDiaKm!, sigma1Width: sigwid , stationsExistPastSigma1: stationsExistBeyondSigma1)
       print("total width = \(plotBarsTuple.totalWidthKm) Km")
@@ -343,20 +344,27 @@ class DetailViewController: UIViewController {
     }
     DispatchQueue.main.async{self.eventMagnitudeDrop.text = magDropStr}
     
-    var asterRotationStr = "Rotation       —"
-     if item.AstRotationHrs != nil
+    if item.AstRotationHrs == nil && item.AstRotationAmplitude == nil
     {
-      asterRotationStr = String(format: "Rotation %0.3fh",item.AstRotationHrs!)
+      DispatchQueue.main.async{self.asterRotAmpView.isHidden = true}
     }
-    DispatchQueue.main.async{self.eventCamAseroidRotation.text = asterRotationStr}
-
-    var asterAmpStr = "Amplitude       —"
-    if item.AstRotationAmplitude != nil
+    else
     {
-      asterAmpStr = String(format: "Amplitude %0.2fm",item.AstRotationAmplitude!)
+      DispatchQueue.main.async{self.asterRotAmpView.isHidden = false}
+      var asterRotationStr = "Rotation       —"
+      if item.AstRotationHrs != nil
+      {
+        asterRotationStr = String(format: "Rotation %0.3fh",item.AstRotationHrs!)
+      }
+      DispatchQueue.main.async{self.eventCamAseroidRotation.text = asterRotationStr}
+      
+      var asterAmpStr = "Amplitude       —"
+      if item.AstRotationAmplitude != nil
+      {
+        asterAmpStr = String(format: "Amplitude %0.2fm",item.AstRotationAmplitude!)
+      }
+      DispatchQueue.main.async{self.eventCamRotationAmplitude.text = asterAmpStr}
     }
-    DispatchQueue.main.async{self.eventCamRotationAmplitude.text = asterAmpStr}
-
     
     
     //camera combined magnitude ???
