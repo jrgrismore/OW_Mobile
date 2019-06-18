@@ -251,21 +251,21 @@ class DetailViewController: UIViewController {
     {
       asteroidDiamStr = String(format: "Diameter %0.1f km",item.AstDiaKm!)
       //set shadow bar width
-      print("asteroidDiameterStr=",asteroidDiamStr)
+//      print("asteroidDiameterStr=",asteroidDiamStr)
       let shadowWidth = item.AstDiaKm!
-      print("shadwWidth=",shadowWidth)
+//      print("shadwWidth=",shadowWidth)
       //create teset sigma1 width until Hristo provides this
       let sigwid = Double.random(in: (shadowWidth - shadowWidth*0.5)...(shadowWidth + shadowWidth*0.5) )
       //      let sigwid = shadowWidth / 2
-      print("sigwid=",sigwid)
+//      print("sigwid=",sigwid)
       
       let stationsExistBeyondSigma1:Bool = true
       
       var plotBarsTuple = shadowSigmaBarScales(astDiam: item.AstDiaKm!, sigma1Width: sigwid , stationsExistPastSigma1: stationsExistBeyondSigma1)
-      print("total width = \(plotBarsTuple.totalWidthKm) Km")
+//      print("total width = \(plotBarsTuple.totalWidthKm) Km")
       
       let totalBarsWidthKm = pathBarsTotalWidth(astDiamKm: item.AstDiaKm!, sigma1WidthKm: sigwid, stationsExistPastSigma1: stationsExistBeyondSigma1)
-      print("pathBarsTotslWidth = \(totalBarsWidthKm) Km")
+//      print("pathBarsTotslWidth = \(totalBarsWidthKm) Km")
       
       //set bar views to full width before applying scale factor
       DispatchQueue.main.sync
@@ -279,12 +279,12 @@ class DetailViewController: UIViewController {
       let sigma1Factor = (shadowWidth + (2 * sigwid)) / totalBarsWidthKm
       let sigma2Factor = (shadowWidth + (4 * sigwid)) / totalBarsWidthKm
       let sigma3Factor = (shadowWidth + (6 * sigwid)) / totalBarsWidthKm
-      print("shadow factor=",plotBarsTuple.shadowBarWidthFactor)
-      print("shadowFactor=",shadowFactor)
-      print("sigma1 factor=",plotBarsTuple.sigma1BarWidthFactor)
-      print("sigma1Factor=",sigma1Factor)
-      print("sigma2 factor=",plotBarsTuple.sigma2BarWidthFactor)
-      print("sigma2Factor=",sigma2Factor)
+//      print("shadow factor=",plotBarsTuple.shadowBarWidthFactor)
+//      print("shadowFactor=",shadowFactor)
+//      print("sigma1 factor=",plotBarsTuple.sigma1BarWidthFactor)
+//      print("sigma1Factor=",sigma1Factor)
+//      print("sigma2 factor=",plotBarsTuple.sigma2BarWidthFactor)
+//      print("sigma2Factor=",sigma2Factor)
 
       DispatchQueue.main.sync
       {

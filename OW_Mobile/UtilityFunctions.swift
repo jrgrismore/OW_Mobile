@@ -363,7 +363,6 @@ func shadowSigmaBarScales(astDiam: Double, sigma1Width: Double, stationsExistPas
   let shadowBarFactor = astDiam / totalWidth
   let sigma1BarFactor = sigma1BarWidth / totalWidth
   let sigma2BarFactor = sigma2BarWidth / totalWidth
-  print("shadowSigmaBarScales return totalWidth = ", totalWidth)
   return (shadowBarFactor,sigma1BarFactor,sigma2BarFactor,totalWidth)
 }
 
@@ -376,6 +375,5 @@ func pathBarsTotalWidth(astDiamKm: Double, sigma1WidthKm: Double, stationsExistP
   {
     totalWidth = sigma1BarWidth + (4 * sigma1WidthKm)
   }
-  print("pathBarsTotalWidth return totalWidth = ", totalWidth)
   return totalWidth
 }
