@@ -581,7 +581,7 @@
                                                                     </subviews>
                                                                 </stackView>
                                                                 <stackView opaque="NO" contentMode="scaleToFill" alignment="center" spacingType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="czY-uG-a6i" userLabel="Max Dur Stack View">
-                                                                    <rect key="frame" x="149.5" y="0.0" width="64" height="60"/>
+                                                                    <rect key="frame" x="151.5" y="0.0" width="64" height="60"/>
                                                                     <subviews>
                                                                         <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="max_sign" translatesAutoresizingMaskIntoConstraints="NO" id="kVP-mH-CGf" userLabel="Max Dur Img">
                                                                             <rect key="frame" x="0.0" y="22" width="16" height="16"/>
@@ -598,13 +598,13 @@
                                                                     </subviews>
                                                                 </stackView>
                                                                 <stackView opaque="NO" contentMode="scaleToFill" alignment="center" spacingType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="Htq-9P-NBT" userLabel="Mag Drop Stack View">
-                                                                    <rect key="frame" x="298.5" y="0.0" width="60.5" height="60"/>
+                                                                    <rect key="frame" x="306.5" y="0.0" width="52.5" height="60"/>
                                                                     <subviews>
                                                                         <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="drop_sign" translatesAutoresizingMaskIntoConstraints="NO" id="lP2-Ti-Od1" userLabel="Mag Drop Img">
-                                                                            <rect key="frame" x="0.0" y="22" width="16" height="16"/>
+                                                                            <rect key="frame" x="0.0" y="22" width="8" height="16"/>
                                                                         </imageView>
                                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0.6m" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="J0Y-mu-ovw" userLabel="Mag Drop Text">
-                                                                            <rect key="frame" x="24" y="20.5" width="36.5" height="19.5"/>
+                                                                            <rect key="frame" x="16" y="20.5" width="36.5" height="19.5"/>
                                                                             <fontDescription key="fontDescription" style="UICTFontTextStyleCallout"/>
                                                                             <nil key="textColor"/>
                                                                             <nil key="highlightedColor"/>
@@ -1067,9 +1067,8 @@
                                                             <stackView opaque="NO" contentMode="scaleToFill" alignment="center" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="8LX-JT-3DF" userLabel="Sun  Alt HStack">
                                                                 <rect key="frame" x="100" y="0.0" width="63.5" height="28.5"/>
                                                                 <subviews>
-                                                                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" translatesAutoresizingMaskIntoConstraints="NO" id="sQT-p9-pck" userLabel="Sun Alt Img">
+                                                                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" image="sun" translatesAutoresizingMaskIntoConstraints="NO" id="sQT-p9-pck" userLabel="Sun Alt Img">
                                                                         <rect key="frame" x="0.0" y="6" width="16" height="16"/>
-                                                                        <color key="backgroundColor" red="1" green="1" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                                         <constraints>
                                                                             <constraint firstAttribute="width" constant="16" id="Szq-j5-B4g"/>
                                                                             <constraint firstAttribute="height" constant="16" id="dkp-kH-PRh"/>
@@ -1094,9 +1093,8 @@
                                                             <stackView opaque="NO" contentMode="scaleToFill" alignment="center" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="maa-WR-bh0" userLabel="Moon  Alt HStack">
                                                                 <rect key="frame" x="206.5" y="0.0" width="57.5" height="28.5"/>
                                                                 <subviews>
-                                                                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" translatesAutoresizingMaskIntoConstraints="NO" id="Oly-DR-BDl" userLabel="Moon Alt Img">
+                                                                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" image="moon_5" translatesAutoresizingMaskIntoConstraints="NO" id="Oly-DR-BDl" userLabel="Moon Alt Img">
                                                                         <rect key="frame" x="0.0" y="6" width="16" height="16"/>
-                                                                        <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                         <constraints>
                                                                             <constraint firstAttribute="height" constant="16" id="MrU-Dg-GWP"/>
                                                                             <constraint firstAttribute="width" constant="16" id="ahE-TU-wVa"/>
@@ -1121,9 +1119,8 @@
                                                             <stackView opaque="NO" contentMode="scaleToFill" alignment="center" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="0Pm-Nd-mm6" userLabel="Moon  Sep HStack">
                                                                 <rect key="frame" x="307.5" y="0.0" width="45.5" height="28.5"/>
                                                                 <subviews>
-                                                                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" translatesAutoresizingMaskIntoConstraints="NO" id="Utg-Kl-gus" userLabel="Moon Sep Img">
+                                                                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" image="angle" translatesAutoresizingMaskIntoConstraints="NO" id="Utg-Kl-gus" userLabel="Moon Sep Img">
                                                                         <rect key="frame" x="0.0" y="6" width="16" height="16"/>
-                                                                        <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                         <constraints>
                                                                             <constraint firstAttribute="height" constant="16" id="X3C-Zn-wHD"/>
                                                                             <constraint firstAttribute="width" constant="16" id="YX3-Y6-04x"/>
@@ -1545,6 +1542,7 @@
                         <outlet property="eventTitle" destination="Bxb-g6-GRG" id="mlk-Bq-qVg"/>
                         <outlet property="eventWindSignImg" destination="xEL-jx-mOe" id="rx9-LA-Qqs"/>
                         <outlet property="eventWindStrengthImg" destination="oYy-99-jES" id="gVg-9R-WhS"/>
+                        <outlet property="moonAltImg" destination="Oly-DR-BDl" id="1aN-zV-DW4"/>
                         <outlet property="shadowBarView" destination="c4Z-ek-M3c" id="Nyi-hp-bUY"/>
                         <outlet property="shadowBarWidth" destination="dzB-Uz-Z9Z" id="cNn-Z5-Rmd"/>
                         <outlet property="sigma1BarView" destination="Zlt-mA-YQ5" id="6hy-QB-cvQ"/>
@@ -1592,11 +1590,14 @@
         </scene>
     </scenes>
     <resources>
+        <image name="angle" width="16" height="16"/>
         <image name="cloud_100" width="16" height="16"/>
         <image name="drop_sign" width="8" height="16"/>
         <image name="max_sign" width="16" height="16"/>
+        <image name="moon_5" width="100" height="100"/>
         <image name="spos_0" width="16" height="16"/>
         <image name="star_y" width="16" height="16"/>
+        <image name="sun" width="19" height="19"/>
         <image name="term_b" width="8" height="16"/>
         <image name="wind_0" width="16" height="16"/>
         <image name="wind_sign" width="16" height="16"/>

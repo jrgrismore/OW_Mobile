@@ -251,6 +251,62 @@ func stationSigmaIcon(_ sigmaIconValue: Int?) -> UIImage
   return sigmaIconImage
 }
 
+func moonAltIcon(_ moonAltIconValue: Int?) -> UIImage
+{
+  var moonAltIconImage: UIImage
+  if moonAltIconValue != nil
+  {
+  switch moonAltIconValue
+  {
+  case 0:
+    moonAltIconImage = #imageLiteral(resourceName: "moon_0.png")
+  case 1:
+    moonAltIconImage = #imageLiteral(resourceName: "moon_1.png")
+  case 2:
+    moonAltIconImage = #imageLiteral(resourceName: "moon_2.png")
+  case 3:
+    moonAltIconImage = #imageLiteral(resourceName: "moon_3.png")
+  case 4:
+    moonAltIconImage = #imageLiteral(resourceName: "moon_4.png")
+  case 5:
+    moonAltIconImage = #imageLiteral(resourceName: "moon_5.png")
+  case 6:
+    moonAltIconImage = #imageLiteral(resourceName: "moon_6.png")
+  case 7:
+    moonAltIconImage = #imageLiteral(resourceName: "moon_7.png")
+  case 8:
+    moonAltIconImage = #imageLiteral(resourceName: "moon_8.png")
+  case 9:
+    moonAltIconImage =  #imageLiteral(resourceName: "moon_9.png")
+  case 10:
+    moonAltIconImage = #imageLiteral(resourceName: "moon_10.png")
+  case 11:
+    moonAltIconImage = #imageLiteral(resourceName: "moon_11.png")
+  case 12:
+    moonAltIconImage = #imageLiteral(resourceName: "moon_12.png")
+  case 13:
+    moonAltIconImage = #imageLiteral(resourceName: "moon_13.png")
+  case 14:
+    moonAltIconImage = #imageLiteral(resourceName: "moon_14.png")
+  case 15:
+    moonAltIconImage = #imageLiteral(resourceName: "moon_15.png")
+  case 16:
+    moonAltIconImage = #imageLiteral(resourceName: "moon_16.png")
+  case 17:
+    moonAltIconImage = #imageLiteral(resourceName: "moon_17.png")
+  case 18:
+    moonAltIconImage = #imageLiteral(resourceName: "moon_18.png")
+  case 19:
+    moonAltIconImage = #imageLiteral(resourceName: "moon_19.png")
+  default:
+    moonAltIconImage = #imageLiteral(resourceName: "moon_0.png")
+    }
+  } else {
+    moonAltIconImage = #imageLiteral(resourceName: "moon_0.png")
+  }
+  return moonAltIconImage
+}
+
  //********************************************
  // RA HH.hhh -> HH MM SS
  //********************************************

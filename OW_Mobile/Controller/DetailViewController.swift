@@ -85,6 +85,7 @@ class DetailViewController: UIViewController {
   @IBOutlet weak var eventTempImg: UIImageView!
   @IBOutlet weak var sigmaImg: UIImageView!
   @IBOutlet weak var starAltImg: UIImageView!
+  @IBOutlet weak var moonAltImg: UIImageView!
   
   @IBOutlet weak var shadowBarWidth: NSLayoutConstraint!
   @IBOutlet weak var asterRotAmpView: UIStackView!
@@ -505,9 +506,20 @@ class DetailViewController: UIViewController {
     DispatchQueue.main.async{self.eventSunAlt.text = sunAltStr}
 
     var moonAltStr = "—"
+    var moonPhaseImage: UIImage
     if item.MoonAlt != nil
     {
       moonAltStr = String(format: "%0.0f°", item.MoonAlt!)
+      if item.MoonPhase != nil
+      {
+        moonPhaseImage =  moonAltIcon(item.MoonPhase!)
+        DispatchQueue.main.async {self.moonAltImg.image = moonPhaseImage}
+      }
+      else
+      {
+        moonPhaseImage = moonAltIcon(0)
+        DispatchQueue.main.async {self.moonAltImg.image = moonPhaseImage}
+      }
     }
     DispatchQueue.main.async{self.eventMoonAlt.text = moonAltStr}
 
