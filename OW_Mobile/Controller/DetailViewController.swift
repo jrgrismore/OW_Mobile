@@ -89,6 +89,7 @@ class DetailViewController: UIViewController {
   
   @IBOutlet weak var shadowBarWidth: NSLayoutConstraint!
   @IBOutlet weak var asterRotAmpView: UIStackView!
+  @IBOutlet weak var bvStarDiamView: UIStackView!
   
   
   override func viewDidLoad()
@@ -226,20 +227,27 @@ class DetailViewController: UIViewController {
     }
     DispatchQueue.main.async{self.eventDec.text = decStr}
 
-    var bvStr = "B-V   —"
-    if item.BV != nil
+    if item.BV == nil && item.SellarDia == nil
     {
-      bvStr = String(format: "B-V %0.3f",item.BV!)
-     }
-    DispatchQueue.main.async{self.eventStarBV.text = bvStr}
-
-    var stellarDiamStr = "Stellar Dia.          —"
-     if item.SellarDia != nil
-    {
-      stellarDiamStr = String(format: "Stellar Dia. %0.1f mas",item.SellarDia!)
+      //hide view
+      DispatchQueue.main.async {self.bvStarDiamView.isHidden = true}
+    } else {
+      DispatchQueue.main.async {self.bvStarDiamView.isHidden = false}
+      var bvStr = "B-V   —"
+      if item.BV != nil
+      {
+        bvStr = String(format: "B-V %0.3f",item.BV!)
+      }
+      DispatchQueue.main.async{self.eventStarBV.text = bvStr}
+      
+      var stellarDiamStr = "Stellar Dia.          —"
+      if item.SellarDia != nil
+      {
+        stellarDiamStr = String(format: "Stellar Dia. %0.1f mas",item.SellarDia!)
+      }
+      DispatchQueue.main.async{self.eventStarDiameter.text =  stellarDiamStr}
     }
-    DispatchQueue.main.async{self.eventStarDiameter.text =  stellarDiamStr}
-
+    
     var asteroidClassStr = "—"
     if item.AstClass != nil
     {
@@ -428,7 +436,8 @@ class DetailViewController: UIViewController {
       completionDateStr = eventDateFormatter.string(from: completionDate )
     }
     DispatchQueue.main.async{self.eventTime.text = eventUtcStr}
-    DispatchQueue.main.async{self.eventTimeRemaining.text = leadTimeStr + " on " + completionDateStr}
+//    DispatchQueue.main.async{self.eventTimeRemaining.text = leadTimeStr + " on " + completionDateStr}
+    DispatchQueue.main.async{self.eventTimeRemaining.text = leadTimeStr }
 
     var errorTimeStr = "—"
     if item.ErrorInTimeSec != nil

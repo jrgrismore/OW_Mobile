@@ -1508,6 +1508,7 @@
                     <connections>
                         <outlet property="activitySpinner" destination="L5X-Y9-CwX" id="Blp-v0-6yC"/>
                         <outlet property="asterRotAmpView" destination="GgE-i9-KDU" id="iAL-0e-7ir"/>
+                        <outlet property="bvStarDiamView" destination="SeI-hh-4GI" id="17s-ZJ-VBu"/>
                         <outlet property="centerBarView" destination="qFM-b9-xCf" id="NVd-Cg-hVg"/>
                         <outlet property="eventAsteroidDiameter" destination="RX4-MR-uvs" id="MbB-9d-Zdz"/>
                         <outlet property="eventAsteroidMagnitude" destination="dVX-Qz-Run" id="33b-Gy-dZ1"/>
