@@ -32,6 +32,7 @@ struct Event: Codable
   var HighCloud: Bool?
   var BestStationPos: Int?
   var StarColour: Int?
+//  var Details: EventDetails
 }
 
 struct MyEvents: Codable
@@ -92,11 +93,13 @@ struct EventDetails: Codable
   var AstRotationHrs: Double?
   var AstRotationAmplitude: Double?
   var PredictionUpdated: String?
+  var OneSigmaErrorWidthKm: Double?   //new
 }
 
 struct Station: Codable
 {
   var StationId: Int?
+  var StationName: String?   //new
   var EventTimeUtc: String?
   var WeatherInfoAvailable: Bool?
   var CloudCover: Int?
@@ -105,4 +108,7 @@ struct Station: Codable
   var HighCloud: Bool?
   var StationPos: Int?
   var ChordOffsetKm: Double?
+  var OccultDistanceKm: Double?   //new
+  var IsOwnStation: Bool?   //new
+  var IsPrimaryStation: Bool?   //new
 }
