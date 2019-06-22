@@ -1553,6 +1553,7 @@
                         <outlet property="spinnerLbl" destination="rfp-J5-iaI" id="aRy-5Z-I6Y"/>
                         <outlet property="spinnerView" destination="bUk-xQ-arM" id="jqD-TJ-Hko"/>
                         <outlet property="starAltImg" destination="XKy-gC-OYs" id="N2d-zp-CaB"/>
+                        <outlet property="sunAltImg" destination="sQT-p9-pck" id="nMK-8g-MOD"/>
                         <outlet property="userBarView" destination="KZq-4J-gy2" id="yQe-hN-5f4"/>
                         <outlet property="weatherBarView" destination="RoV-Cl-X5I" id="Hvn-UQ-dkk"/>
                     </connections>

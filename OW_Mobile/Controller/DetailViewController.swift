@@ -86,6 +86,7 @@ class DetailViewController: UIViewController {
   @IBOutlet weak var sigmaImg: UIImageView!
   @IBOutlet weak var starAltImg: UIImageView!
   @IBOutlet weak var moonAltImg: UIImageView!
+  @IBOutlet weak var sunAltImg: UIImageView!
   
   @IBOutlet weak var shadowBarWidth: NSLayoutConstraint!
   @IBOutlet weak var asterRotAmpView: UIStackView!
@@ -511,6 +512,18 @@ class DetailViewController: UIViewController {
     if item.SunAlt != nil
     {
       sunAltStr = String(format: "%0.0f°", item.SunAlt!)
+      if item.SunAlt! > -12.0
+      {
+        DispatchQueue.main.async {self.sunAltImg.image = #imageLiteral(resourceName: "sun.png")}
+      }
+      else
+      {
+        DispatchQueue.main.async {self.sunAltImg.image = nil}
+      }
+    }
+    else
+    {
+      DispatchQueue.main.async {self.sunAltImg.image = nil}
     }
     DispatchQueue.main.async{self.eventSunAlt.text = sunAltStr}
 
