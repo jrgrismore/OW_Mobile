@@ -86,7 +86,7 @@ struct EventDetails: Codable
   var SunAlt: Double?
   var MoonAlt: Double?
   var MoonAz: Double?
-  var SellarDia: Double?
+  var StellarDia: Double?
   var StarName: String?
   var OtherStarNames: String?
   var AstClass: String?
