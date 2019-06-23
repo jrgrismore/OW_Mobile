@@ -277,26 +277,27 @@ class DetailViewController: UIViewController {
     DispatchQueue.main.async{self.eventAsteroidOrigin.attributedText = asteroidClassAttrStr}
 
 //    var asteroidDiamStr = "Diameter        —"
-    var asteroidDiamAttrStr: NSAttributedString = NSMutableAttributedString(string: "Diameter        —")
+    var asteroidDiamAttrStr: NSAttributedString = NSMutableAttributedString(string: "Diam        —")
     if item.AstDiaKm != nil
     {
 //      asteroidDiamStr = String(format: "Diameter %0.1f km",item.AstDiaKm!)
-      asteroidDiamAttrStr = self.formatLabelandField(label:"Diameter ", field: String(format: "%0.1f",item.AstDiaKm!), units:" km")
+      asteroidDiamAttrStr = self.formatLabelandField(label:"Diam ", field: String(format: "%0.1f",item.AstDiaKm!), units:" km")
       //set shadow bar width
 //      print("asteroidDiameterStr=",asteroidDiamStr)
       let shadowWidth = item.AstDiaKm!
 //      print("shadwWidth=",shadowWidth)
-      //create teset sigma1 width until Hristo provides this
+      //create test sigma1 width until Hristo provides this
       let sigwid = Double.random(in: (shadowWidth - shadowWidth*0.5)...(shadowWidth + shadowWidth*0.5) )
+      let sig1Width = item.OneSigmaErrorWidthKm!
       //      let sigwid = shadowWidth / 2
 //      print("sigwid=",sigwid)
       
       let stationsExistBeyondSigma1:Bool = true
       
-      var plotBarsTuple = shadowSigmaBarScales(astDiam: item.AstDiaKm!, sigma1Width: sigwid , stationsExistPastSigma1: stationsExistBeyondSigma1)
+      var plotBarsTuple = shadowSigmaBarScales(astDiam: item.AstDiaKm!, sigma1Width: sig1Width , stationsExistPastSigma1: stationsExistBeyondSigma1)
 //      print("total width = \(plotBarsTuple.totalWidthKm) Km")
       
-      let totalBarsWidthKm = pathBarsTotalWidth(astDiamKm: item.AstDiaKm!, sigma1WidthKm: sigwid, stationsExistPastSigma1: stationsExistBeyondSigma1)
+      let totalBarsWidthKm = pathBarsTotalWidth(astDiamKm: item.AstDiaKm!, sigma1WidthKm: sig1Width, stationsExistPastSigma1: stationsExistBeyondSigma1)
 //      print("pathBarsTotslWidth = \(totalBarsWidthKm) Km")
       
       //set bar views to full width before applying scale factor
@@ -308,9 +309,9 @@ class DetailViewController: UIViewController {
         
       }
       let shadowFactor = shadowWidth / totalBarsWidthKm
-      let sigma1Factor = (shadowWidth + (2 * sigwid)) / totalBarsWidthKm
-      let sigma2Factor = (shadowWidth + (4 * sigwid)) / totalBarsWidthKm
-      let sigma3Factor = (shadowWidth + (6 * sigwid)) / totalBarsWidthKm
+      let sigma1Factor = (shadowWidth + (2 * sig1Width)) / totalBarsWidthKm
+      let sigma2Factor = (shadowWidth + (4 * sig1Width)) / totalBarsWidthKm
+      let sigma3Factor = (shadowWidth + (6 * sig1Width)) / totalBarsWidthKm
 //      print("shadow factor=",plotBarsTuple.shadowBarWidthFactor)
 //      print("shadowFactor=",shadowFactor)
 //      print("sigma1 factor=",plotBarsTuple.sigma1BarWidthFactor)
@@ -442,12 +443,12 @@ class DetailViewController: UIViewController {
     }
     DispatchQueue.main.async{self.eventChordDistance.text = stationChordDistStr}
 
-    var stationID = "Station ID   —"
-    if item.Stations![0].StationId != nil
+    var stationName = "—"
+     if item.Stations![0].StationName != nil
     {
-      stationID = String(format: "Station ID %d",item.Stations![0].StationId!)
+      stationName = item.Stations![0].StationName!
     }
-    DispatchQueue.main.async{self.eventStationID.text = stationID}
+    DispatchQueue.main.async{self.eventStationID.text = stationName}
 
     //need code to format time properly
     var eventUtcStr = "—"

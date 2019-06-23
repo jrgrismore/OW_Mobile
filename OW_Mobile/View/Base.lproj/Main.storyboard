@@ -847,11 +847,58 @@
                                             </view>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ITw-Gp-ShU" userLabel="Sigma3 Bar View">
                                                 <rect key="frame" x="0.0" y="20" width="369" height="65.5"/>
-                                                <color key="backgroundColor" red="0.83480781319999997" green="0.49831014870000001" blue="0.48625296350000002" alpha="0.59999999999999998" colorSpace="custom" customColorSpace="displayP3"/>
+                                                <subviews>
+                                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="UQ5-4h-qzg" userLabel="Sig3L View">
+                                                        <rect key="frame" x="0.0" y="0.0" width="3" height="65.5"/>
+                                                        <color key="backgroundColor" red="0.83480781319999997" green="0.49831014870000001" blue="0.48625296350000002" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                                        <constraints>
+                                                            <constraint firstAttribute="width" constant="3" id="Xl3-zT-KVF"/>
+                                                        </constraints>
+                                                    </view>
+                                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Jkd-xP-M4W" userLabel="Sig3R View">
+                                                        <rect key="frame" x="366" y="0.0" width="3" height="65.5"/>
+                                                        <color key="backgroundColor" red="0.83480781319999997" green="0.49831014870000001" blue="0.48625296350000002" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                                        <constraints>
+                                                            <constraint firstAttribute="width" constant="3" id="3dd-9J-Rix"/>
+                                                        </constraints>
+                                                        <viewLayoutGuide key="safeArea" id="aor-7Z-uTf"/>
+                                                    </view>
+                                                </subviews>
+                                                <constraints>
+                                                    <constraint firstAttribute="trailing" secondItem="Jkd-xP-M4W" secondAttribute="trailing" id="4tY-ZJ-Je8"/>
+                                                    <constraint firstItem="UQ5-4h-qzg" firstAttribute="top" secondItem="ITw-Gp-ShU" secondAttribute="top" id="KNe-gL-aLX"/>
+                                                    <constraint firstAttribute="bottom" secondItem="Jkd-xP-M4W" secondAttribute="bottom" id="S5p-vD-Dc5"/>
+                                                    <constraint firstItem="UQ5-4h-qzg" firstAttribute="leading" secondItem="ITw-Gp-ShU" secondAttribute="leading" id="ddW-mK-T1F"/>
+                                                    <constraint firstAttribute="bottom" secondItem="UQ5-4h-qzg" secondAttribute="bottom" id="g7f-mZ-iF0"/>
+                                                    <constraint firstItem="Jkd-xP-M4W" firstAttribute="top" secondItem="ITw-Gp-ShU" secondAttribute="top" id="yR9-Oc-r9C"/>
+                                                </constraints>
                                             </view>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Mhe-Il-VFc" userLabel="Sigma2 Bar View">
                                                 <rect key="frame" x="27.5" y="20" width="314" height="65.5"/>
-                                                <color key="backgroundColor" red="0.83480781319999997" green="0.49831014870000001" blue="0.48625296350000002" alpha="0.69999999999999996" colorSpace="custom" customColorSpace="displayP3"/>
+                                                <subviews>
+                                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="tRx-8d-MMU" userLabel="Sig2L View">
+                                                        <rect key="frame" x="0.0" y="0.0" width="3" height="65.5"/>
+                                                        <color key="backgroundColor" red="0.83480781316757202" green="0.4983101487159729" blue="0.48625296354293823" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                                        <constraints>
+                                                            <constraint firstAttribute="width" constant="3" id="e8G-ZX-x98"/>
+                                                        </constraints>
+                                                    </view>
+                                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hOO-hA-eYW" userLabel="Sig2R View">
+                                                        <rect key="frame" x="366" y="0.0" width="3" height="65.5"/>
+                                                        <color key="backgroundColor" red="0.83480781316757202" green="0.4983101487159729" blue="0.48625296354293823" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                                        <constraints>
+                                                            <constraint firstAttribute="width" constant="3" id="fIA-OI-N04"/>
+                                                        </constraints>
+                                                    </view>
+                                                </subviews>
+                                                <constraints>
+                                                    <constraint firstItem="tRx-8d-MMU" firstAttribute="leading" secondItem="Mhe-Il-VFc" secondAttribute="leading" id="0ku-sp-VgO"/>
+                                                    <constraint firstAttribute="bottom" secondItem="tRx-8d-MMU" secondAttribute="bottom" id="Kwf-mm-bag"/>
+                                                    <constraint firstAttribute="trailing" secondItem="hOO-hA-eYW" secondAttribute="trailing" multiplier="0.85" id="hkG-XX-hKB"/>
+                                                    <constraint firstItem="tRx-8d-MMU" firstAttribute="top" secondItem="Mhe-Il-VFc" secondAttribute="top" id="lHD-kZ-GkX"/>
+                                                    <constraint firstAttribute="bottom" secondItem="hOO-hA-eYW" secondAttribute="bottom" id="vSw-Oi-eKv"/>
+                                                    <constraint firstItem="hOO-hA-eYW" firstAttribute="top" secondItem="Mhe-Il-VFc" secondAttribute="top" id="yiK-Pi-M90"/>
+                                                </constraints>
                                             </view>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Zlt-mA-YQ5" userLabel="Sigma1 Bar View">
                                                 <rect key="frame" x="46" y="20" width="277" height="65.5"/>
