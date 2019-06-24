@@ -31,6 +31,9 @@ class DetailViewController: UIViewController {
                         )
   
   var selectedEventDetails = EventDetails()
+
+  var occultationEvent = OccultationEvent()
+
   
   // MARK: - Spinner Outlets
   @IBOutlet weak var spinnerView: UIView!
@@ -95,7 +98,7 @@ class DetailViewController: UIViewController {
   
   // MARK: - Constraint Outlets
   @IBOutlet weak var shadowBarWidth: NSLayoutConstraint!
-
+  
   
   // MARK: - View functions
   override func viewDidLoad()
@@ -146,76 +149,69 @@ class DetailViewController: UIViewController {
   {
     //for testing
     var item = itm
-    updateObjectFld(item)
-    updateRankFld(item)
-    updateFeedFld(item)
-    updateRAFld(item)
-    updateDecFld(item)
+    
+    DispatchQueue.main.async
+    {
+      self.eventTitle.attributedText = self.occultationEvent.updateObjectFld(item)
+      self.eventRank.attributedText = self.occultationEvent.updateRankFld(item)
+      self.eventFeed.attributedText = self.occultationEvent.updateFeedFld(item)
+      self.eventRA.attributedText = self.occultationEvent.updateRAFld(item)
+      self.eventDec.attributedText = self.occultationEvent.updateDecFld(item)
+      //insert BVStarDiamView here
+      self.eventAsteroidOrigin.attributedText = self.occultationEvent.updateAsteroidClassFld(item)
+      self.eventStarMagnitude.attributedText = self.occultationEvent.updateStarMagFld(item)
+      self.eventAsteroidMagnitude.attributedText = self.occultationEvent.updateAsteroidMagFld(item)
+      self.eventCombinedMagnitude.attributedText = self.occultationEvent.updateCombinedMagFld(item)
+      self.eventMagnitudeDrop.attributedText = self.occultationEvent.updateMagDropFld(item)
+    }
+   
+    
     
     if item.BV == nil && item.StellarDia == nil
     {
       //hide view
       DispatchQueue.main.async {self.bvStarDiamView.isHidden = true}
     } else {
-      DispatchQueue.main.async {self.bvStarDiamView.isHidden = false}
-      updateBVFld(item)
-      updateStarDiamFld(item)
-    }
-    
-    updateAsteroidClassFld(item)
-    
-    //    var asteroidDiamStr = "Diameter        —"
+      DispatchQueue.main.async
+      {
+        //show view
+        self.bvStarDiamView.isHidden = false
+        self.eventStarBV.attributedText = self.occultationEvent.updateBVFld(item)
+        self.eventStarDiameter.attributedText =  self.occultationEvent.updateStarDiamFld(item)
+      }
+     }
+
+ 
     var asteroidDiamAttrStr: NSAttributedString = NSMutableAttributedString(string: "Diam        —")
     if item.AstDiaKm != nil
     {
-      //      asteroidDiamStr = String(format: "Diameter %0.1f km",item.AstDiaKm!)
       asteroidDiamAttrStr = self.formatLabelandField(label:"Diam ", field: String(format: "%0.1f",item.AstDiaKm!), units:" km")
       //set shadow bar width
-      //      print("asteroidDiameterStr=",asteroidDiamStr)
       let shadowWidth = item.AstDiaKm!
-      //      print("shadwWidth=",shadowWidth)
       //create test sigma1 width until Hristo provides this
       let sigwid = Double.random(in: (shadowWidth - shadowWidth*0.5)...(shadowWidth + shadowWidth*0.5) )
       let sig1Width = item.OneSigmaErrorWidthKm!
       //      let sigwid = shadowWidth / 2
-      //      print("sigwid=",sigwid)
-      
       let stationsExistBeyondSigma1:Bool = true
-      
       var plotBarsTuple = shadowSigmaBarScales(astDiam: item.AstDiaKm!, sigma1Width: sig1Width , stationsExistPastSigma1: stationsExistBeyondSigma1)
-      //      print("total width = \(plotBarsTuple.totalWidthKm) Km")
-      
       let totalBarsWidthKm = pathBarsTotalWidth(astDiamKm: item.AstDiaKm!, sigma1WidthKm: sig1Width, stationsExistPastSigma1: stationsExistBeyondSigma1)
-      //      print("pathBarsTotslWidth = \(totalBarsWidthKm) Km")
-      
       //set bar views to full width before applying scale factor
       DispatchQueue.main.sync
         {
           self.shadowBarView.bounds.size.width = self.weatherBarView.bounds.width
           self.sigma1BarView.bounds.size.width = self.weatherBarView.bounds.width
           self.sigma2BarView.bounds.size.width = self.weatherBarView.bounds.width
-          
       }
       let shadowFactor = shadowWidth / totalBarsWidthKm
       let sigma1Factor = (shadowWidth + (2 * sig1Width)) / totalBarsWidthKm
       let sigma2Factor = (shadowWidth + (4 * sig1Width)) / totalBarsWidthKm
       let sigma3Factor = (shadowWidth + (6 * sig1Width)) / totalBarsWidthKm
-      //      print("shadow factor=",plotBarsTuple.shadowBarWidthFactor)
-      //      print("shadowFactor=",shadowFactor)
-      //      print("sigma1 factor=",plotBarsTuple.sigma1BarWidthFactor)
-      //      print("sigma1Factor=",sigma1Factor)
-      //      print("sigma2 factor=",plotBarsTuple.sigma2BarWidthFactor)
-      //      print("sigma2Factor=",sigma2Factor)
-      
       DispatchQueue.main.sync
         {
-          //        self.shadowBarView.transform = CGAffineTransform(scaleX: CGFloat(plotBarsTuple.shadowBarWidthFactor), y: 1.0)
-          //        self.sigma1BarView.transform = CGAffineTransform(scaleX: CGFloat(plotBarsTuple.sigma1BarWidthFactor), y: 1.0)
           self.shadowBarView.transform = CGAffineTransform(scaleX: CGFloat(shadowFactor), y: 1.0)
           self.sigma1BarView.transform = CGAffineTransform(scaleX: CGFloat(sigma1Factor), y: 1.0)
           self.userBarView.frame.origin.x = self.centerBarView.frame.origin.x + (self.weatherBarView.bounds.width / 2) * CGFloat((item.Stations![0].ChordOffsetKm! / totalBarsWidthKm))
       }
-      
       if stationsExistBeyondSigma1
       {
         DispatchQueue.main.sync
@@ -236,10 +232,7 @@ class DetailViewController: UIViewController {
       DispatchQueue.main.async {self.eventAsteroidDiameter.attributedText = asteroidDiamAttrStr}
     }
     
-    updateStarMagFld(item)
-    updateAsteroidMagFld(item)
-    updateCombinedMagFld(item)
-    updateMagDropFld(item)
+    
     
     if item.AstRotationHrs == nil && item.AstRotationAmplitude == nil
     {
@@ -247,19 +240,23 @@ class DetailViewController: UIViewController {
     }
     else
     {
-      DispatchQueue.main.async{self.asterRotAmpView.isHidden = false}
-      asteroidRotationFld(item)
-      asteroidRotationAmpFld(item)
-    }
+      DispatchQueue.main.async{
+        self.asterRotAmpView.isHidden = false
+        self.eventCamAseroidRotation.attributedText = self.occultationEvent.updateAsteroidRotationFld(item)
+        self.eventCamRotationAmplitude.attributedText = self.occultationEvent.updateAsteroidRotationAmpFld(item)
+      }
+     }
+    
+
+    
+    //containing view is hidden until these are implemented in web api
+      //camera combined magnitude ???
+      DispatchQueue.main.async{self.eventCamCombinedMag.text = "??? Comb. Mag ???"}
+      //camera mag drop ???
+      DispatchQueue.main.async{self.eventCamMagDrop.text = "??? Mag Drop ???"}
     
     
-    //camera combined magnitude ???
-    DispatchQueue.main.async{self.eventCamCombinedMag.text = "??? Comb. Mag ???"}
-    //camera mag drop ???
-    DispatchQueue.main.async{self.eventCamMagDrop.text = "??? Mag Drop ???"}
     
-    
-    //need code to set color
     var stationPosIconVal : Int?
     stationPosIconVal = 0
     if item.Stations![0].StationPos != nil
@@ -412,169 +409,10 @@ class DetailViewController: UIViewController {
   
 
   // MARK: - Field Update Functiosn
-  fileprivate func updateObjectFld(_ item: EventDetails) {
-    //    var objectStr = "—"
-    var objectAttrStr: NSAttributedString = NSMutableAttributedString(string: "—")
-    if item.StarName != nil
-    {
-      objectAttrStr = self.formatLabelandField(label:"", field: item.StarName!, units:"")
-      //      objectStr = "occults " + item.StarName!
-    }
-    DispatchQueue.main.async{self.eventTitle.attributedText = objectAttrStr}
-  }
+ 
   
-  fileprivate func updateRankFld(_ item: EventDetails) {
-    //    var rankStr = "Rank: —"
-    var rankAttrStr: NSAttributedString = NSMutableAttributedString(string: "Rank: —")
-    if item.Rank != nil
-    {
-      rankAttrStr = self.formatLabelandField(label:"Rank: ", field: String(format: "%d",item.Rank!), units:"")
-      
-      //      rankStr = String(format: "Rank: %d",item.Rank!)
-    }
-    DispatchQueue.main.async{self.eventRank.attributedText = rankAttrStr}
-  }
   
-  fileprivate func updateFeedFld(_ item: EventDetails) {
-    //    var feedStr = "—"
-    var feedAttrStr: NSAttributedString = NSMutableAttributedString(string: "—")
-    if item.Feed != nil
-    {
-      feedAttrStr = self.formatLabelandField(label:"", field: item.Feed!, units:"")
-      //      feedStr = item.Feed!
-    }
-    DispatchQueue.main.async{self.eventFeed.attributedText = feedAttrStr}
-  }
   
-  fileprivate func updateRAFld(_ item: EventDetails) {
-    //    var raStr = "RA   —"
-    var raAttrStr: NSAttributedString = NSMutableAttributedString(string: "RA   —")
-    if item.RAHours != nil
-    {
-      //******convert decimal hours to hh:mm:ss
-      let raTuple = floatRAtoHMS(floatRA: item.RAHours!)
-      //      raStr = String(format: "RA %0.2f",item.RAHours!)
-      let raFldStr = String(format: "%02dh %02dm %04.1fs",raTuple.hours,raTuple.minutes,raTuple.seconds)
-      raAttrStr = self.formatLabelandField(label:"RA ", field: raFldStr, units:"")
-      //      raStr = String(format: "RA  %02dh %02dm %04.1fs",raTuple.hours,raTuple.minutes,raTuple.seconds)
-    }
-    DispatchQueue.main.async{self.eventRA.attributedText = raAttrStr}
-  }
-  
-  fileprivate func updateDecFld(_ item: EventDetails) {
-    //    var decStr = "DE   —"
-    var decAttrStr: NSAttributedString = NSMutableAttributedString(string: "DE   —")
-    if item.DEDeg != nil
-    {
-      //******convert decimal degrees to dd:mm:ss
-      let decTuple = floatDecToDMS(floatDegrees: item.DEDeg!)
-      //      decStr = String(format: "DE %0.2f",item.DEDeg!)
-      let decFldStr = String(format: "%+03d° %02d' %04.1f\"",decTuple.degrees,labs(decTuple.minutes),fabs(decTuple.seconds))
-      decAttrStr = self.formatLabelandField(label:"DE ", field: decFldStr, units:"")
-      //     decStr = String(format: "DE  %+03d° %02d' %04.1f\"",decTuple.degrees,labs(decTuple.minutes),fabs(decTuple.seconds))
-    }
-    DispatchQueue.main.async{self.eventDec.attributedText = decAttrStr}
-  }
-  
-  fileprivate func updateBVFld(_ item: EventDetails) {
-    //      var bvStr = "B-V   —"
-    var bvAttrStr: NSAttributedString = NSMutableAttributedString(string: "B-V   —")
-    if item.BV != nil
-    {
-      //        bvStr = String(format: "B-V %0.3f",item.BV!)
-      bvAttrStr = self.formatLabelandField(label:"B-V ", field: String(format: "%0.3f",item.BV!), units:"")
-    }
-    DispatchQueue.main.async{self.eventStarBV.attributedText = bvAttrStr}
-  }
-  
-  fileprivate func updateStarDiamFld(_ item: EventDetails) {
-    //      var stellarDiamStr = "Stellar Dia.          —"
-    var starDiamAttrStr: NSAttributedString = NSMutableAttributedString(string: "Stellar Dia.          —")
-    if item.StellarDia != nil
-    {
-      
-      //        stellarDiamStr = String(format: "Stellar Dia. %0.1f mas",item.StellarDia!)
-      starDiamAttrStr = self.formatLabelandField(label:"Stellar Dia. ", field: String(format: "%0.1f",item.StellarDia!), units:" mas")
-    }
-    DispatchQueue.main.async{self.eventStarDiameter.attributedText =  starDiamAttrStr}
-  }
-  
-  fileprivate func updateAsteroidClassFld(_ item: EventDetails) {
-    //    var asteroidClassStr = "—"
-    var asteroidClassAttrStr: NSAttributedString = NSMutableAttributedString(string: "—")
-    if item.AstClass != nil
-    {
-      //      asteroidClassStr = item.AstClass!
-      asteroidClassAttrStr = self.formatLabelandField(label:"", field: item.AstClass!, units:"")
-    }
-    DispatchQueue.main.async{self.eventAsteroidOrigin.attributedText = asteroidClassAttrStr}
-  }
-  
-  fileprivate func updateStarMagFld(_ item: EventDetails) {
-    //    var starMagStr = "Star Mag     —"
-    var starMagAttrStr: NSAttributedString = NSMutableAttributedString(string: "Star Mag     —")
-    if item.StarMag != nil
-    {
-      //      starMagStr = String(format: "Star Mag %0.2f",item.StarMag!)
-      starMagAttrStr = self.formatLabelandField(label:"Star Mag ", field: String(format: "%0.2f",item.StarMag!), units:"")
-    }
-    DispatchQueue.main.async{self.eventStarMagnitude.attributedText = starMagAttrStr}
-  }
-  
-  fileprivate func updateAsteroidMagFld(_ item: EventDetails) {
-    //    var asterMagStr = "Aster. Mag     —"
-    var asterMagAttrStr: NSAttributedString = NSMutableAttributedString(string: "Aster. Mag     —")
-    if item.AstMag != nil
-    {
-      //      asterMagStr = String(format: "Aster. Mag %0.2f",item.AstMag!)
-      asterMagAttrStr = self.formatLabelandField(label:"Aster. Mag ", field: String(format: "%0.2f",item.AstMag!), units:"")
-    }
-    DispatchQueue.main.async{self.eventAsteroidMagnitude.attributedText = asterMagAttrStr}
-  }
-  
-  fileprivate func updateCombinedMagFld(_ item: EventDetails) {
-    //    var combMagStr = "Comb. Mag       —"
-    var combMagAttrStr: NSAttributedString = NSMutableAttributedString(string: "Comb. Mag       —")
-    if item.CombMag != nil
-    {
-      //      combMagStr = String(format: "Comb. Mag %0.2f",item.CombMag!)
-      combMagAttrStr = self.formatLabelandField(label:"Comb. Mag  ", field: String(format: "%0.2f",item.CombMag!), units:"")
-    }
-    DispatchQueue.main.async{self.eventCombinedMagnitude.attributedText = combMagAttrStr}
-  }
-  
-  fileprivate func updateMagDropFld(_ item: EventDetails) {
-    //    var magDropStr = "Mag Drop       —"
-    var magDropAttrStr: NSAttributedString = NSMutableAttributedString(string: "Mag Drop       —")
-    if item.MagDrop != nil
-    {
-      //      magDropStr = String(format: "Mag Drop %0.2f",item.MagDrop!)
-      magDropAttrStr = self.formatLabelandField(label:"Mag Drop ", field: String(format: "%0.2f",item.MagDrop!), units:"")
-    }
-    DispatchQueue.main.async{self.eventMagnitudeDrop.attributedText = magDropAttrStr}
-  }
-  
-  fileprivate func asteroidRotationFld(_ item: EventDetails) {
-    //      var asterRotationStr = "Rotation       —"
-    var asterRotationAttrStr: NSAttributedString = NSMutableAttributedString(string: "Rotation       —")
-    if item.AstRotationHrs != nil
-    {
-      //        asterRotationStr = String(format: "Rotation %0.3fh",item.AstRotationHrs!)
-      asterRotationAttrStr = self.formatLabelandField(label:"Rotation ", field: String(format: "%0.3fh",item.AstRotationHrs!), units:"")
-    }
-    DispatchQueue.main.async{self.eventCamAseroidRotation.attributedText = asterRotationAttrStr}
-  }
-  
-  fileprivate func asteroidRotationAmpFld(_ item: EventDetails) {
-    //      var asterAmpStr = "Amplitude       —"
-    var asterAmpAttrStr: NSAttributedString = NSMutableAttributedString(string: "Amplitude       —")
-    if item.AstRotationAmplitude != nil
-    {
-      //        asterAmpStr = String(format: "Amplitude %0.2fm",item.AstRotationAmplitude!)
-      asterAmpAttrStr = self.formatLabelandField(label:"Amplitude ", field: String(format: "%0.2fm",item.AstRotationAmplitude!), units:"")
-    }
-    DispatchQueue.main.async{self.eventCamRotationAmplitude.attributedText = asterAmpAttrStr}
-  }
   
   fileprivate func updateEventTimeFlds(_ item: inout EventDetails) {
     //need code to format time properly
@@ -606,6 +444,7 @@ class DetailViewController: UIViewController {
   
   
   // MARK: -  Field Utility functions
+  //may not need this later
   func formatLabelandField(label: String, field: String, units: String) -> NSAttributedString
   {
     let labelFont =   UIFont.preferredFont(forTextStyle: .callout)

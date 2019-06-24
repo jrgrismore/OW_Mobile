@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		5249BF972298A05E0006D200 /* UtilityFunctions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5249BF962298A05E0006D200 /* UtilityFunctions.swift */; };
+		5283C09522C0720E00BDB2CA /* Station.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5283C09422C0720E00BDB2CA /* Station.swift */; };
+		5283C09722C072A600BDB2CA /* Event.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5283C09622C072A600BDB2CA /* Event.swift */; };
 		5287622F2202107100BDABEC /* AccountViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5287622E2202107100BDABEC /* AccountViewController.swift */; };
 		5287623F220266BB00BDABEC /* ReminderViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5287623E220266BB00BDABEC /* ReminderViewController.swift */; };
 		5288B50C220A258B000002C6 /* WebService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5288B50B220A258B000002C6 /* WebService.swift */; };
@@ -45,6 +47,8 @@
 
 /* Begin PBXFileReference section */
 		5249BF962298A05E0006D200 /* UtilityFunctions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UtilityFunctions.swift; sourceTree = "<group>"; };
+		5283C09422C0720E00BDB2CA /* Station.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Station.swift; sourceTree = "<group>"; };
+		5283C09622C072A600BDB2CA /* Event.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Event.swift; sourceTree = "<group>"; };
 		5287622E2202107100BDABEC /* AccountViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountViewController.swift; sourceTree = "<group>"; };
 		5287623E220266BB00BDABEC /* ReminderViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReminderViewController.swift; sourceTree = "<group>"; };
 		5288B50B220A258B000002C6 /* WebService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebService.swift; sourceTree = "<group>"; };
@@ -106,6 +110,8 @@
 			children = (
 				5288B50B220A258B000002C6 /* WebService.swift */,
 				529C4611228DFEB200F9DB55 /* DataStructures.swift */,
+				5283C09422C0720E00BDB2CA /* Station.swift */,
+				5283C09622C072A600BDB2CA /* Event.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -329,7 +335,9 @@
 				529AD0592207C576001BEFC9 /* MyEventsViewController.swift in Sources */,
 				5287623F220266BB00BDABEC /* ReminderViewController.swift in Sources */,
 				5287622F2202107100BDABEC /* AccountViewController.swift in Sources */,
+				5283C09522C0720E00BDB2CA /* Station.swift in Sources */,
 				52C8020921F9510D00E66A13 /* AppDelegate.swift in Sources */,
+				5283C09722C072A600BDB2CA /* Event.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
