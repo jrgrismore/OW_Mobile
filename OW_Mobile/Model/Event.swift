@@ -279,4 +279,42 @@ class OccultationEvent: NSObject
     return false
   }
   
+  func printStations(_ item: EventDetails)
+  {
+    for station in item.Stations!
+    {
+      print()
+      print("station = ",station)
+    }
+  }
+  
+  func primaryStation(_ item: EventDetails) -> Station?
+  {
+    for station in item.Stations!
+    {
+      if station.IsPrimaryStation! {return station}
+    }
+    return nil
+  }
+  
+  func myStations(_ item: EventDetails) -> [Station]?
+  {
+    var myStations: [Station] = []
+    for station in item.Stations!
+    {
+      if station.IsOwnStation! {myStations.append(station)}
+    }
+    return myStations
+  }
+  
+  func otherStations(_ item: EventDetails) -> [Station]?
+  {
+    var otherStations: [Station] = []
+    for station in item.Stations!
+    {
+      if !station.IsOwnStation! {otherStations.append(station)}
+    }
+    return otherStations
+  }
+  
 }

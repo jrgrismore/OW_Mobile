@@ -212,6 +212,31 @@ class DetailViewController: UIViewController {
 //*******************************************************************
 
     
+    
+    DispatchQueue.main.async
+    {
+      //print stations
+     self.occultationEvent.printStations(item)
+      //print primary station
+      print()
+      print("primary station = ",self.occultationEvent.primaryStation(item))
+      //print own stations
+      print()
+      for myStation in self.occultationEvent.myStations(item)!
+      {
+        print("myStation = ",myStation)
+      }
+      //print others' stations
+      print()
+      for otherStation in self.occultationEvent.otherStations(item)!
+      {
+        print("others' stations = ",otherStation)
+      }
+    }
+
+    
+    
+    
     var stationPosIconVal : Int?
     stationPosIconVal = 0
     if item.Stations![0].StationPos != nil
