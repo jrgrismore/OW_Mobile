@@ -159,103 +159,58 @@ class DetailViewController: UIViewController {
       self.eventDec.attributedText = self.occultationEvent.updateDecFld(item)
       //insert BVStarDiamView here
       self.eventAsteroidOrigin.attributedText = self.occultationEvent.updateAsteroidClassFld(item)
+      self.eventAsteroidDiameter.attributedText = self.occultationEvent.updateAsteroidDiamKM(item)
       self.eventStarMagnitude.attributedText = self.occultationEvent.updateStarMagFld(item)
       self.eventAsteroidMagnitude.attributedText = self.occultationEvent.updateAsteroidMagFld(item)
       self.eventCombinedMagnitude.attributedText = self.occultationEvent.updateCombinedMagFld(item)
       self.eventMagnitudeDrop.attributedText = self.occultationEvent.updateMagDropFld(item)
-    }
-   
-    
-    
-    if item.BV == nil && item.StellarDia == nil
-    {
-      //hide view
-      DispatchQueue.main.async {self.bvStarDiamView.isHidden = true}
-    } else {
-      DispatchQueue.main.async
+      self.bvStarDiamView.isHidden = self.occultationEvent.hideBVStarDiamView(item)
+      //hide BV ad star diameter if both are nil
+      if self.bvStarDiamView.isHidden == false
       {
-        //show view
-        self.bvStarDiamView.isHidden = false
         self.eventStarBV.attributedText = self.occultationEvent.updateBVFld(item)
         self.eventStarDiameter.attributedText =  self.occultationEvent.updateStarDiamFld(item)
       }
-     }
-
- 
-    var asteroidDiamAttrStr: NSAttributedString = NSMutableAttributedString(string: "Diam        —")
-    if item.AstDiaKm != nil
-    {
-      asteroidDiamAttrStr = self.formatLabelandField(label:"Diam ", field: String(format: "%0.1f",item.AstDiaKm!), units:" km")
-      //set shadow bar width
-      let shadowWidth = item.AstDiaKm!
-      //create test sigma1 width until Hristo provides this
-      let sigwid = Double.random(in: (shadowWidth - shadowWidth*0.5)...(shadowWidth + shadowWidth*0.5) )
-      let sig1Width = item.OneSigmaErrorWidthKm!
-      //      let sigwid = shadowWidth / 2
-      let stationsExistBeyondSigma1:Bool = true
-      var plotBarsTuple = shadowSigmaBarScales(astDiam: item.AstDiaKm!, sigma1Width: sig1Width , stationsExistPastSigma1: stationsExistBeyondSigma1)
-      let totalBarsWidthKm = pathBarsTotalWidth(astDiamKm: item.AstDiaKm!, sigma1WidthKm: sig1Width, stationsExistPastSigma1: stationsExistBeyondSigma1)
-      //set bar views to full width before applying scale factor
-      DispatchQueue.main.sync
-        {
-          self.shadowBarView.bounds.size.width = self.weatherBarView.bounds.width
-          self.sigma1BarView.bounds.size.width = self.weatherBarView.bounds.width
-          self.sigma2BarView.bounds.size.width = self.weatherBarView.bounds.width
-      }
-      let shadowFactor = shadowWidth / totalBarsWidthKm
-      let sigma1Factor = (shadowWidth + (2 * sig1Width)) / totalBarsWidthKm
-      let sigma2Factor = (shadowWidth + (4 * sig1Width)) / totalBarsWidthKm
-      let sigma3Factor = (shadowWidth + (6 * sig1Width)) / totalBarsWidthKm
-      DispatchQueue.main.sync
-        {
-          self.shadowBarView.transform = CGAffineTransform(scaleX: CGFloat(shadowFactor), y: 1.0)
-          self.sigma1BarView.transform = CGAffineTransform(scaleX: CGFloat(sigma1Factor), y: 1.0)
-          self.userBarView.frame.origin.x = self.centerBarView.frame.origin.x + (self.weatherBarView.bounds.width / 2) * CGFloat((item.Stations![0].ChordOffsetKm! / totalBarsWidthKm))
-      }
-      if stationsExistBeyondSigma1
+      //hide asteroid rotation and amplitude if both are nil
+      self.asterRotAmpView.isHidden = self.occultationEvent.hideAsterRotAmpView(item)
+      if self.asterRotAmpView.isHidden == false
       {
-        DispatchQueue.main.sync
-          {
-            self.sigma2BarView.transform = CGAffineTransform(scaleX: CGFloat(sigma2Factor), y: 1.0)
-            self.sigma2BarView.isHidden = false
-            self.sigma3BarView.isHidden = false
-        }
-      }
-      else
-      {
-        DispatchQueue.main.sync
-          {
-            self.sigma2BarView.isHidden = true
-            self.sigma3BarView.isHidden = true
-        }
-      }
-      DispatchQueue.main.async {self.eventAsteroidDiameter.attributedText = asteroidDiamAttrStr}
-    }
-    
-    
-    
-    if item.AstRotationHrs == nil && item.AstRotationAmplitude == nil
-    {
-      DispatchQueue.main.async{self.asterRotAmpView.isHidden = true}
-    }
-    else
-    {
-      DispatchQueue.main.async{
-        self.asterRotAmpView.isHidden = false
         self.eventCamAseroidRotation.attributedText = self.occultationEvent.updateAsteroidRotationFld(item)
         self.eventCamRotationAmplitude.attributedText = self.occultationEvent.updateAsteroidRotationAmpFld(item)
       }
-     }
-    
+ 
+      //update shadow bars plot
+      let stationsExistBeyondSigma1:Bool = self.occultationEvent.barPlotToSigma3(item)
+      
+      self.shadowBarView.bounds.size.width = self.weatherBarView.bounds.width
+      self.sigma1BarView.bounds.size.width = self.weatherBarView.bounds.width
+      self.sigma2BarView.bounds.size.width = self.weatherBarView.bounds.width
+      let barsTuple = self.occultationEvent.updateShadowBarView(item,stationsExistPastSigma1: stationsExistBeyondSigma1)
+      self.shadowBarView.transform = CGAffineTransform(scaleX: CGFloat(barsTuple.shadowFactor), y: 1.0)
+      self.sigma1BarView.transform = CGAffineTransform(scaleX: CGFloat(barsTuple.sig1Factor), y: 1.0)
+      self.userBarView.frame.origin.x = self.centerBarView.frame.origin.x + (self.weatherBarView.bounds.width / 2) * CGFloat((item.Stations![0].ChordOffsetKm! / pathBarsTotalWidth(astDiamKm: item.AstDiaKm!, sigma1WidthKm: item.OneSigmaErrorWidthKm!, stationsExistPastSigma1: stationsExistBeyondSigma1)))
+      
+      if stationsExistBeyondSigma1
+      {
+            self.sigma2BarView.transform = CGAffineTransform(scaleX: CGFloat(barsTuple.sig2Factor), y: 1.0)
+            self.sigma2BarView.isHidden = false
+            self.sigma3BarView.isHidden = false  //always scaled to full width
+       }
+      else
+      {
+            self.sigma2BarView.isHidden = true
+            self.sigma3BarView.isHidden = true
+      }
+    }   // end DispatchQueue.main.async
 
-    
-    //containing view is hidden until these are implemented in web api
+//*******************************************************************
+// containing view is hidden until these are implemented in web api
       //camera combined magnitude ???
-      DispatchQueue.main.async{self.eventCamCombinedMag.text = "??? Comb. Mag ???"}
+//      DispatchQueue.main.async{self.eventCamCombinedMag.text = "??? Comb. Mag ???"}
       //camera mag drop ???
-      DispatchQueue.main.async{self.eventCamMagDrop.text = "??? Mag Drop ???"}
-    
-    
+//      DispatchQueue.main.async{self.eventCamMagDrop.text = "??? Mag Drop ???"}
+//*******************************************************************
+
     
     var stationPosIconVal : Int?
     stationPosIconVal = 0

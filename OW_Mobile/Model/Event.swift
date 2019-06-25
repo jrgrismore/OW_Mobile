@@ -16,6 +16,8 @@ class OccultationEvent: NSObject
   var details = EventDetails()
   var stations = [Station]()
 
+  
+  // MARK: - event detail update functions
   func updateObjectFld(_ item: EventDetails) -> NSAttributedString
   {
     //    var objectStr = "—"
@@ -125,6 +127,16 @@ class OccultationEvent: NSObject
     return asteroidClassAttrStr
   }
   
+  func updateAsteroidDiamKM(_ item: EventDetails) -> NSAttributedString
+  {
+    var asteroidDiamAttrStr: NSAttributedString = NSMutableAttributedString(string: "Diam        —")
+    if item.AstDiaKm != nil
+    {
+      asteroidDiamAttrStr = self.formatLabelandField(label:"Diam ", field: String(format: "%0.1f",item.AstDiaKm!), units:" km")
+    }
+    return asteroidDiamAttrStr
+  }
+
   func updateStarMagFld(_ item: EventDetails) -> NSAttributedString
   {
     //    var starMagStr = "Star Mag     —"
@@ -198,8 +210,48 @@ class OccultationEvent: NSObject
     return asterAmpAttrStr
   }
 
+  func hideBVStarDiamView(_ item: EventDetails) -> Bool
+  {
+    if item.BV == nil && item.StellarDia == nil
+    {
+      return true
+    }
+    else
+    {
+      return false
+    }
+  }
+
+  func hideAsterRotAmpView(_ item: EventDetails) -> Bool
+  {
+    if item.AstRotationHrs == nil && item.AstRotationAmplitude == nil
+    {
+      return true
+    }
+    else
+    {
+      return false
+    }
+  }
+
+  // MARK: - shadow bar plot functions
+  func updateShadowBarView(_ item: EventDetails,stationsExistPastSigma1: Bool) -> (shadowFactor:Double,sig1Factor:Double,sig2Factor:Double,sig3Factor:Double)
+  {
+    let shadowWidth = item.AstDiaKm!
+    let sig1Width = item.OneSigmaErrorWidthKm!
+    
+    var plotBarsTuple = shadowSigmaBarScales(astDiam: item.AstDiaKm!, sigma1Width: sig1Width , stationsExistPastSigma1: stationsExistPastSigma1)
+    let totalBarsWidthKm = pathBarsTotalWidth(astDiamKm: item.AstDiaKm!, sigma1WidthKm: sig1Width, stationsExistPastSigma1: stationsExistPastSigma1)
+
+    let shadowFactor = shadowWidth / totalBarsWidthKm
+    let sigma1Factor = (shadowWidth + (2 * sig1Width)) / totalBarsWidthKm
+    let sigma2Factor = (shadowWidth + (4 * sig1Width)) / totalBarsWidthKm
+    let sigma3Factor = (shadowWidth + (6 * sig1Width)) / totalBarsWidthKm
+
+    return (shadowFactor,sigma1Factor,sigma2Factor,sigma3Factor)
+  }
   
-  
+  // MARK: - attributed text functions
   func formatLabelandField(label: String, field: String, units: String) -> NSAttributedString
   {
     let labelFont =   UIFont.preferredFont(forTextStyle: .callout)
@@ -220,4 +272,11 @@ class OccultationEvent: NSObject
     return labelAttrStr
   }
 
+  // MARK: - stations functions
+  func barPlotToSigma3(_ item: EventDetails) -> Bool
+  {
+    //implement station distance beyond sigma1 later
+    return false
+  }
+  
 }
