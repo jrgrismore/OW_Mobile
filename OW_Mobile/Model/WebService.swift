@@ -169,6 +169,7 @@ class OWWebAPI: NSObject
     return parsedDetails
   }
 
+  
   func loadEvents() -> [Event]
   {
     guard let encodedData = UserDefaults.standard.array(forKey: UDKeys.myEventList) as? [Data] else {
@@ -177,12 +178,28 @@ class OWWebAPI: NSObject
     
     return encodedData.map { try! JSONDecoder().decode(Event.self, from: $0) }
   }
-  
+ 
   func saveEvents(_ events: [Event])
   {
     let data = events.map { try? JSONEncoder().encode($0) }
     UserDefaults.standard.set(data, forKey: UDKeys.myEventList)
   }
+  
+  
+  func loadDetails() -> [EventDetails]
+  {
+    guard let encodedData = UserDefaults.standard.array(forKey: UDKeys.myEventDetails) as? [Data] else {
+      return []
+    }
+    return encodedData.map { try! JSONDecoder().decode(EventDetails.self, from: $0) }
+  }
+
+  func saveDetails(_ eventListDetails: [EventDetails])
+  {
+    let data = eventListDetails.map { try? JSONEncoder().encode($0) }
+    UserDefaults.standard.set(data, forKey: UDKeys.myEventDetails)
+  }
+ 
   
   func getCookieData()
   {

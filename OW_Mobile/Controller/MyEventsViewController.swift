@@ -115,9 +115,6 @@ class MyEventsViewController: UIViewController, UICollectionViewDataSource,UICol
         dest.selection = cellDataArray[index.row]!.Object
         dest.detailData = cellDataArray[index.row]!
         dest.eventID = cellDataArray[index.row]!.Id!
-//        print("dest.selection=",dest.selection)
-//        print("dest.detailData=",dest.detailData)
-//        print("detailData=",dest.detailData)
       }
     }
   }
@@ -139,10 +136,57 @@ class MyEventsViewController: UIViewController, UICollectionViewDataSource,UICol
       //fill cells
       DispatchQueue.main.async{self.spinnerLbl.text = "download and parsing complete"}
       usleep(useconds_t(0.5 * 1000000)) //will sleep for 0.5 seconds)
-//            for item in myEvents!
-//            {
-//              self.printEventInfo(eventItem: item)
-//            }
+      var itemIndex = 0
+      var myEventListDetails: [EventDetails] = []
+            for item in myEvents!
+            {
+              DispatchQueue.main.async
+                {
+                  print("\nEventInfo>>>")
+                  self.printEventInfo(eventItem: item)
+                  print("<<<End of EventInfo\n")
+              }
+              
+              DispatchQueue.main.async
+                {
+                  self.spinnerView.isHidden = false
+                  self.activitySpinner.startAnimating()
+              }
+              OWWebAPI.shared.retrieveEventDetails(eventID: item.Id!) { (myDetails, error) in
+                itemIndex = itemIndex + 1
+                DispatchQueue.main.async{self.spinnerLbl.text = "download complete"}
+                usleep(useconds_t(0.5 * 1000000)) //will sleep for 0.5 seconds
+                 DispatchQueue.main.async{self.spinnerLbl.text = "updating details"}
+                usleep(useconds_t(0.5 * 1000000)) //will sleep for 0.5 seconds
+                myEventListDetails.append(myDetails!)
+                DispatchQueue.main.async
+                {
+                  print("EventDetails")
+                  print("itemIndex=",itemIndex)
+                  print("myDetails=", myDetails)
+                  print("End of Event Details")                    
+                  if itemIndex == myEvents!.count
+                  {
+                    print("final event list details=",myEventListDetails)
+                    for details in myEventListDetails
+                    {
+                      print("details=",details)
+                    }
+                    // save detail data
+                    OWWebAPI.shared.saveDetails(myEventListDetails)
+                    let tempDetails = OWWebAPI.shared.loadDetails()
+                    for details in tempDetails
+                    {
+                      print("UserDefaults details=",details)
+                    }
+                    
+                    print("stop spinner")
+                    self.activitySpinner.stopAnimating()
+                    self.spinnerView.isHidden = true
+                  }
+                }
+              }
+      }
       
       
       
@@ -157,11 +201,11 @@ class MyEventsViewController: UIViewController, UICollectionViewDataSource,UICol
       DispatchQueue.main.async{self.spinnerLbl.text = "Updating Events..."}
       DispatchQueue.main.async{self.myEventsCollection.reloadData()}
       usleep(useconds_t(0.5 * 1000000)) //will sleep for 0.5 seconds)
-      DispatchQueue.main.async
-        {
-        self.activitySpinner.stopAnimating()
-        self.spinnerView.isHidden = true
-        }
+//      DispatchQueue.main.async
+//        {
+//        self.activitySpinner.stopAnimating()
+//        self.spinnerView.isHidden = true
+//        }
 //      print("invalidate owSession")
 //      OWWebAPI.owSession.invalidateAndCancel()
     })
@@ -189,12 +233,13 @@ extension MyEventsViewController
   // MARK: - Collection delegate functions
   func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int
   {
-//    print("numberOfItemsInSection=",cellDataArray.count)
+    print("numberOfItemsInSection=",cellDataArray.count)
     return cellDataArray.count
   }
   
   func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell
   {
+    print("cellForItemAt")
     var cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as! MyEventsCollectionViewCell
     //set permanent cell background color to 235_255_235_67
     cell.backgroundColor = #colorLiteral(red: 0.9215686275, green: 1, blue: 0.9215686275, alpha: 0.67)

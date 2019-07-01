@@ -13,6 +13,7 @@ import Foundation
 struct UDKeys
 {
   static let myEventList = "myEventList"
+  static let myEventDetails = "myEventDetails"
 }
 
 //Event structure matching JSON keys
@@ -38,6 +39,12 @@ struct Event: Codable
 struct MyEvents: Codable
 {
   var events: [Event]
+}
+
+struct MyEventListDetails: Codable
+{
+  var eventList: [Event]
+  var eventsDetails: [EventDetails]
 }
 
 //Event strings structure

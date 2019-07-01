@@ -317,4 +317,57 @@ class OccultationEvent: NSObject
     return otherStations
   }
   
+  func primaryStationIndex(_ item: EventDetails) -> Int?
+  {
+    if let index = item.Stations?.firstIndex(where: {$0.IsPrimaryStation!} )
+    {
+      return  index
+    }
+    return nil
+  }
+  
+  func stationAtIndex(index: Int, _ item: EventDetails) -> Station
+  {
+    return item.Stations![index]
+  }
+  
+  enum SortOrder: String
+  {
+    case ascending
+    case descending
+  }
+  
+  func stationsSortedByChordOffset(_ item: EventDetails, order: SortOrder) -> [Station]
+  {
+    let stations: [Station] = item.Stations!
+    let sortOrder: SortOrder = order
+    switch sortOrder
+    {
+    case .ascending:
+      return stations.sorted(by: {$0.ChordOffsetKm! < $1.ChordOffsetKm!} )
+    case .descending:
+      return stations.sorted(by: {$0.ChordOffsetKm! > $1.ChordOffsetKm!} )
+    }
+  }
+  
+  func stationsSortedByCloudCover(_ item: EventDetails, order: SortOrder) -> [Station]
+  {
+    let stations: [Station] = item.Stations!
+    let sortOrder: SortOrder = order
+    switch sortOrder
+    {
+    case .ascending:
+      return stations.sorted(by: {$0.CloudCover! < $1.CloudCover!} )
+    case .descending:
+      return stations.sorted(by: {$0.CloudCover! > $1.CloudCover!} )
+    }
+  }
+  
+  func prettyPrintStation(_ item: EventDetails, index: Int)
+  {
+    let stationToPrint = OccultationStation(station: item.Stations![index])
+    stationToPrint.prettyPrint()    
+  }
+
 }
+
