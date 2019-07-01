@@ -18,6 +18,7 @@ class DetailViewController: UIViewController,UICollectionViewDataSource,UICollec
   var eventID: String = ""
   
   var stationsDetails = [EventDetails]()
+  var selectedStations = [Station]()
   
   var detailData = Event(Id:"",
                          Object:"",
@@ -111,8 +112,8 @@ class DetailViewController: UIViewController,UICollectionViewDataSource,UICollec
   func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int
   {
     print("numberOfItemsInSection")
-    print("stationDetails.count=",stationsDetails.count)
-    return stationsDetails.count
+    print("stationDetails.count=",selectedStations.count)
+    return selectedStations.count
   }
   
   func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell
@@ -123,7 +124,7 @@ class DetailViewController: UIViewController,UICollectionViewDataSource,UICollec
     //    fillCellFields(cell: &cell, indexPath: indexPath)
 //    updateEventInfoFields(eventItem: selectedEventDetails)
 //    updateStationFlds(cell: &cell, indexPath: indexPath, eventItem: stationsDetails[0])
-    updateStationFlds(cell: &cell, indexPath: indexPath, eventItem: selectedEventDetails)
+    updateStationFlds(cell: &cell, indexPath: indexPath, stations: selectedStations, itm: selectedEventDetails)
     return cell
   }
   
@@ -136,7 +137,7 @@ class DetailViewController: UIViewController,UICollectionViewDataSource,UICollec
     super.viewWillLayoutSubviews()
     stationCollectionView.collectionViewLayout.invalidateLayout()
     //set cell size
-    let cellsInRow = 5
+//    let cellsInRow = 5
     //    var cellHeight = 180
     var cellHeight = stationCollectionView.bounds.height-6
     //set layout attributes
@@ -190,9 +191,23 @@ class DetailViewController: UIViewController,UICollectionViewDataSource,UICollec
 //    let detailsIndex = detailsList.index(where: { $0.Id == detailData.Id  })
     let detailsIndex = stationsDetails.index(where: { $0.Id == detailData.Id  })
     selectedEventDetails = stationsDetails[detailsIndex!]
+    selectedStations = selectedEventDetails.Stations!
 //    stationsDetails = selectedEventDetails.Stations![0]
     print("DetailsViewController > details = ",selectedEventDetails)
     print("DetailsViewController > stationDetails = ",stationsDetails)
+    print()
+    print("selectedEventDetails=",selectedEventDetails)
+    //pretty print stations sorted by chord offset
+    print()
+    print("chord sorted stations")
+    let chordSortedStations = self.occultationEvent.stationsSortedByChordOffset(selectedEventDetails, order: .ascending)
+    for station in chordSortedStations
+    {
+      let stationForPrint = OccultationStation(station: station)
+      stationForPrint.prettyPrint()
+    }
+
+    
     updateEventInfoFields(eventItem: selectedEventDetails)
     self.stationCollectionView.reloadData()
 
@@ -352,31 +367,34 @@ class DetailViewController: UIViewController,UICollectionViewDataSource,UICollec
     print("end updateEventInfoFields")
   }
 
-  func updateStationFlds(cell: inout StationCell, indexPath: IndexPath, eventItem: EventDetails)
+//  func updateStationFlds(cell: inout StationCell, indexPath: IndexPath, eventItem: EventDetails)
+  func updateStationFlds(cell: inout StationCell, indexPath: IndexPath, stations: [Station], itm: EventDetails)
     {
+      var item = itm
+      
+      let stationIndex = indexPath.row
       print("begin updateStationFlds")
-      var item = eventItem
       var stationPosIconVal : Int?
       stationPosIconVal = 0
-      if item.Stations![0].StationPos != nil
+      if stations[stationIndex].StationPos != nil
       {
-        stationPosIconVal = item.Stations![0].StationPos!
+        stationPosIconVal = stations[stationIndex].StationPos!
       }
       //    DispatchQueue.main.async{cell.sigmaImg.image = stationSigmaIcon(stationPosIconVal)}
       cell.sigmaImg.image = stationSigmaIcon(stationPosIconVal)
       
       var stationChordDistStr = "Chord: — km"
-      if item.Stations![0].ChordOffsetKm != nil
+      if stations[stationIndex].ChordOffsetKm != nil
       {
-        stationChordDistStr = String(format: "Chord: %0.0f km",item.Stations![0].ChordOffsetKm!)
+        stationChordDistStr = String(format: "Chord: %0.0f km",stations[stationIndex].ChordOffsetKm!)
       }
       //    DispatchQueue.main.async{self.eventChordDistance.text = stationChordDistStr}
       cell.eventChordDistance.text = stationChordDistStr
       
       var stationName = "—"
-      if item.Stations![0].StationName != nil
+      if stations[stationIndex].StationName != nil
       {
-        stationName = item.Stations![0].StationName!
+        stationName = stations[stationIndex].StationName!
       }
       //    DispatchQueue.main.async{self.eventStationID.text = stationName}
       cell.eventStationID.text = stationName
@@ -395,16 +413,16 @@ class DetailViewController: UIViewController,UICollectionViewDataSource,UICollec
       
       //determine if there's weather info available
       //    print("weather info available = ",item.Stations![0].WeatherInfoAvailable)
-      if item.Stations![0].WeatherInfoAvailable != nil && item.Stations![0].WeatherInfoAvailable!
+      if stations[stationIndex].WeatherInfoAvailable != nil && stations[stationIndex].WeatherInfoAvailable!
       {
         //      print("weather info IS available")
         //cloud info
         var cloudCoverStr = " —"
         var cloudIconValue: Int?
-        if item.Stations![0].CloudCover != nil
+        if stations[stationIndex].CloudCover != nil
         {
-          cloudCoverStr = String(format: " %d%%",item.Stations![0].CloudCover!)
-          cloudIconValue = item.Stations![0].CloudCover!
+          cloudCoverStr = String(format: " %d%%",stations[stationIndex].CloudCover!)
+          cloudIconValue = stations[stationIndex].CloudCover!
         }
         //      DispatchQueue.main.async{self.eventClouds.text = cloudCoverStr}
         //      DispatchQueue.main.async{self.eventCloudImg.image = cloudIcon(cloudIconValue)}
@@ -414,10 +432,10 @@ class DetailViewController: UIViewController,UICollectionViewDataSource,UICollec
         //wind info
         var windSpeedIconValue: Int?
         var windSignIconValue: Int?
-        if item.Stations![0].Wind != nil
+        if stations[stationIndex].Wind != nil
         {
-          windSignIconValue = item.Stations![0].Wind!
-          windSpeedIconValue = item.Stations![0].Wind!
+          windSignIconValue = stations[stationIndex].Wind!
+          windSpeedIconValue = stations[stationIndex].Wind!
         }
         //      DispatchQueue.main.async{self.eventWindStrengthImg.image = windStrengthIcon(windSpeedIconValue) }
         //      DispatchQueue.main.async{self.eventWindSignImg.image = windSignIcon(windSignIconValue)}
@@ -426,21 +444,21 @@ class DetailViewController: UIViewController,UICollectionViewDataSource,UICollec
         
         //temp info
         var tempStr = "—"
-        if item.Stations![0].TempDegC != nil
+        if stations[stationIndex].TempDegC != nil
         {
-          tempStr = String(format: "%d°C",item.Stations![0].TempDegC!)
+          tempStr = String(format: "%d°C",stations[stationIndex].TempDegC!)
         }
         //      DispatchQueue.main.async{self.eventTemperature.text = tempStr}
         //      DispatchQueue.main.async{self.eventTempImg.image = thermIcon(item.Stations![0].TempDegC!)}
         cell.eventTemperature.text = tempStr
-        cell.eventTempImg.image = thermIcon(item.Stations![0].TempDegC!)
+        cell.eventTempImg.image = thermIcon(stations[stationIndex].TempDegC!)
         
         //high cloud info
         //need code to set icon
         var highCloudStr = ""
-        if item.Stations![0].HighCloud != nil
+        if stations[stationIndex].HighCloud != nil
         {
-          highCloudStr = String(format: "%@",item.Stations![0].HighCloud!.description)
+          highCloudStr = String(format: "%@",stations[stationIndex].HighCloud!.description)
         }
         
       } else {
