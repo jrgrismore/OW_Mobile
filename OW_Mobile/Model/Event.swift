@@ -66,7 +66,7 @@ class OccultationEvent: NSObject
       let raTuple = floatRAtoHMS(floatRA: item.RAHours!)
       //      raStr = String(format: "RA %0.2f",item.RAHours!)
       let raFldStr = String(format: "%02dh %02dm %04.1fs",raTuple.hours,raTuple.minutes,raTuple.seconds)
-      raAttrStr = self.formatLabelandField(label:"RA ", field: raFldStr, units:"")
+      raAttrStr = self.formatLabelandField(label:"RA: ", field: raFldStr, units:"")
       //      raStr = String(format: "RA  %02dh %02dm %04.1fs",raTuple.hours,raTuple.minutes,raTuple.seconds)
     }
     return raAttrStr
@@ -82,7 +82,7 @@ class OccultationEvent: NSObject
       let decTuple = floatDecToDMS(floatDegrees: item.DEDeg!)
       //      decStr = String(format: "DE %0.2f",item.DEDeg!)
       let decFldStr = String(format: "%+03d° %02d' %04.1f\"",decTuple.degrees,labs(decTuple.minutes),fabs(decTuple.seconds))
-      decAttrStr = self.formatLabelandField(label:"DE ", field: decFldStr, units:"")
+      decAttrStr = self.formatLabelandField(label:"DE: ", field: decFldStr, units:"")
       //     decStr = String(format: "DE  %+03d° %02d' %04.1f\"",decTuple.degrees,labs(decTuple.minutes),fabs(decTuple.seconds))
     }
     return decAttrStr
@@ -95,7 +95,7 @@ class OccultationEvent: NSObject
     if item.BV != nil
     {
       //        bvStr = String(format: "B-V %0.3f",item.BV!)
-      bvAttrStr = self.formatLabelandField(label:"B-V ", field: String(format: "%0.3f",item.BV!), units:"")
+      bvAttrStr = self.formatLabelandField(label:"B-V: ", field: String(format: "%0.3f",item.BV!), units:"")
     }
     DispatchQueue.main.async{}
     return bvAttrStr
@@ -109,7 +109,7 @@ class OccultationEvent: NSObject
     {
       
       //        stellarDiamStr = String(format: "Stellar Dia. %0.1f mas",item.StellarDia!)
-      starDiamAttrStr = self.formatLabelandField(label:"Stellar Dia. ", field: String(format: "%0.1f",item.StellarDia!), units:" mas")
+      starDiamAttrStr = self.formatLabelandField(label:"Stellar Dia: ", field: String(format: "%0.1f",item.StellarDia!), units:" mas")
     }
     DispatchQueue.main.async{}
     return starDiamAttrStr
@@ -132,7 +132,7 @@ class OccultationEvent: NSObject
     var asteroidDiamAttrStr: NSAttributedString = NSMutableAttributedString(string: "Diam        —")
     if item.AstDiaKm != nil
     {
-      asteroidDiamAttrStr = self.formatLabelandField(label:"Diam ", field: String(format: "%0.1f",item.AstDiaKm!), units:" km")
+      asteroidDiamAttrStr = self.formatLabelandField(label:"Diam: ", field: String(format: "%0.1f",item.AstDiaKm!), units:" km")
     }
     return asteroidDiamAttrStr
   }
@@ -144,7 +144,7 @@ class OccultationEvent: NSObject
     if item.StarMag != nil
     {
       //      starMagStr = String(format: "Star Mag %0.2f",item.StarMag!)
-      starMagAttrStr = self.formatLabelandField(label:"Star Mag ", field: String(format: "%0.2f",item.StarMag!), units:"")
+      starMagAttrStr = self.formatLabelandField(label:"Star Mag: ", field: String(format: "%0.2f",item.StarMag!), units:"")
     }
     return starMagAttrStr
   }
@@ -156,7 +156,7 @@ class OccultationEvent: NSObject
     if item.AstMag != nil
     {
       //      asterMagStr = String(format: "Aster. Mag %0.2f",item.AstMag!)
-      asterMagAttrStr = self.formatLabelandField(label:"Aster. Mag ", field: String(format: "%0.2f",item.AstMag!), units:"")
+      asterMagAttrStr = self.formatLabelandField(label:"Aster. Mag: ", field: String(format: "%0.2f",item.AstMag!), units:"")
     }
     return asterMagAttrStr
   }
@@ -168,7 +168,7 @@ class OccultationEvent: NSObject
     if item.CombMag != nil
     {
       //      combMagStr = String(format: "Comb. Mag %0.2f",item.CombMag!)
-      combMagAttrStr = self.formatLabelandField(label:"Comb. Mag  ", field: String(format: "%0.2f",item.CombMag!), units:"")
+      combMagAttrStr = self.formatLabelandField(label:"Comb. Mag:  ", field: String(format: "%0.2f",item.CombMag!), units:"")
     }
     return combMagAttrStr
   }
@@ -180,7 +180,7 @@ class OccultationEvent: NSObject
     if item.MagDrop != nil
     {
       //      magDropStr = String(format: "Mag Drop %0.2f",item.MagDrop!)
-      magDropAttrStr = self.formatLabelandField(label:"Mag Drop ", field: String(format: "%0.2f",item.MagDrop!), units:"")
+      magDropAttrStr = self.formatLabelandField(label:"Mag Drop: ", field: String(format: "%0.2f",item.MagDrop!), units:"")
     }
     DispatchQueue.main.async{}
     return magDropAttrStr
@@ -193,7 +193,7 @@ class OccultationEvent: NSObject
     if item.AstRotationHrs != nil
     {
       //        asterRotationStr = String(format: "Rotation %0.3fh",item.AstRotationHrs!)
-      asterRotationAttrStr = self.formatLabelandField(label:"Rotation ", field: String(format: "%0.3fh",item.AstRotationHrs!), units:"")
+      asterRotationAttrStr = self.formatLabelandField(label:"Rotation: ", field: String(format: "%0.3fh",item.AstRotationHrs!), units:"")
     }
     return asterRotationAttrStr
   }
@@ -205,7 +205,7 @@ class OccultationEvent: NSObject
     if item.AstRotationAmplitude != nil
     {
       //        asterAmpStr = String(format: "Amplitude %0.2fm",item.AstRotationAmplitude!)
-      asterAmpAttrStr = self.formatLabelandField(label:"Amplitude ", field: String(format: "%0.2fm",item.AstRotationAmplitude!), units:"")
+      asterAmpAttrStr = self.formatLabelandField(label:"Amplitude: ", field: String(format: "%0.2fm",item.AstRotationAmplitude!), units:"")
     }
     return asterAmpAttrStr
   }
@@ -251,6 +251,18 @@ class OccultationEvent: NSObject
     return (shadowFactor,sigma1Factor,sigma2Factor,sigma3Factor)
   }
   
+  func assignStationFactor(_ item: EventDetails, station: Station, stationsExistPastSigma1: Bool) -> Double
+  {
+    let sig1Width = item.OneSigmaErrorWidthKm!
+    let totalBarsWidthKm = pathBarsTotalWidth(astDiamKm: item.AstDiaKm!, sigma1WidthKm: sig1Width, stationsExistPastSigma1: stationsExistPastSigma1)
+    let stationFactor = station.ChordOffsetKm! / totalBarsWidthKm
+    print("#######")
+    print("station.ChordOffsetKm=",station.ChordOffsetKm!)
+    print("totalBarsWidthKm=",totalBarsWidthKm)
+    print("stationFactor=",stationFactor)
+    return stationFactor
+  }
+  
   // MARK: - attributed text functions
   func formatLabelandField(label: String, field: String, units: String) -> NSAttributedString
   {
@@ -276,6 +288,13 @@ class OccultationEvent: NSObject
   func barPlotToSigma3(_ item: EventDetails) -> Bool
   {
     //implement station distance beyond sigma1 later
+    for station in item.Stations!
+    {
+      if station.ChordOffsetKm! >= item.OneSigmaErrorWidthKm!
+      {
+        return true
+      }
+    }
     return false
   }
   

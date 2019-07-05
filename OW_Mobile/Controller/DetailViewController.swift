@@ -139,15 +139,15 @@ class DetailViewController: UIViewController,UICollectionViewDataSource,UICollec
     //set cell size
 //    let cellsInRow = 5
     //    var cellHeight = 180
-    var cellHeight = stationCollectionView.bounds.height-6
+    var cellHeight = stationCollectionView.bounds.height
     //set layout attributes
     if let flowLayout = self.stationCollectionView.collectionViewLayout as? UICollectionViewFlowLayout
     {
       //      print("UIScreen.main.bounds.width=",UIScreen.main.bounds.width)
       //      print("myEventsCollection.bounds.width=",myEventsCollection.bounds.width)
-      flowLayout.minimumLineSpacing = 3
+      flowLayout.minimumLineSpacing = 0
       flowLayout.minimumInteritemSpacing = 0
-      flowLayout.sectionInset = UIEdgeInsets(top: 3, left: 3, bottom: 3, right: 3)
+      flowLayout.sectionInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
       let totalHInsets = flowLayout.sectionInset.left + flowLayout.sectionInset.right
       //      print("totalHInsets=",totalHInsets)
       //      let totalInteritemSpace = flowLayout.minimumInteritemSpacing * CGFloat(cellsInRow - 1)
@@ -158,9 +158,9 @@ class DetailViewController: UIViewController,UICollectionViewDataSource,UICollec
       //? is this the right way to do this ?
       //            let cellWidth = view.safeAreaLayoutGuide.layoutFrame.size.width - totalHInsets
       //?does this work for all screen sizes and orientations?
-      var cellWidth = view.safeAreaLayoutGuide.layoutFrame.size.width - flowLayout.minimumLineSpacing
+//      var cellWidth = view.safeAreaLayoutGuide.layoutFrame.size.width - flowLayout.minimumLineSpacing
       //      var cellWidth = self.stationCollectionView.bounds.width - totalHInsets
-      //      var cellWidth = self.stationCollectionView.bounds.width - flowLayout.minimumInteritemSpacing
+            var cellWidth = self.stationCollectionView.bounds.width - flowLayout.minimumLineSpacing
       //      cellHeight = 100
       //      cellWidth = 100
       print("cell height=",cellHeight,"   cell width=",cellWidth)
@@ -316,8 +316,25 @@ class DetailViewController: UIViewController,UICollectionViewDataSource,UICollec
             self.sigma2BarView.isHidden = true
             self.sigma3BarView.isHidden = true
       }
+      
+      for station in item.Stations!
+      {
+        let stationFactor = self.occultationEvent.assignStationFactor(item, station: station, stationsExistPastSigma1: stationsExistBeyondSigma1)
+        var stationView = UIView()
+        stationView.frame.origin.x = self.centerBarView.frame.origin.x + (self.weatherBarView.bounds.width / 2) * CGFloat(stationFactor)
+        stationView.frame.origin.y = self.weatherBarView.frame.origin.y
+        stationView.frame.size.width = 3
+        stationView.frame.size.height = self.weatherBarView.frame.height
+        stationView.backgroundColor = UIColor.red
+        self.weatherBarView.addSubview(stationView)
+      }
+      
     }   // end DispatchQueue.main.async
 
+    
+    
+    
+    
 //*******************************************************************
 // containing view is hidden until these are implemented in web api
       //camera combined magnitude ???
@@ -495,20 +512,23 @@ class DetailViewController: UIViewController,UICollectionViewDataSource,UICollec
         {
           //        DispatchQueue.main.async {self.sunAltImg.image = #imageLiteral(resourceName: "sun.png")}
           cell.sunAltImg.image =  #imageLiteral(resourceName: "sun")
+          cell.eventSunAlt.text = sunAltStr
         }
         else
         {
           //        DispatchQueue.main.async {self.sunAltImg.image = nil}
           cell.sunAltImg.image = nil
+          cell.eventSunAlt.text = ""
         }
       }
       else
       {
         //      DispatchQueue.main.async {self.sunAltImg.image = nil}
         cell.sunAltImg.image = nil
+        cell.eventSunAlt.text = ""
       }
       //    DispatchQueue.main.async{self.eventSunAlt.text = sunAltStr}
-      cell.eventSunAlt.text = sunAltStr
+//      cell.eventSunAlt.text = sunAltStr
       
       var moonAltStr = "—"
       var moonPhaseImage: UIImage
@@ -582,7 +602,7 @@ class DetailViewController: UIViewController,UICollectionViewDataSource,UICollec
       eventDateFormatter.timeZone = TimeZone(abbreviation: "UTC")
       let completionDate = eventDateFormatter.date(from: item.Stations![0].EventTimeUtc!)!
       //      print("completion date = ",completionDate)
-      eventDateFormatter.dateFormat = "dd MMM yyyy"
+      eventDateFormatter.dateFormat = "dd MMM, HH:mm:ss' UT'"
       //      completionDateStr = eventDateFormatter.string(from: (eventDateFormatter.date(from: item.Stations![0].EventTimeUtc!)!) )
       completionDateStr = eventDateFormatter.string(from: completionDate )
     }
