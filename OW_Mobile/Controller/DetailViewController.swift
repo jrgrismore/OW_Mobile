@@ -191,7 +191,7 @@ class DetailViewController: UIViewController,UICollectionViewDataSource,UICollec
 //    let detailsIndex = detailsList.index(where: { $0.Id == detailData.Id  })
     let detailsIndex = stationsDetails.index(where: { $0.Id == detailData.Id  })
     selectedEventDetails = stationsDetails[detailsIndex!]
-    selectedStations = selectedEventDetails.Stations!
+//    selectedStations = selectedEventDetails.Stations!
 //    stationsDetails = selectedEventDetails.Stations![0]
     print("DetailsViewController > details = ",selectedEventDetails)
     print("DetailsViewController > stationDetails = ",stationsDetails)
@@ -207,9 +207,15 @@ class DetailViewController: UIViewController,UICollectionViewDataSource,UICollec
       stationForPrint.prettyPrint()
     }
 
-    
     updateEventInfoFields(eventItem: selectedEventDetails)
     self.stationCollectionView.reloadData()
+    let primaryIndex = self.occultationEvent.primaryStationIndex(selectedStations)
+    print("scroll to primaryIndex = ",primaryIndex)
+    DispatchQueue.main.async
+    {
+      self.stationCollectionView.scrollToItem(at: IndexPath(item: primaryIndex!, section: 0), at: .left, animated: false)
+    }
+
 
     
 //    var detailsIndex = 0
@@ -262,7 +268,8 @@ class DetailViewController: UIViewController,UICollectionViewDataSource,UICollec
     print("begin updateEventInfoFields")
     //for testing
     var item = itm
-    
+    selectedStations = self.occultationEvent.stationsSortedByChordOffset(item, order: .ascending)
+
     //*********************station tests**********************
 //    var testStations = [Station]()
 //    var newStation = Station()
@@ -392,6 +399,8 @@ class DetailViewController: UIViewController,UICollectionViewDataSource,UICollec
             self.sigma3BarView.isHidden = true
       }
       
+      
+      //      for station in stationsSortedByOffset
       for station in item.Stations!
       {
         let stationFactor = self.occultationEvent.assignStationFactor(item, station: station, stationsExistPastSigma1: stationsExistBeyondSigma1)
@@ -404,7 +413,7 @@ class DetailViewController: UIViewController,UICollectionViewDataSource,UICollec
         stationView.backgroundColor = cloudColor(station.CloudCover)
 
         self.weatherBarView.addSubview(stationView)
-        self.weatherBarView.bringSubviewToFront(stationView)
+//        self.weatherBarView.bringSubviewToFront(stationView)
       }
       
     }   // end DispatchQueue.main.async
@@ -459,6 +468,8 @@ class DetailViewController: UIViewController,UICollectionViewDataSource,UICollec
       }
       
     }
+    // set collection view index to primary station
+//    let primaryIndex = self.occultationEvent.primaryStationIndex(item)
     print("end updateEventInfoFields")
   }
 

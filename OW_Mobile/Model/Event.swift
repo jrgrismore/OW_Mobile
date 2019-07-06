@@ -361,11 +361,25 @@ class OccultationEvent: NSObject
     return nil
   }
   
+  func primaryStationIndex(_ stations: [Station]) -> Int?
+  {
+    if let index = stations.firstIndex(where: {$0.IsPrimaryStation!} )
+    {
+      return  index
+    }
+    return nil
+  }
+
   func stationAtIndex(index: Int, _ item: EventDetails) -> Station
   {
     return item.Stations![index]
   }
-  
+
+  func stationAtIndex(index: Int, _ stations: [Station]) -> Station
+  {
+    return stations[index]
+  }
+
   enum SortOrder: String
   {
     case ascending
