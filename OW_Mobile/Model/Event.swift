@@ -240,7 +240,7 @@ class OccultationEvent: NSObject
     let shadowWidth = item.AstDiaKm!
     let sig1Width = item.OneSigmaErrorWidthKm!
     
-    var plotBarsTuple = shadowSigmaBarScales(astDiam: item.AstDiaKm!, sigma1Width: sig1Width , stationsExistPastSigma1: stationsExistPastSigma1)
+//    var plotBarsTuple = shadowSigmaBarScales(astDiam: item.AstDiaKm!, sigma1Width: sig1Width , stationsExistPastSigma1: stationsExistPastSigma1)
     let totalBarsWidthKm = pathBarsTotalWidth(astDiamKm: item.AstDiaKm!, sigma1WidthKm: sig1Width, stationsExistPastSigma1: stationsExistPastSigma1)
 
     let shadowFactor = shadowWidth / totalBarsWidthKm
@@ -253,13 +253,29 @@ class OccultationEvent: NSObject
   
   func assignStationFactor(_ item: EventDetails, station: Station, stationsExistPastSigma1: Bool) -> Double
   {
-    let sig1Width = item.OneSigmaErrorWidthKm!
-    let totalBarsWidthKm = pathBarsTotalWidth(astDiamKm: item.AstDiaKm!, sigma1WidthKm: sig1Width, stationsExistPastSigma1: stationsExistPastSigma1)
-    let stationFactor = station.ChordOffsetKm! / totalBarsWidthKm
+    
+//    let primaryStation = self.occultationEvent.primaryStation(item)
+//    let primaryChordOffset = primaryStation!.ChordOffsetKm!
+//    print("primaryChordOffset=",primaryChordOffset)
+//    let barPlotTotalWidth = pathBarsTotalWidth(astDiamKm: item.AstDiaKm!, sigma1WidthKm: item.OneSigmaErrorWidthKm!, stationsExistPastSigma1: stationsExistBeyondSigma1)
+//    print("barPlotTotalWidth=",barPlotTotalWidth)
+//    var primaryFactor = primaryChordOffset / (barPlotTotalWidth / 2)
+//    print("primaryFactor=",primaryFactor)
+    
+    let stationChordOffset = station.ChordOffsetKm!
+    let barPlotTotalWidth = pathBarsTotalWidth(astDiamKm: item.AstDiaKm!, sigma1WidthKm: item.OneSigmaErrorWidthKm!, stationsExistPastSigma1: stationsExistPastSigma1)
+    var stationFactor = stationChordOffset / (barPlotTotalWidth / 2)
+
+    //original code
+//    let sig1Width = item.OneSigmaErrorWidthKm!
+//    let totalBarsWidthKm = pathBarsTotalWidth(astDiamKm: item.AstDiaKm!, sigma1WidthKm: sig1Width, stationsExistPastSigma1: stationsExistPastSigma1)
+//    let stationFactor = station.ChordOffsetKm! / totalBarsWidthKm
     print("#######")
     print("station.ChordOffsetKm=",station.ChordOffsetKm!)
-    print("totalBarsWidthKm=",totalBarsWidthKm)
+//    print("totalBarsWidthKm=",totalBarsWidthKm)
+    print("barPlotTotalWidth=",barPlotTotalWidth)
     print("stationFactor=",stationFactor)
+    
     return stationFactor
   }
   
@@ -290,7 +306,7 @@ class OccultationEvent: NSObject
     //implement station distance beyond sigma1 later
     for station in item.Stations!
     {
-      if station.ChordOffsetKm! >= item.OneSigmaErrorWidthKm!
+      if fabs(station.ChordOffsetKm!) >= item.OneSigmaErrorWidthKm!
       {
         return true
       }

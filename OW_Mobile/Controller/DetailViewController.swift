@@ -263,6 +263,66 @@ class DetailViewController: UIViewController,UICollectionViewDataSource,UICollec
     //for testing
     var item = itm
     
+    //*********************station tests**********************
+//    var testStations = [Station]()
+//    var newStation = Station()
+//    newStation.StationId = 1
+//    newStation.StationName = "Station Name"
+//    newStation.EventTimeUtc = "2019-07-04T21:04:57.488"
+//    newStation.WeatherInfoAvailable = true
+//    newStation.CloudCover = 5
+//    newStation.Wind = 3
+//    newStation.TempDegC = 24
+//    newStation.HighCloud = false
+//    newStation.StationPos = 1
+//
+//    newStation.ChordOffsetKm = 10     //test value
+//
+//    newStation.OccultDistanceKm = 1.1
+//    newStation.IsOwnStation = true
+//    newStation.IsPrimaryStation = true
+//    testStations.append(newStation)
+//
+//    var testItem = EventDetails()
+//    testItem.Id = "id123456789"
+//    testItem.Object = "Test Object"
+//    testItem.StarMag = 9.87
+//    testItem.MagDrop = 6.54
+//    testItem.MaxDurSec = 1.23
+//    testItem.ErrorInTimeSec = 0.7
+//    testItem.StarColour = 3
+//    testItem.Stations = testStations
+//    testItem.Feed = "Test Feed"
+//    testItem.Rank = 97
+//    testItem.BV = 0.543
+//    testItem.CombMag = 9.99
+//    testItem.AstMag = 14.7
+//    testItem.MoonDist = 1.1
+//    testItem.MoonPhase = 11
+//
+//    testItem.AstDiaKm = 20     //test value
+//
+//    testItem.AstDistUA = 1.1
+//    testItem.RAHours = 12.345
+//    testItem.DEDeg = 67.89
+//    testItem.StarAlt = 35.7
+//    testItem.StarAz = 123.4
+//    testItem.SunAlt = -11
+//    testItem.MoonAlt = 11
+//    testItem.MoonAz = 11
+//    testItem.StellarDia = 0.05
+//    testItem.StarName = "TYC 123"
+//    testItem.OtherStarNames = ""
+//    testItem.AstClass = "NEO"
+//    testItem.AstRotationHrs = 7.8
+//    testItem.AstRotationAmplitude = 0.9
+//    testItem.PredictionUpdated = "July 4, 2019"
+//
+//    testItem.OneSigmaErrorWidthKm = 20     //test value
+//
+//    item = testItem
+    //********************************************************
+
     DispatchQueue.main.async
     {
       self.eventTitle.attributedText = self.occultationEvent.updateObjectFld(item)
@@ -303,7 +363,22 @@ class DetailViewController: UIViewController,UICollectionViewDataSource,UICollec
       let barsTuple = self.occultationEvent.updateShadowBarView(item,stationsExistPastSigma1: stationsExistBeyondSigma1)
       self.shadowBarView.transform = CGAffineTransform(scaleX: CGFloat(barsTuple.shadowFactor), y: 1.0)
       self.sigma1BarView.transform = CGAffineTransform(scaleX: CGFloat(barsTuple.sig1Factor), y: 1.0)
-      self.userBarView.frame.origin.x = self.centerBarView.frame.origin.x + (self.weatherBarView.bounds.width / 2) * CGFloat((item.Stations![0].ChordOffsetKm! / pathBarsTotalWidth(astDiamKm: item.AstDiaKm!, sigma1WidthKm: item.OneSigmaErrorWidthKm!, stationsExistPastSigma1: stationsExistBeyondSigma1)))
+      
+      let primaryStation = self.occultationEvent.primaryStation(item)
+      let primaryChordOffset = primaryStation!.ChordOffsetKm!
+      print("primaryChordOffset=",primaryChordOffset)
+      let primaryFactor = self.occultationEvent.assignStationFactor(item, station: primaryStation!, stationsExistPastSigma1: stationsExistBeyondSigma1)
+
+//      let barPlotTotalWidth = pathBarsTotalWidth(astDiamKm: item.AstDiaKm!, sigma1WidthKm: item.OneSigmaErrorWidthKm!, stationsExistPastSigma1: stationsExistBeyondSigma1)
+//      print("barPlotTotalWidth=",barPlotTotalWidth)
+//      var primaryFactor = primaryChordOffset / (barPlotTotalWidth / 2)
+//      print("primaryFactor=",primaryFactor)
+//      primaryFactor = self.occultationEvent.assignStationFactor(item, station: primaryStation!, stationsExistPastSigma1: stationsExistBeyondSigma1)
+      
+      self.userBarView.frame.origin.x = self.centerBarView.frame.origin.x + (self.weatherBarView.bounds.width / 2) * CGFloat(primaryFactor)
+      
+      
+//      self.userBarView.frame.origin.x = self.centerBarView.frame.origin.x + (self.weatherBarView.bounds.width / 2) * CGFloat((item.Stations![0].ChordOffsetKm! / pathBarsTotalWidth(astDiamKm: item.AstDiaKm!, sigma1WidthKm: item.OneSigmaErrorWidthKm!, stationsExistPastSigma1: stationsExistBeyondSigma1)))
       
       if stationsExistBeyondSigma1
       {
@@ -325,8 +400,11 @@ class DetailViewController: UIViewController,UICollectionViewDataSource,UICollec
         stationView.frame.origin.y = self.weatherBarView.frame.origin.y
         stationView.frame.size.width = 3
         stationView.frame.size.height = self.weatherBarView.frame.height
-        stationView.backgroundColor = UIColor.red
+//        stationView.backgroundColor = UIColor.red
+        stationView.backgroundColor = cloudColor(station.CloudCover)
+
         self.weatherBarView.addSubview(stationView)
+        self.weatherBarView.bringSubviewToFront(stationView)
       }
       
     }   // end DispatchQueue.main.async

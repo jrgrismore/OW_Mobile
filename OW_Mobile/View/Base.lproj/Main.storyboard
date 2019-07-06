@@ -1536,7 +1536,7 @@
                                                 <color key="backgroundColor" red="0.44024449586868286" green="0.79986923933029175" blue="0.78823524713516235" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                             </view>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qFM-b9-xCf" userLabel="Center Bar View">
-                                                <rect key="frame" x="186" y="0.0" width="3" height="86"/>
+                                                <rect key="frame" x="186" y="19.5" width="3" height="66.5"/>
                                                 <color key="backgroundColor" red="0.39985933899879456" green="0.78460901975631714" blue="0.29790294170379639" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" constant="3" id="g1g-i6-fIa"/>
@@ -1585,7 +1585,7 @@
                                             <constraint firstItem="c4Z-ek-M3c" firstAttribute="bottom" secondItem="Zlt-mA-YQ5" secondAttribute="bottom" id="CvF-p1-1zc"/>
                                             <constraint firstItem="RoV-Cl-X5I" firstAttribute="leading" secondItem="HuD-ai-6Aw" secondAttribute="leading" id="G7S-Ma-GiA"/>
                                             <constraint firstItem="Mhe-Il-VFc" firstAttribute="centerX" secondItem="HuD-ai-6Aw" secondAttribute="centerX" id="H3q-b7-4jN"/>
-                                            <constraint firstItem="qFM-b9-xCf" firstAttribute="top" secondItem="HuD-ai-6Aw" secondAttribute="top" id="Kc5-uG-YxX"/>
+                                            <constraint firstItem="qFM-b9-xCf" firstAttribute="top" secondItem="c4Z-ek-M3c" secondAttribute="top" id="Kc5-uG-YxX"/>
                                             <constraint firstItem="Mhe-Il-VFc" firstAttribute="top" secondItem="Zlt-mA-YQ5" secondAttribute="top" id="LQY-oc-GXl"/>
                                             <constraint firstItem="Zlt-mA-YQ5" firstAttribute="top" secondItem="RoV-Cl-X5I" secondAttribute="bottom" id="Nag-Ba-LYe"/>
                                             <constraint firstAttribute="trailing" secondItem="ncD-JH-6k1" secondAttribute="trailing" id="Oyx-o5-qkg"/>

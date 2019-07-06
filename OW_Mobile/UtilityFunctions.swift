@@ -138,6 +138,48 @@ func cloudIcon(_ cloudIconVal: Int?) -> UIImage
   return cloudImage
 }
 
+func cloudColor(_ cloudIconVal: Int?) -> UIColor
+{
+  //set appropriate cloud image
+  //      0% -  9%   cloud_0.png
+  //    10% - 19%    cloud_10.png
+  //    20% - 29%    cloud_20.png
+  //    30% - 39%    cloud_30.png
+  //    40% - 49%    cloud_40.png
+  //    50% - 59%    cloud_50.png
+  //    60% - 69%    cloud_60.png
+  //    70% - 79%    cloud_70.png
+  //    80% - 89%    cloud_80.png
+  //    90% - 100%   cloud_90.png
+  var cloudColor: UIColor
+  switch cloudIconVal!
+  {
+  case 0...9:
+    cloudColor =  #colorLiteral(red: 0.001137823565, green: 0.2069600523, blue: 0.4554731846, alpha: 1)
+  case 10...19:
+    cloudColor =  #colorLiteral(red: 0.06971666962, green: 0.3020606041, blue: 0.5551496744, alpha: 1)
+  case 20...29:
+    cloudColor =  #colorLiteral(red: 0.1543450356, green: 0.3969052434, blue: 0.6628355384, alpha: 1)
+  case 30...39:
+    cloudColor =  #colorLiteral(red: 0.2456468344, green: 0.503529191, blue: 0.7697986364, alpha: 1)
+  case 40...49:
+    cloudColor =  #colorLiteral(red: 0.342204392, green: 0.6059697866, blue: 0.8767475486, alpha: 1)
+  case 50...59:
+    cloudColor =  #colorLiteral(red: 0.4613946676, green: 0.7284020185, blue: 0.7289966345, alpha: 1)
+  case 60...69:
+    cloudColor =  #colorLiteral(red: 0.5686532259, green: 0.8384991288, blue: 0.8389254212, alpha: 1)
+  case 70...79:
+    cloudColor =  #colorLiteral(red: 0.6698740125, green: 0.9486840367, blue: 0.9488958716, alpha: 1)
+  case 80...89:
+    cloudColor =  #colorLiteral(red: 0.7646406293, green: 0.7647491693, blue: 0.7646064162, alpha: 1)
+  case 90...100:
+    cloudColor =  #colorLiteral(red: 0.8861995339, green: 0.8863242269, blue: 0.8861603141, alpha: 1)
+  default:
+    cloudColor =  #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
+  }
+return cloudColor
+}
+
 func windStrengthIcon(_ windStrengthIconValue: Int?) -> UIImage
 {
   //    0 = wind_0.png;
@@ -429,6 +471,7 @@ func pathBarsTotalWidth(astDiamKm: Double, sigma1WidthKm: Double, stationsExistP
   var totalWidth = sigma1BarWidth
   if stationsExistPastSigma1
   {
+    print("total plot width includes sigma2 and sigma3")
     totalWidth = sigma1BarWidth + (4 * sigma1WidthKm)
   }
   return totalWidth
