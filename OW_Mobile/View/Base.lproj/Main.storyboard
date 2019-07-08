@@ -2281,6 +2281,7 @@
                         <outlet property="asterRotAmpView" destination="GgE-i9-KDU" id="iAL-0e-7ir"/>
                         <outlet property="bvStarDiamView" destination="SeI-hh-4GI" id="17s-ZJ-VBu"/>
                         <outlet property="centerBarView" destination="qFM-b9-xCf" id="NVd-Cg-hVg"/>
+                        <outlet property="centerGrayBar" destination="ncD-JH-6k1" id="Jdc-Bl-25g"/>
                         <outlet property="eventAsteroidDiameter" destination="RX4-MR-uvs" id="MbB-9d-Zdz"/>
                         <outlet property="eventAsteroidMagnitude" destination="dVX-Qz-Run" id="33b-Gy-dZ1"/>
                         <outlet property="eventAsteroidOrigin" destination="ncY-ji-tEs" id="hHi-ZG-LZX"/>

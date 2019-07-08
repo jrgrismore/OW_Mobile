@@ -39,6 +39,11 @@ class DetailViewController: UIViewController,UICollectionViewDataSource,UICollec
   var selectedEventDetails = EventDetails()
 
   var occultationEvent = OccultationEvent()
+  
+  var stationCursor = UIView()
+  
+  var visibleIndexPaths = [IndexPath]()
+
 
 //  var occultationStation = OccultationStation(station: <#Station#>)
   
@@ -85,6 +90,7 @@ class DetailViewController: UIViewController,UICollectionViewDataSource,UICollec
   
   // MARK: - View Outlets
   @IBOutlet weak var weatherBarView: UIView!
+  @IBOutlet weak var centerGrayBar: UIView!
   @IBOutlet weak var sigma3BarView: UIView!
   @IBOutlet weak var sigma2BarView: UIView!
   @IBOutlet weak var sigma1BarView: UIView!
@@ -111,29 +117,91 @@ class DetailViewController: UIViewController,UICollectionViewDataSource,UICollec
   // MARK: - View functions
   func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int
   {
-    print("numberOfItemsInSection")
-    print("stationDetails.count=",selectedStations.count)
+//    print("numberOfItemsInSection")
+//    print("stationDetails.count=",selectedStations.count)
     return selectedStations.count
   }
   
   func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell
   {
-    print("cellForItemAt indexPath:",indexPath)
+    print()
+    print(">collectionView")
+    print("cellForItemAt > indexPath:",indexPath)
     var cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as! StationCell
     cell.backgroundColor = #colorLiteral(red: 0.2043271959, green: 0.620110333, blue: 0.6497597098, alpha: 1)
     //    fillCellFields(cell: &cell, indexPath: indexPath)
 //    updateEventInfoFields(eventItem: selectedEventDetails)
 //    updateStationFlds(cell: &cell, indexPath: indexPath, eventItem: stationsDetails[0])
     updateStationFlds(cell: &cell, indexPath: indexPath, stations: selectedStations, itm: selectedEventDetails)
+    //    moveCursorToStation(indexPath: indexPath)
+    visibleIndexPaths = collectionView.indexPathsForVisibleItems
+    print("<collectionView")
+    print()
     return cell
   }
   
+  func scrollViewDidEndDecelerating(_ scrollView: UIScrollView)
+  {
+    print()
+    print(">scrollViewDidEndDecelerating")
+    print("visibleIndexPaths=",visibleIndexPaths)
+    let visibleRect = CGRect(origin: stationCollectionView.contentOffset, size: stationCollectionView.bounds.size)
+    let visiblePoint = CGPoint(x: visibleRect.midX, y: visibleRect.midY)
+    let visibleIndexPath = stationCollectionView.indexPathForItem(at: visiblePoint)
+    moveCursorToStation(indexPath: visibleIndexPath!)
+    print("<scrollViewDidEndDecelerating")
+  }
+  
+//  func mostVisibleCell()
+//  {
+//    let visibleRect = CGRect(origin: stationCollectionView.contentOffset, size: stationCollectionView.bounds.size)
+//    let visiblePoint = CGPoint(x: visibleRect.midX, y: visibleRect.midY)
+//    let visibleIndexPath = stationCollectionView.indexPathForItem(at: visiblePoint)
+//    print("mostVisibleCell > visibleIndexPath=",visibleIndexPath)
+//  }
+  
+  
+  func moveCursorToStation(indexPath: IndexPath)
+  {
+    print()
+    print(">moveCursorToStation")
+//    stationCursor.frame.origin.x = selectedStations[indexPath.item].tag
+    print("station indexPath.item=",indexPath.item)
+    
+    var currentIndex = 0
+    if let tempIndex = self.weatherBarView.subviews.firstIndex(where: {$0.tag == indexPath.item} )
+    {
+      currentIndex = tempIndex
+    }
+
+    
+    DispatchQueue.main.async
+    {
+      print("self.weatherBarView.subviews[currentIndex].frame.origin.x=",self.weatherBarView.subviews[currentIndex].frame.origin.x)
+      print("self.weatherBarView.bounds.minX=",self.weatherBarView.bounds.minX)
+      print("self.weatherBarView.subviews[currentIndex].frame.origin.x=",self.weatherBarView.subviews[currentIndex].frame.origin.x)
+      print("self.weatherBarView.bounds.maxX=",self.weatherBarView.bounds.maxX)
+      if self.weatherBarView.subviews[currentIndex].frame.origin.x >= self.weatherBarView.bounds.minX
+        && self.weatherBarView.subviews[currentIndex].frame.origin.x < self.weatherBarView.bounds.maxX
+      {
+        print("show station cursor")
+        self.stationCursor.isHidden = false
+        let currentStationView = self.weatherBarView.subviews[currentIndex]
+        self.stationCursor.frame.origin.x = currentStationView.frame.origin.x + (currentStationView.frame.width / 2) - self.stationCursor.frame.width / 2
+      } else {
+        print("hide station cursor")
+        self.stationCursor.isHidden = true
+      }
+      print("<moveCursorToStation")
+      print()
+    }
+  }
   
   
   // MARK: - View functions
   override func viewWillLayoutSubviews()
   {
-    print("viewWillLayoutSubviews")
+//    print("viewWillLayoutSubviews")
     super.viewWillLayoutSubviews()
     stationCollectionView.collectionViewLayout.invalidateLayout()
     //set cell size
@@ -163,7 +231,7 @@ class DetailViewController: UIViewController,UICollectionViewDataSource,UICollec
             var cellWidth = self.stationCollectionView.bounds.width - flowLayout.minimumLineSpacing
       //      cellHeight = 100
       //      cellWidth = 100
-      print("cell height=",cellHeight,"   cell width=",cellWidth)
+//      print("cell height=",cellHeight,"   cell width=",cellWidth)
       flowLayout.itemSize = CGSize(width: cellWidth, height: CGFloat(cellHeight))
     }
   }
@@ -182,6 +250,8 @@ class DetailViewController: UIViewController,UICollectionViewDataSource,UICollec
   
    override func viewWillAppear(_ animated: Bool)
   {
+    print()
+    print(">viewWillAppear")
 //    let detailEndpoint = OWWebAPI.shared.createEventDetailURL(owSession: OWWebAPI.owSession, eventID: detailData.Id!)
 //    print("detailEndpoint=",detailEndpoint)
     self.title = detailData.Object
@@ -193,29 +263,31 @@ class DetailViewController: UIViewController,UICollectionViewDataSource,UICollec
     selectedEventDetails = stationsDetails[detailsIndex!]
 //    selectedStations = selectedEventDetails.Stations!
 //    stationsDetails = selectedEventDetails.Stations![0]
-    print("DetailsViewController > details = ",selectedEventDetails)
-    print("DetailsViewController > stationDetails = ",stationsDetails)
-    print()
-    print("selectedEventDetails=",selectedEventDetails)
+//    print("DetailsViewController > details = ",selectedEventDetails)
+//    print("DetailsViewController > stationDetails = ",stationsDetails)
+//    print()
+//    print("selectedEventDetails=",selectedEventDetails)
     //pretty print stations sorted by chord offset
-    print()
-    print("chord sorted stations")
+//    print()
+//    print("chord sorted stations")
     let chordSortedStations = self.occultationEvent.stationsSortedByChordOffset(selectedEventDetails, order: .ascending)
-    for station in chordSortedStations
-    {
-      let stationForPrint = OccultationStation(station: station)
-      stationForPrint.prettyPrint()
-    }
+//    for station in chordSortedStations
+//    {
+//      let stationForPrint = OccultationStation(station: station)
+//      stationForPrint.prettyPrint()
+//    }
 
+    let primaryIndex = self.occultationEvent.primaryStationIndex(chordSortedStations)
+    print("scroll to primaryIndex = ",primaryIndex)
     updateEventInfoFields(eventItem: selectedEventDetails)
     self.stationCollectionView.reloadData()
-    let primaryIndex = self.occultationEvent.primaryStationIndex(selectedStations)
-    print("scroll to primaryIndex = ",primaryIndex)
+//    let primaryIndex = self.occultationEvent.primaryStationIndex(selectedStations)
     DispatchQueue.main.async
     {
-      self.stationCollectionView.scrollToItem(at: IndexPath(item: primaryIndex!, section: 0), at: .left, animated: false)
+      self.stationCollectionView.scrollToItem(at: IndexPath(item: primaryIndex!, section: 0), at: .centeredHorizontally, animated: false)
+      self.moveCursorToStation(indexPath: IndexPath(item: primaryIndex!, section: 0))
     }
-
+ 
 
     
 //    var detailsIndex = 0
@@ -231,6 +303,8 @@ class DetailViewController: UIViewController,UICollectionViewDataSource,UICollec
 //        break
 //      }
 //      detailsIndex = detailsIndex + 1
+    print("<viewWillAppear")
+    print()
     }
     
     
@@ -265,11 +339,11 @@ class DetailViewController: UIViewController,UICollectionViewDataSource,UICollec
   //  func updateEventInfoFields(indexPath:IndexPath,eventItem itm: EventDetails) //cell: inout StationCell,
   func updateEventInfoFields(eventItem itm: EventDetails)
   {
-    print("begin updateEventInfoFields")
+    print(">updateEventInfoFields")
     //for testing
     var item = itm
     selectedStations = self.occultationEvent.stationsSortedByChordOffset(item, order: .ascending)
-
+ 
     //*********************station tests**********************
 //    var testStations = [Station]()
 //    var newStation = Station()
@@ -373,6 +447,7 @@ class DetailViewController: UIViewController,UICollectionViewDataSource,UICollec
       
       let primaryStation = self.occultationEvent.primaryStation(item)
       let primaryChordOffset = primaryStation!.ChordOffsetKm!
+      print()
       print("primaryChordOffset=",primaryChordOffset)
       let primaryFactor = self.occultationEvent.assignStationFactor(item, station: primaryStation!, stationsExistPastSigma1: stationsExistBeyondSigma1)
 
@@ -400,11 +475,12 @@ class DetailViewController: UIViewController,UICollectionViewDataSource,UICollec
       }
       
       
-      //      for station in stationsSortedByOffset
-      for station in item.Stations!
+      //      for station in self.selectedStations
+      for (index,station) in item.Stations!.enumerated()
       {
         let stationFactor = self.occultationEvent.assignStationFactor(item, station: station, stationsExistPastSigma1: stationsExistBeyondSigma1)
         var stationView = UIView()
+//        stationView.tag = index
         stationView.frame.origin.x = self.centerBarView.frame.origin.x + (self.weatherBarView.bounds.width / 2) * CGFloat(stationFactor)
         stationView.frame.origin.y = self.weatherBarView.frame.origin.y
         stationView.frame.size.width = 3
@@ -415,7 +491,15 @@ class DetailViewController: UIViewController,UICollectionViewDataSource,UICollec
         self.weatherBarView.addSubview(stationView)
 //        self.weatherBarView.bringSubviewToFront(stationView)
       }
-      
+      //add station cursor subview
+      self.stationCursor.frame.size.width = 11
+      self.stationCursor.frame.size.height = 3
+      self.stationCursor.frame.origin.y = self.weatherBarView.frame.origin.y + self.weatherBarView.frame.height - self.centerGrayBar.frame.height - self.stationCursor.frame.height
+      self.stationCursor.frame.origin.x = self.centerBarView.frame.origin.x
+      self.stationCursor.backgroundColor = .black
+      self.weatherBarView.addSubview(self.stationCursor)
+      self.weatherBarView.bringSubviewToFront(self.stationCursor)
+
     }   // end DispatchQueue.main.async
 
     
@@ -435,51 +519,57 @@ class DetailViewController: UIViewController,UICollectionViewDataSource,UICollec
     DispatchQueue.main.async
     {
       //print stations
-     self.occultationEvent.printStations(item)
+//     self.occultationEvent.printStations(item)
       //print primary station
-      print()
-      print("primary station = ",self.occultationEvent.primaryStation(item))
+//      print()
+//      print("primary station = ",self.occultationEvent.primaryStation(item))
       //print own stations
-      print()
-      for myStation in self.occultationEvent.myStations(item)!
-      {
-        print("myStation = ",myStation)
-      }
-      //print others' stations
-      print()
-      for otherStation in self.occultationEvent.otherStations(item)!
-      {
-        print("others' stations = ",otherStation)
-      }
+//      print()
+//      for myStation in self.occultationEvent.myStations(item)!
+//      {
+//        print("myStation = ",myStation)
+//      }
+//      //print others' stations
+//      print()
+//      for otherStation in self.occultationEvent.otherStations(item)!
+//      {
+//        print("others' stations = ",otherStation)
+//      }
       //print index of primary station
-      print("primary station index = ",self.occultationEvent.primaryStationIndex(item))
+      print("primary station index = ",self.occultationEvent.primaryStationIndex(self.selectedStations))
       //print station at last index
-      print("last station = ", self.occultationEvent.stationAtIndex(index: item.Stations!.count-1, item))
-      //print stations sorted by ChordOffsetKm fron negative to positive (L to R)
-      print("station sort = \n",self.occultationEvent.stationsSortedByChordOffset(item,order: .descending))
-      //print stations sorted by Cloud Cover fron negative to positive (L to R)
-      print("station sort = \n",self.occultationEvent.stationsSortedByCloudCover(item,order: .descending))
+//      print("last station = ", self.occultationEvent.stationAtIndex(index: item.Stations!.count-1, item))
+//      //print stations sorted by ChordOffsetKm fron negative to positive (L to R)
+//      print("station sort = \n",self.occultationEvent.stationsSortedByChordOffset(item,order: .descending))
+//      //print stations sorted by Cloud Cover fron negative to positive (L to R)
+//      print("station sort = \n",self.occultationEvent.stationsSortedByCloudCover(item,order: .descending))
       //pretty print stations sorted by chord offset
-      let chordSortedStations = self.occultationEvent.stationsSortedByChordOffset(item, order: .ascending)
-      for station in chordSortedStations
-      {
-        let stationForPrint = OccultationStation(station: station)
-        stationForPrint.prettyPrint()
-      }
+//      let chordSortedStations = self.occultationEvent.stationsSortedByChordOffset(item, order: .ascending)
+//      for station in chordSortedStations
+//      {
+//        let stationForPrint = OccultationStation(station: station)
+//        stationForPrint.prettyPrint()
+//      }
       
     }
     // set collection view index to primary station
 //    let primaryIndex = self.occultationEvent.primaryStationIndex(item)
-    print("end updateEventInfoFields")
-  }
+//    print("end updateEventInfoFields")
+    DispatchQueue.main.async
+    {
+      print("<updateEventInfoFields")
+    }
+ }
 
 //  func updateStationFlds(cell: inout StationCell, indexPath: IndexPath, eventItem: EventDetails)
   func updateStationFlds(cell: inout StationCell, indexPath: IndexPath, stations: [Station], itm: EventDetails)
     {
       var item = itm
       
-      let stationIndex = indexPath.row
-      print("begin updateStationFlds")
+//      let stationIndex = indexPath.row
+      let stationIndex = indexPath.item
+      
+//      print("begin updateStationFlds")
       var stationPosIconVal : Int?
       stationPosIconVal = 0
       if stations[stationIndex].StationPos != nil
@@ -661,7 +751,7 @@ class DetailViewController: UIViewController,UICollectionViewDataSource,UICollec
         //      DispatchQueue.main.async{self.starAltImg.image = nil}
         cell.starAltImg.image = nil
       }
-      print("end updateStationFlds")
+//      print("end updateStationFlds")
     }
    
 

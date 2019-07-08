@@ -71,7 +71,14 @@ class MyEventsViewController: UIViewController, UICollectionViewDataSource,UICol
     {
       updateCellArray()
     }
-    
+//    print()
+//    print("##############################################################")
+//    print("##############################################################")
+//    print("!!!DON'T FORGET TO REENABLE IB STORYBOARD WARNINGS!!!")
+//    print("##############################################################")
+//    print("##############################################################")
+//    print()
+
    }
   
   override func viewWillAppear(_ animated: Bool)
@@ -140,13 +147,13 @@ class MyEventsViewController: UIViewController, UICollectionViewDataSource,UICol
       var myEventListDetails: [EventDetails] = []
             for item in myEvents!
             {
-              DispatchQueue.main.async
-                {
-                  print("\nEventInfo>>>")
-                  self.printEventInfo(eventItem: item)
-                  print("<<<End of EventInfo\n")
-              }
-              
+//              DispatchQueue.main.async
+//                {
+//                  print("\nEventInfo>>>")
+//                  self.printEventInfo(eventItem: item)
+//                  print("<<<End of EventInfo\n")
+//              }
+//
               DispatchQueue.main.async
                 {
                   self.spinnerView.isHidden = false
@@ -161,26 +168,26 @@ class MyEventsViewController: UIViewController, UICollectionViewDataSource,UICol
                 myEventListDetails.append(myDetails!)
                 DispatchQueue.main.async
                 {
-                  print("EventDetails")
-                  print("itemIndex=",itemIndex)
-                  print("myDetails=", myDetails)
-                  print("End of Event Details")                    
+//                  print("EventDetails")
+//                  print("itemIndex=",itemIndex)
+//                  print("myDetails=", myDetails)
+//                  print("End of Event Details")
                   if itemIndex == myEvents!.count
                   {
-                    print("final event list details=",myEventListDetails)
-                    for details in myEventListDetails
-                    {
-                      print("details=",details)
-                    }
+//                    print("final event list details=",myEventListDetails)
+//                    for details in myEventListDetails
+//                    {
+//                      print("details=",details)
+//                    }
                     // save detail data
                     OWWebAPI.shared.saveDetails(myEventListDetails)
                     let tempDetails = OWWebAPI.shared.loadDetails()
-                    for details in tempDetails
-                    {
-                      print("UserDefaults details=",details)
-                    }
+//                    for details in tempDetails
+//                    {
+//                      print("UserDefaults details=",details)
+//                    }
                     
-                    print("stop spinner")
+//                    print("stop spinner")
                     self.activitySpinner.stopAnimating()
                     self.spinnerView.isHidden = true
                   }
@@ -233,13 +240,13 @@ extension MyEventsViewController
   // MARK: - Collection delegate functions
   func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int
   {
-    print("numberOfItemsInSection=",cellDataArray.count)
+//    print("numberOfItemsInSection=",cellDataArray.count)
     return cellDataArray.count
   }
   
   func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell
   {
-    print("cellForItemAt")
+//    print("cellForItemAt")
     var cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as! MyEventsCollectionViewCell
     //set permanent cell background color to 235_255_235_67
     cell.backgroundColor = #colorLiteral(red: 0.9215686275, green: 1, blue: 0.9215686275, alpha: 0.67)

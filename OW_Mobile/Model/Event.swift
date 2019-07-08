@@ -237,6 +237,8 @@ class OccultationEvent: NSObject
   // MARK: - shadow bar plot functions
   func updateShadowBarView(_ item: EventDetails,stationsExistPastSigma1: Bool) -> (shadowFactor:Double,sig1Factor:Double,sig2Factor:Double,sig3Factor:Double)
   {
+    print()
+    print(">updateShadowBarView")
     let shadowWidth = item.AstDiaKm!
     let sig1Width = item.OneSigmaErrorWidthKm!
     
@@ -248,6 +250,8 @@ class OccultationEvent: NSObject
     let sigma2Factor = (shadowWidth + (4 * sig1Width)) / totalBarsWidthKm
     let sigma3Factor = (shadowWidth + (6 * sig1Width)) / totalBarsWidthKm
 
+    print("<updateShadowBarView")
+    print()
     return (shadowFactor,sigma1Factor,sigma2Factor,sigma3Factor)
   }
   
@@ -270,6 +274,7 @@ class OccultationEvent: NSObject
 //    let sig1Width = item.OneSigmaErrorWidthKm!
 //    let totalBarsWidthKm = pathBarsTotalWidth(astDiamKm: item.AstDiaKm!, sigma1WidthKm: sig1Width, stationsExistPastSigma1: stationsExistPastSigma1)
 //    let stationFactor = station.ChordOffsetKm! / totalBarsWidthKm
+    print()
     print("#######")
     print("station.ChordOffsetKm=",station.ChordOffsetKm!)
 //    print("totalBarsWidthKm=",totalBarsWidthKm)
@@ -399,6 +404,19 @@ class OccultationEvent: NSObject
     }
   }
   
+  func stationsSortedByChordOffset(_ station: [Station], order: SortOrder) -> [Station]
+  {
+//    let stations: [Station] = item.Stations!
+    let sortOrder: SortOrder = order
+    switch sortOrder
+    {
+    case .ascending:
+      return stations.sorted(by: {$0.ChordOffsetKm! < $1.ChordOffsetKm!} )
+    case .descending:
+      return stations.sorted(by: {$0.ChordOffsetKm! > $1.ChordOffsetKm!} )
+    }
+  }
+
   func stationsSortedByCloudCover(_ item: EventDetails, order: SortOrder) -> [Station]
   {
     let stations: [Station] = item.Stations!
