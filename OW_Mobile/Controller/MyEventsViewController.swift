@@ -137,12 +137,12 @@ class MyEventsViewController: UIViewController, UICollectionViewDataSource,UICol
       }
 
     //    let OWWebAPI.shared = OWWebAPI()
-    DispatchQueue.main.async{self.spinnerLbl.text = "Fetching Event Data..."}
+    DispatchQueue.main.async{self.spinnerLbl.text = "Event List \n Retrieving..."}
     usleep(useconds_t(0.5 * 1000000)) //will sleep for 0.5 seconds)
     OWWebAPI.shared.retrieveEventList(completion: { (myEvents, error) in
       //fill cells
-      DispatchQueue.main.async{self.spinnerLbl.text = "download and parsing complete"}
-      usleep(useconds_t(0.5 * 1000000)) //will sleep for 0.5 seconds)
+      DispatchQueue.main.async{self.spinnerLbl.text = "Event List \n Download and Parsing Complete"}
+      usleep(useconds_t(1.0 * 1000000)) //will sleep for 0.5 seconds)
       var itemIndex = 0
       var myEventListDetails: [EventDetails] = []
             for item in myEvents!
@@ -161,10 +161,12 @@ class MyEventsViewController: UIViewController, UICollectionViewDataSource,UICol
               }
               OWWebAPI.shared.retrieveEventDetails(eventID: item.Id!) { (myDetails, error) in
                 itemIndex = itemIndex + 1
-                DispatchQueue.main.async{self.spinnerLbl.text = "download complete"}
-                usleep(useconds_t(0.5 * 1000000)) //will sleep for 0.5 seconds
-                 DispatchQueue.main.async{self.spinnerLbl.text = "updating details"}
-                usleep(useconds_t(0.5 * 1000000)) //will sleep for 0.5 seconds
+                var spinnerText = String(format:"Event Details \n %d of %d Downloaded",itemIndex,myEvents!.count)
+                DispatchQueue.main.async{self.spinnerLbl.text = spinnerText}
+                usleep(useconds_t(0.2 * 1000000)) //will sleep for 0.5 seconds
+//                spinnerText = String(format:"Event Details \n %d of %d Updated",itemIndex,myEvents!.count)
+//                 DispatchQueue.main.async{self.spinnerLbl.text = spinnerText}
+//                usleep(useconds_t(0.2 * 1000000)) //will sleep for 0.5 seconds
                 myEventListDetails.append(myDetails!)
                 DispatchQueue.main.async
                 {

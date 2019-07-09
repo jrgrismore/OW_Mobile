@@ -115,12 +115,12 @@ class OWWebAPI: NSObject
         return
       }
 //      print("data retrieved")
-      self.delegate?.webLogTextDidChange(text: "Data Retrieved")
-      usleep(useconds_t(0.5 * 1000000)) //will sleep for 0.5 seconds)
+//      self.delegate?.webLogTextDidChange(text: "Data Retrieved")
+//      usleep(useconds_t(0.5 * 1000000)) //will sleep for 0.5 seconds)
       let myEvents = self.parseEventData(jsonData: dataResponse)
       print("myEvents count=", myEvents.count)
-      self.delegate?.webLogTextDidChange(text: "myEvents count= \(myEvents.count)")
-      usleep(useconds_t(0.5 * 1000000)) //will sleep for 0.5 seconds)
+      self.delegate?.webLogTextDidChange(text: "Event List count = \(myEvents.count)")
+      usleep(useconds_t(1.0 * 1000000)) //will sleep for 0.5 seconds)
       completion(myEvents,nil)
     }
 //    print("...owTask.resume()")
@@ -251,15 +251,15 @@ class OWWebAPI: NSObject
         return
       }
 //      print("data retrieved")
-      self.delegate?.webLogTextDidChange(text: "Data Retrieved")
-      usleep(useconds_t(0.5 * 1000000)) //will sleep for 0.5 seconds)
+//      self.delegate?.webLogTextDidChange(text: "Data Retrieved")
+//      usleep(useconds_t(0.5 * 1000000)) //will sleep for 0.5 seconds)
       
 //      print("dataResponse=",String(decoding: dataResponse, as: UTF8.self))
       
       let detailEvents = self.parseDetailData(jsonData: dataResponse)
 //      print("detailEvents=", detailEvents)
 //      self.delegate?.webLogTextDidChange(text: "detailEvents count= \(detailEvents.count)")
-      usleep(useconds_t(0.5 * 1000000)) //will sleep for 0.5 seconds)
+//      usleep(useconds_t(0.5 * 1000000)) //will sleep for 0.5 seconds)
       completion(detailEvents,nil)
     }
 //    print("...owDetailTask.resume()")

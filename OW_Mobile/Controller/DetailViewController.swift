@@ -71,6 +71,7 @@ class DetailViewController: UIViewController
   @IBOutlet weak var eventCamRotationAmplitude: UILabel!
   
   // MARK: - View Outlets
+  @IBOutlet var eventDetailView: UIView!
   @IBOutlet weak var weatherBarView: UIView!
   @IBOutlet weak var centerGrayBar: UIView!
   @IBOutlet weak var sigma3BarView: UIView!
@@ -116,7 +117,9 @@ class DetailViewController: UIViewController
   {
     print()
     print(">viewWillAppear")
-    self.title = detailData.Object
+    eventDetailView.isHidden = false
+    
+   self.title = detailData.Object
     
     stationsDetails = OWWebAPI.shared.loadDetails()
     let detailsIndex = stationsDetails.index(where: { $0.Id == detailData.Id  })
@@ -140,6 +143,11 @@ class DetailViewController: UIViewController
   
   override func viewDidAppear(_ animated: Bool)
   {
+  }
+  
+  override func viewWillDisappear(_ animated: Bool)
+  {
+    eventDetailView.isHidden = true
   }
   
   // MARK: - Event Detail Functions
