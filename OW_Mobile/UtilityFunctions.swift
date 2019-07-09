@@ -69,20 +69,20 @@ func starColorIcon(_ starColorIconVal: Int?) -> UIImage
     //    Red (5) = star_r.png
     switch starColorIconVal
     {
-      case 0:
+    case 0:
       starColorImage =  #imageLiteral(resourceName: "star_black")
-      case 1:
+    case 1:
       starColorImage =  #imageLiteral(resourceName: "star_b")
-      case 2:
-       starColorImage =  #imageLiteral(resourceName: "star_w")
-      case 3:
+    case 2:
+      starColorImage =  #imageLiteral(resourceName: "star_w")
+    case 3:
       starColorImage =  #imageLiteral(resourceName: "star_y")
-      case 4:
+    case 4:
       starColorImage =  #imageLiteral(resourceName: "star_o")
-      case 5:
+    case 5:
       starColorImage =  #imageLiteral(resourceName: "star_r")
-      default:
-     starColorImage =  #imageLiteral(resourceName: "star_black")
+    default:
+      starColorImage =  #imageLiteral(resourceName: "star_black")
     }
   } else {
     starColorImage =  #imageLiteral(resourceName: "star_black")
@@ -133,7 +133,7 @@ func cloudIcon(_ cloudIconVal: Int?) -> UIImage
       cloudImage =  #imageLiteral(resourceName: "cloud_100.png")
     }
   } else {
-   cloudImage =  #imageLiteral(resourceName: "cloud_100.png")
+    cloudImage =  #imageLiteral(resourceName: "cloud_100.png")
   }
   return cloudImage
 }
@@ -177,7 +177,7 @@ func cloudColor(_ cloudIconVal: Int?) -> UIColor
   default:
     cloudColor =  #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
   }
-return cloudColor
+  return cloudColor
 }
 
 func windStrengthIcon(_ windStrengthIconValue: Int?) -> UIImage
@@ -298,50 +298,50 @@ func moonAltIcon(_ moonAltIconValue: Int?) -> UIImage
   var moonAltIconImage: UIImage
   if moonAltIconValue != nil
   {
-  switch moonAltIconValue
-  {
-  case 0:
-    moonAltIconImage = #imageLiteral(resourceName: "moon_0.png")
-  case 1:
-    moonAltIconImage = #imageLiteral(resourceName: "moon_1.png")
-  case 2:
-    moonAltIconImage = #imageLiteral(resourceName: "moon_2.png")
-  case 3:
-    moonAltIconImage = #imageLiteral(resourceName: "moon_3.png")
-  case 4:
-    moonAltIconImage = #imageLiteral(resourceName: "moon_4.png")
-  case 5:
-    moonAltIconImage = #imageLiteral(resourceName: "moon_5.png")
-  case 6:
-    moonAltIconImage = #imageLiteral(resourceName: "moon_6.png")
-  case 7:
-    moonAltIconImage = #imageLiteral(resourceName: "moon_7.png")
-  case 8:
-    moonAltIconImage = #imageLiteral(resourceName: "moon_8.png")
-  case 9:
-    moonAltIconImage =  #imageLiteral(resourceName: "moon_9.png")
-  case 10:
-    moonAltIconImage = #imageLiteral(resourceName: "moon_10.png")
-  case 11:
-    moonAltIconImage = #imageLiteral(resourceName: "moon_11.png")
-  case 12:
-    moonAltIconImage = #imageLiteral(resourceName: "moon_12.png")
-  case 13:
-    moonAltIconImage = #imageLiteral(resourceName: "moon_13.png")
-  case 14:
-    moonAltIconImage = #imageLiteral(resourceName: "moon_14.png")
-  case 15:
-    moonAltIconImage = #imageLiteral(resourceName: "moon_15.png")
-  case 16:
-    moonAltIconImage = #imageLiteral(resourceName: "moon_16.png")
-  case 17:
-    moonAltIconImage = #imageLiteral(resourceName: "moon_17.png")
-  case 18:
-    moonAltIconImage = #imageLiteral(resourceName: "moon_18.png")
-  case 19:
-    moonAltIconImage = #imageLiteral(resourceName: "moon_19.png")
-  default:
-    moonAltIconImage = #imageLiteral(resourceName: "moon_0.png")
+    switch moonAltIconValue
+    {
+    case 0:
+      moonAltIconImage = #imageLiteral(resourceName: "moon_0.png")
+    case 1:
+      moonAltIconImage = #imageLiteral(resourceName: "moon_1.png")
+    case 2:
+      moonAltIconImage = #imageLiteral(resourceName: "moon_2.png")
+    case 3:
+      moonAltIconImage = #imageLiteral(resourceName: "moon_3.png")
+    case 4:
+      moonAltIconImage = #imageLiteral(resourceName: "moon_4.png")
+    case 5:
+      moonAltIconImage = #imageLiteral(resourceName: "moon_5.png")
+    case 6:
+      moonAltIconImage = #imageLiteral(resourceName: "moon_6.png")
+    case 7:
+      moonAltIconImage = #imageLiteral(resourceName: "moon_7.png")
+    case 8:
+      moonAltIconImage = #imageLiteral(resourceName: "moon_8.png")
+    case 9:
+      moonAltIconImage =  #imageLiteral(resourceName: "moon_9.png")
+    case 10:
+      moonAltIconImage = #imageLiteral(resourceName: "moon_10.png")
+    case 11:
+      moonAltIconImage = #imageLiteral(resourceName: "moon_11.png")
+    case 12:
+      moonAltIconImage = #imageLiteral(resourceName: "moon_12.png")
+    case 13:
+      moonAltIconImage = #imageLiteral(resourceName: "moon_13.png")
+    case 14:
+      moonAltIconImage = #imageLiteral(resourceName: "moon_14.png")
+    case 15:
+      moonAltIconImage = #imageLiteral(resourceName: "moon_15.png")
+    case 16:
+      moonAltIconImage = #imageLiteral(resourceName: "moon_16.png")
+    case 17:
+      moonAltIconImage = #imageLiteral(resourceName: "moon_17.png")
+    case 18:
+      moonAltIconImage = #imageLiteral(resourceName: "moon_18.png")
+    case 19:
+      moonAltIconImage = #imageLiteral(resourceName: "moon_19.png")
+    default:
+      moonAltIconImage = #imageLiteral(resourceName: "moon_0.png")
     }
   } else {
     moonAltIconImage = #imageLiteral(resourceName: "moon_0.png")
@@ -349,15 +349,15 @@ func moonAltIcon(_ moonAltIconValue: Int?) -> UIImage
   return moonAltIconImage
 }
 
- //********************************************
- // RA HH.hhh -> HH MM SS
- //********************************************
- func floatRAtoHMS(floatRA: Double) -> (hours: Int, minutes: Int, seconds: Double)
- {
- let restrictedRA = limitTo24Hours(floatHrs: floatRA)
- let hms = floatHoursToHMS(floatHrs: restrictedRA)
- return hms
- }
+//********************************************
+// RA HH.hhh -> HH MM SS
+//********************************************
+func floatRAtoHMS(floatRA: Double) -> (hours: Int, minutes: Int, seconds: Double)
+{
+  let restrictedRA = limitTo24Hours(floatHrs: floatRA)
+  let hms = floatHoursToHMS(floatHrs: restrictedRA)
+  return hms
+}
 
 //********************************************
 //Dec DDD.ddd -> DD MM SS
@@ -476,3 +476,114 @@ func pathBarsTotalWidth(astDiamKm: Double, sigma1WidthKm: Double, stationsExistP
   }
   return totalWidth
 }
+
+//scale plot
+enum PlotScale: String
+{
+  case shadowEdge
+  case sigma1Edge
+  case sigma2Edge
+  case sigma3Edge
+  case farthestChord
+}
+
+func shadowWidthKm(_ item: EventDetails) -> Double
+{
+  return item.AstDiaKm!
+}
+
+func sigma1WidthKm(_ item: EventDetails) -> Double
+{
+  let shadowWidth = shadowWidthKm(item)
+  let sigma1ErrorWidth = item.OneSigmaErrorWidthKm!   //shadow edge to sigma1 edge
+  let sigma1TotalWidth = shadowWidth + sigma1ErrorWidth * 2
+  return sigma1TotalWidth
+}
+
+
+func sigma2WidthKm(_ item: EventDetails) -> Double
+{
+  let sigma1ErrorWidth = item.OneSigmaErrorWidthKm!   //shadow edge to sigma1 edge
+  let sigma1TotalWidth = sigma1WidthKm(item) + sigma1ErrorWidth * 2
+  return sigma1TotalWidth
+}
+
+func sigma3WidthKm(_ item: EventDetails) -> Double
+{
+  let sigma1ErrorWidth = item.OneSigmaErrorWidthKm!   //shadow edge to sigma1 edge
+  let sigma3TotalWidth = sigma2WidthKm(item)  + sigma1ErrorWidth * 2
+  return sigma3TotalWidth
+}
+
+func farthestChordWidth(_ item: EventDetails) -> Double
+{
+  var farthestChordKm = 0.0
+  for station in item.Stations!
+  {
+    if fabs(station.ChordOffsetKm!) > farthestChordKm
+    {
+      farthestChordKm = fabs(station.ChordOffsetKm!)
+    }
+  }
+  let farthestTotalWidth = farthestChordKm * 2 + farthestChordKm * 0.05
+  return farthestTotalWidth
+}
+
+func totalPlotWidthKm(_ item: EventDetails, scale: PlotScale) -> Double
+{
+  let shadowWidth = item.AstDiaKm!
+//  let shadowWidth = shadowWidthKm(item)
+//  let sigma1ErrorWidth = item.OneSigmaErrorWidthKm!   //shadow edge to sigma1 edge
+//  let sigma1TotalWidth = shadowWidth + sigma1ErrorWidth * 2
+  let sigma1TotalWidth = sigma1WidthKm(item)
+  let sigma2TotalWidth = sigma2WidthKm(item)
+  let sigma3TotalWidth = sigma3WidthKm(item)
+//  var farthestChordKm = 0.0
+  var farthestTotalWidth = farthestChordWidth(item)
+//  for station in item.Stations!
+//  {
+//    if fabs(station.ChordOffsetKm!) > farthestChordKm
+//    {
+//      farthestChordKm = fabs(station.ChordOffsetKm!)
+//    }
+//  }
+//  let farthestTotalWidth = farthestChordKm * 2 + farthestChordKm * 0.05
+  switch scale
+  {
+  case .shadowEdge:
+    return shadowWidth
+  case .sigma1Edge:
+    return sigma1TotalWidth
+  case .sigma2Edge:
+    return sigma2TotalWidth
+  case .sigma3Edge:
+    return sigma3TotalWidth
+  case .farthestChord:
+    return farthestTotalWidth
+  default:
+    return sigma3TotalWidth
+  }
+}
+
+func plotBarsWidthFactors(_ item: EventDetails, totalPlotWidthKm: Double) -> (shadowBarFactor:Double,sigma1BarFactor:Double,sigma2BarFactor:Double,sigma3BarFactor:Double)
+{
+  let shadowWidth = item.AstDiaKm!
+  let sigma1ErrorWidth = item.OneSigmaErrorWidthKm!   //shadow edge to sigma1 edge
+  let sigma1TotalWidth = shadowWidth + sigma1ErrorWidth * 2
+  let sigma2TotalWidth = sigma1TotalWidth + sigma1ErrorWidth * 2
+  let sigma3TotalWidth = sigma2TotalWidth + sigma1ErrorWidth * 2
+  
+  let shadowBarWidthFactor = shadowWidth / totalPlotWidthKm
+  let sigma1BarWidthFactor = sigma1TotalWidth / totalPlotWidthKm
+  let sigma2BarWidthFactor = sigma2TotalWidth / totalPlotWidthKm
+  let sigma3BarWidthFactor = sigma3TotalWidth / totalPlotWidthKm
+  
+  return (shadowBarWidthFactor, sigma1BarWidthFactor, sigma2BarWidthFactor, sigma3BarWidthFactor)
+}
+
+func plotStationBarFactor(station: Station, totalPlotWidthKm: Double) -> Double
+{
+  let stationBarFactor = station.ChordOffsetKm! / (totalPlotWidthKm / 2)
+  return stationBarFactor
+}
+

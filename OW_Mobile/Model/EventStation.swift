@@ -8,7 +8,7 @@
 
 import Foundation
 
-class OccultationStation: NSObject
+class EventStation: NSObject
 {
   var station: Station
   init(station: Station)

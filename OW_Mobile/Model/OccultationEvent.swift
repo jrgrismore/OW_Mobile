@@ -241,7 +241,7 @@ class OccultationEvent: NSObject
     print(">updateShadowBarView")
     let shadowWidth = item.AstDiaKm!
     let sig1Width = item.OneSigmaErrorWidthKm!
-    
+
 //    var plotBarsTuple = shadowSigmaBarScales(astDiam: item.AstDiaKm!, sigma1Width: sig1Width , stationsExistPastSigma1: stationsExistPastSigma1)
     let totalBarsWidthKm = pathBarsTotalWidth(astDiamKm: item.AstDiaKm!, sigma1WidthKm: sig1Width, stationsExistPastSigma1: stationsExistPastSigma1)
 
@@ -432,9 +432,32 @@ class OccultationEvent: NSObject
   
   func prettyPrintStation(_ item: EventDetails, index: Int)
   {
-    let stationToPrint = OccultationStation(station: item.Stations![index])
+    let stationToPrint = EventStation(station: item.Stations![index])
     stationToPrint.prettyPrint()    
   }
+  
+  // MARK: - Field Update Functiosn
+  func updateEventTimeFlds(_ item: inout EventDetails) -> (eventTime:String, remainingTime:NSAttributedString)
+  {
+    var eventUtcStr = "—"
+    var leadTimeStr = "—"
+    var leadTimeAttrStr: NSAttributedString = NSMutableAttributedString(string: "—")
+    var completionDateStr = "—"
+    if item.Stations![0].EventTimeUtc != nil
+    {
+      eventUtcStr = formatEventTime(timeString: item.Stations![0].EventTimeUtc!)
+      leadTimeStr = leadTime(timeString: item.Stations![0].EventTimeUtc!)
+      leadTimeAttrStr = self.formatLabelandField(label:"", field: leadTimeStr, units:"")
+      let eventDateFormatter = DateFormatter()
+      eventDateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSS"
+      eventDateFormatter.timeZone = TimeZone(abbreviation: "UTC")
+      let completionDate = eventDateFormatter.date(from: item.Stations![0].EventTimeUtc!)!
+      eventDateFormatter.dateFormat = "dd MMM, HH:mm:ss' UT'"
+      completionDateStr = eventDateFormatter.string(from: completionDate )
+    }
+    return (completionDateStr,leadTimeAttrStr)
+  }
+
 
 }
 
