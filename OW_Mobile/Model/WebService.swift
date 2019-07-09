@@ -119,6 +119,8 @@ class OWWebAPI: NSObject
 //      usleep(useconds_t(0.5 * 1000000)) //will sleep for 0.5 seconds)
       let myEvents = self.parseEventData(jsonData: dataResponse)
       print("myEvents count=", myEvents.count)
+//      print("myEvents=",myEvents)
+
       self.delegate?.webLogTextDidChange(text: "Event List count = \(myEvents.count)")
       usleep(useconds_t(1.0 * 1000000)) //will sleep for 0.5 seconds)
       completion(myEvents,nil)

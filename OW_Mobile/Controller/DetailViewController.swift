@@ -424,7 +424,12 @@ class DetailViewController: UIViewController
       stationView.frame.origin.y = self.weatherBarView.frame.origin.y
       stationView.frame.size.width = 3
       stationView.frame.size.height = self.weatherBarView.frame.height
-      stationView.backgroundColor = cloudColor(station.CloudCover)
+      if detailData.WeatherInfoAvailable!
+      {
+        stationView.backgroundColor = cloudColor(station.CloudCover)
+      } else {
+        stationView.backgroundColor = .gray
+      }
       self.weatherBarView.addSubview(stationView)
 //      print("index=",index,"stationView.frame.origin.x=",stationView.frame.origin.x)
     }

@@ -321,6 +321,7 @@ extension MyEventsViewController
 //    cell.objectText.text = cellDataArray[indexPath.row]!.Object
 //    cell.objectText.text = myEventsStrings.Object
     cell.objectText.text = cellStringArray[indexPath.row].Object
+//    print("object=",cellStringArray[indexPath.row].Object)
 
     //create "m" superscript for star magnitude and magnitude drop
     let magAttrStr = NSMutableAttributedString(string:"m", attributes:[NSAttributedString.Key.font : captionFont,
