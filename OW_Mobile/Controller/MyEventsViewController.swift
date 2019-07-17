@@ -630,8 +630,14 @@ extension MyEventsViewController
       var eventStrings = EventStrings()
 //      print("myEventStrings=",myEventStrings)
       if event!.Id != nil { eventStrings.Id = event!.Id ?? "" }
+//      if event!.Object != nil { eventStrings.Object = event!.Object ?? "" }
       if event!.Object != nil { eventStrings.Object = event!.Object ?? "" }
+      print("eventStrings.Object=",eventStrings.Object)
       
+      //remove "bogus" number for planet satellite
+      eventStrings.Object = eventStrings.Object.replacingOccurrences(of: "(-2147483648) ", with: "")
+      print("eventStrings.Object=",eventStrings.Object)
+
       //*******check precision
       
        if event!.StarMag != nil

@@ -119,8 +119,10 @@ class DetailViewController: UIViewController
     print(">viewWillAppear")
     eventDetailView.isHidden = false
     
-   self.title = detailData.Object
-    
+  let detailObject = detailData.Object!.replacingOccurrences(of: "(-2147483648) ", with: "")
+//    self.title = detailData.Object
+    self.title = detailObject
+
     stationsDetails = OWWebAPI.shared.loadDetails()
     let detailsIndex = stationsDetails.index(where: { $0.Id == detailData.Id  })
     selectedEventDetails = stationsDetails[detailsIndex!]
