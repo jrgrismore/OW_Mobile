@@ -90,19 +90,27 @@ class DetailViewController: UIViewController
   // MARK: - View functions
   override func viewWillLayoutSubviews()
   {
+    print("viewWillLayoutSubviews")
     super.viewWillLayoutSubviews()
+      adjustCellWidth()
+  }
+  
+  
+  override func viewDidLayoutSubviews()
+  {
+    print("viewDidLayoutSubviews")
+    super.viewDidLayoutSubviews()
+    print("stationCollectionView.bounds.width=",stationCollectionView.bounds.width)
     stationCollectionView.collectionViewLayout.invalidateLayout()
-    var cellHeight = stationCollectionView.bounds.height
-    //set layout attributes
-    if let flowLayout = self.stationCollectionView.collectionViewLayout as? UICollectionViewFlowLayout
-    {
-      flowLayout.minimumLineSpacing = 0
-      flowLayout.minimumInteritemSpacing = 0
-      flowLayout.sectionInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
-      let totalHInsets = flowLayout.sectionInset.left + flowLayout.sectionInset.right
-      var cellWidth = self.stationCollectionView.bounds.width - flowLayout.minimumLineSpacing
-      flowLayout.itemSize = CGSize(width: cellWidth, height: CGFloat(cellHeight))
-    }
+   }
+  
+  
+  
+  override func willTransition(to newCollection: UITraitCollection, with coordinator: UIViewControllerTransitionCoordinator)
+  {
+    print()
+    print("willTransition")
+    print()
   }
   
   override func viewDidLoad()
@@ -111,8 +119,53 @@ class DetailViewController: UIViewController
     stationCollectionView.delegate = self
     stationCollectionView.dataSource = self
     self.spinnerView.layer.cornerRadius = 20
+    NotificationCenter.default.addObserver(self, selector: #selector(deviceRotated), name:  UIDevice.orientationDidChangeNotification, object: nil)
+   }
+
+  func adjustCellWidth() {
+    var cellHeight = stationCollectionView.bounds.height
+    if let flowLayout = self.stationCollectionView.collectionViewLayout as? UICollectionViewFlowLayout
+    {
+      flowLayout.minimumLineSpacing = 0
+      flowLayout.minimumInteritemSpacing = 0
+      flowLayout.sectionInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
+      let totalHInsets = flowLayout.sectionInset.left + flowLayout.sectionInset.right
+      var cellWidth = self.stationCollectionView.bounds.width - flowLayout.minimumLineSpacing
+      print("stationCollectionView.bounds.width=",stationCollectionView.bounds.width)
+      //      print("adjusted cellWidth=",cellWidth)
+      stationCollectionView.bounds.origin.x = 0
+      flowLayout.itemSize = CGSize(width: cellWidth, height: CGFloat(cellHeight))
+      print("flowLayout.itemSize=",flowLayout.itemSize)
+    }
   }
   
+  @objc func deviceRotated()
+{
+  print("deviceRotated")
+  switch UIDevice.current.orientation {
+  case .landscapeLeft:
+    print("landscape left")
+  case .landscapeRight:
+    print("landscape right")
+  case .portrait:
+    print("portrait")
+  case .portraitUpsideDown:
+    print("portrait upsidedown")
+  case .faceUp:
+    print("face up")
+  case .faceDown:
+    print("face down")
+  default:
+    print("other")
+  }
+  print("stationCollectionView.bounds.width=",stationCollectionView.bounds.width)
+  print()
+  adjustCellWidth()
+  stationCollectionView.reloadData()
+
+}
+
+
   override func viewWillAppear(_ animated: Bool)
   {
     print()
@@ -357,7 +410,7 @@ class DetailViewController: UIViewController
     
     var plotWidthKm = totalPlotWidthKm(item, scale: .sigma3Edge)
     let outerChordWidth = farthestChordWidth(item)
-    print("outerChordWidth=",outerChordWidth)
+//    print("outerChordWidth=",outerChordWidth)
     if outerChordWidth > sigma3WidthKm(item)
     {
       print(".farthesChord")
@@ -375,7 +428,7 @@ class DetailViewController: UIViewController
     {
       plotWidthKm = totalPlotWidthKm(item, scale: .shadowEdge)
     }
-    print("plotWidthKm=",plotWidthKm)
+//    print("plotWidthKm=",plotWidthKm)
 
     
     
@@ -448,7 +501,7 @@ class DetailViewController: UIViewController
     self.weatherBarView.bringSubviewToFront(self.stationCursor)
     
 //    print("primary station index = ",self.event.primaryStationIndex(self.selectedStations))
-    print("<updateEventInfoFields")
+//    print("<updateEventInfoFields")
   }
 }
 
@@ -463,35 +516,35 @@ extension DetailViewController: UICollectionViewDataSource,UICollectionViewDeleg
   
   func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell
   {
-    print()
-    print(">collectionView")
+//    print()
+//    print(">collectionView")
 //    print("cellForItemAt > indexPath:",indexPath)
     var cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as! StationCell
     cell.backgroundColor = #colorLiteral(red: 0.2043271959, green: 0.620110333, blue: 0.6497597098, alpha: 1)
     updateStationFlds(cell: &cell, indexPath: indexPath, stations: selectedStations, itm: selectedEventDetails)
     //    moveCursorToStation(indexPath: indexPath)
     visibleIndexPaths = collectionView.indexPathsForVisibleItems
-    print("<collectionView")
+//    print("<collectionView")
     print()
     return cell
   }
   
   func scrollViewDidEndDecelerating(_ scrollView: UIScrollView)
   {
-    print()
-    print(">scrollViewDidEndDecelerating")
+//    print()
+//    print(">scrollViewDidEndDecelerating")
 //    print("visibleIndexPaths=",visibleIndexPaths)
     let visibleRect = CGRect(origin: stationCollectionView.contentOffset, size: stationCollectionView.bounds.size)
     let visiblePoint = CGPoint(x: visibleRect.midX, y: visibleRect.midY)
     let visibleIndexPath = stationCollectionView.indexPathForItem(at: visiblePoint)
     moveCursorToStation(indexPath: visibleIndexPath!)
-    print("<scrollViewDidEndDecelerating")
+//    print("<scrollViewDidEndDecelerating")
   }
   
   func moveCursorToStation(indexPath: IndexPath)
   {
-    print()
-    print(">moveCursorToStation")
+//    print()
+//    print(">moveCursorToStation")
 //    print("station indexPath.item=",indexPath.item)
 //    for subview in self.weatherBarView.subviews
 //    {
@@ -526,8 +579,8 @@ extension DetailViewController: UICollectionViewDataSource,UICollectionViewDeleg
 //          print("hide station cursor")
           self.stationCursor.isHidden = true
         }
-        print("<moveCursorToStation")
-        print()
+//        print("<moveCursorToStation")
+//        print()
     }
   }
 }
