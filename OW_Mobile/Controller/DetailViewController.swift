@@ -101,7 +101,7 @@ class DetailViewController: UIViewController
     print("viewDidLayoutSubviews")
     super.viewDidLayoutSubviews()
     print("stationCollectionView.bounds.width=",stationCollectionView.bounds.width)
-    stationCollectionView.collectionViewLayout.invalidateLayout()
+//    stationCollectionView.collectionViewLayout.invalidateLayout()
    }
   
   
@@ -161,7 +161,7 @@ class DetailViewController: UIViewController
   print("stationCollectionView.bounds.width=",stationCollectionView.bounds.width)
   print()
   adjustCellWidth()
-  stationCollectionView.reloadData()
+//  stationCollectionView.reloadData()
 
 }
 
@@ -184,13 +184,11 @@ class DetailViewController: UIViewController
     selectedStations = chordSortedStations
     
     let primaryIndex = self.event.primaryStationIndex(chordSortedStations)
-    print("scroll to primaryIndex = ",primaryIndex)
     updateEventInfoFields(eventItem: selectedEventDetails)
-    self.stationCollectionView.reloadData()
     DispatchQueue.main.async
       {
         self.stationCollectionView.scrollToItem(at: IndexPath(item: primaryIndex!, section: 0), at: .centeredHorizontally, animated: false)
-        self.moveCursorToStation(indexPath: IndexPath(item: primaryIndex!, section: 0))
+        self.stationCollectionView.layoutIfNeeded()
     }
     print("<viewWillAppear")
     print()
@@ -198,6 +196,12 @@ class DetailViewController: UIViewController
   
   override func viewDidAppear(_ animated: Bool)
   {
+    let primaryIndex = self.event.primaryStationIndex(selectedStations)
+    DispatchQueue.main.async
+      {
+        self.stationCollectionView.scrollToItem(at: IndexPath(item: primaryIndex!, section: 0), at: .centeredHorizontally, animated: false)
+         self.moveCursorToStation(indexPath: IndexPath(item: primaryIndex!, section: 0))
+    }
   }
   
   override func viewWillDisappear(_ animated: Bool)
@@ -209,9 +213,9 @@ class DetailViewController: UIViewController
   func updateEventInfoFields(eventItem itm: EventDetails)
   {
     print(">updateEventInfoFields")
-    //for testing
+    //testing var
     var item = itm
-//    selectedStations = self.event.stationsSortedByChordOffset(item, order: .ascending)
+    selectedStations = self.event.stationsSortedByChordOffset(item, order: .ascending)
     
     DispatchQueue.main.async
       {
@@ -511,6 +515,16 @@ extension DetailViewController: UICollectionViewDataSource,UICollectionViewDeleg
 {
   func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int
   {
+//    print("> number of items")
+//    print("selectedStations:")
+//    for (index,station) in self.selectedStations.enumerated()
+//    {
+//      print("index=",index)
+//      print(station)
+//      print()
+//    }
+//    print()
+//
     return selectedStations.count
   }
   
@@ -519,6 +533,7 @@ extension DetailViewController: UICollectionViewDataSource,UICollectionViewDeleg
 //    print()
 //    print(">collectionView")
 //    print("cellForItemAt > indexPath:",indexPath)
+//    print("station=",selectedStations[indexPath.item])
     var cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as! StationCell
     cell.backgroundColor = #colorLiteral(red: 0.2043271959, green: 0.620110333, blue: 0.6497597098, alpha: 1)
     updateStationFlds(cell: &cell, indexPath: indexPath, stations: selectedStations, itm: selectedEventDetails)

@@ -1606,10 +1606,12 @@
                                             <constraint firstItem="KZq-4J-gy2" firstAttribute="bottom" secondItem="Zlt-mA-YQ5" secondAttribute="bottom" id="kTa-0V-ZfQ"/>
                                             <constraint firstItem="KZq-4J-gy2" firstAttribute="leading" secondItem="c4Z-ek-M3c" secondAttribute="leading" id="kZj-By-6w1"/>
                                             <constraint firstItem="c4Z-ek-M3c" firstAttribute="centerY" secondItem="Zlt-mA-YQ5" secondAttribute="centerY" id="noL-x6-gLC"/>
+                                            <constraint firstItem="RoV-Cl-X5I" firstAttribute="trailing" secondItem="ITw-Gp-ShU" secondAttribute="trailing" id="oCW-bn-8jV"/>
                                             <constraint firstItem="Zlt-mA-YQ5" firstAttribute="bottom" secondItem="ITw-Gp-ShU" secondAttribute="bottom" id="pUw-J6-POB"/>
                                             <constraint firstItem="Zlt-mA-YQ5" firstAttribute="bottom" secondItem="qFM-b9-xCf" secondAttribute="bottom" id="qLn-uO-iAH"/>
                                             <constraint firstItem="dfW-aU-Wim" firstAttribute="leading" secondItem="HuD-ai-6Aw" secondAttribute="leading" id="r3w-h4-aou"/>
                                             <constraint firstAttribute="trailing" secondItem="dfW-aU-Wim" secondAttribute="trailing" id="tcF-wn-6Cw"/>
+                                            <constraint firstItem="ITw-Gp-ShU" firstAttribute="leading" secondItem="RoV-Cl-X5I" secondAttribute="leading" id="uTp-qW-8yf"/>
                                             <constraint firstItem="Zlt-mA-YQ5" firstAttribute="top" secondItem="ITw-Gp-ShU" secondAttribute="top" id="x5q-Pi-uGe"/>
                                             <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="40" id="xoo-hY-CUW"/>
                                         </constraints>
@@ -1936,8 +1938,8 @@
                                             </collectionViewCell>
                                         </cells>
                                         <connections>
-                                            <outlet property="dataSource" destination="28v-ai-x9D" id="FiH-BD-Gue"/>
-                                            <outlet property="delegate" destination="28v-ai-x9D" id="1jh-G9-sEQ"/>
+                                            <outlet property="dataSource" destination="CsV-hu-Udn" id="3NM-vy-nCh"/>
+                                            <outlet property="delegate" destination="CsV-hu-Udn" id="k6k-rd-FNp"/>
                                         </connections>
                                     </collectionView>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="8kR-kG-KhO" userLabel="View 4">
