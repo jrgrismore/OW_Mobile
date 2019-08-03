@@ -167,12 +167,9 @@ class DetailViewController: UIViewController
 
   override func viewWillAppear(_ animated: Bool)
   {
-    print()
-    print(">viewWillAppear")
     eventDetailView.isHidden = false
     
   let detailObject = detailData.Object!.replacingOccurrences(of: "(-2147483648) ", with: "")
-//    self.title = detailData.Object
     self.title = detailObject
 
     stationsDetails = OWWebAPI.shared.loadDetails()
@@ -189,8 +186,6 @@ class DetailViewController: UIViewController
         self.stationCollectionView.scrollToItem(at: IndexPath(item: primaryIndex!, section: 0), at: .centeredHorizontally, animated: false)
         self.stationCollectionView.layoutIfNeeded()
     }
-    print("<viewWillAppear")
-    print()
   }
   
   override func viewDidAppear(_ animated: Bool)
@@ -211,7 +206,6 @@ class DetailViewController: UIViewController
   // MARK: - Event Detail Functions
   func updateEventInfoFields(eventItem itm: EventDetails)
   {
-    print(">updateEventInfoFields")
     //testing var
     var item = itm
     selectedStations = self.event.stationsSortedByChordOffset(item, order: .ascending)

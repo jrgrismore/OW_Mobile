@@ -74,7 +74,6 @@ class MyEventsViewController: UIViewController, UICollectionViewDataSource,UICol
   
   override func viewWillAppear(_ animated: Bool)
   {
-    print("MyEventsViewController > viewWillAppear")
     //set cell size
 //    let cellsInRow = 1
 //    let cellHeight = 180
@@ -104,9 +103,6 @@ class MyEventsViewController: UIViewController, UICollectionViewDataSource,UICol
   
   override func viewDidAppear(_ animated: Bool)
   {
-    print("MyEventsViewController > viewDidAppear")
-    
-    print("userHasChanged=",userHasChanged)
     if userHasChanged
     {
       let userChangeAlert = UIAlertController(title: "User Has Changed", message: "Update Event List?", preferredStyle: .alert)
