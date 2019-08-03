@@ -36,19 +36,10 @@ class MyEventsViewController: UIViewController, UICollectionViewDataSource,UICol
     //set layout attributes
     if let flowLayout = self.myEventsCollection.collectionViewLayout as? UICollectionViewFlowLayout
     {
-//      print("UIScreen.main.bounds.width=",UIScreen.main.bounds.width)
-//      print("myEventsCollection.bounds.width=",myEventsCollection.bounds.width)
       flowLayout.minimumLineSpacing = 5
       flowLayout.minimumInteritemSpacing = 3
       flowLayout.sectionInset = UIEdgeInsets(top: 5, left: 5, bottom: 7, right: 5)
       let totalHInsets = flowLayout.sectionInset.left + flowLayout.sectionInset.right
-//      print("totalHInsets=",totalHInsets)      let totalInteritemSpace = flowLayout.minimumInteritemSpacing * CGFloat(cellsInRow - 1)
-//      print("totalInteritemSpace=",totalInteritemSpace)
-//      let cellWidth = (UIScreen.main.bounds.width - totalInteritemSpace - totalHInsets)/CGFloat(cellsInRow)
-//      let cellWidth = (myEventsCollection.bounds.width - totalInteritemSpace - totalHInsets)/CGFloat(cellsInRow)
-       //      print("cellWidth=",cellWidth)
-      //? is this the right way to do this ?
-//      let cellWidth = view.safeAreaLayoutGuide.layoutFrame.size.width - totalHInsets
       //?does this work for all screen sizes and orientations?
       let cellWidth = view.safeAreaLayoutGuide.layoutFrame.size.width - totalHInsets
       flowLayout.itemSize = CGSize(width: cellWidth, height: CGFloat(cellHeight))
@@ -83,6 +74,7 @@ class MyEventsViewController: UIViewController, UICollectionViewDataSource,UICol
   
   override func viewWillAppear(_ animated: Bool)
   {
+    print("MyEventsViewController > viewWillAppear")
     //set cell size
 //    let cellsInRow = 1
 //    let cellHeight = 180
@@ -110,6 +102,27 @@ class MyEventsViewController: UIViewController, UICollectionViewDataSource,UICol
 
   }
   
+  override func viewDidAppear(_ animated: Bool)
+  {
+    print("MyEventsViewController > viewDidAppear")
+    
+    print("userHasChanged=",userHasChanged)
+    if userHasChanged
+    {
+      let userChangeAlert = UIAlertController(title: "User Has Changed", message: "Update Event List?", preferredStyle: .alert)
+      //add action to update user
+      userChangeAlert.addAction(UIAlertAction(title: "Update", style: .default, handler: {_ in
+        print("Yes was tapped")
+        //handle the user change
+        self.refreshEventCells(nil)
+        userHasChanged = false
+      })
+      )
+      userChangeAlert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil) )
+      self.present(userChangeAlert, animated: true, completion: nil)
+    }
+  }
+  
   override func prepare(for segue: UIStoryboardSegue, sender: Any?)
   {
 //    print("prepare(for seque")
@@ -135,25 +148,31 @@ class MyEventsViewController: UIViewController, UICollectionViewDataSource,UICol
         self.spinnerView.isHidden = false
         self.activitySpinner.startAnimating()
       }
-
-    //    let OWWebAPI.shared = OWWebAPI()
     DispatchQueue.main.async{self.spinnerLbl.text = "Event List \n Retrieving..."}
     usleep(useconds_t(0.5 * 1000000)) //will sleep for 0.5 seconds)
     OWWebAPI.shared.retrieveEventList(completion: { (myEvents, error) in
       //fill cells
+      if myEvents!.count < 1
+      {
+        DispatchQueue.main.async
+          {
+            self.cellDataArray = []
+            self.cellStringArray = []
+            self.myEventsCollection.reloadData()
+            OWWebAPI.shared.saveEvents([])
+            OWWebAPI.shared.saveDetails([])
+            self.activitySpinner.stopAnimating()
+            self.spinnerView.isHidden = true
+        }
+        return
+      }
+      
       DispatchQueue.main.async{self.spinnerLbl.text = "Event List \n Download and Parsing Complete"}
       usleep(useconds_t(1.0 * 1000000)) //will sleep for 0.5 seconds)
       var itemIndex = 0
       var myEventListDetails: [EventDetails] = []
             for item in myEvents!
             {
-//              DispatchQueue.main.async
-//                {
-//                  print("\nEventInfo>>>")
-//                  self.printEventInfo(eventItem: item)
-//                  print("<<<End of EventInfo\n")
-//              }
-//
               DispatchQueue.main.async
                 {
                   self.spinnerView.isHidden = false
@@ -164,41 +183,19 @@ class MyEventsViewController: UIViewController, UICollectionViewDataSource,UICol
                 var spinnerText = String(format:"Event Details \n %d of %d Downloaded",itemIndex,myEvents!.count)
                 DispatchQueue.main.async{self.spinnerLbl.text = spinnerText}
                 usleep(useconds_t(0.2 * 1000000)) //will sleep for 0.5 seconds
-//                spinnerText = String(format:"Event Details \n %d of %d Updated",itemIndex,myEvents!.count)
-//                 DispatchQueue.main.async{self.spinnerLbl.text = spinnerText}
-//                usleep(useconds_t(0.2 * 1000000)) //will sleep for 0.5 seconds
                 myEventListDetails.append(myDetails!)
                 DispatchQueue.main.async
                 {
-//                  print("EventDetails")
-//                  print("itemIndex=",itemIndex)
-//                  print("myDetails=", myDetails)
-//                  print("End of Event Details")
                   if itemIndex == myEvents!.count
                   {
-//                    print("final event list details=",myEventListDetails)
-//                    for details in myEventListDetails
-//                    {
-//                      print("details=",details)
-//                    }
-                    // save detail data
                     OWWebAPI.shared.saveDetails(myEventListDetails)
                     let tempDetails = OWWebAPI.shared.loadDetails()
-//                    for details in tempDetails
-//                    {
-//                      print("UserDefaults details=",details)
-//                    }
-                    
-//                    print("stop spinner")
                     self.activitySpinner.stopAnimating()
                     self.spinnerView.isHidden = true
                   }
                 }
               }
       }
-      
-      
-      
       OWWebAPI.shared.saveEvents(myEvents!)
       self.cellDataArray = myEvents!
       self.cellStringArray = self.assignMyEventStrings(myEvents: self.cellDataArray)
@@ -220,13 +217,12 @@ class MyEventsViewController: UIViewController, UICollectionViewDataSource,UICol
     })
   }
   
-  @IBAction func refreshEventCells(_ sender: Any)
+  @IBAction func refreshEventCells(_ sender: Any?)
   {
     updateCellArray()
     
     //get cookie info
     OWWebAPI.shared.getCookieData()
-
   }
   
   // MARK: - Utility functions

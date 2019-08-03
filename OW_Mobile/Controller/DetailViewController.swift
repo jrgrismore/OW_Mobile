@@ -1,4 +1,3 @@
-//
 //  DetailViewController.swift
 //  OW_Mobile
 //

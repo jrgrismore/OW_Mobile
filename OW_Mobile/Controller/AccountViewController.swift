@@ -24,6 +24,8 @@ struct Credentials
   static var password = "qwerty123456"
 }
 
+var userHasChanged: Bool = false
+
 func saveCredentailsToKeyChain()
 {
   print("saveCredentailsToKeyChain")
@@ -148,6 +150,9 @@ class AccountViewController: UIViewController, UITextFieldDelegate
   @IBOutlet weak var passwordFld: UITextField!
   @IBOutlet weak var versionLbl: UILabel!
   
+  var initialUserName: String = ""
+  var finalUserName: String = ""
+
   override func viewDidLoad()
   {
     super.viewDidLoad()
@@ -167,6 +172,7 @@ class AccountViewController: UIViewController, UITextFieldDelegate
     loadCredentailsFromKeyChain()
     print("loaded Credentials=",Credentials.username,"   ",Credentials.password)
     emailFld.text = Credentials.username
+    initialUserName = Credentials.username
     passwordFld.text = Credentials.password
   }
   
@@ -178,13 +184,29 @@ class AccountViewController: UIViewController, UITextFieldDelegate
     {
       Credentials.username = emailFld.text!
       Credentials.password = passwordFld.text!
+      finalUserName = Credentials.username
       deleteAllSecItemsFromKeychain()
       saveCredentailsToKeyChain()
 //      updateCredentailsOnKeyChain()
 //      deleteCredentailsFromKeyChain()
       OWWebAPI.shared.deleteCookies()
     }
+    finalUserName = Credentials.username
+
+    print("finalUserName=",finalUserName)
+    print("initialUserName=",initialUserName)
+    if finalUserName != initialUserName
+    {
+      userHasChanged = true
+    }
+//    if userHasChanged
+//    {
+//      print("*****************")
+//      print("User Has Changed!")
+//      print("*****************")
+//    }
   }
+  
   
   func textFieldShouldReturn(_ textField: UITextField) -> Bool
   {
@@ -209,7 +231,7 @@ class AccountViewController: UIViewController, UITextFieldDelegate
 //      Credentials.password = passwordFld.text!
     }
 //    print("Credentials=",Credentials.username,"   ",Credentials.password)
-  }
+   }
   
   @IBAction func updateUserandPassword(_ sender: Any)
   {
@@ -218,6 +240,7 @@ class AccountViewController: UIViewController, UITextFieldDelegate
     saveCredentailsToKeyChain()
 //    updateCredentailsOnKeyChain()
     loadCredentailsFromKeyChain()
+    userHasChanged = true
   }
   
   func versionBuild() -> String {
