@@ -452,7 +452,7 @@ class OccultationEvent: NSObject
       eventDateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSS"
       eventDateFormatter.timeZone = TimeZone(abbreviation: "UTC")
       let completionDate = eventDateFormatter.date(from: item.Stations![0].EventTimeUtc!)!
-      eventDateFormatter.dateFormat = "dd MMM, HH:mm:ss' UT'"
+      eventDateFormatter.dateFormat = "ddMMM, HH:mm:ss'UT'"
       completionDateStr = eventDateFormatter.string(from: completionDate )
     }
     return (completionDateStr,leadTimeAttrStr)

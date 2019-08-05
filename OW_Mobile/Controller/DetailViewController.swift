@@ -260,7 +260,7 @@ class DetailViewController: UIViewController
     var stationChordDistStr = "Chord: — km"
     if stations[stationIndex].ChordOffsetKm != nil
     {
-      stationChordDistStr = String(format: "Chord: %0.0f km",stations[stationIndex].ChordOffsetKm!)
+      stationChordDistStr = String(format: "Chord:%0.0fkm",stations[stationIndex].ChordOffsetKm!)
     }
     cell.eventChordDistance.text = stationChordDistStr
     
@@ -278,7 +278,7 @@ class DetailViewController: UIViewController
     var errorTimeStr = "—"
     if item.ErrorInTimeSec != nil
     {
-      errorTimeStr = String(format: "+/-%0.0f sec",item.ErrorInTimeSec!)
+      errorTimeStr = String(format: "+/-%0.0fsec",item.ErrorInTimeSec!)
     }
     cell.eventTimeError.text = errorTimeStr
     
@@ -353,13 +353,13 @@ class DetailViewController: UIViewController
       else
       {
         cell.sunAltImg.image = nil
-        cell.eventSunAlt.text = ""
+        cell.eventSunAlt.text = "   "
       }
     }
     else
     {
       cell.sunAltImg.image = nil
-      cell.eventSunAlt.text = ""
+      cell.eventSunAlt.text = "   "
     }
     
     
@@ -384,7 +384,7 @@ class DetailViewController: UIViewController
     var moonDist = "—"
     if item.MoonDist != nil
     {
-      moonDist = String(format: "%0.0f", item.MoonDist!)
+      moonDist = String(format: "%0.0f°", item.MoonDist!)
     }
     cell.eventMoonSeparation.text = moonDist
     
