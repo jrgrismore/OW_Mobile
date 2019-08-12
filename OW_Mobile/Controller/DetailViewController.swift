@@ -94,18 +94,31 @@ class DetailViewController: UIViewController
   // MARK: - View functions
   override func viewWillLayoutSubviews()
   {
+    print()
+    stationCollectionView.frame.size.width = self.view.safeAreaLayoutGuide.layoutFrame.size.width
     print("viewWillLayoutSubviews")
+//    print("safe area height =",self.view.safeAreaLayoutGuide.layoutFrame.size.height)
+    print("safe area width =",self.view.safeAreaLayoutGuide.layoutFrame.size.width)
+    print("stationCollectionView.bounds.width=",stationCollectionView.bounds.width)
     super.viewWillLayoutSubviews()
       adjustCellWidth()
+    print()
   }
   
   
   override func viewDidLayoutSubviews()
   {
+    print()
     print("viewDidLayoutSubviews")
-    super.viewDidLayoutSubviews()
+//    print("safe area height =",self.view.safeAreaLayoutGuide.layoutFrame.size.height)
+    print("safe area width =",self.view.safeAreaLayoutGuide.layoutFrame.size.width)
     print("stationCollectionView.bounds.width=",stationCollectionView.bounds.width)
+    super.viewDidLayoutSubviews()
+//    print("stationCollectionView.bounds.width=",stationCollectionView.bounds.width)
+    currentStationIndexPath = visibleStationIndexPath()
+    print("currentStationIndexPath=",currentStationIndexPath)
 //    stationCollectionView.collectionViewLayout.invalidateLayout()
+    print()
    }
   
   
@@ -114,8 +127,10 @@ class DetailViewController: UIViewController
   {
     print()
     print("willTransition")
-    currentStationIndexPath = visibleStationIndexPath()
-    print("currentStationIndexPath=",currentStationIndexPath)
+    print("safe area width =",self.view.safeAreaLayoutGuide.layoutFrame.size.width)
+    print("stationCollectionView.bounds.width=",stationCollectionView.bounds.width)
+//    currentStationIndexPath = visibleStationIndexPath()
+//    print("currentStationIndexPath=",currentStationIndexPath)
     print()
   }
   
@@ -137,7 +152,8 @@ class DetailViewController: UIViewController
       flowLayout.sectionInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
       let totalHInsets = flowLayout.sectionInset.left + flowLayout.sectionInset.right
       var cellWidth = self.stationCollectionView.bounds.width - flowLayout.minimumLineSpacing
-      print("stationCollectionView.bounds.width=",stationCollectionView.bounds.width)
+//      var cellWidth = self.view.safeAreaLayoutGuide.layout - flowLayout.minimumLineSpacing
+//      print("stationCollectionView.bounds.width=",stationCollectionView.bounds.width)
       //      print("adjusted cellWidth=",cellWidth)
       stationCollectionView.bounds.origin.x = 0
       flowLayout.itemSize = CGSize(width: cellWidth, height: CGFloat(cellHeight))
@@ -147,7 +163,11 @@ class DetailViewController: UIViewController
   
   @objc func deviceRotated()
 {
+  print()
   print("deviceRotated")
+  //    print("safe area height =",self.view.safeAreaLayoutGuide.layoutFrame.size.height)
+  print("safe area width =",self.view.safeAreaLayoutGuide.layoutFrame.size.width)
+  print("stationCollectionView.bounds.width=",stationCollectionView.bounds.width)
   switch UIDevice.current.orientation {
   case .landscapeLeft:
     print("landscape left")
@@ -164,10 +184,13 @@ class DetailViewController: UIViewController
   default:
     print("other")
   }
-  print("stationCollectionView.bounds.width=",stationCollectionView.bounds.width)
-  print()
-  adjustCellWidth()
-  updateShadowPlot(selectedEventDetails)
+//  print("stationCollectionView.bounds.width=",stationCollectionView.bounds.width)
+//  print()
+  DispatchQueue.main.async {
+    self.stationCollectionView.setNeedsLayout()
+    self.adjustCellWidth()
+    self.updateShadowPlot(self.selectedEventDetails)
+  }
   print("currentStationIndexPath=",currentStationIndexPath)
 //  let chordSortedStations = self.event.stationsSortedByChordOffset(selectedEventDetails, order: .ascending)
 //  let primaryIndex = self.event.primaryStationIndex(chordSortedStations)
@@ -180,6 +203,7 @@ class DetailViewController: UIViewController
 
 //  stationCollectionView.reloadData()
 
+  print()
 }
 
 
@@ -206,11 +230,15 @@ class DetailViewController: UIViewController
         self.stationCollectionView.scrollToItem(at: IndexPath(item: primaryIndex!, section: 0), at: .centeredHorizontally, animated: false)
         self.stationCollectionView.layoutIfNeeded()
     }
-    
   }
   
   override func viewDidAppear(_ animated: Bool)
   {
+    print()
+    print("viewDidAppear")
+    //    print("safe area height =",self.view.safeAreaLayoutGuide.layoutFrame.size.height)
+    print("safe area width =",self.view.safeAreaLayoutGuide.layoutFrame.size.width)
+    print("stationCollectionView.bounds.width=",stationCollectionView.bounds.width)
     let primaryIndex = self.event.primaryStationIndex(selectedStations)
     DispatchQueue.main.async
       {
@@ -218,6 +246,7 @@ class DetailViewController: UIViewController
          self.moveCursorToStation(indexPath: IndexPath(item: primaryIndex!, section: 0))
     }
     updateShadowPlot(selectedEventDetails)
+    print()
   }
   
   override func viewWillDisappear(_ animated: Bool)
@@ -563,7 +592,7 @@ extension DetailViewController: UICollectionViewDataSource,UICollectionViewDeleg
     print()
     print(">collectionView")
     print("cellForItemAt > indexPath:",indexPath)
-    print("station=",selectedStations[indexPath.item])
+//    print("station=",selectedStations[indexPath.item])
     var cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as! StationCell
     cell.backgroundColor = #colorLiteral(red: 0.2043271959, green: 0.620110333, blue: 0.6497597098, alpha: 1)
     updateStationFlds(cell: &cell, indexPath: indexPath, stations: selectedStations, itm: selectedEventDetails)
@@ -576,15 +605,17 @@ extension DetailViewController: UICollectionViewDataSource,UICollectionViewDeleg
   
   func visibleStationIndexPath() -> IndexPath
   {
+    print()
     print("visibleStationIndexPath")
     let visibleRect = CGRect(origin: stationCollectionView.contentOffset, size: stationCollectionView.bounds.size)
-    print("visibleRect=",visibleRect)
+//    print("visibleRect=",visibleRect)
     let visiblePoint = CGPoint(x: visibleRect.midX, y: visibleRect.midY)
-    print("visiblePoint=",visiblePoint)
+//    print("visiblePoint=",visiblePoint)
     let visibleStationIndexPath = stationCollectionView.indexPathForItem(at: visiblePoint)!
     print("visibleStationIndexPath=",visibleStationIndexPath)
     print("visbleStationIndexPath.item=",visibleStationIndexPath.item)
-    print("visbleStationIndexPath.section=",visibleStationIndexPath.section)
+//    print("visbleStationIndexPath.section=",visibleStationIndexPath.section)
+    print()
     return visibleStationIndexPath
   }
   
