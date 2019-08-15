@@ -98,11 +98,13 @@ class DetailViewController: UIViewController
     stationCollectionView.frame.size.width = self.view.safeAreaLayoutGuide.layoutFrame.size.width
     print("viewWillLayoutSubviews")
 //    print("safe area height =",self.view.safeAreaLayoutGuide.layoutFrame.size.height)
-    print("safe area width =",self.view.safeAreaLayoutGuide.layoutFrame.size.width)
-    print("stationCollectionView.bounds.width=",stationCollectionView.bounds.width)
+//    print("safe area width =",self.view.safeAreaLayoutGuide.layoutFrame.size.width)
+//    print("stationCollectionView.bounds.width=",stationCollectionView.bounds.width)
     super.viewWillLayoutSubviews()
       adjustCellWidth()
-    print()
+//    currentStationIndexPath = visibleStationIndexPath()
+    print("currentStationIndexPath=",currentStationIndexPath)
+   print()
   }
   
   
@@ -111,11 +113,11 @@ class DetailViewController: UIViewController
     print()
     print("viewDidLayoutSubviews")
 //    print("safe area height =",self.view.safeAreaLayoutGuide.layoutFrame.size.height)
-    print("safe area width =",self.view.safeAreaLayoutGuide.layoutFrame.size.width)
-    print("stationCollectionView.bounds.width=",stationCollectionView.bounds.width)
+//    print("safe area width =",self.view.safeAreaLayoutGuide.layoutFrame.size.width)
+//    print("stationCollectionView.bounds.width=",stationCollectionView.bounds.width)
     super.viewDidLayoutSubviews()
 //    print("stationCollectionView.bounds.width=",stationCollectionView.bounds.width)
-    currentStationIndexPath = visibleStationIndexPath()
+//    currentStationIndexPath = visibleStationIndexPath()
     print("currentStationIndexPath=",currentStationIndexPath)
 //    stationCollectionView.collectionViewLayout.invalidateLayout()
     print()
@@ -127,11 +129,13 @@ class DetailViewController: UIViewController
   {
     print()
     print("willTransition")
-    print("safe area width =",self.view.safeAreaLayoutGuide.layoutFrame.size.width)
-    print("stationCollectionView.bounds.width=",stationCollectionView.bounds.width)
+    super.willTransition(to: newCollection, with: coordinator)
+//    print("safe area width =",self.view.safeAreaLayoutGuide.layoutFrame.size.width)
+//    print("stationCollectionView.bounds.width=",stationCollectionView.bounds.width)
 //    currentStationIndexPath = visibleStationIndexPath()
 //    print("currentStationIndexPath=",currentStationIndexPath)
-    print()
+  print("currentStationIndexPath=",currentStationIndexPath)
+   print()
   }
   
   override func viewDidLoad()
@@ -144,6 +148,8 @@ class DetailViewController: UIViewController
    }
 
   func adjustCellWidth() {
+    print()
+    print("adjustCellWidth")
     var cellHeight = stationCollectionView.bounds.height
     if let flowLayout = self.stationCollectionView.collectionViewLayout as? UICollectionViewFlowLayout
     {
@@ -158,6 +164,7 @@ class DetailViewController: UIViewController
       stationCollectionView.bounds.origin.x = 0
       flowLayout.itemSize = CGSize(width: cellWidth, height: CGFloat(cellHeight))
       print("flowLayout.itemSize=",flowLayout.itemSize)
+      print("currentStationIndexPath=",currentStationIndexPath)
     }
   }
   
@@ -166,8 +173,8 @@ class DetailViewController: UIViewController
   print()
   print("deviceRotated")
   //    print("safe area height =",self.view.safeAreaLayoutGuide.layoutFrame.size.height)
-  print("safe area width =",self.view.safeAreaLayoutGuide.layoutFrame.size.width)
-  print("stationCollectionView.bounds.width=",stationCollectionView.bounds.width)
+//  print("safe area width =",self.view.safeAreaLayoutGuide.layoutFrame.size.width)
+//  print("stationCollectionView.bounds.width=",stationCollectionView.bounds.width)
   switch UIDevice.current.orientation {
   case .landscapeLeft:
     print("landscape left")
@@ -186,18 +193,21 @@ class DetailViewController: UIViewController
   }
 //  print("stationCollectionView.bounds.width=",stationCollectionView.bounds.width)
 //  print()
+//  currentStationIndexPath = visibleStationIndexPath()
+
   DispatchQueue.main.async {
     self.stationCollectionView.setNeedsLayout()
     self.adjustCellWidth()
     self.updateShadowPlot(self.selectedEventDetails)
+//    self.currentStationIndexPath = self.visibleStationIndexPath()
+    self.stationCollectionView.scrollToItem(at: self.currentStationIndexPath, at: .centeredHorizontally, animated: false)
   }
   print("currentStationIndexPath=",currentStationIndexPath)
 //  let chordSortedStations = self.event.stationsSortedByChordOffset(selectedEventDetails, order: .ascending)
 //  let primaryIndex = self.event.primaryStationIndex(chordSortedStations)
 //  moveCursorToStation(indexPath: IndexPath(item: primaryIndex!, section: 0))
-  print("deviceRotated > visibleStationIndexPath()=",visibleStationIndexPath())
+//  print("deviceRotated > visibleStationIndexPath()=",visibleStationIndexPath())
   print("deviceRotated > currentStationIndexPath=",currentStationIndexPath)
-  self.stationCollectionView.scrollToItem(at: currentStationIndexPath, at: .centeredHorizontally, animated: false)
 //  moveCursorToStation(indexPath: visibleStationIndexPath())
   moveCursorToStation(indexPath: currentStationIndexPath)
 
@@ -209,6 +219,8 @@ class DetailViewController: UIViewController
 
   override func viewWillAppear(_ animated: Bool)
   {
+    print()
+    print("viewWillAppear")
     eventDetailView.isHidden = false
     stationBarSubViewsExist = false
     stationCursorExists = false
@@ -230,6 +242,7 @@ class DetailViewController: UIViewController
         self.stationCollectionView.scrollToItem(at: IndexPath(item: primaryIndex!, section: 0), at: .centeredHorizontally, animated: false)
         self.stationCollectionView.layoutIfNeeded()
     }
+    print("currentStationIndexPath=",currentStationIndexPath)
   }
   
   override func viewDidAppear(_ animated: Bool)
@@ -237,16 +250,18 @@ class DetailViewController: UIViewController
     print()
     print("viewDidAppear")
     //    print("safe area height =",self.view.safeAreaLayoutGuide.layoutFrame.size.height)
-    print("safe area width =",self.view.safeAreaLayoutGuide.layoutFrame.size.width)
-    print("stationCollectionView.bounds.width=",stationCollectionView.bounds.width)
+//    print("safe area width =",self.view.safeAreaLayoutGuide.layoutFrame.size.width)
+//    print("stationCollectionView.bounds.width=",stationCollectionView.bounds.width)
     let primaryIndex = self.event.primaryStationIndex(selectedStations)
+    currentStationIndexPath = IndexPath(item:primaryIndex!, section: 0)
     DispatchQueue.main.async
       {
         self.stationCollectionView.scrollToItem(at: IndexPath(item: primaryIndex!, section: 0), at: .centeredHorizontally, animated: false)
          self.moveCursorToStation(indexPath: IndexPath(item: primaryIndex!, section: 0))
     }
     updateShadowPlot(selectedEventDetails)
-    print()
+    print("currentStationIndexPath=",currentStationIndexPath)
+   print()
   }
   
   override func viewWillDisappear(_ animated: Bool)
@@ -502,6 +517,8 @@ class DetailViewController: UIViewController
   
   fileprivate func updateShadowPlot(_ item: EventDetails)
   {
+    print()
+    print("updateShadowPlot")
     //update shadow bars plot
     let stationsExistBeyondSigma1:Bool = self.event.barPlotToSigma3(item)
     
@@ -536,9 +553,6 @@ class DetailViewController: UIViewController
     }
 //    print("plotWidthKm=",plotWidthKm)
 
-    
-    
-//    print("plotWidthKm=",plotWidthKm)
     let plotBarFactors = plotBarsWidthFactors(item, totalPlotWidthKm: plotWidthKm)
     
     self.shadowBarView.bounds.size.width = self.weatherBarView.bounds.width
@@ -565,6 +579,7 @@ class DetailViewController: UIViewController
     
 //    print("primary station index = ",self.event.primaryStationIndex(self.selectedStations))
 //    print("<updateEventInfoFields")
+    print("currentStationIndexPath=",currentStationIndexPath)
   }
 }
 
@@ -598,6 +613,7 @@ extension DetailViewController: UICollectionViewDataSource,UICollectionViewDeleg
     updateStationFlds(cell: &cell, indexPath: indexPath, stations: selectedStations, itm: selectedEventDetails)
     //    moveCursorToStation(indexPath: indexPath)
 //    visibleIndexPaths = collectionView.indexPathsForVisibleItems
+//    currentStationIndexPath = visibleStationIndexPath()
 //    print("<collectionView")
     print()
     return cell
@@ -615,24 +631,28 @@ extension DetailViewController: UICollectionViewDataSource,UICollectionViewDeleg
     print("visibleStationIndexPath=",visibleStationIndexPath)
     print("visbleStationIndexPath.item=",visibleStationIndexPath.item)
 //    print("visbleStationIndexPath.section=",visibleStationIndexPath.section)
+//    currentStationIndexPath = visibleStationIndexPath
+    print("currentStationIndexPath=",currentStationIndexPath)
     print()
     return visibleStationIndexPath
   }
   
   func scrollViewDidEndDecelerating(_ scrollView: UIScrollView)
   {
-//    print()
-//    print(">scrollViewDidEndDecelerating")
+    print()
+    print(">scrollViewDidEndDecelerating")
 //    print("visibleIndexPaths=",visibleIndexPaths)
 //    moveCursorToStation(indexPath: visibleStationIndexPath)
+    currentStationIndexPath = visibleStationIndexPath()
     moveCursorToStation(indexPath: visibleStationIndexPath())
 //    print("<scrollViewDidEndDecelerating")
+    print("currentStationIndexPath=",currentStationIndexPath)
   }
   
   func moveCursorToStation(indexPath: IndexPath)
   {
-//    print()
-//    print(">moveCursorToStation")
+    print()
+    print(">moveCursorToStation")
 //    print("station indexPath.item=",indexPath.item)
 //    for subview in self.weatherBarView.subviews
 //    {
@@ -670,6 +690,7 @@ extension DetailViewController: UICollectionViewDataSource,UICollectionViewDeleg
 //        print("<moveCursorToStation")
 //        print()
     }
+    print("currentStationIndexPath=",currentStationIndexPath)
   }
 }
 
