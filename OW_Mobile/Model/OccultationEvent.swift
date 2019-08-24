@@ -287,8 +287,13 @@ class OccultationEvent: NSObject
   // MARK: - attributed text functions
   func formatLabelandField(label: String, field: String, units: String) -> NSAttributedString
   {
-    let labelFont =   UIFont.preferredFont(forTextStyle: .callout)
-    let fieldFont =   UIFont.preferredFont(forTextStyle: .headline)
+    var labelFont =   UIFont.preferredFont(forTextStyle: .callout)
+    var fieldFont =   UIFont.preferredFont(forTextStyle: .headline)
+    if sizeClassIsRR
+    {
+      labelFont =   UIFont.preferredFont(forTextStyle: .title2)
+      fieldFont =   UIFont.preferredFont(forTextStyle: .title1)
+    }
     let unitsFont = labelFont
     
     let labelAttributes: [NSMutableAttributedString.Key: Any] = [.font: labelFont]

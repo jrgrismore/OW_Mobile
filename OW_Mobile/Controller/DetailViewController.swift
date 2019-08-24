@@ -7,6 +7,8 @@
 
 import UIKit
 
+var sizeClassIsRR = false
+
 class DetailViewController: UIViewController
 {
   let reuseIdentifier = "StationCell"
@@ -145,6 +147,10 @@ class DetailViewController: UIViewController
     stationCollectionView.dataSource = self
     self.spinnerView.layer.cornerRadius = 20
     NotificationCenter.default.addObserver(self, selector: #selector(deviceRotated), name:  UIDevice.orientationDidChangeNotification, object: nil)
+    if self.view.traitCollection.horizontalSizeClass == .regular && self.view.traitCollection.verticalSizeClass == .regular
+    {
+      sizeClassIsRR = true
+    }
    }
 
   func adjustCellWidth() {
