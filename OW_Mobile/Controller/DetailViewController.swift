@@ -139,6 +139,13 @@ class DetailViewController: UIViewController
   {
     print()
     print("viewDidAppear")
+    
+    
+    // temporarily added to test station left scroll problem
+    // seems to work 8/25/19
+    adjustCellWidth()
+    
+    
     //    print("safe area height =",self.view.safeAreaLayoutGuide.layoutFrame.size.height)
     //    print("safe area width =",self.view.safeAreaLayoutGuide.layoutFrame.size.width)
     //    print("stationCollectionView.bounds.width=",stationCollectionView.bounds.width)
@@ -163,7 +170,12 @@ class DetailViewController: UIViewController
 //    print("safe area width =",self.view.safeAreaLayoutGuide.layoutFrame.size.width)
 //    print("stationCollectionView.bounds.width=",stationCollectionView.bounds.width)
     super.viewWillLayoutSubviews()
-      adjustCellWidth()
+    
+    
+    //temporarily disabled to test station left scroll problem
+//      adjustCellWidth()
+    
+    
 //    currentStationIndexPath = visibleStationIndexPath()
     print("currentStationIndexPath=",currentStationIndexPath)
    print()
@@ -181,7 +193,7 @@ class DetailViewController: UIViewController
 //    currentStationIndexPath = visibleStationIndexPath()
     print("currentStationIndexPath=",currentStationIndexPath)
 //    stationCollectionView.collectionViewLayout.invalidateLayout()
-    print()
+    print("==================")
    }
 
   override func willTransition(to newCollection: UITraitCollection, with coordinator: UIViewControllerTransitionCoordinator)
@@ -499,7 +511,6 @@ class DetailViewController: UIViewController
     
     let primaryStation = self.event.primaryStation(item)!
     let primaryChordOffset = primaryStation.ChordOffsetKm!
-    print()
     //    print("primaryChordOffset=",primaryChordOffset)
     let primaryFactor = plotStationBarFactor(station: primaryStation, totalPlotWidthKm: plotWidthKm)
     //    print("primaryFactor=",primaryFactor)
