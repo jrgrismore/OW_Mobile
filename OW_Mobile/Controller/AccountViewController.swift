@@ -20,8 +20,8 @@ enum KeychainError: Error
 
 struct Credentials
 {
-  static var username = "Alex Pratt"
-  static var password = "qwerty123456"
+  static var username = ""
+  static var password = ""
 }
 
 var userHasChanged: Bool = false
@@ -187,6 +187,7 @@ class AccountViewController: UIViewController, UITextFieldDelegate
       finalUserName = Credentials.username
       deleteAllSecItemsFromKeychain()
       saveCredentailsToKeyChain()
+      
 //      updateCredentailsOnKeyChain()
 //      deleteCredentailsFromKeyChain()
       OWWebAPI.shared.deleteCookies()

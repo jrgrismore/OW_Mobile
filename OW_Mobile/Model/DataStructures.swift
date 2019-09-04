@@ -14,6 +14,7 @@ struct UDKeys
 {
   static let myEventList = "myEventList"
   static let myEventDetails = "myEventDetails"
+  static let lastEventListUpdate = "lastEventListUpdate"
 }
 
 //Event structure matching JSON keys

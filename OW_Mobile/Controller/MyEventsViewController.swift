@@ -49,27 +49,50 @@ class MyEventsViewController: UIViewController, UICollectionViewDataSource,UICol
   override func viewDidLoad()
   {
     super.viewDidLoad()
+    self.spinnerView.layer.cornerRadius = 20
     OWWebAPI.shared.delegate = self
     myEventsCollection.backgroundColor =  _ColorLiteralType(red: 0.03605184332, green: 0.2271486223, blue: 0.2422576547, alpha: 1)
-    cellDataArray = OWWebAPI.shared.loadEvents()
-    //test
-//    cellDataArray = []
-    
-    self.spinnerView.layer.cornerRadius = 20
-    
-    DispatchQueue.main.async{self.myEventsCollection.reloadData()}
-    if cellDataArray.count == 0
+    // show alert displaying last update and asking update or use existing event list
+    var alertTitle = ""
+    var alertMsg = ""
+    var alertExistingBtn = ""
+    loadCredentailsFromKeyChain()
+    var lastUpdateAlert = UIAlertController()
+    if let lastUpdate = UserDefaults.standard.object(forKey: UDKeys.lastEventListUpdate) as? Date
     {
-      updateCellArray()
+      // show alert asking update or use existing
+      let updateTimeFormatter = DateFormatter()
+      updateTimeFormatter.dateFormat = "MM-dd-yy'   'HH:mm:ss"
+      let lastUpdateStr = updateTimeFormatter.string(from: lastUpdate)
+      alertTitle = String(format:"Event List for User\n" + Credentials.username + "\nLast Updated\n%@",lastUpdateStr)
+      alertMsg = "Update Event List or\nUse Existing List?"
+      alertExistingBtn = "Use Existing"
     }
-//    print()
-//    print("##############################################################")
-//    print("##############################################################")
-//    print("!!!DON'T FORGET TO REENABLE IB STORYBOARD WARNINGS!!!")
-//    print("##############################################################")
-//    print("##############################################################")
-//    print()
-
+    else
+    {
+      DispatchQueue.main.async{print("else > ")}
+      
+      alertTitle = "Event List for User \n" + Credentials.username + "\nNever Updated"
+      alertMsg = "Update Now?"
+    }
+    
+    lastUpdateAlert = UIAlertController(title: alertTitle, message: alertMsg, preferredStyle: .alert)
+    lastUpdateAlert.addAction(UIAlertAction(title: "Update", style: .default, handler: {_ in
+      //handle the update      print("peform the update")
+      self.cellDataArray = OWWebAPI.shared.loadEvents()
+      self.updateCellArray()
+    }))
+    lastUpdateAlert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil) )
+    if alertExistingBtn == "Use Existing"
+    {
+      lastUpdateAlert.addAction(UIAlertAction(title: alertExistingBtn, style: .default, handler: {_ in
+       //restore existing list
+        self.cellDataArray = OWWebAPI.shared.loadEvents()
+        self.cellStringArray = self.assignMyEventStrings(myEvents: self.cellDataArray)
+        DispatchQueue.main.async{self.myEventsCollection.reloadData()}
+      }))
+    }
+    self.present(lastUpdateAlert, animated: true, completion: nil)
    }
   
   override func viewWillAppear(_ animated: Bool)
@@ -105,7 +128,7 @@ class MyEventsViewController: UIViewController, UICollectionViewDataSource,UICol
   {
     if userHasChanged
     {
-      let userChangeAlert = UIAlertController(title: "User Has Changed", message: "Update Event List?", preferredStyle: .alert)
+      let userChangeAlert = UIAlertController(title: "User Has Changed to \n" + Credentials.username, message: "Update Event List?", preferredStyle: .alert)
       //add action to update user
       userChangeAlert.addAction(UIAlertAction(title: "Update", style: .default, handler: {_ in
         print("Yes was tapped")
@@ -114,7 +137,12 @@ class MyEventsViewController: UIViewController, UICollectionViewDataSource,UICol
         userHasChanged = false
       })
       )
-      userChangeAlert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil) )
+      userChangeAlert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: {_ in
+        self.cellDataArray = []
+        self.myEventsCollection.reloadData()
+        OWWebAPI.shared.saveEvents([])
+        OWWebAPI.shared.saveDetails([])
+      }) )
       self.present(userChangeAlert, animated: true, completion: nil)
     }
   }
@@ -193,6 +221,11 @@ class MyEventsViewController: UIViewController, UICollectionViewDataSource,UICol
               }
       }
       OWWebAPI.shared.saveEvents(myEvents!)
+      
+      //store update date in userDefaults
+      UserDefaults.standard.set(Date(), forKey: UDKeys.lastEventListUpdate)
+      
+      
       self.cellDataArray = myEvents!
       self.cellStringArray = self.assignMyEventStrings(myEvents: self.cellDataArray)
 //      print("cellStringArray = ",self.cellStringArray)
