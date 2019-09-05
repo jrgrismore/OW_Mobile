@@ -80,7 +80,7 @@ class MyEventsViewController: UIViewController, UICollectionViewDataSource,UICol
     lastUpdateAlert.addAction(UIAlertAction(title: "Update", style: .default, handler: {_ in
       //handle the update      print("peform the update")
       self.cellDataArray = OWWebAPI.shared.loadEvents()
-      self.updateCellArray()
+       self.updateCellArray()
     }))
     lastUpdateAlert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil) )
     if alertExistingBtn == "Use Existing"
@@ -88,6 +88,7 @@ class MyEventsViewController: UIViewController, UICollectionViewDataSource,UICol
       lastUpdateAlert.addAction(UIAlertAction(title: alertExistingBtn, style: .default, handler: {_ in
        //restore existing list
         self.cellDataArray = OWWebAPI.shared.loadEvents()
+        UserDefaults.standard.removeObject(forKey: UDKeys.lastEventListUpdate)
         self.cellStringArray = self.assignMyEventStrings(myEvents: self.cellDataArray)
         DispatchQueue.main.async{self.myEventsCollection.reloadData()}
       }))
