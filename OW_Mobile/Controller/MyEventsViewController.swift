@@ -60,7 +60,9 @@ class MyEventsViewController: UIViewController, UICollectionViewDataSource,UICol
     var lastUpdateAlert = UIAlertController()
     if let lastUpdate = UserDefaults.standard.object(forKey: UDKeys.lastEventListUpdate) as? Date
     {
+      // lastUpdate is valid, therefore previous event list is stored in UserDefaults
       // show alert asking update or use existing
+      print("lastUpdate has valid value")
       let updateTimeFormatter = DateFormatter()
       updateTimeFormatter.dateFormat = "MM-dd-yy'   'HH:mm:ss"
       let lastUpdateStr = updateTimeFormatter.string(from: lastUpdate)
@@ -70,29 +72,34 @@ class MyEventsViewController: UIViewController, UICollectionViewDataSource,UICol
     }
     else
     {
+      //lastUpdate is nil, therefore no previous event list data is available
       DispatchQueue.main.async{print("else > ")}
       
-      alertTitle = "Event List for User \n" + Credentials.username + "\nNever Updated"
+      alertTitle = "Event List for User \n" + Credentials.username + "\nNot Updated"
       alertMsg = "Update Now?"
     }
     
     lastUpdateAlert = UIAlertController(title: alertTitle, message: alertMsg, preferredStyle: .alert)
     lastUpdateAlert.addAction(UIAlertAction(title: "Update", style: .default, handler: {_ in
       //handle the update      print("peform the update")
-      self.cellDataArray = OWWebAPI.shared.loadEvents()
+//      self.cellDataArray = OWWebAPI.shared.loadEvents()
        self.updateCellArray()
     }))
-    lastUpdateAlert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil) )
     if alertExistingBtn == "Use Existing"
     {
       lastUpdateAlert.addAction(UIAlertAction(title: alertExistingBtn, style: .default, handler: {_ in
        //restore existing list
+        print("Use Existing tapped")
         self.cellDataArray = OWWebAPI.shared.loadEvents()
         UserDefaults.standard.removeObject(forKey: UDKeys.lastEventListUpdate)
         self.cellStringArray = self.assignMyEventStrings(myEvents: self.cellDataArray)
         DispatchQueue.main.async{self.myEventsCollection.reloadData()}
       }))
     }
+    lastUpdateAlert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: {_ in
+      print("Cancel button tapped")
+    }) )
+
     self.present(lastUpdateAlert, animated: true, completion: nil)
    }
   
@@ -143,6 +150,7 @@ class MyEventsViewController: UIViewController, UICollectionViewDataSource,UICol
         self.myEventsCollection.reloadData()
         OWWebAPI.shared.saveEvents([])
         OWWebAPI.shared.saveDetails([])
+        UserDefaults.standard.removeObject(forKey: UDKeys.lastEventListUpdate)
       }) )
       self.present(userChangeAlert, animated: true, completion: nil)
     }
