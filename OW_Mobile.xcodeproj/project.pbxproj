@@ -59,6 +59,7 @@
 		5292753B220DD0CF009AD6D5 /* TabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
 		529AD0582207C576001BEFC9 /* MyEventsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyEventsViewController.swift; sourceTree = "<group>"; };
 		529AD05A2207C8BC001BEFC9 /* MyEventsCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyEventsCollectionViewCell.swift; sourceTree = "<group>"; };
+		529C1BC623298A62000C8F11 /* OW_Mobile.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = OW_Mobile.entitlements; sourceTree = "<group>"; };
 		529C4611228DFEB200F9DB55 /* DataStructures.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataStructures.swift; sourceTree = "<group>"; };
 		52B2BE3A22C5B9430082852F /* StationCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StationCell.swift; sourceTree = "<group>"; };
 		52C8020521F9510D00E66A13 /* OW_Mobile.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = OW_Mobile.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -166,6 +167,7 @@
 		52C8020721F9510D00E66A13 /* OW_Mobile */ = {
 			isa = PBXGroup;
 			children = (
+				529C1BC623298A62000C8F11 /* OW_Mobile.entitlements */,
 				52C8020821F9510D00E66A13 /* AppDelegate.swift */,
 				5249BF962298A05E0006D200 /* UtilityFunctions.swift */,
 				529D9CD221FF87BB002A3428 /* Model */,
@@ -267,6 +269,11 @@
 				TargetAttributes = {
 					52C8020421F9510D00E66A13 = {
 						CreatedOnToolsVersion = 10.1;
+						SystemCapabilities = {
+							com.apple.iCloud = {
+								enabled = 0;
+							};
+						};
 					};
 					52C8021B21F9510F00E66A13 = {
 						CreatedOnToolsVersion = 10.1;

@@ -7,8 +7,9 @@
 //
 
 import UIKit
+import EventKit
 
-class MyEventsViewController: UIViewController, UICollectionViewDataSource,UICollectionViewDelegate, UICollectionViewDelegateFlowLayout
+class MyEventsViewController: UIViewController, UICollectionViewDataSource,UICollectionViewDelegate, UICollectionViewDelegateFlowLayout,UIGestureRecognizerDelegate
 {
   @IBOutlet weak var myEventsCollection: UICollectionView!
   @IBOutlet weak var activitySpinner: UIActivityIndicatorView!
@@ -18,6 +19,10 @@ class MyEventsViewController: UIViewController, UICollectionViewDataSource,UICol
   let reuseIdentifier = "MyEventCell"
   var cellDataArray = [Event?]()
   var cellStringArray = [EventStrings]()
+  var eventStore = EKEventStore()
+  
+//  var tempIndexPath = IndexPath()
+
 //  let OWWebAPI.shared = OWWebAPI.shared
   
   @IBAction func switchToLogin(_ sender: Any)
@@ -287,64 +292,38 @@ extension MyEventsViewController
     //set permanent cell background color to 235_255_235_67
     cell.backgroundColor = #colorLiteral(red: 0.9215686275, green: 1, blue: 0.9215686275, alpha: 0.67)
     fillCellFields(cell: &cell, indexPath: indexPath)
+    let longPress = UILongPressGestureRecognizer(target: self, action: #selector(handleLongPress))
+    cell.addGestureRecognizer(longPress)
+//    tempIndexPath = indexPath
     return cell
   }
-//  
-//  func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath)
-//  {
-//    guard let cell = collectionView.cellForItem(at: indexPath) else { return }
-//
-//    performSegue(withIdentifier: "DetailSegue", sender: cell)
-//  }
+  
+  @objc func handleLongPress(gesture: UILongPressGestureRecognizer)
+  {
+    if gesture.state == UIGestureRecognizer.State.began
+    {
+      print("long press gesture began")
+      let p = gesture.location(in: self.myEventsCollection)
+      
+      if let indexPath = self.myEventsCollection.indexPathForItem(at: p)
+      {
+        // get the cell at indexPath (the one you long pressed)
+//        let cell = self.myEventsCollection.cellForItem(at: indexPath)
+//        print("point indexPath = ",indexPath)
+        print("point indexPath.item = ",indexPath.item)
+        print("create calender event entry")
 
-  
-  // MARK: - Collection cell data functions
-  
-//  func formatEventTime(timeString: String) -> String
-//  {
-//    let eventTimeFormatter = DateFormatter()
-//    eventTimeFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSS"
-//    eventTimeFormatter.timeZone = TimeZone(abbreviation: "UTC")
-//    if let formattedDate = eventTimeFormatter.date(from: timeString)
-//    {
-//      eventTimeFormatter.dateFormat = "dd MMM, HH:mm:ss 'UT'"
-//      return eventTimeFormatter.string(from: formattedDate)
-//    }
-//    return timeString
-//  }
-//  
-//  func leadTime(timeString: String) -> String
-//  {
-//    var leadTimeString = ""
-//    let eventTimeFormatter = DateFormatter()
-//    eventTimeFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSS"
-//    eventTimeFormatter.timeZone = TimeZone(abbreviation: "UTC")
-//    if let eventDate = eventTimeFormatter.date(from: timeString)
-//    {
-//      let leadTimeSeconds = Int(eventDate.timeIntervalSinceNow)
-//      if leadTimeSeconds <= 0 { return "completed" }
-//      let leadTimeMinutes = leadTimeSeconds / 60
-//     let leadTimeHours = leadTimeMinutes / 60
-//      let leadTimeDays = leadTimeHours / 24
-//      if leadTimeMinutes > 0
-//      {
-//        if leadTimeMinutes < 90
-//        {
-//          leadTimeString = String(format: "in \(leadTimeMinutes) min")
-//        }
-//        else if leadTimeHours < 48
-//        {
-//          leadTimeString = String(format: "in \(leadTimeHours) hours")
-//        }
-//        else
-//        {
-//          leadTimeString = String(format: "in \(leadTimeDays) days")
-//        }
-//      }
-//      return leadTimeString
-//    }
-//    return leadTimeString
-//  }
+      } else {
+        print("couldn't find index path")
+      }
+//      print("indexPath = ",tempIndexPath)
+    }
+    if gesture.state == UIGestureRecognizer.State.ended
+    {
+      print("long press gesture ended")
+    }
+  }
+
   
   func fillCellFields(cell: inout MyEventsCollectionViewCell, indexPath: IndexPath)
   {
@@ -762,6 +741,8 @@ extension MyEventsViewController
   }
 
 }
+
+// MARK: - OW Web API functions
 
 extension MyEventsViewController: OWWebAPIDelegate
 {
