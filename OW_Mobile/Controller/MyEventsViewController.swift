@@ -8,6 +8,7 @@
 
 import UIKit
 import EventKit
+import EventKitUI
 
 class MyEventsViewController: UIViewController, UICollectionViewDataSource,UICollectionViewDelegate, UICollectionViewDelegateFlowLayout,UIGestureRecognizerDelegate
 {
@@ -20,6 +21,8 @@ class MyEventsViewController: UIViewController, UICollectionViewDataSource,UICol
   var cellDataArray = [Event?]()
   var cellStringArray = [EventStrings]()
   var eventStore = EKEventStore()
+  let vc = EKEventEditViewController()
+
   
 //  var tempIndexPath = IndexPath()
 
@@ -54,6 +57,7 @@ class MyEventsViewController: UIViewController, UICollectionViewDataSource,UICol
   override func viewDidLoad()
   {
     super.viewDidLoad()
+    
     self.spinnerView.layer.cornerRadius = 20
     OWWebAPI.shared.delegate = self
     myEventsCollection.backgroundColor =  _ColorLiteralType(red: 0.03605184332, green: 0.2271486223, blue: 0.2422576547, alpha: 1)
@@ -308,22 +312,51 @@ extension MyEventsViewController
       if let indexPath = self.myEventsCollection.indexPathForItem(at: p)
       {
         // get the cell at indexPath (the one you long pressed)
-//        let cell = self.myEventsCollection.cellForItem(at: indexPath)
-//        print("point indexPath = ",indexPath)
+        //        let cell = self.myEventsCollection.cellForItem(at: indexPath)
+        //        print("point indexPath = ",indexPath)
         print("point indexPath.item = ",indexPath.item)
         print("create calender event entry")
-
+        eventStore.requestAccess(to: .event, completion: {(granted,error) in
+          if granted && error == nil
+          {
+            print("granted = \(granted)")
+            print("error = \(error)")
+            
+            var event = EKEvent(eventStore: self.eventStore)            
+            event.title = "Test Title"
+            event.location = "Test Location"
+            event.startDate = Date()
+            event.endDate = Date()
+            event.notes = "Test Note"
+//            event.calendar = self.eventStore.defaultCalendarForNewEvents
+            do
+            {
+              DispatchQueue.main.async
+                {
+                  self.vc.editViewDelegate = self as? EKEventEditViewDelegate
+                  self.vc.event = event
+                  self.vc.eventStore = self.eventStore
+                  self.present(self.vc, animated: true, completion: nil )
+              }
+            } catch let error as NSError {
+              print("failed to save event with error \(error)")
+            }
+            print("saved event")
+          } else {
+            print("failed to save event with error \(error) or access not granted")
+          }
+        })
+        
       } else {
         print("couldn't find index path")
       }
-//      print("indexPath = ",tempIndexPath)
+
     }
     if gesture.state == UIGestureRecognizer.State.ended
     {
       print("long press gesture ended")
     }
   }
-
   
   func fillCellFields(cell: inout MyEventsCollectionViewCell, indexPath: IndexPath)
   {
@@ -753,5 +786,15 @@ extension MyEventsViewController: OWWebAPIDelegate
 //        print("webLogTextDidChange>text to: ",text)
         self.spinnerLbl.text = text
     }
+  }
+}
+
+
+extension MyEventsViewController: EKEventEditViewDelegate
+{
+  func eventEditViewController(_ controller: EKEventEditViewController, didCompleteWith action: EKEventEditViewAction)
+  {
+    print("eventEditViewController > didCompleteWith")
+    controller.dismiss(animated: true, completion: nil)
   }
 }
