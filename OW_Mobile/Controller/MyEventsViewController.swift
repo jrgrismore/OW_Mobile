@@ -352,10 +352,19 @@ extension MyEventsViewController
                   let eventEndUTC = event.startDate.addingTimeInterval( (self.cellDataArray[indexPath.row]?.MaxDurSec!)!)
                   event.endDate = eventEndUTC
                   var noteStr = self.cellStringArray[indexPath.row].Object + " occults " +  allDetails[detailsIndex!].StarName!
-                  noteStr.append("\nstart: " + primaryStation!.EventTimeUtc! )
+//                  noteStr.append("\nstart: " + primaryStation!.EventTimeUtc! )
+                  noteStr.append("\nRank: " + String(format: " %d ",allDetails[detailsIndex!].Rank!))
+                  noteStr.append(", Chord: " + String(format: " %0.1f km ",primaryStation!.ChordOffsetKm!))
                   noteStr.append("\nmax duration: " + String(format: " %0.1f sec",allDetails[detailsIndex!].MaxDurSec!))
                   noteStr.append("\ncombined mag: " + String(format: " %0.1f ",allDetails[detailsIndex!].CombMag!))
-                  noteStr.append("\nmag drop: " + String(format: " %0.1f ",allDetails[detailsIndex!].MagDrop!))
+                  noteStr.append(", mag drop: " + String(format: " %0.1f ",allDetails[detailsIndex!].MagDrop!))
+                  let raTuple = floatRAtoHMS(floatRA: allDetails[detailsIndex!].RAHours!)
+                  let raStr = String(format: "%02dh %02dm %04.1fs",raTuple.hours,raTuple.minutes,raTuple.seconds)
+                  noteStr.append("\nRA: " + raStr)
+//                  noteStr.append("\nRA: " + String(format: " %0.1f ",allDetails[detailsIndex!].RAHours!))
+                  noteStr.append(", Dec: " + String(format: " %0.1f° ",allDetails[detailsIndex!].DEDeg!))
+                  noteStr.append("\nAlt: " + String(format: " %0.1f° ",allDetails[detailsIndex!].StarAlt!))
+                  noteStr.append(", Az: " + String(format: " %0.1f° ",allDetails[detailsIndex!].StarAz!))
                   event.notes = noteStr
                   
                   self.vc.editViewDelegate = self as? EKEventEditViewDelegate
