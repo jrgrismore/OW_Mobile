@@ -315,27 +315,53 @@ extension MyEventsViewController
         //        let cell = self.myEventsCollection.cellForItem(at: indexPath)
         //        print("point indexPath = ",indexPath)
         print("point indexPath.item = ",indexPath.item)
+        print("cellDataArray[indexPath.item]=",cellDataArray[indexPath.item])
         print("create calender event entry")
-        eventStore.requestAccess(to: .event, completion: {(granted,error) in
+        
+        //        var eventStore = EKEventStore()
+        
+        eventStore.requestAccess(to: .event, completion: {(granted,error) -> Void in
           if granted && error == nil
           {
             print("granted = \(granted)")
             print("error = \(error)")
+            print("point indexPath.item = ",indexPath.item)
+            let allDetails = OWWebAPI.shared.loadDetails()
+            //            print("selected Details=",allDetails[indexPath.item])
+            //            for eventDetails in allDetails
+            //            {
+            //              print("eventDetails=",eventDetails)
+            //              print()
+            //            }
             
-            var event = EKEvent(eventStore: self.eventStore)            
-            event.title = "Test Title"
-            event.location = "Test Location"
-            event.startDate = Date()
-            event.endDate = Date()
-            event.notes = "Test Note"
-//            event.calendar = self.eventStore.defaultCalendarForNewEvents
+            //            let detailsIndex = self.cellDataArray.index(where: { $0!.Id == allDetails[indexPath.item].Id  })
+            let detailsIndex = allDetails.index(where: { $0.Id == self.cellDataArray[indexPath.item]?.Id  })
+            print("detailsIndex=",detailsIndex)
+            print("allDetails[detailsIndex]=",allDetails[detailsIndex!])
+            var selectedEvent = OccultationEvent()
+            let primaryStation = selectedEvent.primaryStation(allDetails[detailsIndex!])
             do
             {
               DispatchQueue.main.async
                 {
+                  var event = EKEvent(eventStore: self.eventStore)
+                  event.title = self.cellStringArray[indexPath.row].Object
+                  event.location = primaryStation!.StationName
+                  let eventStartUTC = utcStrToDate(eventTimeStr: primaryStation!.EventTimeUtc!)
+                  event.startDate = eventStartUTC
+                  let eventEndUTC = event.startDate.addingTimeInterval( (self.cellDataArray[indexPath.row]?.MaxDurSec!)!)
+                  event.endDate = eventEndUTC
+                  var noteStr = self.cellStringArray[indexPath.row].Object + " occults " +  allDetails[detailsIndex!].StarName!
+                  noteStr.append("\nstart: " + primaryStation!.EventTimeUtc! )
+                  noteStr.append("\nmax duration: " + String(format: " %0.1f sec",allDetails[detailsIndex!].MaxDurSec!))
+                  noteStr.append("\ncombined mag: " + String(format: " %0.1f ",allDetails[detailsIndex!].CombMag!))
+                  noteStr.append("\nmag drop: " + String(format: " %0.1f ",allDetails[detailsIndex!].MagDrop!))
+                  event.notes = noteStr
+                  
                   self.vc.editViewDelegate = self as? EKEventEditViewDelegate
+                  self.vc.event = nil
                   self.vc.event = event
-                  self.vc.eventStore = self.eventStore
+                  self.vc.eventStore = self.eventStore   //????????
                   self.present(self.vc, animated: true, completion: nil )
               }
             } catch let error as NSError {
@@ -350,7 +376,7 @@ extension MyEventsViewController
       } else {
         print("couldn't find index path")
       }
-
+      
     }
     if gesture.state == UIGestureRecognizer.State.ended
     {
@@ -796,5 +822,6 @@ extension MyEventsViewController: EKEventEditViewDelegate
   {
     print("eventEditViewController > didCompleteWith")
     controller.dismiss(animated: true, completion: nil)
+    print("eventEditViewController removed")
   }
 }

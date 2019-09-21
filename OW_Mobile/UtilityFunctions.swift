@@ -55,6 +55,17 @@ func leadTime(timeString: String) -> String
   return leadTimeString
 }
 
+func utcStrToDate(eventTimeStr: String) -> Date?
+{
+  let eventTimeFormatter = DateFormatter()
+  eventTimeFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSS"
+  eventTimeFormatter.timeZone = TimeZone(abbreviation: "UTC")
+  if let formattedDate = eventTimeFormatter.date(from: eventTimeStr)
+  {
+    return formattedDate
+  }
+  return nil
+}
 
 func starColorIcon(_ starColorIconVal: Int?) -> UIImage
 {
