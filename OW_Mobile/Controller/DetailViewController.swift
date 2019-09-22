@@ -319,7 +319,7 @@ class DetailViewController: UIViewController
     var stationChordDistStr = "Chord: — km"
     if stations[stationIndex].ChordOffsetKm != nil
     {
-      stationChordDistStr = String(format: "Chord:%0.0fkm",stations[stationIndex].ChordOffsetKm!)
+      stationChordDistStr = String(format: "Chord: %0.0f km",stations[stationIndex].ChordOffsetKm!)
     }
     cell.eventChordDistance.text = stationChordDistStr
     
@@ -337,7 +337,7 @@ class DetailViewController: UIViewController
     var errorTimeStr = "—"
     if item.ErrorInTimeSec != nil
     {
-      errorTimeStr = String(format: "+/-%0.0fsec",item.ErrorInTimeSec!)
+      errorTimeStr = String(format: "+/-%0.0f sec",item.ErrorInTimeSec!)
     }
     cell.eventTimeError.text = errorTimeStr
     
