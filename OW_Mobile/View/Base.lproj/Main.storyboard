@@ -23,7 +23,6 @@
                     <connections>
                         <segue destination="obR-c7-j7C" kind="relationship" relationship="viewControllers" id="Llj-c9-vSh"/>
                         <segue destination="BYZ-38-t0r" kind="relationship" relationship="viewControllers" id="ooJ-GH-0ab"/>
-                        <segue destination="36a-yk-pEC" kind="relationship" relationship="viewControllers" id="8L6-1o-8Vy"/>
                     </connections>
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ubl-gN-oOm" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -705,7 +704,7 @@
                     <navigationItem key="navigationItem" title="My Events" id="eoE-G9-e6E">
                         <leftBarButtonItems>
                             <barButtonItem style="plain" id="Kc8-Dy-cw5">
-                                <button key="customView" opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="6rY-Nl-7is">
+                                <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="6rY-Nl-7is">
                                     <rect key="frame" x="16" y="6" width="54" height="32"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     <fontDescription key="fontDescription" type="system" pointSize="16"/>
