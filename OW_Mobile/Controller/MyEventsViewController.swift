@@ -22,6 +22,8 @@ class MyEventsViewController: UIViewController, UICollectionViewDataSource,UICol
   var cellStringArray = [EventStrings]()
   var eventStore = EKEventStore()
   let vc = EKEventEditViewController()
+  
+  var eventCompleted: Bool = false
 
   
 //  var tempIndexPath = IndexPath()
@@ -114,6 +116,9 @@ class MyEventsViewController: UIViewController, UICollectionViewDataSource,UICol
   
   override func viewWillAppear(_ animated: Bool)
   {
+    self.navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white,
+                                                                    NSAttributedString.Key.font: UIFont.preferredFont(forTextStyle: .title3)]
+
     //set cell size
 //    let cellsInRow = 1
 //    let cellHeight = 180
@@ -177,6 +182,20 @@ class MyEventsViewController: UIViewController, UICollectionViewDataSource,UICol
         dest.selection = cellDataArray[index.row]!.Object
         dest.detailData = cellDataArray[index.row]!
         dest.eventID = cellDataArray[index.row]!.Id!
+        let timeRemaining = leadTime(timeString: cellDataArray[index.row]!.EventTimeUtc!)
+        if timeRemaining == "completed"
+        {eventCompleted = true} else {eventCompleted = false}
+        if eventCompleted
+        {
+          print("set dest.complete to true")
+          dest.complete = eventCompleted
+        }
+        else {
+          print("set dest.complete to false")
+         dest.complete = false
+        }
+
+        print("DetailSegue > dest.complete=",dest.complete)
       }
     }
   }
@@ -430,6 +449,22 @@ extension MyEventsViewController
 //    }
     cell.maxDurText.text = cellStringArray[indexPath.row].MaxDurSec
     cell.leadTime.text = leadTime(timeString: cellStringArray[indexPath.row].EventTimeUtc)
+    print("check leadTime for completed")
+    
+    
+    if cell.leadTime.text == "completed"
+    {
+      print("found completed")
+      cell.leadTime.text = ""
+      //dim/gray out asteriod hame, date and time
+      cell.objectText.textColor = .darkGray
+      cell.eventTime.textColor = .darkGray
+    } else {
+      cell.objectText.textColor = .black
+      cell.eventTime.textColor = .black
+    }
+    
+    
     cell.eventTime.text = formatEventTime(timeString: cellStringArray[indexPath.row].EventTimeUtc)
     //set time error field
     if cellDataArray[indexPath.row]!.ErrorInTimeSec != nil

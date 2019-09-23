@@ -34,6 +34,7 @@ class DetailViewController: UIViewController
   var selection: String!
   var detailStr: String = ""
   var eventID: String = ""
+  var complete: Bool = false
   
   var stationsDetails = [EventDetails]()
   var selectedStations = [Station]()
@@ -111,6 +112,10 @@ class DetailViewController: UIViewController
   {
     print()
     print("viewWillAppear")
+    
+    print("complete=",complete)
+    
+
     eventDetailView.isHidden = false
     stationBarSubViewsExist = false
     stationCursorExists = false
@@ -127,20 +132,31 @@ class DetailViewController: UIViewController
     
     let primaryIndex = self.event.primaryStationIndex(chordSortedStations)
     updateEventInfoFields(eventItem: selectedEventDetails)
-    DispatchQueue.main.async
-      {
+    if complete
+    {
+      print(":::::set color to darkGray")
+      self.navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.darkGray,
+                                                                      NSAttributedString.Key.font: UIFont.preferredFont(forTextStyle: .title3)]
+    } else {
+      print(":::::set color to white")
+      self.navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white,
+                                                                      NSAttributedString.Key.font: UIFont.preferredFont(forTextStyle: .title3)]
+    }
+    
+     DispatchQueue.main.async
+    {
         self.stationCollectionView.scrollToItem(at: IndexPath(item: primaryIndex!, section: 0), at: .centeredHorizontally, animated: false)
         self.stationCollectionView.layoutIfNeeded()
+//        self.navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.purple]
     }
-    print("currentStationIndexPath=",currentStationIndexPath)
-  }
+//      print("currentStationIndexPath=",currentStationIndexPath)
+    }
   
   override func viewDidAppear(_ animated: Bool)
   {
-    print()
-    print("viewDidAppear")
-    
-    
+//    print()
+//    print("viewDidAppear")
+
     // temporarily added to test station left scroll problem
     // seems to work 8/25/19
     adjustCellWidth()
@@ -157,15 +173,15 @@ class DetailViewController: UIViewController
         self.moveCursorToStation(indexPath: IndexPath(item: primaryIndex!, section: 0))
     }
     updateShadowPlot(selectedEventDetails)
-    print("currentStationIndexPath=",currentStationIndexPath)
-    print()
+//    print("currentStationIndexPath=",currentStationIndexPath)
+//    print()
   }
   
   override func viewWillLayoutSubviews()
   {
-    print()
+//    print()
     stationCollectionView.frame.size.width = self.view.safeAreaLayoutGuide.layoutFrame.size.width
-    print("viewWillLayoutSubviews")
+//    print("viewWillLayoutSubviews")
 //    print("safe area height =",self.view.safeAreaLayoutGuide.layoutFrame.size.height)
 //    print("safe area width =",self.view.safeAreaLayoutGuide.layoutFrame.size.width)
 //    print("stationCollectionView.bounds.width=",stationCollectionView.bounds.width)
@@ -177,35 +193,35 @@ class DetailViewController: UIViewController
     
     
 //    currentStationIndexPath = visibleStationIndexPath()
-    print("currentStationIndexPath=",currentStationIndexPath)
-   print()
+//    print("currentStationIndexPath=",currentStationIndexPath)
+//   print()
   }
   
   override func viewDidLayoutSubviews()
   {
-    print()
-    print("viewDidLayoutSubviews")
+//    print()
+//    print("viewDidLayoutSubviews")
 //    print("safe area height =",self.view.safeAreaLayoutGuide.layoutFrame.size.height)
 //    print("safe area width =",self.view.safeAreaLayoutGuide.layoutFrame.size.width)
 //    print("stationCollectionView.bounds.width=",stationCollectionView.bounds.width)
     super.viewDidLayoutSubviews()
 //    print("stationCollectionView.bounds.width=",stationCollectionView.bounds.width)
 //    currentStationIndexPath = visibleStationIndexPath()
-    print("currentStationIndexPath=",currentStationIndexPath)
+//    print("currentStationIndexPath=",currentStationIndexPath)
 //    stationCollectionView.collectionViewLayout.invalidateLayout()
     print("==================")
    }
 
   override func willTransition(to newCollection: UITraitCollection, with coordinator: UIViewControllerTransitionCoordinator)
   {
-    print()
-    print("willTransition")
+//    print()
+//    print("willTransition")
     super.willTransition(to: newCollection, with: coordinator)
 //    print("safe area width =",self.view.safeAreaLayoutGuide.layoutFrame.size.width)
 //    print("stationCollectionView.bounds.width=",stationCollectionView.bounds.width)
 //    currentStationIndexPath = visibleStationIndexPath()
 //    print("currentStationIndexPath=",currentStationIndexPath)
-  print("currentStationIndexPath=",currentStationIndexPath)
+//  print("currentStationIndexPath=",currentStationIndexPath)
    print()
   }
   
@@ -243,12 +259,12 @@ class DetailViewController: UIViewController
 //    self.currentStationIndexPath = self.visibleStationIndexPath()
     self.stationCollectionView.scrollToItem(at: self.currentStationIndexPath, at: .centeredHorizontally, animated: false)
   }
-  print("currentStationIndexPath=",currentStationIndexPath)
+//  print("currentStationIndexPath=",currentStationIndexPath)
 //  let chordSortedStations = self.event.stationsSortedByChordOffset(selectedEventDetails, order: .ascending)
 //  let primaryIndex = self.event.primaryStationIndex(chordSortedStations)
 //  moveCursorToStation(indexPath: IndexPath(item: primaryIndex!, section: 0))
 //  print("deviceRotated > visibleStationIndexPath()=",visibleStationIndexPath())
-  print("deviceRotated > currentStationIndexPath=",currentStationIndexPath)
+//  print("deviceRotated > currentStationIndexPath=",currentStationIndexPath)
 //  moveCursorToStation(indexPath: visibleStationIndexPath())
   moveCursorToStation(indexPath: currentStationIndexPath)
 
@@ -260,7 +276,8 @@ class DetailViewController: UIViewController
   override func viewWillDisappear(_ animated: Bool)
   {
     eventDetailView.isHidden = true
-  }
+//    self.navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.red]
+   }
   
   // MARK: - Event Detail Functions
   func updateEventInfoFields(eventItem itm: EventDetails)
@@ -273,9 +290,22 @@ class DetailViewController: UIViewController
       {
         self.eventTitle.attributedText = self.event.updateObjectFld(item)
         self.eventRank.attributedText = self.event.updateRankFld(item)
-//        let timeTuple = self.updateEventTimeFlds(&item)
         let timeTuple = self.event.updateEventTimeFlds(&item)
-        self.eventTimeRemaining.attributedText = timeTuple.remainingTime
+        var remainingTime: NSMutableAttributedString = timeTuple.remainingTime as! NSMutableAttributedString
+        if remainingTime.string == "completed"
+        {
+          print("Detail > found completed")
+          remainingTime = NSMutableAttributedString(string: "")
+          //dim/gray out asteriod hame, date and time
+          self.eventTitle.textColor = .darkGray
+          self.eventRank.textColor = .darkGray
+          self.eventFeed.textColor = .darkGray
+        }
+        //this does not take effect until return to previous view controller
+        self.navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white,
+                                                                        NSAttributedString.Key.font: UIFont.preferredFont(forTextStyle: .title3)]
+
+        self.eventTimeRemaining.attributedText = remainingTime
         self.eventFeed.attributedText = self.event.updateFeedFld(item)
         self.eventRA.attributedText = self.event.updateRAFld(item)
         self.eventDec.attributedText = self.event.updateDecFld(item)
@@ -461,8 +491,8 @@ class DetailViewController: UIViewController
   
   func updateShadowPlot(_ item: EventDetails)
   {
-    print()
-    print("updateShadowPlot")
+//    print()
+//    print("updateShadowPlot")
     //update shadow bars plot
     let stationsExistBeyondSigma1:Bool = self.event.barPlotToSigma3(item)
     
@@ -522,13 +552,13 @@ class DetailViewController: UIViewController
     
     //    print("primary station index = ",self.event.primaryStationIndex(self.selectedStations))
     //    print("<updateEventInfoFields")
-    print("currentStationIndexPath=",currentStationIndexPath)
+//    print("currentStationIndexPath=",currentStationIndexPath)
   }
   
   func moveCursorToStation(indexPath: IndexPath)
   {
-    print()
-    print(">moveCursorToStation")
+//    print()
+//    print(">moveCursorToStation")
     //    print("station indexPath.item=",indexPath.item)
     //    for subview in self.weatherBarView.subviews
     //    {
@@ -566,24 +596,24 @@ class DetailViewController: UIViewController
         //        print("<moveCursorToStation")
         //        print()
     }
-    print("currentStationIndexPath=",currentStationIndexPath)
+//    print("currentStationIndexPath=",currentStationIndexPath)
   }
 
   func visibleStationIndexPath() -> IndexPath
   {
-    print()
-    print("visibleStationIndexPath")
+//    print()
+//    print("visibleStationIndexPath")
     let visibleRect = CGRect(origin: stationCollectionView.contentOffset, size: stationCollectionView.bounds.size)
     //    print("visibleRect=",visibleRect)
     let visiblePoint = CGPoint(x: visibleRect.midX, y: visibleRect.midY)
     //    print("visiblePoint=",visiblePoint)
     let visibleStationIndexPath = stationCollectionView.indexPathForItem(at: visiblePoint)!
-    print("visibleStationIndexPath=",visibleStationIndexPath)
-    print("visbleStationIndexPath.item=",visibleStationIndexPath.item)
+//    print("visibleStationIndexPath=",visibleStationIndexPath)
+//    print("visbleStationIndexPath.item=",visibleStationIndexPath.item)
     //    print("visbleStationIndexPath.section=",visibleStationIndexPath.section)
     //    currentStationIndexPath = visibleStationIndexPath
-    print("currentStationIndexPath=",currentStationIndexPath)
-    print()
+//    print("currentStationIndexPath=",currentStationIndexPath)
+//    print()
     return visibleStationIndexPath
   }
 
@@ -677,8 +707,8 @@ extension DetailViewController: UICollectionViewDataSource,UICollectionViewDeleg
   
   func adjustCellWidth()
   {
-    print()
-    print("adjustCellWidth")
+//    print()
+//    print("adjustCellWidth")
     var cellHeight = stationCollectionView.bounds.height
     if let flowLayout = self.stationCollectionView.collectionViewLayout as? UICollectionViewFlowLayout
     {
@@ -692,21 +722,21 @@ extension DetailViewController: UICollectionViewDataSource,UICollectionViewDeleg
       //      print("adjusted cellWidth=",cellWidth)
       stationCollectionView.bounds.origin.x = 0
       flowLayout.itemSize = CGSize(width: cellWidth, height: CGFloat(cellHeight))
-      print("flowLayout.itemSize=",flowLayout.itemSize)
-      print("currentStationIndexPath=",currentStationIndexPath)
+//      print("flowLayout.itemSize=",flowLayout.itemSize)
+//      print("currentStationIndexPath=",currentStationIndexPath)
     }
   }
   
   func scrollViewDidEndDecelerating(_ scrollView: UIScrollView)
   {
-    print()
-    print(">scrollViewDidEndDecelerating")
+//    print()
+//    print(">scrollViewDidEndDecelerating")
 //    print("visibleIndexPaths=",visibleIndexPaths)
 //    moveCursorToStation(indexPath: visibleStationIndexPath)
     currentStationIndexPath = visibleStationIndexPath()
     moveCursorToStation(indexPath: visibleStationIndexPath())
 //    print("<scrollViewDidEndDecelerating")
-    print("currentStationIndexPath=",currentStationIndexPath)
+//    print("currentStationIndexPath=",currentStationIndexPath)
   }
 }
 
