@@ -20,6 +20,7 @@ class MyEventsViewController: UIViewController, UICollectionViewDataSource,UICol
   let reuseIdentifier = "MyEventCell"
   var cellDataArray = [Event?]()
   var cellStringArray = [EventStrings]()
+  var eventsWithDetails = MyEventListDetails(eventList: [], eventsDetails: [])
   var eventStore = EKEventStore()
   let vc = EKEventEditViewController()
   
@@ -101,14 +102,18 @@ class MyEventsViewController: UIViewController, UICollectionViewDataSource,UICol
       lastUpdateAlert.addAction(UIAlertAction(title: alertExistingBtn, style: .default, handler: {_ in
        //restore existing list
         print("Use Existing tapped")
+        
+        self.assignEventsWithDetails()
+        
         self.cellDataArray = OWWebAPI.shared.loadEvents()
-        UserDefaults.standard.removeObject(forKey: UDKeys.lastEventListUpdate)
+//        UserDefaults.standard.removeObject(forKey: UDKeys.lastEventListUpdate)
         self.cellStringArray = self.assignMyEventStrings(myEvents: self.cellDataArray)
         DispatchQueue.main.async{self.myEventsCollection.reloadData()}
       }))
     }
     lastUpdateAlert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: {_ in
       print("Cancel button tapped")
+//      UserDefaults.standard.removeObject(forKey: UDKeys.lastEventListUpdate)
     }) )
 
     self.present(lastUpdateAlert, animated: true, completion: nil)
@@ -176,9 +181,16 @@ class MyEventsViewController: UIViewController, UICollectionViewDataSource,UICol
     if segue.identifier == "DetailSegue"
     {
 //      print("segue.identifier=",segue.identifier)
+      
+
+      
       if let dest = segue.destination as? DetailViewController,
         let index = myEventsCollection.indexPathsForSelectedItems?.first
       {
+//        let eventDetails = OWWebAPI.shared.loadDetails()
+//        let detailsIndex = eventDetails.index(where: { $0.Id == cellDataArray[index.item]!.Id  })
+//        print("detailsIndex=", detailsIndex)
+        
         dest.selection = cellDataArray[index.row]!.Object
         dest.detailData = cellDataArray[index.row]!
         dest.eventID = cellDataArray[index.row]!.Id!
@@ -202,6 +214,7 @@ class MyEventsViewController: UIViewController, UICollectionViewDataSource,UICol
   
   // MARK: - Event data functions
   //retrieve json, parse json, use closure to fill cells
+  
   func updateCellArray()
   {
     DispatchQueue.main.async
@@ -250,9 +263,27 @@ class MyEventsViewController: UIViewController, UICollectionViewDataSource,UICol
                   if itemIndex == myEvents!.count
                   {
                     OWWebAPI.shared.saveDetails(myEventListDetails)
-                    let tempDetails = OWWebAPI.shared.loadDetails()
+                    
+                    self.assignEventsWithDetails()
+
+                    DispatchQueue.main.async
+                      {
+//                        print("########################")
+//                        print("fillCellFields > eventsWithDetails > events = \n",self.eventsWithDetails.eventList)
+//                        print("------------------------")
+//                        print("fillCellFields > eventsWithDetails > details = \n",self.eventsWithDetails.eventsDetails)
+                        for (index, event) in self.eventsWithDetails.eventList.enumerated()
+                        {
+                          print("~~~~~~~~~~~~")
+                          print("event = ", event)
+                          print("details = ",self.eventsWithDetails.eventsDetails[index])
+                        }
+                      }
                     self.activitySpinner.stopAnimating()
                     self.spinnerView.isHidden = true
+                    print("\n\n\n\n\n")
+                    print("reload after details retrieval completion")
+                    DispatchQueue.main.async{self.myEventsCollection.reloadData()}
                   }
                 }
               }
@@ -271,6 +302,8 @@ class MyEventsViewController: UIViewController, UICollectionViewDataSource,UICol
       
 //      print("cell data array updated")
       DispatchQueue.main.async{self.spinnerLbl.text = "Updating Events..."}
+      print("\n\n\n\n\n")
+      print("reload after events retrieval completion")
       DispatchQueue.main.async{self.myEventsCollection.reloadData()}
       usleep(useconds_t(0.5 * 1000000)) //will sleep for 0.5 seconds)
 //      DispatchQueue.main.async
@@ -426,11 +459,45 @@ extension MyEventsViewController
     //create "m" superscript for star magnitude and magnitude drop
     let magAttrStr = NSMutableAttributedString(string:"m", attributes:[NSAttributedString.Key.font : captionFont,
                                                                        NSAttributedString.Key.baselineOffset: 5])
-    let starMagStr = cellStringArray[indexPath.row].StarMag
-    let starMagAttrStr = NSMutableAttributedString(string:starMagStr)
-    starMagAttrStr.append(magAttrStr)
-    cell.starMagText.attributedText = starMagAttrStr
+    let events = OWWebAPI.shared.loadEvents()
+//    let eventDetails = OWWebAPI.shared.loadDetails()
+//    print("########################")
+//    print("fillCellFields > eventsWithDetails > events = \n",eventsWithDetails.eventList)
+//    print("------------------------")
+//    print("fillCellFields > eventsWithDetails > details = \n",eventsWithDetails.eventsDetails)
 
+//    for (index, event) in events.enumerated()
+//    {
+//      print()
+//      print("event.Id = ",event.Id)
+////      print("indexPath.row=",indexPath.row)
+//      let detailsIndex = eventDetails.index(where: { $0.Id == event.Id  })
+////      print("detailsIndex=", detailsIndex)
+//      print("details.Id = ", eventDetails[detailsIndex!].Id)
+//    }
+
+//    print("°°°°events.count=",events.count)
+//    print("°°°°eventDetails.count=",eventDetails.count)
+    
+    
+    
+    if events.count == eventsWithDetails.eventsDetails.count
+    {
+      //use combined mag rather than star mag
+      let combMag = eventsWithDetails.eventsDetails[indexPath.row].CombMag
+      let combMagStr = String(format: "%0.1f",combMag!)
+      let combMagAttrStr = NSMutableAttributedString(string:combMagStr)
+      combMagAttrStr.append(magAttrStr)
+      cell.starMagText.attributedText = combMagAttrStr
+    } else {
+      let starMagStr = cellStringArray[indexPath.row].StarMag
+      let starMagAttrStr = NSMutableAttributedString(string:starMagStr)
+      starMagAttrStr.append(magAttrStr)
+      cell.starMagText.attributedText = starMagAttrStr
+    }
+
+    
+    
 //    if cellDataArray[indexPath.row]!.MagDrop! >= 0.2
 //    {
 ////      let magDropStr = String(format: "%.01f",cellDataArray[indexPath.row]!.MagDrop)
@@ -449,12 +516,12 @@ extension MyEventsViewController
 //    }
     cell.maxDurText.text = cellStringArray[indexPath.row].MaxDurSec
     cell.leadTime.text = leadTime(timeString: cellStringArray[indexPath.row].EventTimeUtc)
-    print("check leadTime for completed")
+//    print("check leadTime for completed")
     
     
     if cell.leadTime.text == "completed"
     {
-      print("found completed")
+//      print("found completed")
       cell.leadTime.text = ""
       //dim/gray out asteriod hame, date and time
       cell.objectText.textColor = .darkGray
@@ -841,6 +908,22 @@ extension MyEventsViewController
 //    print()
 //    print("myEventStrings = ",myEventStrings)
     return myEventStrings
+  }
+  
+  fileprivate func assignEventsWithDetails() {
+    let tempEvents = OWWebAPI.shared.loadEvents()
+    let tempDetails = OWWebAPI.shared.loadDetails()
+    self.eventsWithDetails.eventList = []
+    self.eventsWithDetails.eventsDetails = []
+    self.eventsWithDetails.eventList = tempEvents
+    for (index, event) in tempEvents.enumerated()
+    {
+      print()
+      print("event.Id = ",event.Id)
+      let detailsIndex = tempDetails.index(where: { $0.Id == event.Id  })
+      print("details.Id = ", tempDetails[detailsIndex!].Id)
+      self.eventsWithDetails.eventsDetails.append(tempDetails[detailsIndex!])
+    }
   }
 
 }
