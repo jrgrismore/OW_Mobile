@@ -28,13 +28,13 @@ var userHasChanged: Bool = false
 
 func saveCredentailsToKeyChain()
 {
-  print("saveCredentailsToKeyChain")
+//  print("saveCredentailsToKeyChain")
   let server = "www.occultwatcher.net"
-  print("Credentials=",Credentials.username,"   ",Credentials.password)
+//  print("Credentials=",Credentials.username,"   ",Credentials.password)
   let username = Credentials.username
-  print("save username=",username)
+//  print("save username=",username)
   let password = Credentials.password.data(using: .utf8)
-  print("save password=",password)
+//  print("save password=",password)
   let attributes: [String : Any] =
     [
       (kSecClass as String): kSecClassInternetPassword,
@@ -55,13 +55,13 @@ func saveCredentailsToKeyChain()
 
 func deleteCredentailsFromKeyChain()
 {
-  print("deleteCredentailsFromKeyChain")
+//  print("deleteCredentailsFromKeyChain")
   let server = "www.occultwatcher.net"
-  print("Credentials=",Credentials.username,"   ",Credentials.password)
+//  print("Credentials=",Credentials.username,"   ",Credentials.password)
   let username = Credentials.username
-  print("delete username=",username)
+//  print("delete username=",username)
   let password = Credentials.password.data(using: .utf8)
-  print("delete password=",password)
+//  print("delete password=",password)
   let attributes: [String : Any] =
     [
       (kSecClass as String): kSecClassInternetPassword,
@@ -78,11 +78,11 @@ func updateCredentailsOnKeyChain()
 {
   print("updateCredentailsOnKeyChain")
   let server = "www.occultwatcher.net"
-  print("Credentials=",Credentials.username,"   ",Credentials.password)
+//  print("Credentials=",Credentials.username,"   ",Credentials.password)
   let username = Credentials.username
-  print("update username=",username)
+//  print("update username=",username)
   let password = Credentials.password.data(using: .utf8)
-  print("update password=",password)
+//  print("update password=",password)
   let query: [String : Any] =
     [
       (kSecClass as String): kSecClassInternetPassword,
@@ -97,13 +97,13 @@ func updateCredentailsOnKeyChain()
   
   //update existingbitem on keychain
   let itemUpdateStatus = SecItemUpdate(query as CFDictionary, updateAttributes as CFDictionary)
-  print("itam update status=",itemUpdateStatus.description)
+//  print("itam update status=",itemUpdateStatus.description)
   
 }
 
 func loadCredentailsFromKeyChain()
 {
-  print("loadCredentailsFromKeyChain")
+//  print("loadCredentailsFromKeyChain")
   let server = "www.occultwatcher.net"
   //query for item in keychain
   let query: [String: Any] =
@@ -124,8 +124,8 @@ func loadCredentailsFromKeyChain()
     let passwordData = existingItem[kSecValueData as String] as? Data,
     let password = String(data: passwordData, encoding: .utf8)
   {
-    print("from keychain:")
-    print("username=",username,"   password=",password)
+//    print("from keychain:")
+//    print("username=",username,"   password=",password)
     Credentials.username = username
     Credentials.password = password
   }
@@ -166,11 +166,11 @@ class AccountViewController: UIViewController, UITextFieldDelegate
   
   override func viewWillAppear(_ animated: Bool)
   {
-    print("viewWillAppear")
+//    print("viewWillAppear")
     super.viewWillAppear(true)
     versionLbl.text = versionBuild()
     loadCredentailsFromKeyChain()
-    print("loaded Credentials=",Credentials.username,"   ",Credentials.password)
+//    print("loaded Credentials=",Credentials.username,"   ",Credentials.password)
     emailFld.text = Credentials.username
     initialUserName = Credentials.username
     passwordFld.text = Credentials.password
@@ -178,8 +178,8 @@ class AccountViewController: UIViewController, UITextFieldDelegate
   
   override func viewWillDisappear(_ animated: Bool)
   {
-    print("viewWillDisappear")
-    print("email= \(emailFld.text)   Credentials.username=\(Credentials.username)")
+//    print("viewWillDisappear")
+//    print("email= \(emailFld.text)   Credentials.username=\(Credentials.username)")
     if emailFld.text != Credentials.username || passwordFld.text != Credentials.password
     {
       Credentials.username = emailFld.text!
@@ -194,8 +194,8 @@ class AccountViewController: UIViewController, UITextFieldDelegate
     }
     finalUserName = Credentials.username
 
-    print("finalUserName=",finalUserName)
-    print("initialUserName=",initialUserName)
+//    print("finalUserName=",finalUserName)
+//    print("initialUserName=",initialUserName)
     if finalUserName != initialUserName
     {
       userHasChanged = true
@@ -220,7 +220,7 @@ class AccountViewController: UIViewController, UITextFieldDelegate
   
   func textFieldDidEndEditing(_ textField: UITextField, reason: UITextField.DidEndEditingReason)
   {
-    print("textFieldDidEndEditing")
+//    print("textFieldDidEndEditing")
     if textField == emailFld
     {
 //      print("set username")
@@ -236,7 +236,7 @@ class AccountViewController: UIViewController, UITextFieldDelegate
   
   @IBAction func updateUserandPassword(_ sender: Any)
   {
-    print("updateUserandPassword")
+//    print("updateUserandPassword")
     deleteCredentailsFromKeyChain()
     saveCredentailsToKeyChain()
 //    updateCredentailsOnKeyChain()

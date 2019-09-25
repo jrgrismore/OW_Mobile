@@ -110,10 +110,10 @@ class DetailViewController: UIViewController
   
   override func viewWillAppear(_ animated: Bool)
   {
-    print()
-    print("viewWillAppear")
-    
-    print("complete=",complete)
+//    print()
+//    print("viewWillAppear")
+//    
+//    print("complete=",complete)
     
 
     eventDetailView.isHidden = false
@@ -134,11 +134,11 @@ class DetailViewController: UIViewController
     updateEventInfoFields(eventItem: selectedEventDetails)
     if complete
     {
-      print(":::::set color to darkGray")
+//      print(":::::set color to darkGray")
       self.navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.darkGray,
                                                                       NSAttributedString.Key.font: UIFont.preferredFont(forTextStyle: .title3)]
     } else {
-      print(":::::set color to white")
+//      print(":::::set color to white")
       self.navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white,
                                                                       NSAttributedString.Key.font: UIFont.preferredFont(forTextStyle: .title3)]
     }
@@ -209,7 +209,7 @@ class DetailViewController: UIViewController
 //    currentStationIndexPath = visibleStationIndexPath()
 //    print("currentStationIndexPath=",currentStationIndexPath)
 //    stationCollectionView.collectionViewLayout.invalidateLayout()
-    print("==================")
+//    print("==================")
    }
 
   override func willTransition(to newCollection: UITraitCollection, with coordinator: UIViewControllerTransitionCoordinator)
@@ -222,13 +222,13 @@ class DetailViewController: UIViewController
 //    currentStationIndexPath = visibleStationIndexPath()
 //    print("currentStationIndexPath=",currentStationIndexPath)
 //  print("currentStationIndexPath=",currentStationIndexPath)
-   print()
+//   print()
   }
   
   @objc func deviceRotated()
   {
-  print()
-  print("deviceRotated")
+//  print()
+//  print("deviceRotated")
   //    print("safe area height =",self.view.safeAreaLayoutGuide.layoutFrame.size.height)
 //  print("safe area width =",self.view.safeAreaLayoutGuide.layoutFrame.size.width)
 //  print("stationCollectionView.bounds.width=",stationCollectionView.bounds.width)
@@ -270,7 +270,7 @@ class DetailViewController: UIViewController
 
 //  stationCollectionView.reloadData()
 
-  print()
+//  print()
 }
 
   override func viewWillDisappear(_ animated: Bool)
@@ -690,9 +690,9 @@ extension DetailViewController: UICollectionViewDataSource,UICollectionViewDeleg
   
   func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell
   {
-    print()
-    print(">collectionView")
-    print("cellForItemAt > indexPath:",indexPath)
+//    print()
+//    print(">collectionView")
+//    print("cellForItemAt > indexPath:",indexPath)
 //    print("station=",selectedStations[indexPath.item])
     var cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as! StationCell
     cell.backgroundColor = #colorLiteral(red: 0.2043271959, green: 0.620110333, blue: 0.6497597098, alpha: 1)
@@ -701,7 +701,7 @@ extension DetailViewController: UICollectionViewDataSource,UICollectionViewDeleg
 //    visibleIndexPaths = collectionView.indexPathsForVisibleItems
 //    currentStationIndexPath = visibleStationIndexPath()
 //    print("<collectionView")
-    print()
+//    print()
     return cell
   }
   

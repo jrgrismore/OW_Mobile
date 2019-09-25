@@ -74,7 +74,7 @@ class MyEventsViewController: UIViewController, UICollectionViewDataSource,UICol
     {
       // lastUpdate is valid, therefore previous event list is stored in UserDefaults
       // show alert asking update or use existing
-      print("lastUpdate has valid value")
+//      print("lastUpdate has valid value")
       let updateTimeFormatter = DateFormatter()
       updateTimeFormatter.dateFormat = "MM-dd-yy'   'HH:mm:ss"
       let lastUpdateStr = updateTimeFormatter.string(from: lastUpdate)
@@ -101,7 +101,7 @@ class MyEventsViewController: UIViewController, UICollectionViewDataSource,UICol
     {
       lastUpdateAlert.addAction(UIAlertAction(title: alertExistingBtn, style: .default, handler: {_ in
        //restore existing list
-        print("Use Existing tapped")
+//        print("Use Existing tapped")
         
         self.assignEventsWithDetails()
         
@@ -158,7 +158,7 @@ class MyEventsViewController: UIViewController, UICollectionViewDataSource,UICol
       let userChangeAlert = UIAlertController(title: "User Has Changed to \n" + Credentials.username, message: "Update Event List?", preferredStyle: .alert)
       //add action to update user
       userChangeAlert.addAction(UIAlertAction(title: "Update", style: .default, handler: {_ in
-        print("Yes was tapped")
+//        print("Yes was tapped")
         //handle the user change
         self.refreshEventCells(nil)
         userHasChanged = false
@@ -199,15 +199,15 @@ class MyEventsViewController: UIViewController, UICollectionViewDataSource,UICol
         {eventCompleted = true} else {eventCompleted = false}
         if eventCompleted
         {
-          print("set dest.complete to true")
+//          print("set dest.complete to true")
           dest.complete = eventCompleted
         }
         else {
-          print("set dest.complete to false")
+//          print("set dest.complete to false")
          dest.complete = false
         }
 
-        print("DetailSegue > dest.complete=",dest.complete)
+//        print("DetailSegue > dest.complete=",dest.complete)
       }
     }
   }
@@ -274,15 +274,15 @@ class MyEventsViewController: UIViewController, UICollectionViewDataSource,UICol
 //                        print("fillCellFields > eventsWithDetails > details = \n",self.eventsWithDetails.eventsDetails)
                         for (index, event) in self.eventsWithDetails.eventList.enumerated()
                         {
-                          print("~~~~~~~~~~~~")
-                          print("event = ", event)
-                          print("details = ",self.eventsWithDetails.eventsDetails[index])
+//                          print("~~~~~~~~~~~~")
+//                          print("event = ", event)
+//                          print("details = ",self.eventsWithDetails.eventsDetails[index])
                         }
                       }
                     self.activitySpinner.stopAnimating()
                     self.spinnerView.isHidden = true
-                    print("\n\n\n\n\n")
-                    print("reload after details retrieval completion")
+//                    print("\n\n\n\n\n")
+//                    print("reload after details retrieval completion")
                     DispatchQueue.main.async{self.myEventsCollection.reloadData()}
                   }
                 }
@@ -302,8 +302,8 @@ class MyEventsViewController: UIViewController, UICollectionViewDataSource,UICol
       
 //      print("cell data array updated")
       DispatchQueue.main.async{self.spinnerLbl.text = "Updating Events..."}
-      print("\n\n\n\n\n")
-      print("reload after events retrieval completion")
+//      print("\n\n\n\n\n")
+//      print("reload after events retrieval completion")
       DispatchQueue.main.async{self.myEventsCollection.reloadData()}
       usleep(useconds_t(0.5 * 1000000)) //will sleep for 0.5 seconds)
 //      DispatchQueue.main.async
@@ -918,10 +918,10 @@ extension MyEventsViewController
     self.eventsWithDetails.eventList = tempEvents
     for (index, event) in tempEvents.enumerated()
     {
-      print()
-      print("event.Id = ",event.Id)
+//      print()
+//      print("event.Id = ",event.Id)
       let detailsIndex = tempDetails.index(where: { $0.Id == event.Id  })
-      print("details.Id = ", tempDetails[detailsIndex!].Id)
+//      print("details.Id = ", tempDetails[detailsIndex!].Id)
       self.eventsWithDetails.eventsDetails.append(tempDetails[detailsIndex!])
     }
   }
