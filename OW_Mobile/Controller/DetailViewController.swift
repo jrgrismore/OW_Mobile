@@ -47,6 +47,7 @@ class DetailViewController: UIViewController
   
   var stationBarSubViewsExist = false
   var stationCursorExists = false
+  var dimGray = #colorLiteral(red: 0.6666666667, green: 0.6666666667, blue: 0.6666666667, alpha: 1)
   
   // MARK: - Spinner Outlets
   @IBOutlet weak var spinnerView: UIView!
@@ -106,6 +107,7 @@ class DetailViewController: UIViewController
     {
       sizeClassIsRR = true
     }
+    self.navigationController?.navigationBar.tintColor = #colorLiteral(red: 0.01680417731, green: 0.1983509958, blue: 1, alpha: 1)
   }
   
   override func viewWillAppear(_ animated: Bool)
@@ -139,7 +141,7 @@ class DetailViewController: UIViewController
                                                                       NSAttributedString.Key.font: UIFont.preferredFont(forTextStyle: .title3)]
     } else {
 //      print(":::::set color to white")
-      self.navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white,
+      self.navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.black,
                                                                       NSAttributedString.Key.font: UIFont.preferredFont(forTextStyle: .title3)]
     }
     
@@ -297,12 +299,12 @@ class DetailViewController: UIViewController
           print("Detail > found completed")
           remainingTime = NSMutableAttributedString(string: "")
           //dim/gray out asteriod hame, date and time
-          self.eventTitle.textColor = .darkGray
-          self.eventRank.textColor = .darkGray
-          self.eventFeed.textColor = .darkGray
+          self.eventTitle.textColor = self.dimGray
+          self.eventRank.textColor = self.dimGray
+          self.eventFeed.textColor = self.dimGray
         }
         //this does not take effect until return to previous view controller
-        self.navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white,
+        self.navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.black,
                                                                         NSAttributedString.Key.font: UIFont.preferredFont(forTextStyle: .title3)]
 
         self.eventTimeRemaining.attributedText = remainingTime

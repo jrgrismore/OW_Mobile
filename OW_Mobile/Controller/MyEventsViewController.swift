@@ -47,9 +47,9 @@ class MyEventsViewController: UIViewController, UICollectionViewDataSource,UICol
     //set layout attributes
     if let flowLayout = self.myEventsCollection.collectionViewLayout as? UICollectionViewFlowLayout
     {
-      flowLayout.minimumLineSpacing = 5
+      flowLayout.minimumLineSpacing = 15
       flowLayout.minimumInteritemSpacing = 3
-      flowLayout.sectionInset = UIEdgeInsets(top: 5, left: 5, bottom: 7, right: 5)
+      flowLayout.sectionInset = UIEdgeInsets(top: 8, left: 8, bottom: 8, right: 8)
       let totalHInsets = flowLayout.sectionInset.left + flowLayout.sectionInset.right
       //?does this work for all screen sizes and orientations?
       let cellWidth = view.safeAreaLayoutGuide.layoutFrame.size.width - totalHInsets
@@ -117,11 +117,13 @@ class MyEventsViewController: UIViewController, UICollectionViewDataSource,UICol
     }) )
 
     self.present(lastUpdateAlert, animated: true, completion: nil)
+    self.navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.black,
+                                                                    NSAttributedString.Key.font: UIFont.preferredFont(forTextStyle: .title3)]
    }
   
   override func viewWillAppear(_ animated: Bool)
   {
-    self.navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white,
+    self.navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.black,
                                                                     NSAttributedString.Key.font: UIFont.preferredFont(forTextStyle: .title3)]
 
     //set cell size
@@ -346,7 +348,7 @@ extension MyEventsViewController
 //    print("cellForItemAt")
     var cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as! MyEventsCollectionViewCell
     //set permanent cell background color to 235_255_235_67
-    cell.backgroundColor = #colorLiteral(red: 0.9215686275, green: 1, blue: 0.9215686275, alpha: 0.67)
+    cell.backgroundColor = #colorLiteral(red: 0.3058823529, green: 0.4941176471, blue: 0.5333333333, alpha: 0.67)
     fillCellFields(cell: &cell, indexPath: indexPath)
     let longPress = UILongPressGestureRecognizer(target: self, action: #selector(handleLongPress))
     cell.addGestureRecognizer(longPress)
@@ -524,11 +526,27 @@ extension MyEventsViewController
 //      print("found completed")
       cell.leadTime.text = ""
       //dim/gray out asteriod hame, date and time
-      cell.objectText.textColor = .darkGray
-      cell.eventTime.textColor = .darkGray
+      cell.objectText.textColor = #colorLiteral(red: 0.6666666667, green: 0.6666666667, blue: 0.6666666667, alpha: 1)
+      cell.cloudText.textColor = #colorLiteral(red: 0.6666666667, green: 0.6666666667, blue: 0.6666666667, alpha: 1)
+      cell.eventTime.textColor = #colorLiteral(red: 0.6666666667, green: 0.6666666667, blue: 0.6666666667, alpha: 1)
+      cell.eventTime.textColor = #colorLiteral(red: 0.6666666667, green: 0.6666666667, blue: 0.6666666667, alpha: 1)
+      cell.leadTime.textColor = #colorLiteral(red: 0.6666666667, green: 0.6666666667, blue: 0.6666666667, alpha: 1)
+      cell.magDropText.textColor = #colorLiteral(red: 0.6666666667, green: 0.6666666667, blue: 0.6666666667, alpha: 1)
+      cell.maxDurText.textColor = #colorLiteral(red: 0.6666666667, green: 0.6666666667, blue: 0.6666666667, alpha: 1)
+      cell.starMagText.textColor = #colorLiteral(red: 0.6666666667, green: 0.6666666667, blue: 0.6666666667, alpha: 1)
+      cell.tempText.textColor = #colorLiteral(red: 0.6666666667, green: 0.6666666667, blue: 0.6666666667, alpha: 1)
+      cell.timeError.textColor = #colorLiteral(red: 0.6666666667, green: 0.6666666667, blue: 0.6666666667, alpha: 1)
     } else {
-      cell.objectText.textColor = .black
-      cell.eventTime.textColor = .black
+      cell.objectText.textColor = .white
+      cell.cloudText.textColor = .white
+      cell.eventTime.textColor = .white
+      cell.eventTime.textColor = .white
+      cell.leadTime.textColor = .white
+      cell.magDropText.textColor = .white
+      cell.maxDurText.textColor = .white
+      cell.starMagText.textColor = .white
+      cell.tempText.textColor = .white
+      cell.timeError.textColor = .white
     }
     
     
