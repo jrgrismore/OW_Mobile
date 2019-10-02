@@ -17,6 +17,79 @@ struct UDKeys
   static let lastEventListUpdate = "lastEventListUpdate"
 }
 
+//Unified event with details structure matching JSON keys
+struct EventWithDetails: Codable
+{
+  var Id: String?
+  var Object: String?
+  var StarMag: Double?
+  var MagDrop: Double?
+  var MaxDurSec: Double?
+  var EventTimeUtc: String?
+  var ErrorInTimeSec: Double?
+  var WeatherInfoAvailable: Bool?   //weather info available
+  var CloudCover: Int?
+  var Wind: Int?
+  var TempDegC: Int?
+  var HighCloud: Bool?
+  var BestStationPos: Int?
+  var StarColour: Int?
+  
+  var Stations: [ObserverStation]?
+  
+  var Feed: String?
+  var Rank: Int?
+  var BV: Double?
+  var CombMag: Double?
+  var AstMag: Double?
+  var MoonDist: Double?
+  var MoonPhase: Int?
+  var AstDiaKm: Double?
+  var AstDistUA: Double?
+  var RAHours: Double?
+  var DEDeg: Double?
+  var StarAlt: Double?
+  var StarAz: Double?
+  var SunAlt: Double?
+  var MoonAlt: Double?
+  var MoonAz: Double?
+  var StellarDiaMas: Double?
+  var StarName: String?
+  var OtherStarNames: String?
+  var AstClass: String?
+  var AstRotationHrs: Double?
+  var AstRotationAmplitude: Double?
+  var PredictionUpdated: String?
+  var OneSigmaErrorWidthKm: Double?
+}
+
+struct ObserverStation: Codable
+{
+  var StationId: Int?
+  var StationName: String?
+  var EventTimeUtc: String?
+  var WeatherInfoAvailable: Bool?
+  var CloudCover: Int?
+  var Wind: Int?
+  var TempDegC: Int?
+  var HighCloud: Bool?
+  var StationPos: Int?
+  var ChordOffsetKm: Double?
+  var OccultDistanceKm: Double?
+  var IsOwnStation: Bool?
+  var IsPrimaryStation: Bool?
+  var ErrorInTimeSec: Double?
+  var StarAlt: Double?
+  var StarAz: Double?
+  var SunAlt: Double?
+  var MoonAlt: Double?
+  var MoonAz: Double?
+  var MoonDist: Double?
+  var MoonPhase: Double?
+  var CombMag: Double?
+  var StarColour: Double?
+}
+
 //Event structure matching JSON keys
 struct Event: Codable
 {
