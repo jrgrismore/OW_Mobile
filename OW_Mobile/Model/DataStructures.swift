@@ -15,6 +15,7 @@ struct UDKeys
   static let myEventList = "myEventList"
   static let myEventDetails = "myEventDetails"
   static let lastEventListUpdate = "lastEventListUpdate"
+  static let eventsWithDetails = "eventsWithDetails"
 }
 
 //Unified event with details structure matching JSON keys
@@ -34,9 +35,7 @@ struct EventWithDetails: Codable
   var HighCloud: Bool?
   var BestStationPos: Int?
   var StarColour: Int?
-  
-  var Stations: [ObserverStation]?
-  
+  var Stations: [ObserverStation]?   //station array
   var Feed: String?
   var Rank: Int?
   var BV: Double?
@@ -89,6 +88,7 @@ struct ObserverStation: Codable
   var CombMag: Double?
   var StarColour: Double?
 }
+var eventWithDetails = [EventWithDetails]()
 
 //Event structure matching JSON keys
 struct Event: Codable
@@ -193,3 +193,23 @@ struct Station: Codable
   var IsOwnStation: Bool?   //new
   var IsPrimaryStation: Bool?   //new
 }
+
+//EventDetaiol strings structure
+struct EventDetailStrings: Codable
+{
+  var Id: String = ""
+  var Object: String = ""
+  var StarMag: String = ""
+  var MagDrop: String = ""
+  var MaxDurSec: String = ""
+  var EventTimeUtc: String = ""
+  var ErrorInTimeSec: String = ""
+  var WeatherInfoAvailable: String = ""
+  var CloudCover: String = ""
+  var Wind: String = ""
+  var TempDegC: String = ""
+  var HighCloud: String = ""
+  var BestStationPos: String = ""
+  var StarColour: String = ""
+ }
+var eventDetailStrings = EventDetailStrings()

@@ -74,15 +74,10 @@ class OWWebAPI: NSObject
     func retrieveEventsWithDetails( completion: @escaping ([EventWithDetails]?, Error?) -> Void)
     {
       delegate?.webLogTextDidChange(text: "Connecting to OW")
+      usleep(useconds_t(0.5 * 1000000)) //will sleep for 0.5 seconds)
       let config = URLSessionConfiguration.default
-  //    let owSession = URLSession(configuration: config)
       OWWebAPI.owSession = URLSession(configuration: config)
       let owURL = createEventWithDetailsilURL(owSession: OWWebAPI.owSession)
-  //    print("owURL=",owURL)
-  //    delegate?.webLogTextDidChange(text: "Connecting to " + owURL.description)
-
-  //    delegate?.webLogTextDidChange(text: "Begin...")
-   //   deleteCookie()  this was just here as a test
       let owTask = OWWebAPI.owSession.dataTask(with: owURL)
       {
         (data,response,error) in
@@ -94,18 +89,14 @@ class OWWebAPI: NSObject
           usleep(useconds_t(0.5 * 1000000)) //will sleep for 0.5 seconds)
           return
         }
-  //      print("data retrieved")
-  //      self.delegate?.webLogTextDidChange(text: "Data Retrieved")
-  //      usleep(useconds_t(0.5 * 1000000)) //will sleep for 0.5 seconds)
+        self.delegate?.webLogTextDidChange(text: "Data Retrieved")
+        usleep(useconds_t(0.5 * 1000000)) //will sleep for 0.5 seconds)
         let eventWithDetail = self.parseEventsWithDetails(jsonData: dataResponse)
-  //      print("myEvents count=", myEvents.count)
-  //      print("myEvents=",myEvents)
 
-        self.delegate?.webLogTextDidChange(text: "eventWithDetail List count = \(eventWithDetail.count)")
-        usleep(useconds_t(1.0 * 1000000)) //will sleep for 0.5 seconds)
+        self.delegate?.webLogTextDidChange(text: "eventWithDetails List count = \(eventWithDetail.count)")
+        usleep(useconds_t(1.0 * 1000000)) //will sleep for 1.0 seconds)
         completion(eventWithDetail,nil)
       }
-  //    print("...owTask.resume()")
       owTask.resume()
     }
 

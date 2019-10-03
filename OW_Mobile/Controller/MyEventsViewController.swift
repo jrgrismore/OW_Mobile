@@ -19,7 +19,9 @@ class MyEventsViewController: UIViewController, UICollectionViewDataSource,UICol
   
   let reuseIdentifier = "MyEventCell"
   var cellDataArray = [Event?]()
+  var cellEventDetailArray = [EventWithDetails]()  //for rework
   var cellStringArray = [EventStrings]()
+  var cellEventDetailStringArray = [EventDetailStrings]()
   var eventsWithDetails = MyEventListDetails(eventList: [], eventsDetails: [])
   var eventsWithDetailsData = EventWithDetails()
   var eventStore = EKEventStore()
@@ -220,16 +222,49 @@ class MyEventsViewController: UIViewController, UICollectionViewDataSource,UICol
   
   func getEventsWithDetails()
   {
+    DispatchQueue.main.async
+      {
+        self.spinnerView.isHidden = false
+        self.activitySpinner.startAnimating()
+    }
     OWWebAPI.shared.retrieveEventsWithDetails(completion: { (eventsWithDetailsData, error) in
       DispatchQueue.main.async
         {
-          print("eventsWithDetailsData =",eventsWithDetailsData)
           print("event count =",eventsWithDetailsData?.count)
+          self.spinnerLbl.text = "Event List \n Download Complete..."
           for event in eventsWithDetailsData!
           {
             self.printEventWithDetails(event)
           }
-          //                      DispatchQueue.main.async{self.myEventsCollection.reloadData()}
+          //fill cells
+          if eventsWithDetailsData!.count < 1
+          {
+            DispatchQueue.main.async
+              {
+                self.cellDataArray = []
+                self.cellStringArray = []
+                self.myEventsCollection.reloadData()
+                //                OWWebAPI.shared.saveEvents([])
+                //                OWWebAPI.shared.saveDetails([])
+                //save empty array to userdefaults
+                self.activitySpinner.stopAnimating()
+                self.spinnerView.isHidden = true
+            }
+            return
+          }
+          self.cellEventDetailArray = eventsWithDetailsData!
+          self.cellEventDetailStringArray = self.assignEventDetailStrings(eventPlusDetails: self.cellEventDetailArray)
+          
+                DispatchQueue.main.async{self.spinnerLbl.text = "Updating Events..."}
+                DispatchQueue.main.async{self.myEventsCollection.reloadData()}
+                usleep(useconds_t(0.5 * 1000000)) //will sleep for 0.5 seconds)
+                DispatchQueue.main.async
+                  {
+                  self.activitySpinner.stopAnimating()
+                  self.spinnerView.isHidden = true
+                  }
+          DispatchQueue.main.async{self.myEventsCollection.reloadData()}
+
       }
     })
     //          OWWebAPI.shared.saveEvents(myEvents!)
@@ -237,24 +272,24 @@ class MyEventsViewController: UIViewController, UICollectionViewDataSource,UICol
     //          UserDefaults.standard.set(Date(), forKey: UDKeys.lastEventListUpdate)
   }
 
-  func printEventWithDetails(_ eventWithDetails: EventWithDetails)
+  func printEventWithDetails(_ eventAndDetails: EventWithDetails)
   {
       print()
-      print("Id =", eventWithDetails.Id!)
-      print("Object =", eventWithDetails.Object!)
-      print("StarMag =", eventWithDetails.StarMag!)
-      print("MagDrop =", eventWithDetails.MagDrop!)
-      print("MaxDurSec =", eventWithDetails.MaxDurSec!)
-      print("EventTimeUtc =", eventWithDetails.EventTimeUtc!)
-      print("ErrorInTimeSec =", eventWithDetails.ErrorInTimeSec!)
-      print("WeatherInfoAvailable =", eventWithDetails.WeatherInfoAvailable!)
-      print("CloudCover =", eventWithDetails.CloudCover!)
-      print("Wind =", eventWithDetails.Wind!)
-      print("TempDegC =", eventWithDetails.TempDegC!)
-      print("HighCloud =", eventWithDetails.HighCloud!)
-      print("BestStationPos =", eventWithDetails.BestStationPos!)
-      print("StarColour =", eventWithDetails.StarColour!)
-      for station in eventWithDetails.Stations!
+      print("Id =", eventAndDetails.Id!)
+      print("Object =", eventAndDetails.Object!)
+      print("StarMag =", eventAndDetails.StarMag!)
+      print("MagDrop =", eventAndDetails.MagDrop!)
+      print("MaxDurSec =", eventAndDetails.MaxDurSec!)
+      print("EventTimeUtc =", eventAndDetails.EventTimeUtc!)
+      print("ErrorInTimeSec =", eventAndDetails.ErrorInTimeSec!)
+      print("WeatherInfoAvailable =", eventAndDetails.WeatherInfoAvailable!)
+      print("CloudCover =", eventAndDetails.CloudCover!)
+      print("Wind =", eventAndDetails.Wind!)
+      print("TempDegC =", eventAndDetails.TempDegC!)
+      print("HighCloud =", eventAndDetails.HighCloud!)
+      print("BestStationPos =", eventAndDetails.BestStationPos!)
+      print("StarColour =", eventAndDetails.StarColour!)
+      for station in eventAndDetails.Stations!
       {
         print(" StationID =",station.StationId!)
         print("   StationName =",station.StationName!)
@@ -280,33 +315,34 @@ class MyEventsViewController: UIViewController, UICollectionViewDataSource,UICol
         print("   CombMag =",station.CombMag!)
         print("   StarColour =",station.StarColour!)
       }
-      print("Feed =",eventWithDetails.Feed!)
-      print("Rank =",eventWithDetails.Rank!)
-      print("BV =",eventWithDetails.BV)
-      print("CombMag =",eventWithDetails.CombMag!)
-      print("AstMag =",eventWithDetails.AstMag!)
-      print("MoonDist =",eventWithDetails.MoonDist!)
-      print("MoonPhase =",eventWithDetails.MoonPhase!)
-      print("AstDiaKm =",eventWithDetails.AstDiaKm!)
-      print("AstDistUA =",eventWithDetails.AstDistUA!)
-      print("RAHours =",eventWithDetails.RAHours!)
-      print("DEDeg =",eventWithDetails.DEDeg!)
-      print("StarAlt =",eventWithDetails.StarAlt!)
-      print("StarAz =",eventWithDetails.StarAz!)
-      print("SunAlt =",eventWithDetails.SunAlt!)
-      print("MoonAlt =",eventWithDetails.MoonAlt!)
-      print("MoonAz =",eventWithDetails.MoonAz!)
-      print("StellarDiaMas =",eventWithDetails.StellarDiaMas)
-      print("StarName =",eventWithDetails.StarName!)
-      print("OtherStarNames =",eventWithDetails.OtherStarNames!)
-      print("AstClass =",eventWithDetails.AstClass!)
-      print("AstRotationHrs =",eventWithDetails.AstRotationHrs)
-      print("AstRotationAmplitude =",eventWithDetails.AstRotationAmplitude)
-      print("PredictionUpdated =",eventWithDetails.PredictionUpdated!)
-      print("OneSigmaErrorWidthKm =",eventWithDetails.OneSigmaErrorWidthKm!)
+      print("Feed =",eventAndDetails.Feed!)
+      print("Rank =",eventAndDetails.Rank!)
+      print("BV =",eventAndDetails.BV)
+      print("CombMag =",eventAndDetails.CombMag!)
+      print("AstMag =",eventAndDetails.AstMag!)
+      print("MoonDist =",eventAndDetails.MoonDist!)
+      print("MoonPhase =",eventAndDetails.MoonPhase!)
+      print("AstDiaKm =",eventAndDetails.AstDiaKm!)
+      print("AstDistUA =",eventAndDetails.AstDistUA!)
+      print("RAHours =",eventAndDetails.RAHours!)
+      print("DEDeg =",eventAndDetails.DEDeg!)
+      print("StarAlt =",eventAndDetails.StarAlt!)
+      print("StarAz =",eventAndDetails.StarAz!)
+      print("SunAlt =",eventAndDetails.SunAlt!)
+      print("MoonAlt =",eventAndDetails.MoonAlt!)
+      print("MoonAz =",eventAndDetails.MoonAz!)
+      print("StellarDiaMas =",eventAndDetails.StellarDiaMas)
+      print("StarName =",eventAndDetails.StarName!)
+      print("OtherStarNames =",eventAndDetails.OtherStarNames!)
+      print("AstClass =",eventAndDetails.AstClass!)
+      print("AstRotationHrs =",eventAndDetails.AstRotationHrs)
+      print("AstRotationAmplitude =",eventAndDetails.AstRotationAmplitude)
+      print("PredictionUpdated =",eventAndDetails.PredictionUpdated!)
+      print("OneSigmaErrorWidthKm =",eventAndDetails.OneSigmaErrorWidthKm!)
      print()
 
   }
+  
   func updateCellArray()
   {
     //temporary test
@@ -436,7 +472,8 @@ extension MyEventsViewController
   func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int
   {
 //    print("numberOfItemsInSection=",cellDataArray.count)
-    return cellDataArray.count
+//    return cellDataArray.count
+    return cellEventDetailArray.count
   }
   
   func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell
@@ -542,358 +579,314 @@ extension MyEventsViewController
       print("long press gesture ended")
     }
   }
-  
-  func fillCellFields(cell: inout MyEventsCollectionViewCell, indexPath: IndexPath)
-  {
-    let calloutFont =   UIFont.preferredFont(forTextStyle: .callout)
-    let captionFont =   UIFont.preferredFont(forTextStyle: .caption1)
-//    let eventsStrings = self.assignMyEventStrings(myEvents: self.cellDataArray)
-    //cell text
-//    cell.objectText.text = cellDataArray[indexPath.row]!.Object
-//    cell.objectText.text = myEventsStrings.Object
-    cell.objectText.text = cellStringArray[indexPath.row].Object
-//    print("object=",cellStringArray[indexPath.row].Object)
-
-    //create "m" superscript for star magnitude and magnitude drop
-    let magAttrStr = NSMutableAttributedString(string:"m", attributes:[NSAttributedString.Key.font : captionFont,
-                                                                       NSAttributedString.Key.baselineOffset: 5])
-    let events = OWWebAPI.shared.loadEvents()
-//    let eventDetails = OWWebAPI.shared.loadDetails()
-//    print("########################")
-//    print("fillCellFields > eventsWithDetails > events = \n",eventsWithDetails.eventList)
-//    print("------------------------")
-//    print("fillCellFields > eventsWithDetails > details = \n",eventsWithDetails.eventsDetails)
-
-//    for (index, event) in events.enumerated()
-//    {
-//      print()
-//      print("event.Id = ",event.Id)
-////      print("indexPath.row=",indexPath.row)
-//      let detailsIndex = eventDetails.index(where: { $0.Id == event.Id  })
-////      print("detailsIndex=", detailsIndex)
-//      print("details.Id = ", eventDetails[detailsIndex!].Id)
-//    }
-
-//    print("°°°°events.count=",events.count)
-//    print("°°°°eventDetails.count=",eventDetails.count)
     
-    
-    
-    if events.count == eventsWithDetails.eventsDetails.count
+    func fillCellFields(cell: inout MyEventsCollectionViewCell, indexPath: IndexPath)
     {
-      //use combined mag rather than star mag
-      let combMag = eventsWithDetails.eventsDetails[indexPath.row].CombMag
-      let combMagStr = String(format: "%0.1f",combMag!)
-      let combMagAttrStr = NSMutableAttributedString(string:combMagStr)
-      combMagAttrStr.append(magAttrStr)
-      cell.starMagText.attributedText = combMagAttrStr
-    } else {
-      let starMagStr = cellStringArray[indexPath.row].StarMag
-      let starMagAttrStr = NSMutableAttributedString(string:starMagStr)
-      starMagAttrStr.append(magAttrStr)
-      cell.starMagText.attributedText = starMagAttrStr
-    }
-
-    
-    
-//    if cellDataArray[indexPath.row]!.MagDrop! >= 0.2
-//    {
-////      let magDropStr = String(format: "%.01f",cellDataArray[indexPath.row]!.MagDrop)
-//      let magDropStr = String(format: "%.01f",cellDataArray[indexPath.row]!.MagDrop)
-      let magDropAttrStr = NSMutableAttributedString(string:cellStringArray[indexPath.row].MagDrop, attributes:[NSAttributedString.Key.font : calloutFont])
-//      let magDropAttrStr = NSMutableAttributedString(string:magDropStr)
-      magDropAttrStr.append(magAttrStr)
-      cell.magDropText.attributedText = magDropAttrStr
-//    }
-//    else
-//    {
-//      let magDropStr = String(format: "%.02f",cellDataArray[indexPath.row]!.MagDrop)
-//      let magDropAttrStr = NSMutableAttributedString(string:magDropStr, attributes:[NSAttributedString.Key.font : calloutFont])
-//      magDropAttrStr.append(magAttrStr)
-//      cell.magDropText.attributedText = magDropAttrStr
-//    }
-    cell.maxDurText.text = cellStringArray[indexPath.row].MaxDurSec
-    cell.leadTime.text = leadTime(timeString: cellStringArray[indexPath.row].EventTimeUtc)
-//    print("check leadTime for completed")
-    
-    
-    if cell.leadTime.text == "completed"
-    {
-//      print("found completed")
-      cell.leadTime.text = ""
-      //dim/gray out asteriod hame, date and time
-      cell.objectText.textColor = #colorLiteral(red: 0.6666666667, green: 0.6666666667, blue: 0.6666666667, alpha: 1)
-      cell.cloudText.textColor = #colorLiteral(red: 0.6666666667, green: 0.6666666667, blue: 0.6666666667, alpha: 1)
-      cell.eventTime.textColor = #colorLiteral(red: 0.6666666667, green: 0.6666666667, blue: 0.6666666667, alpha: 1)
-      cell.eventTime.textColor = #colorLiteral(red: 0.6666666667, green: 0.6666666667, blue: 0.6666666667, alpha: 1)
-      cell.leadTime.textColor = #colorLiteral(red: 0.6666666667, green: 0.6666666667, blue: 0.6666666667, alpha: 1)
-      cell.magDropText.textColor = #colorLiteral(red: 0.6666666667, green: 0.6666666667, blue: 0.6666666667, alpha: 1)
-      cell.maxDurText.textColor = #colorLiteral(red: 0.6666666667, green: 0.6666666667, blue: 0.6666666667, alpha: 1)
-      cell.starMagText.textColor = #colorLiteral(red: 0.6666666667, green: 0.6666666667, blue: 0.6666666667, alpha: 1)
-      cell.tempText.textColor = #colorLiteral(red: 0.6666666667, green: 0.6666666667, blue: 0.6666666667, alpha: 1)
-      cell.timeError.textColor = #colorLiteral(red: 0.6666666667, green: 0.6666666667, blue: 0.6666666667, alpha: 1)
-    } else {
-      cell.objectText.textColor = .white
-      cell.cloudText.textColor = .white
-      cell.eventTime.textColor = .white
-      cell.eventTime.textColor = .white
-      cell.leadTime.textColor = .white
-      cell.magDropText.textColor = .white
-      cell.maxDurText.textColor = .white
-      cell.starMagText.textColor = .white
-      cell.tempText.textColor = .white
-      cell.timeError.textColor = .white
-    }
-    
-    
-    cell.eventTime.text = formatEventTime(timeString: cellStringArray[indexPath.row].EventTimeUtc)
-    //set time error field
-    if cellDataArray[indexPath.row]!.ErrorInTimeSec != nil
-    {
-      let timeError = cellDataArray[indexPath.row]!.ErrorInTimeSec
-      if timeError! > 90.0
+      let calloutFont =   UIFont.preferredFont(forTextStyle: .callout)
+      let captionFont =   UIFont.preferredFont(forTextStyle: .caption1)
+       cell.objectText.text = cellEventDetailArray[indexPath.row].Object
+      //create "m" superscript for star magnitude and magnitude drop
+      let magAttrStr = NSMutableAttributedString(string:"m", attributes:[NSAttributedString.Key.font : captionFont,
+                                                                         NSAttributedString.Key.baselineOffset: 5])
+//      let events = OWWebAPI.shared.loadEvents()
+//      let events = eventsWithDetails
+//      if events.count == eventsWithDetails.eventsDetails.count
+//      {
+//        //use combined mag rather than star mag
+//        let combMag = eventsWithDetails.eventsDetails[indexPath.row].CombMag
+//        let combMagStr = String(format: "%0.1f",combMag!)
+//        let combMagAttrStr = NSMutableAttributedString(string:combMagStr)
+//        combMagAttrStr.append(magAttrStr)
+//        cell.starMagText.attributedText = combMagAttrStr
+//      } else {
+//        let starMagStr = cellStringArray[indexPath.row].StarMag
+//        let starMagAttrStr = NSMutableAttributedString(string:starMagStr)
+//        starMagAttrStr.append(magAttrStr)
+//        cell.starMagText.attributedText = starMagAttrStr
+//      }
+         let magDropAttrStr = NSMutableAttributedString(string:cellEventDetailStringArray[indexPath.row].MagDrop, attributes:[NSAttributedString.Key.font : calloutFont])
+        magDropAttrStr.append(magAttrStr)
+        cell.magDropText.attributedText = magDropAttrStr
+      cell.maxDurText.text = cellEventDetailStringArray[indexPath.row].MaxDurSec
+      cell.leadTime.text = leadTime(timeString: cellEventDetailArray[indexPath.row].EventTimeUtc!)
+      if cell.leadTime.text == "completed"
       {
-        let errorInMin = timeError! / 60.0
-        cell.timeError.text = String(format: "+/- %.01f min",errorInMin)
+        cell.leadTime.text = ""
+        //dim/gray out asteriod hame, date and time
+        cell.objectText.textColor = #colorLiteral(red: 0.6666666667, green: 0.6666666667, blue: 0.6666666667, alpha: 1)
+        cell.cloudText.textColor = #colorLiteral(red: 0.6666666667, green: 0.6666666667, blue: 0.6666666667, alpha: 1)
+        cell.eventTime.textColor = #colorLiteral(red: 0.6666666667, green: 0.6666666667, blue: 0.6666666667, alpha: 1)
+        cell.eventTime.textColor = #colorLiteral(red: 0.6666666667, green: 0.6666666667, blue: 0.6666666667, alpha: 1)
+        cell.leadTime.textColor = #colorLiteral(red: 0.6666666667, green: 0.6666666667, blue: 0.6666666667, alpha: 1)
+        cell.magDropText.textColor = #colorLiteral(red: 0.6666666667, green: 0.6666666667, blue: 0.6666666667, alpha: 1)
+        cell.maxDurText.textColor = #colorLiteral(red: 0.6666666667, green: 0.6666666667, blue: 0.6666666667, alpha: 1)
+        cell.starMagText.textColor = #colorLiteral(red: 0.6666666667, green: 0.6666666667, blue: 0.6666666667, alpha: 1)
+        cell.tempText.textColor = #colorLiteral(red: 0.6666666667, green: 0.6666666667, blue: 0.6666666667, alpha: 1)
+        cell.timeError.textColor = #colorLiteral(red: 0.6666666667, green: 0.6666666667, blue: 0.6666666667, alpha: 1)
       } else {
-        if timeError == -1
+        cell.objectText.textColor = .white
+        cell.cloudText.textColor = .white
+        cell.eventTime.textColor = .white
+        cell.eventTime.textColor = .white
+        cell.leadTime.textColor = .white
+        cell.magDropText.textColor = .white
+        cell.maxDurText.textColor = .white
+        cell.starMagText.textColor = .white
+        cell.tempText.textColor = .white
+        cell.timeError.textColor = .white
+      }
+      
+      cell.eventTime.text = formatEventTime(timeString: cellEventDetailStringArray[indexPath.row].EventTimeUtc)
+      //set time error field
+      if cellEventDetailArray[indexPath.row].ErrorInTimeSec != nil
+      {
+        let timeError = cellEventDetailArray[indexPath.row].ErrorInTimeSec
+        if timeError! > 90.0
         {
-          cell.timeError.text = "N/A"
+          let errorInMin = timeError! / 60.0
+          cell.timeError.text = String(format: "+/- %.01f min",errorInMin)
         } else {
-          cell.timeError.text = String(format: "+/- %.f sec",timeError!)
+          if timeError == -1
+          {
+            cell.timeError.text = "N/A"
+          } else {
+            cell.timeError.text = String(format: "+/- %.f sec",timeError!)
+          }
         }
       }
-    }
-    //cell images
-    cell.maxDurImg.image = #imageLiteral(resourceName: "max_sign")
-    cell.magDropImg.image = #imageLiteral(resourceName: "drop_sign")
-    
-    if cellDataArray[indexPath.row]!.BestStationPos != nil
-    {
-      var sigmaIconValue = cellDataArray[indexPath.row]!.BestStationPos!
-      cell.sigmaImg.image = stationSigmaIcon(sigmaIconValue)   //set station sigma icon
-    }
-    
-    if cellDataArray[indexPath.row]!.StarColour != nil
-    {
-      cell.starMagImg.image = starColorIcon(cellDataArray[indexPath.row]!.StarColour)
-    }
-    
-
-    if cellDataArray[indexPath.row]!.WeatherInfoAvailable != nil
-    {
-      //display weather info if forecast available, no display if no forecast
-      if cellDataArray[indexPath.row]!.WeatherInfoAvailable!
+      //cell images
+      cell.maxDurImg.image = #imageLiteral(resourceName: "max_sign")
+      cell.magDropImg.image = #imageLiteral(resourceName: "drop_sign")
+      
+      if cellEventDetailArray[indexPath.row].BestStationPos != nil
       {
-        if cellDataArray[indexPath.row]!.CloudCover != nil
-        {
-          var cloudIconValue = cellDataArray[indexPath.row]!.CloudCover
-          cell.cloudImg.image = cloudIcon(cloudIconValue)   // set cloud % icon
-          cell.cloudText.text = String(format: "%d%%",cellDataArray[indexPath.row]!.CloudCover!)
-        }
-        
-        if cellDataArray[indexPath.row]!.Wind != nil
-        {
-          var windStrengthIconValue = cellDataArray[indexPath.row]!.Wind
-//          windStrengthIconValue = 0
-          cell.windStrengthImg.image = windStrengthIcon(windStrengthIconValue)   //set wind strength icon
-          cell.windyImg.image = windSignIcon(windStrengthIconValue)   //set wind strength icon
-        }
-
-         if cellDataArray[indexPath.row]!.TempDegC != nil
-        {
-          var thermIconValue = cellDataArray[indexPath.row]?.TempDegC
-          cell.tempImg.image = thermIcon(thermIconValue)
-          //set weather text to appropriate text
-          cell.tempText.text = String(format: "%d°",cellDataArray[indexPath.row]!.TempDegC!)
-        }
-      } else {
-        //set weather images and text empty because no forecast info is available
-        cell.cloudImg.image =  nil
-        cell.windStrengthImg.image =  nil
-        cell.windyImg.image =  nil
-        cell.tempImg.image =  nil
-        cell.cloudText.text = ""
-        cell.tempText.text = ""
+        var sigmaIconValue = cellEventDetailArray[indexPath.row].BestStationPos!
+        cell.sigmaImg.image = stationSigmaIcon(sigmaIconValue)   //set station sigma icon
       }
+      
+      if cellEventDetailArray[indexPath.row].StarColour != nil
+      {
+        cell.starMagImg.image = starColorIcon(cellEventDetailArray[indexPath.row].StarColour)
+      }
+      
+
+      if cellEventDetailArray[indexPath.row].WeatherInfoAvailable != nil
+      {
+        //display weather info if forecast available, no display if no forecast
+        if cellEventDetailArray[indexPath.row].WeatherInfoAvailable!
+        {
+          if cellEventDetailArray[indexPath.row].CloudCover != nil
+          {
+            var cloudIconValue = cellEventDetailArray[indexPath.row].CloudCover
+            cell.cloudImg.image = cloudIcon(cloudIconValue)   // set cloud % icon
+            cell.cloudText.text = String(format: "%d%%",cellEventDetailArray[indexPath.row].CloudCover!)
+          }
+          
+          if cellEventDetailArray[indexPath.row].Wind != nil
+          {
+            var windStrengthIconValue = cellEventDetailArray[indexPath.row].Wind
+  //          windStrengthIconValue = 0
+            cell.windStrengthImg.image = windStrengthIcon(windStrengthIconValue)   //set wind strength icon
+            cell.windyImg.image = windSignIcon(windStrengthIconValue)   //set wind strength icon
+          }
+
+           if cellEventDetailArray[indexPath.row].TempDegC != nil
+          {
+            var thermIconValue = cellEventDetailArray[indexPath.row].TempDegC
+            cell.tempImg.image = thermIcon(thermIconValue)
+            //set weather text to appropriate text
+            cell.tempText.text = String(format: "%d°",cellEventDetailArray[indexPath.row].TempDegC!)
+          }
+        } else {
+          //set weather images and text empty because no forecast info is available
+          cell.cloudImg.image =  nil
+          cell.windStrengthImg.image =  nil
+          cell.windyImg.image =  nil
+          cell.tempImg.image =  nil
+          cell.cloudText.text = ""
+          cell.tempText.text = ""
+        }
+      }
+
+    }
+    
+    func fillCellFields_Old(cell: inout MyEventsCollectionViewCell, indexPath: IndexPath)
+    {
+      let calloutFont =   UIFont.preferredFont(forTextStyle: .callout)
+      let captionFont =   UIFont.preferredFont(forTextStyle: .caption1)
+  //    let eventsStrings = self.assignMyEventStrings(myEvents: self.cellDataArray)
+      //cell text
+  //    cell.objectText.text = cellDataArray[indexPath.row]!.Object
+  //    cell.objectText.text = myEventsStrings.Object
+      cell.objectText.text = cellStringArray[indexPath.row].Object
+  //    print("object=",cellStringArray[indexPath.row].Object)
+
+      //create "m" superscript for star magnitude and magnitude drop
+      let magAttrStr = NSMutableAttributedString(string:"m", attributes:[NSAttributedString.Key.font : captionFont,
+                                                                         NSAttributedString.Key.baselineOffset: 5])
+      let events = OWWebAPI.shared.loadEvents()
+  //    let eventDetails = OWWebAPI.shared.loadDetails()
+  //    print("########################")
+  //    print("fillCellFields > eventsWithDetails > events = \n",eventsWithDetails.eventList)
+  //    print("------------------------")
+  //    print("fillCellFields > eventsWithDetails > details = \n",eventsWithDetails.eventsDetails)
+
+  //    for (index, event) in events.enumerated()
+  //    {
+  //      print()
+  //      print("event.Id = ",event.Id)
+  ////      print("indexPath.row=",indexPath.row)
+  //      let detailsIndex = eventDetails.index(where: { $0.Id == event.Id  })
+  ////      print("detailsIndex=", detailsIndex)
+  //      print("details.Id = ", eventDetails[detailsIndex!].Id)
+  //    }
+
+  //    print("°°°°events.count=",events.count)
+  //    print("°°°°eventDetails.count=",eventDetails.count)
+      
+      
+      
+      if events.count == eventsWithDetails.eventsDetails.count
+      {
+        //use combined mag rather than star mag
+        let combMag = eventsWithDetails.eventsDetails[indexPath.row].CombMag
+        let combMagStr = String(format: "%0.1f",combMag!)
+        let combMagAttrStr = NSMutableAttributedString(string:combMagStr)
+        combMagAttrStr.append(magAttrStr)
+        cell.starMagText.attributedText = combMagAttrStr
+      } else {
+        let starMagStr = cellStringArray[indexPath.row].StarMag
+        let starMagAttrStr = NSMutableAttributedString(string:starMagStr)
+        starMagAttrStr.append(magAttrStr)
+        cell.starMagText.attributedText = starMagAttrStr
+      }
+
+      
+      
+  //    if cellDataArray[indexPath.row]!.MagDrop! >= 0.2
+  //    {
+  ////      let magDropStr = String(format: "%.01f",cellDataArray[indexPath.row]!.MagDrop)
+  //      let magDropStr = String(format: "%.01f",cellDataArray[indexPath.row]!.MagDrop)
+        let magDropAttrStr = NSMutableAttributedString(string:cellStringArray[indexPath.row].MagDrop, attributes:[NSAttributedString.Key.font : calloutFont])
+  //      let magDropAttrStr = NSMutableAttributedString(string:magDropStr)
+        magDropAttrStr.append(magAttrStr)
+        cell.magDropText.attributedText = magDropAttrStr
+  //    }
+  //    else
+  //    {
+  //      let magDropStr = String(format: "%.02f",cellDataArray[indexPath.row]!.MagDrop)
+  //      let magDropAttrStr = NSMutableAttributedString(string:magDropStr, attributes:[NSAttributedString.Key.font : calloutFont])
+  //      magDropAttrStr.append(magAttrStr)
+  //      cell.magDropText.attributedText = magDropAttrStr
+  //    }
+      cell.maxDurText.text = cellStringArray[indexPath.row].MaxDurSec
+      cell.leadTime.text = leadTime(timeString: cellStringArray[indexPath.row].EventTimeUtc)
+  //    print("check leadTime for completed")
+      
+      
+      if cell.leadTime.text == "completed"
+      {
+  //      print("found completed")
+        cell.leadTime.text = ""
+        //dim/gray out asteriod hame, date and time
+        cell.objectText.textColor = #colorLiteral(red: 0.6666666667, green: 0.6666666667, blue: 0.6666666667, alpha: 1)
+        cell.cloudText.textColor = #colorLiteral(red: 0.6666666667, green: 0.6666666667, blue: 0.6666666667, alpha: 1)
+        cell.eventTime.textColor = #colorLiteral(red: 0.6666666667, green: 0.6666666667, blue: 0.6666666667, alpha: 1)
+        cell.eventTime.textColor = #colorLiteral(red: 0.6666666667, green: 0.6666666667, blue: 0.6666666667, alpha: 1)
+        cell.leadTime.textColor = #colorLiteral(red: 0.6666666667, green: 0.6666666667, blue: 0.6666666667, alpha: 1)
+        cell.magDropText.textColor = #colorLiteral(red: 0.6666666667, green: 0.6666666667, blue: 0.6666666667, alpha: 1)
+        cell.maxDurText.textColor = #colorLiteral(red: 0.6666666667, green: 0.6666666667, blue: 0.6666666667, alpha: 1)
+        cell.starMagText.textColor = #colorLiteral(red: 0.6666666667, green: 0.6666666667, blue: 0.6666666667, alpha: 1)
+        cell.tempText.textColor = #colorLiteral(red: 0.6666666667, green: 0.6666666667, blue: 0.6666666667, alpha: 1)
+        cell.timeError.textColor = #colorLiteral(red: 0.6666666667, green: 0.6666666667, blue: 0.6666666667, alpha: 1)
+      } else {
+        cell.objectText.textColor = .white
+        cell.cloudText.textColor = .white
+        cell.eventTime.textColor = .white
+        cell.eventTime.textColor = .white
+        cell.leadTime.textColor = .white
+        cell.magDropText.textColor = .white
+        cell.maxDurText.textColor = .white
+        cell.starMagText.textColor = .white
+        cell.tempText.textColor = .white
+        cell.timeError.textColor = .white
+      }
+      
+      
+      cell.eventTime.text = formatEventTime(timeString: cellStringArray[indexPath.row].EventTimeUtc)
+      //set time error field
+      if cellDataArray[indexPath.row]!.ErrorInTimeSec != nil
+      {
+        let timeError = cellDataArray[indexPath.row]!.ErrorInTimeSec
+        if timeError! > 90.0
+        {
+          let errorInMin = timeError! / 60.0
+          cell.timeError.text = String(format: "+/- %.01f min",errorInMin)
+        } else {
+          if timeError == -1
+          {
+            cell.timeError.text = "N/A"
+          } else {
+            cell.timeError.text = String(format: "+/- %.f sec",timeError!)
+          }
+        }
+      }
+      //cell images
+      cell.maxDurImg.image = #imageLiteral(resourceName: "max_sign")
+      cell.magDropImg.image = #imageLiteral(resourceName: "drop_sign")
+      
+      if cellDataArray[indexPath.row]!.BestStationPos != nil
+      {
+        var sigmaIconValue = cellDataArray[indexPath.row]!.BestStationPos!
+        cell.sigmaImg.image = stationSigmaIcon(sigmaIconValue)   //set station sigma icon
+      }
+      
+      if cellDataArray[indexPath.row]!.StarColour != nil
+      {
+        cell.starMagImg.image = starColorIcon(cellDataArray[indexPath.row]!.StarColour)
+      }
+      
+
+      if cellDataArray[indexPath.row]!.WeatherInfoAvailable != nil
+      {
+        //display weather info if forecast available, no display if no forecast
+        if cellDataArray[indexPath.row]!.WeatherInfoAvailable!
+        {
+          if cellDataArray[indexPath.row]!.CloudCover != nil
+          {
+            var cloudIconValue = cellDataArray[indexPath.row]!.CloudCover
+            cell.cloudImg.image = cloudIcon(cloudIconValue)   // set cloud % icon
+            cell.cloudText.text = String(format: "%d%%",cellDataArray[indexPath.row]!.CloudCover!)
+          }
+          
+          if cellDataArray[indexPath.row]!.Wind != nil
+          {
+            var windStrengthIconValue = cellDataArray[indexPath.row]!.Wind
+  //          windStrengthIconValue = 0
+            cell.windStrengthImg.image = windStrengthIcon(windStrengthIconValue)   //set wind strength icon
+            cell.windyImg.image = windSignIcon(windStrengthIconValue)   //set wind strength icon
+          }
+
+           if cellDataArray[indexPath.row]!.TempDegC != nil
+          {
+            var thermIconValue = cellDataArray[indexPath.row]?.TempDegC
+            cell.tempImg.image = thermIcon(thermIconValue)
+            //set weather text to appropriate text
+            cell.tempText.text = String(format: "%d°",cellDataArray[indexPath.row]!.TempDegC!)
+          }
+        } else {
+          //set weather images and text empty because no forecast info is available
+          cell.cloudImg.image =  nil
+          cell.windStrengthImg.image =  nil
+          cell.windyImg.image =  nil
+          cell.tempImg.image =  nil
+          cell.cloudText.text = ""
+          cell.tempText.text = ""
+        }
+      }
+
     }
 
-  }
-
-//  func cloudIcon(_ indexPath: IndexPath, _ cell: MyEventsCollectionViewCell)
-//  {
-//    //set appropriate cloud image
-////      0% -  9%   cloud_0.png
-////    10% - 19%    cloud_10.png
-////    20% - 29%    cloud_20.png
-////    30% - 39%    cloud_30.png
-////    40% - 49%    cloud_40.png
-////    50% - 59%    cloud_50.png
-////    60% - 69%    cloud_60.png
-////    70% - 79%    cloud_70.png
-////    80% - 89%    cloud_80.png
-////    90% - 100%   cloud_90.png
-//    if cellDataArray[indexPath.row]!.CloudCover != nil
-//    {
-//      switch cellDataArray[indexPath.row]!.CloudCover!
-//      {
-//      case 0...9:
-//        cell.cloudImg.image =  #imageLiteral(resourceName: "cloud_0")
-//      case 10...19:
-//        cell.cloudImg.image =  #imageLiteral(resourceName: "cloud_10")
-//      case 20...29:
-//        cell.cloudImg.image =  #imageLiteral(resourceName: "cloud_20")
-//      case 30...39:
-//        cell.cloudImg.image =  #imageLiteral(resourceName: "cloud_30")
-//      case 40...49:
-//        cell.cloudImg.image =  #imageLiteral(resourceName: "cloud_40.png")
-//      case 50...59:
-//        cell.cloudImg.image =  #imageLiteral(resourceName: "cloud_50.png")
-//      case 60...69:
-//        cell.cloudImg.image =  #imageLiteral(resourceName: "cloud_60.png")
-//      case 70...79:
-//        cell.cloudImg.image =  #imageLiteral(resourceName: "cloud_70.png")
-//      case 80...89:
-//        cell.cloudImg.image =  #imageLiteral(resourceName: "cloud_80.png")
-//      case 90...100:
-//        cell.cloudImg.image =  #imageLiteral(resourceName: "cloud_90.png")
-//      default:
-//        cell.cloudImg.image =  #imageLiteral(resourceName: "cloud_100.png")
-//      }
-//    } else {
-//      cell.cloudImg.image =  #imageLiteral(resourceName: "cloud_100.png")
-//    }
-//  }
-
-//  func starColorIcon(_ indexPath: IndexPath, _ cell: MyEventsCollectionViewCell)
-//  {
-//    if cellDataArray[indexPath.row]!.StarColour != nil
-//    {
-//    
-//      //    Unknown (0) = star_black.png,
-//      //    Blue (1) = star_b.png,
-//      //    White (2) = star_w.png,
-//      //    Yellow (3) = star_y.png,
-//      //    Orange (4) = star_o.png,
-//      //    Red (5) = star_r.png
-//      switch cellDataArray[indexPath.row]!.StarColour!
-//      {
-//      case 0:
-//        cell.starMagImg.image =  #imageLiteral(resourceName: "star_black")
-//      case 1:
-//        cell.starMagImg.image =  #imageLiteral(resourceName: "star_b")
-//      case 2:
-//        cell.starMagImg.image =  #imageLiteral(resourceName: "star_w")
-//      case 3:
-//        cell.starMagImg.image =  #imageLiteral(resourceName: "star_y")
-//      case 4:
-//        cell.starMagImg.image =  #imageLiteral(resourceName: "star_o")
-//      case 5:
-//        cell.starMagImg.image =  #imageLiteral(resourceName: "star_r")
-//      default:
-//        cell.starMagImg.image =  #imageLiteral(resourceName: "star_black")
-//      }
-//    } else {
-//      cell.starMagImg.image =  #imageLiteral(resourceName: "star_black")
-//    }
-//  }
-//
-//  func stationSigmaIcon(_ indexPath: IndexPath, _ cell: MyEventsCollectionViewCell)
-//  {
-//    //    Shadow (0) = spos_0.png,
-//    //    OneSigma (1) = spos_1_2.png,
-//    //    ThreeSigma (2) = spos_1_2.png,
-//    //    Outside (3) = = spos_3.png
-//    if cellDataArray[indexPath.row]!.BestStationPos != nil
-//    {
-//      switch cellDataArray[indexPath.row]!.BestStationPos!
-//      {
-//      case 0:
-//        cell.sigmaImg.image =  #imageLiteral(resourceName: "spos_0")
-//      case 1:
-//        cell.sigmaImg.image =  #imageLiteral(resourceName: "spos_1_2")
-//      case 2:
-//        cell.sigmaImg.image =  #imageLiteral(resourceName: "spos_1_2")
-//      case 3:
-//        cell.sigmaImg.image =  #imageLiteral(resourceName: "spos_3")
-//      default:
-//        cell.sigmaImg.image =  #imageLiteral(resourceName: "spos_3")
-//      }
-//    } else {
-//      cell.sigmaImg.image =  #imageLiteral(resourceName: "spos_3")
-//    }
-//  }
-//
-//  func windStrengthIcon(_ indexPath: IndexPath, _ cell: MyEventsCollectionViewCell)
-//  {
-////    0 = wind_0.png;
-////    1 = wind_1.png;
-////    2 = wind_2.png;
-////    3 = wind_3.png;
-////    4 = wind_4.png;
-////    5, 6, 7 = wind_5_6_7.png;
-//    if cellDataArray[indexPath.row]!.Wind != nil
-//    {
-//      switch cellDataArray[indexPath.row]!.Wind!
-//      {
-//      case 0:
-//        cell.windStrengthImg.image =  #imageLiteral(resourceName: "wind_0")
-//      case 1:
-//        cell.windStrengthImg.image =  #imageLiteral(resourceName: "wind_1")
-//      case 2:
-//        cell.windStrengthImg.image =  #imageLiteral(resourceName: "wind_2")
-//      case 3:
-//        cell.windStrengthImg.image =  #imageLiteral(resourceName: "wind_3")
-//      case 4:
-//        cell.windStrengthImg.image =  #imageLiteral(resourceName: "wind_4")
-//      case 5...7:
-//        cell.windStrengthImg.image =  #imageLiteral(resourceName: "wind_5_6_7")
-//      default:
-//        cell.windStrengthImg.image =  #imageLiteral(resourceName: "wind_0")
-//      }
-//    } else {
-//      cell.windStrengthImg.image =  #imageLiteral(resourceName: "wind_0")
-//    }
-//}
-//
-//  func windSignIcon(_ indexPath: IndexPath, _ cell: MyEventsCollectionViewCell)
-//  {
-//    //if there is wind use wind_sign.png, if no wind use wind_sign_gray.png
-//    if cellDataArray[indexPath.row]!.Wind! > 0
-//    {
-//      cell.windyImg.image = #imageLiteral(resourceName: "wind_sign")
-//    }
-//    else
-//    {
-//      cell.windyImg.image = #imageLiteral(resourceName: "wind_sign_gray")
-//    }
-//  }
-//
-//  func thermIcon(_ indexPath: IndexPath, _ cell: MyEventsCollectionViewCell)
-//  {
-//    
-//    // temp <= 0, blue
-//    // temp 0...16, yellow
-//    // temp 0...32, orange
-//    // temp > 32, red
-//    if cellDataArray[indexPath.row]!.TempDegC! <= 0
-//    {
-//      cell.tempImg.image = #imageLiteral(resourceName: "term_b")
-//    }
-//    else if cellDataArray[indexPath.row]!.TempDegC! < 16
-//    {
-//      cell.tempImg.image = #imageLiteral(resourceName: "term_y")
-//    }
-//    else if cellDataArray[indexPath.row]!.TempDegC! < 32
-//    {
-//      cell.tempImg.image = #imageLiteral(resourceName: "term_o")
-//    }
-//    else if cellDataArray[indexPath.row]!.TempDegC! >= 32
-//    {
-//      cell.tempImg.image = #imageLiteral(resourceName: "term_r")
-//    }
-//  }
-//  
   func printEventInfo(eventItem item: Event)
   {
     print()
@@ -914,116 +907,188 @@ extension MyEventsViewController
   }
 
   
-  func assignMyEventStrings(myEvents: [Event?]) -> [EventStrings]
-  {
-    let calloutFont =   UIFont.preferredFont(forTextStyle: .callout)
-    let captionFont =   UIFont.preferredFont(forTextStyle: .caption1)
-    var myEventStrings = [EventStrings]()
-    for (index, evnt) in myEvents.enumerated()
+    func assignMyEventStrings(myEvents: [Event?]) -> [EventStrings]
     {
-      var event = evnt
-//      print("myEvents: index =",index,"   event=",event)
-//      myEventStrings.append(EventStrings(Id: "", Object: "", StarMag: "", MagDrop: "", MaxDurSec: "", EventTimeUtc: "", ErrorInTimeSec: "", WeatherInfoAvailable: "", CloudCover: "", Wind: "", TempDegC: "", HighCloud: "", BestStationPos: "", StarColour: ""))
-      var eventStrings = EventStrings()
-//      print("myEventStrings=",myEventStrings)
-      if event!.Id != nil { eventStrings.Id = event!.Id ?? "" }
-//      if event!.Object != nil { eventStrings.Object = event!.Object ?? "" }
-      if event!.Object != nil { eventStrings.Object = event!.Object ?? "" }
-//      print("eventStrings.Object=",eventStrings.Object)
-      
-      //remove "bogus" number for planet satellite
-      eventStrings.Object = eventStrings.Object.replacingOccurrences(of: "(-2147483648) ", with: "")
-//      print("eventStrings.Object=",eventStrings.Object)
-
-      //*******check precision
-      
-       if event!.StarMag != nil
+      let calloutFont =   UIFont.preferredFont(forTextStyle: .callout)
+      let captionFont =   UIFont.preferredFont(forTextStyle: .caption1)
+      var myEventStrings = [EventStrings]()
+      for (index, evnt) in myEvents.enumerated()
       {
-//        let magAttrStr = NSMutableAttributedString(string:"m", attributes:[NSAttributedString.Key.font : captionFont,
-//                                                                           NSAttributedString.Key.baselineOffset: 5])
-//        let starMagStr = String(format: "%.01f",event!.StarMag!)
-//        let starMagAttrStr = NSMutableAttributedString(string:starMagStr)
-//        starMagAttrStr.append(magAttrStr)
-//        cell.starMagText.attributedText = starMagAttrStr
-        eventStrings.StarMag = String(format: "%.01f",event!.StarMag!)
-      }
+        var event = evnt
+  //      print("myEvents: index =",index,"   event=",event)
+  //      myEventStrings.append(EventStrings(Id: "", Object: "", StarMag: "", MagDrop: "", MaxDurSec: "", EventTimeUtc: "", ErrorInTimeSec: "", WeatherInfoAvailable: "", CloudCover: "", Wind: "", TempDegC: "", HighCloud: "", BestStationPos: "", StarColour: ""))
+        var eventStrings = EventStrings()
+  //      print("myEventStrings=",myEventStrings)
+        if event!.Id != nil { eventStrings.Id = event!.Id ?? "" }
+  //      if event!.Object != nil { eventStrings.Object = event!.Object ?? "" }
+        if event!.Object != nil { eventStrings.Object = event!.Object ?? "" }
+  //      print("eventStrings.Object=",eventStrings.Object)
+        
+        //remove "bogus" number for planet satellite
+        eventStrings.Object = eventStrings.Object.replacingOccurrences(of: "(-2147483648) ", with: "")
+  //      print("eventStrings.Object=",eventStrings.Object)
 
-      if event!.MagDrop != nil
-      {
-        if event!.MagDrop! >= 0.2
+        //*******check precision
+        
+         if event!.StarMag != nil
         {
-          //create "m" superscript for star magnitude and magnitude drop
-//          let magAttrStr = NSMutableAttributedString(string:"m", attributes:[NSAttributedString.Key.font : captionFont,
-//                                                                             NSAttributedString.Key.baselineOffset: 5])
-//          let starMagStr = myEventsStrings.StarMag
-//          let starMagAttrStr = NSMutableAttributedString(string:starMagStr)
-//          starMagAttrStr.append(magAttrStr)
-//          myEventStrings.StarMag.attributedText = starMagAttrStr
-
-//          let magDropStr = String(format: "%.01f",event!.MagDrop!)
-          //      let magDropAttrStr = NSMutableAttributedString(string:magDropStr, attributes:[NSAttributedString.Key.font : calloutFont])
-//          let magDropAttrStr = NSMutableAttributedString(string:magDropStr)
-//          magDropAttrStr.append(magAttrStr)
-          eventStrings.MagDrop = String(format: "%.01f",event!.MagDrop!)
-        }
-        else
-        {
-//          let magDropStr = String(format: "%.02f",cellDataArray[indexPath.row]!.MagDrop)
-//          let magDropAttrStr = NSMutableAttributedString(string:magDropStr, attributes:[NSAttributedString.Key.font : calloutFont])
-//          magDropAttrStr.append(magAttrStr)
-//          cell.magDropText.attributedText = magDropAttrStr
-          eventStrings.MagDrop = String(format: "%.02f",event!.MagDrop!)
+  //        let magAttrStr = NSMutableAttributedString(string:"m", attributes:[NSAttributedString.Key.font : captionFont,
+  //                                                                           NSAttributedString.Key.baselineOffset: 5])
+  //        let starMagStr = String(format: "%.01f",event!.StarMag!)
+  //        let starMagAttrStr = NSMutableAttributedString(string:starMagStr)
+  //        starMagAttrStr.append(magAttrStr)
+  //        cell.starMagText.attributedText = starMagAttrStr
+          eventStrings.StarMag = String(format: "%.01f",event!.StarMag!)
         }
 
+        if event!.MagDrop != nil
+        {
+          if event!.MagDrop! >= 0.2
+          {
+            //create "m" superscript for star magnitude and magnitude drop
+  //          let magAttrStr = NSMutableAttributedString(string:"m", attributes:[NSAttributedString.Key.font : captionFont,
+  //                                                                             NSAttributedString.Key.baselineOffset: 5])
+  //          let starMagStr = myEventsStrings.StarMag
+  //          let starMagAttrStr = NSMutableAttributedString(string:starMagStr)
+  //          starMagAttrStr.append(magAttrStr)
+  //          myEventStrings.StarMag.attributedText = starMagAttrStr
+
+  //          let magDropStr = String(format: "%.01f",event!.MagDrop!)
+            //      let magDropAttrStr = NSMutableAttributedString(string:magDropStr, attributes:[NSAttributedString.Key.font : calloutFont])
+  //          let magDropAttrStr = NSMutableAttributedString(string:magDropStr)
+  //          magDropAttrStr.append(magAttrStr)
+            eventStrings.MagDrop = String(format: "%.01f",event!.MagDrop!)
+          }
+          else
+          {
+  //          let magDropStr = String(format: "%.02f",cellDataArray[indexPath.row]!.MagDrop)
+  //          let magDropAttrStr = NSMutableAttributedString(string:magDropStr, attributes:[NSAttributedString.Key.font : calloutFont])
+  //          magDropAttrStr.append(magAttrStr)
+  //          cell.magDropText.attributedText = magDropAttrStr
+            eventStrings.MagDrop = String(format: "%.02f",event!.MagDrop!)
+          }
+
+        }
+        if event!.MaxDurSec != nil
+        {
+          eventStrings.MaxDurSec = String(format: "%.01f",event!.MaxDurSec!)
+        }
+        if event!.EventTimeUtc != nil { eventStrings.EventTimeUtc = event!.EventTimeUtc! }
+        //***test***
+        event!.ErrorInTimeSec = nil
+        //***test***
+        if event!.ErrorInTimeSec != nil
+        {
+          eventStrings.ErrorInTimeSec = String(format: "%.01f",event!.ErrorInTimeSec!)
+        }
+         if event!.WeatherInfoAvailable != nil
+        {
+          eventStrings.WeatherInfoAvailable = String(format: "%@",event!.WeatherInfoAvailable!.description)
+        }
+        if event!.CloudCover != nil
+        {
+          eventStrings.CloudCover = String(format: "%d",event!.CloudCover!)
+        }
+        if event!.Wind != nil
+        {
+          eventStrings.Wind = String(format: "%d",event!.Wind!)
+        }
+        if event!.TempDegC != nil
+        {
+          eventStrings.TempDegC = String(format: "%d",event!.TempDegC!)
+        }
+        if event!.HighCloud != nil
+        {
+          eventStrings.HighCloud = String(format: "%@",event!.HighCloud!.description)
+        }
+        if event!.BestStationPos != nil
+        {
+          eventStrings.BestStationPos = String(format: "%d",event!.BestStationPos!)
+        }
+        if event!.StarColour != nil
+        {
+          eventStrings.StarColour = String(format: "%d",event!.StarColour!)
+        }
+  //      print("eventStrings=",eventStrings)
+        myEventStrings.append(eventStrings)
       }
-      if event!.MaxDurSec != nil
-      {
-        eventStrings.MaxDurSec = String(format: "%.01f",event!.MaxDurSec!)
-      }
-      if event!.EventTimeUtc != nil { eventStrings.EventTimeUtc = event!.EventTimeUtc! }
-      //***test***
-      event!.ErrorInTimeSec = nil
-      //***test***
-      if event!.ErrorInTimeSec != nil
-      {
-        eventStrings.ErrorInTimeSec = String(format: "%.01f",event!.ErrorInTimeSec!)
-      }
-       if event!.WeatherInfoAvailable != nil
-      {
-        eventStrings.WeatherInfoAvailable = String(format: "%@",event!.WeatherInfoAvailable!.description)
-      }
-      if event!.CloudCover != nil
-      {
-        eventStrings.CloudCover = String(format: "%d",event!.CloudCover!)
-      }
-      if event!.Wind != nil
-      {
-        eventStrings.Wind = String(format: "%d",event!.Wind!)
-      }
-      if event!.TempDegC != nil
-      {
-        eventStrings.TempDegC = String(format: "%d",event!.TempDegC!)
-      }
-      if event!.HighCloud != nil
-      {
-        eventStrings.HighCloud = String(format: "%@",event!.HighCloud!.description)
-      }
-      if event!.BestStationPos != nil
-      {
-        eventStrings.BestStationPos = String(format: "%d",event!.BestStationPos!)
-      }
-      if event!.StarColour != nil
-      {
-        eventStrings.StarColour = String(format: "%d",event!.StarColour!)
-      }
-//      print("eventStrings=",eventStrings)
-      myEventStrings.append(eventStrings)
+  //    print()
+  //    print("myEventStrings = ",myEventStrings)
+      return myEventStrings
     }
-//    print()
-//    print("myEventStrings = ",myEventStrings)
-    return myEventStrings
-  }
-  
+    
+    func assignEventDetailStrings(eventPlusDetails: [EventWithDetails?]) -> [EventDetailStrings]
+    {
+      let calloutFont =   UIFont.preferredFont(forTextStyle: .callout)
+      let captionFont =   UIFont.preferredFont(forTextStyle: .caption1)
+//       var myEventStrings = [EventStrings]()
+      var eventDetailStringArray = [EventDetailStrings]()
+      for (index, event) in eventPlusDetails.enumerated()
+      {
+        var eventStrings = EventDetailStrings()
+        if event!.Id != nil { eventStrings.Id = event!.Id ?? "" }
+        if event!.Object != nil { eventStrings.Object = event!.Object ?? "" }
+        eventStrings.Object = eventStrings.Object.replacingOccurrences(of: "(-2147483648) ", with: "")
+         if event!.StarMag != nil
+        {
+           eventStrings.StarMag = String(format: "%.01f",event!.StarMag!)
+        }
+        if event!.MagDrop != nil
+        {
+          if event!.MagDrop! >= 0.2
+          {
+            eventStrings.MagDrop = String(format: "%.01f",event!.MagDrop!)
+          }
+          else
+          {
+            eventStrings.MagDrop = String(format: "%.02f",event!.MagDrop!)
+          }
+        }
+        if event!.MaxDurSec != nil
+        {
+          eventStrings.MaxDurSec = String(format: "%.01f",event!.MaxDurSec!)
+        }
+        if event!.EventTimeUtc != nil { eventStrings.EventTimeUtc = event!.EventTimeUtc! }
+        if event!.ErrorInTimeSec != nil
+        {
+          eventStrings.ErrorInTimeSec = String(format: "%.01f",event!.ErrorInTimeSec!)
+        }
+         if event!.WeatherInfoAvailable != nil
+        {
+          eventStrings.WeatherInfoAvailable = String(format: "%@",event!.WeatherInfoAvailable!.description)
+        }
+        if event!.CloudCover != nil
+        {
+          eventStrings.CloudCover = String(format: "%d",event!.CloudCover!)
+        }
+        if event!.Wind != nil
+        {
+          eventStrings.Wind = String(format: "%d",event!.Wind!)
+        }
+        if event!.TempDegC != nil
+        {
+          eventStrings.TempDegC = String(format: "%d",event!.TempDegC!)
+        }
+        if event!.HighCloud != nil
+        {
+          eventStrings.HighCloud = String(format: "%@",event!.HighCloud!.description)
+        }
+        if event!.BestStationPos != nil
+        {
+          eventStrings.BestStationPos = String(format: "%d",event!.BestStationPos!)
+        }
+        if event!.StarColour != nil
+        {
+          eventStrings.StarColour = String(format: "%d",event!.StarColour!)
+        }
+  //      print("eventStrings=",eventStrings)
+        eventDetailStringArray.append(eventStrings)
+      }
+  //    print()
+  //    print("myEventStrings = ",myEventStrings)
+      return eventDetailStringArray
+    }
+    
   fileprivate func assignEventsWithDetails() {
     let tempEvents = OWWebAPI.shared.loadEvents()
     let tempDetails = OWWebAPI.shared.loadDetails()
