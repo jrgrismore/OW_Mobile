@@ -23,7 +23,8 @@ class MyEventsViewController: UIViewController, UICollectionViewDataSource,UICol
   var cellStringArray = [EventStrings]()
   var cellEventDetailStringArray = [EventDetailStrings]()
   var eventsWithDetails = MyEventListDetails(eventList: [], eventsDetails: [])
-  var eventsWithDetailsData = EventWithDetails()
+//  var eventsWithDetailsData = EventWithDetails()
+  var eventsWithDetailsData = [EventDetails]()
   var eventStore = EKEventStore()
   let vc = EKEventEditViewController()
   
@@ -222,6 +223,9 @@ class MyEventsViewController: UIViewController, UICollectionViewDataSource,UICol
   
   func getEventsWithDetails()
   {
+    //***********************************************
+    //Need to add eventsWithDetailsData save and load
+    //***********************************************
     DispatchQueue.main.async
       {
         self.spinnerView.isHidden = false
@@ -232,10 +236,10 @@ class MyEventsViewController: UIViewController, UICollectionViewDataSource,UICol
         {
           print("event count =",eventsWithDetailsData?.count)
           self.spinnerLbl.text = "Event List \n Download Complete..."
-          for event in eventsWithDetailsData!
-          {
-            self.printEventWithDetails(event)
-          }
+//          for event in eventsWithDetailsData!
+//          {
+//            self.printEventWithDetails(event)
+//          }
           //fill cells
           if eventsWithDetailsData!.count < 1
           {
@@ -244,8 +248,7 @@ class MyEventsViewController: UIViewController, UICollectionViewDataSource,UICol
                 self.cellDataArray = []
                 self.cellStringArray = []
                 self.myEventsCollection.reloadData()
-                //                OWWebAPI.shared.saveEvents([])
-                //                OWWebAPI.shared.saveDetails([])
+                OWWebAPI.shared.saveEventsWithDetails([])
                 //save empty array to userdefaults
                 self.activitySpinner.stopAnimating()
                 self.spinnerView.isHidden = true
@@ -266,10 +269,18 @@ class MyEventsViewController: UIViewController, UICollectionViewDataSource,UICol
           DispatchQueue.main.async{self.myEventsCollection.reloadData()}
 
       }
+      //store update date in userDefaults
+      UserDefaults.standard.set(Date(), forKey: UDKeys.lastEventListUpdate)
+      OWWebAPI.shared.saveEventsWithDetails(eventsWithDetailsData!)
+      let loadedEventDetailData = OWWebAPI.shared.loadEventsWithDetails()
+      print("loadedEventDetailData.count =",loadedEventDetailData.count)
+      print()
+      for event in loadedEventDetailData
+      {
+        print("loadedEventDetailData")
+        self.printEventWithDetails(event)
+      }
     })
-    //          OWWebAPI.shared.saveEvents(myEvents!)
-    //store update date in userDefaults
-    //          UserDefaults.standard.set(Date(), forKey: UDKeys.lastEventListUpdate)
   }
 
   func printEventWithDetails(_ eventAndDetails: EventWithDetails)
@@ -345,109 +356,7 @@ class MyEventsViewController: UIViewController, UICollectionViewDataSource,UICol
   
   func updateCellArray()
   {
-    //temporary test
     getEventsWithDetails()
-    return
-    //
-    
-    
-    DispatchQueue.main.async
-      {
-        self.spinnerView.isHidden = false
-        self.activitySpinner.startAnimating()
-      }
-    DispatchQueue.main.async{self.spinnerLbl.text = "Event List \n Retrieving..."}
-    usleep(useconds_t(0.5 * 1000000)) //will sleep for 0.5 seconds)
-    OWWebAPI.shared.retrieveEventList(completion: { (myEvents, error) in
-      //fill cells
-      if myEvents!.count < 1
-      {
-        DispatchQueue.main.async
-          {
-            self.cellDataArray = []
-            self.cellStringArray = []
-            self.myEventsCollection.reloadData()
-            OWWebAPI.shared.saveEvents([])
-            OWWebAPI.shared.saveDetails([])
-            self.activitySpinner.stopAnimating()
-            self.spinnerView.isHidden = true
-        }
-        return
-      }
-      
-      DispatchQueue.main.async{self.spinnerLbl.text = "Event List \n Download and Parsing Complete"}
-      usleep(useconds_t(1.0 * 1000000)) //will sleep for 0.5 seconds)
-      var itemIndex = 0
-      var myEventListDetails: [EventDetails] = []
-            for item in myEvents!
-            {
-              DispatchQueue.main.async
-                {
-                  self.spinnerView.isHidden = false
-                  self.activitySpinner.startAnimating()
-              }
-              OWWebAPI.shared.retrieveEventDetails(eventID: item.Id!) { (myDetails, error) in
-                itemIndex = itemIndex + 1
-                var spinnerText = String(format:"Event Details \n %d of %d Downloaded",itemIndex,myEvents!.count)
-                DispatchQueue.main.async{self.spinnerLbl.text = spinnerText}
-                usleep(useconds_t(0.2 * 1000000)) //will sleep for 0.5 seconds
-                myEventListDetails.append(myDetails!)
-                DispatchQueue.main.async
-                {
-                  if itemIndex == myEvents!.count
-                  {
-                    OWWebAPI.shared.saveDetails(myEventListDetails)
-                    
-                    self.assignEventsWithDetails()
-
-                    DispatchQueue.main.async
-                      {
-//                        print("########################")
-//                        print("fillCellFields > eventsWithDetails > events = \n",self.eventsWithDetails.eventList)
-//                        print("------------------------")
-//                        print("fillCellFields > eventsWithDetails > details = \n",self.eventsWithDetails.eventsDetails)
-                        for (index, event) in self.eventsWithDetails.eventList.enumerated()
-                        {
-                          print("~~~~~~~~~~~~")
-                          print("event = ", event)
-                          print("details = ",self.eventsWithDetails.eventsDetails[index])
-                        }
-                      }
-                    self.activitySpinner.stopAnimating()
-                    self.spinnerView.isHidden = true
-//                    print("\n\n\n\n\n")
-//                    print("reload after details retrieval completion")
-                    DispatchQueue.main.async{self.myEventsCollection.reloadData()}
-                  }
-                }
-              }
-      }
-      OWWebAPI.shared.saveEvents(myEvents!)
-      
-      //store update date in userDefaults
-      UserDefaults.standard.set(Date(), forKey: UDKeys.lastEventListUpdate)
-      
-      
-      self.cellDataArray = myEvents!
-      self.cellStringArray = self.assignMyEventStrings(myEvents: self.cellDataArray)
-//      print("cellStringArray = ",self.cellStringArray)
-      
-      
-      
-//      print("cell data array updated")
-      DispatchQueue.main.async{self.spinnerLbl.text = "Updating Events..."}
-//      print("\n\n\n\n\n")
-//      print("reload after events retrieval completion")
-      DispatchQueue.main.async{self.myEventsCollection.reloadData()}
-      usleep(useconds_t(0.5 * 1000000)) //will sleep for 0.5 seconds)
-//      DispatchQueue.main.async
-//        {
-//        self.activitySpinner.stopAnimating()
-//        self.spinnerView.isHidden = true
-//        }
-//      print("invalidate owSession")
-//      OWWebAPI.owSession.invalidateAndCancel()
-    })
   }
   
   @IBAction func refreshEventCells(_ sender: Any?)
@@ -525,8 +434,11 @@ extension MyEventsViewController
             let detailsIndex = allDetails.index(where: { $0.Id == self.cellDataArray[indexPath.item]?.Id  })
             print("detailsIndex=",detailsIndex)
             print("allDetails[detailsIndex]=",allDetails[detailsIndex!])
-            var selectedEvent = OccultationEvent()
-            let primaryStation = selectedEvent.primaryStation(allDetails[detailsIndex!])
+//            var selectedEvent = OccultationEvent()
+            
+            currentEvent.eventData = self.cellEventDetailArray[detailsIndex!]
+//            let primaryStation = selectedEvent.primaryStation(allDetails[detailsIndex!])
+            let primaryStation = currentEvent.primaryStation(allDetails[detailsIndex!])
             do
             {
               DispatchQueue.main.async

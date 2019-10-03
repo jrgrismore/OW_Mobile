@@ -265,6 +265,24 @@ class OWWebAPI: NSObject
   }
   
   
+  
+   func saveEventsWithDetails(_ eventsWithDetails: [EventWithDetails])
+   {
+     let data = eventsWithDetails.map { try? JSONEncoder().encode($0) }
+     UserDefaults.standard.set(data, forKey: UDKeys.eventsWithDetails)
+   }
+  
+  func loadEventsWithDetails() -> [EventWithDetails]
+  {
+    guard let encodedData = UserDefaults.standard.array(forKey: UDKeys.eventsWithDetails) as? [Data] else {
+      return []
+    }
+    
+    return encodedData.map { try! JSONDecoder().decode(EventWithDetails.self, from: $0) }
+  }
+
+  
+  
   func loadDetails() -> [EventDetails]
   {
     guard let encodedData = UserDefaults.standard.array(forKey: UDKeys.myEventDetails) as? [Data] else {

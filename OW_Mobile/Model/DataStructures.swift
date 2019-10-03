@@ -89,6 +89,7 @@ struct ObserverStation: Codable
   var StarColour: Double?
 }
 var eventWithDetails = [EventWithDetails]()
+var currentEvent = OccultationEvent()
 
 //Event structure matching JSON keys
 struct Event: Codable

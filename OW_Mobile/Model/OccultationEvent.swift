@@ -15,6 +15,8 @@ class OccultationEvent: NSObject
   
   var details = EventDetails()
   var stations = [Station]()
+  
+  var eventData = EventWithDetails()
 
   
   // MARK: - event detail update functions

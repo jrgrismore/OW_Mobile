@@ -112,12 +112,6 @@ class DetailViewController: UIViewController
   
   override func viewWillAppear(_ animated: Bool)
   {
-//    print()
-//    print("viewWillAppear")
-//    
-//    print("complete=",complete)
-    
-
     eventDetailView.isHidden = false
     stationBarSubViewsExist = false
     stationCursorExists = false
@@ -136,11 +130,9 @@ class DetailViewController: UIViewController
     updateEventInfoFields(eventItem: selectedEventDetails)
     if complete
     {
-//      print(":::::set color to darkGray")
       self.navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.darkGray,
                                                                       NSAttributedString.Key.font: UIFont.preferredFont(forTextStyle: .title3)]
     } else {
-//      print(":::::set color to white")
       self.navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.black,
                                                                       NSAttributedString.Key.font: UIFont.preferredFont(forTextStyle: .title3)]
     }
@@ -149,24 +141,12 @@ class DetailViewController: UIViewController
     {
         self.stationCollectionView.scrollToItem(at: IndexPath(item: primaryIndex!, section: 0), at: .centeredHorizontally, animated: false)
         self.stationCollectionView.layoutIfNeeded()
-//        self.navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.purple]
     }
-//      print("currentStationIndexPath=",currentStationIndexPath)
     }
   
   override func viewDidAppear(_ animated: Bool)
   {
-//    print()
-//    print("viewDidAppear")
-
-    // temporarily added to test station left scroll problem
-    // seems to work 8/25/19
     adjustCellWidth()
-    
-    
-    //    print("safe area height =",self.view.safeAreaLayoutGuide.layoutFrame.size.height)
-    //    print("safe area width =",self.view.safeAreaLayoutGuide.layoutFrame.size.width)
-    //    print("stationCollectionView.bounds.width=",stationCollectionView.bounds.width)
     let primaryIndex = self.event.primaryStationIndex(selectedStations)
     currentStationIndexPath = IndexPath(item:primaryIndex!, section: 0)
     DispatchQueue.main.async
@@ -175,65 +155,26 @@ class DetailViewController: UIViewController
         self.moveCursorToStation(indexPath: IndexPath(item: primaryIndex!, section: 0))
     }
     updateShadowPlot(selectedEventDetails)
-//    print("currentStationIndexPath=",currentStationIndexPath)
-//    print()
   }
   
   override func viewWillLayoutSubviews()
   {
-//    print()
     stationCollectionView.frame.size.width = self.view.safeAreaLayoutGuide.layoutFrame.size.width
-//    print("viewWillLayoutSubviews")
-//    print("safe area height =",self.view.safeAreaLayoutGuide.layoutFrame.size.height)
-//    print("safe area width =",self.view.safeAreaLayoutGuide.layoutFrame.size.width)
-//    print("stationCollectionView.bounds.width=",stationCollectionView.bounds.width)
     super.viewWillLayoutSubviews()
-    
-    
-    //temporarily disabled to test station left scroll problem
-//      adjustCellWidth()
-    
-    
-//    currentStationIndexPath = visibleStationIndexPath()
-//    print("currentStationIndexPath=",currentStationIndexPath)
-//   print()
   }
   
   override func viewDidLayoutSubviews()
   {
-//    print()
-//    print("viewDidLayoutSubviews")
-//    print("safe area height =",self.view.safeAreaLayoutGuide.layoutFrame.size.height)
-//    print("safe area width =",self.view.safeAreaLayoutGuide.layoutFrame.size.width)
-//    print("stationCollectionView.bounds.width=",stationCollectionView.bounds.width)
     super.viewDidLayoutSubviews()
-//    print("stationCollectionView.bounds.width=",stationCollectionView.bounds.width)
-//    currentStationIndexPath = visibleStationIndexPath()
-//    print("currentStationIndexPath=",currentStationIndexPath)
-//    stationCollectionView.collectionViewLayout.invalidateLayout()
-//    print("==================")
    }
 
   override func willTransition(to newCollection: UITraitCollection, with coordinator: UIViewControllerTransitionCoordinator)
   {
-//    print()
-//    print("willTransition")
     super.willTransition(to: newCollection, with: coordinator)
-//    print("safe area width =",self.view.safeAreaLayoutGuide.layoutFrame.size.width)
-//    print("stationCollectionView.bounds.width=",stationCollectionView.bounds.width)
-//    currentStationIndexPath = visibleStationIndexPath()
-//    print("currentStationIndexPath=",currentStationIndexPath)
-//  print("currentStationIndexPath=",currentStationIndexPath)
-//   print()
   }
   
   @objc func deviceRotated()
   {
-//  print()
-//  print("deviceRotated")
-  //    print("safe area height =",self.view.safeAreaLayoutGuide.layoutFrame.size.height)
-//  print("safe area width =",self.view.safeAreaLayoutGuide.layoutFrame.size.width)
-//  print("stationCollectionView.bounds.width=",stationCollectionView.bounds.width)
   switch UIDevice.current.orientation {
   case .landscapeLeft:
     print("landscape left")
@@ -250,35 +191,19 @@ class DetailViewController: UIViewController
   default:
     print("other")
   }
-//  print("stationCollectionView.bounds.width=",stationCollectionView.bounds.width)
-//  print()
-//  currentStationIndexPath = visibleStationIndexPath()
 
   DispatchQueue.main.async {
     self.stationCollectionView.setNeedsLayout()
     self.adjustCellWidth()
     self.updateShadowPlot(self.selectedEventDetails)
-//    self.currentStationIndexPath = self.visibleStationIndexPath()
     self.stationCollectionView.scrollToItem(at: self.currentStationIndexPath, at: .centeredHorizontally, animated: false)
   }
-//  print("currentStationIndexPath=",currentStationIndexPath)
-//  let chordSortedStations = self.event.stationsSortedByChordOffset(selectedEventDetails, order: .ascending)
-//  let primaryIndex = self.event.primaryStationIndex(chordSortedStations)
-//  moveCursorToStation(indexPath: IndexPath(item: primaryIndex!, section: 0))
-//  print("deviceRotated > visibleStationIndexPath()=",visibleStationIndexPath())
-//  print("deviceRotated > currentStationIndexPath=",currentStationIndexPath)
-//  moveCursorToStation(indexPath: visibleStationIndexPath())
   moveCursorToStation(indexPath: currentStationIndexPath)
-
-//  stationCollectionView.reloadData()
-
-//  print()
 }
 
   override func viewWillDisappear(_ animated: Bool)
   {
     eventDetailView.isHidden = true
-//    self.navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.red]
    }
   
   // MARK: - Event Detail Functions
@@ -311,7 +236,6 @@ class DetailViewController: UIViewController
         self.eventFeed.attributedText = self.event.updateFeedFld(item)
         self.eventRA.attributedText = self.event.updateRAFld(item)
         self.eventDec.attributedText = self.event.updateDecFld(item)
-        //insert BVStarDiamView here
         self.eventAsteroidOrigin.attributedText = self.event.updateAsteroidClassFld(item)
         self.eventAsteroidDiameter.attributedText = self.event.updateAsteroidDiamKM(item)
         self.eventStarMagnitude.attributedText = self.event.updateStarMagFld(item)
@@ -362,7 +286,6 @@ class DetailViewController: UIViewController
     }
     cell.eventStationID.text = stationName
     
-//    let timeTuple = updateEventTimeFlds(&item)
     let timeTuple = event.updateEventTimeFlds(&item)
     cell.eventTime.text = timeTuple.eventTime
     
@@ -384,10 +307,8 @@ class DetailViewController: UIViewController
         cloudCoverStr = String(format: " %d%%",stations[stationIndex].CloudCover!)
         cloudIconValue = stations[stationIndex].CloudCover!
       }
-      
       cell.eventClouds.text = cloudCoverStr
       cell.eventCloudImg.image = cloudIcon(cloudIconValue)
-      
       //wind info
       var windSpeedIconValue: Int?
       var windSignIconValue: Int?
@@ -398,24 +319,20 @@ class DetailViewController: UIViewController
       }
       cell.eventWindStrengthImg.image = windStrengthIcon(windSpeedIconValue)
       cell.eventWindSignImg.image = windSignIcon(windSignIconValue)
-      
       //temp info
       var tempStr = "—"
       if stations[stationIndex].TempDegC != nil
       {
         tempStr = String(format: "%d°C",stations[stationIndex].TempDegC!)
       }
-      
       cell.eventTemperature.text = tempStr
       cell.eventTempImg.image = thermIcon(stations[stationIndex].TempDegC!)
-      
       //high cloud info
       var highCloudStr = ""
       if stations[stationIndex].HighCloud != nil
       {
         highCloudStr = String(format: "%@",stations[stationIndex].HighCloud!.description)
       }
-      
     } else {
       cell.eventCloudImg.image = nil
       cell.eventClouds.text = ""
@@ -452,7 +369,6 @@ class DetailViewController: UIViewController
       cell.sunAltImg.image = nil
       cell.eventSunAlt.text = "   "
     }
-    
     
     var moonAltStr = "—"
     var moonPhaseImage: UIImage
@@ -493,14 +409,10 @@ class DetailViewController: UIViewController
   
   func updateShadowPlot(_ item: EventDetails)
   {
-//    print()
-//    print("updateShadowPlot")
-    //update shadow bars plot
     let stationsExistBeyondSigma1:Bool = self.event.barPlotToSigma3(item)
     
     var plotWidthKm = totalPlotWidthKm(item, scale: .sigma3Edge)
     let outerChordWidth = farthestChordWidth(item)
-    //    print("outerChordWidth=",outerChordWidth)
     sigma1BarView.isHidden = false
     sigma2BarView.isHidden = false
     sigma3BarView.isHidden = false
@@ -527,7 +439,6 @@ class DetailViewController: UIViewController
       sigma2BarView.isHidden = true
       sigma3BarView.isHidden = true
     }
-    //    print("plotWidthKm=",plotWidthKm)
     
     let plotBarFactors = plotBarsWidthFactors(item, totalPlotWidthKm: plotWidthKm)
     
@@ -543,104 +454,44 @@ class DetailViewController: UIViewController
     
     let primaryStation = self.event.primaryStation(item)!
     let primaryChordOffset = primaryStation.ChordOffsetKm!
-    //    print("primaryChordOffset=",primaryChordOffset)
     let primaryFactor = plotStationBarFactor(station: primaryStation, totalPlotWidthKm: plotWidthKm)
-    //    print("primaryFactor=",primaryFactor)
     self.userBarView.frame.origin.x = self.centerBarView.frame.origin.x + (self.weatherBarView.bounds.width / 2) * CGFloat(primaryFactor)
     
     self.weatherBarView.subviews.forEach( { $0 .removeFromSuperview() })
     addStationsSubviews(plotWidthKm)
     addStationCursor()
-    
-    //    print("primary station index = ",self.event.primaryStationIndex(self.selectedStations))
-    //    print("<updateEventInfoFields")
-//    print("currentStationIndexPath=",currentStationIndexPath)
   }
   
   func moveCursorToStation(indexPath: IndexPath)
   {
-//    print()
-//    print(">moveCursorToStation")
-    //    print("station indexPath.item=",indexPath.item)
-    //    for subview in self.weatherBarView.subviews
-    //    {
-    //      subview.backgroundColor = .black
-    //    }
     var currentIndex = indexPath.item
-    //    if let tempIndex = self.weatherBarView.subviews.firstIndex(where: {$0.tag == indexPath.item} )
-    //    {
-    //      currentIndex = tempIndex
-    //    }
     DispatchQueue.main.async
       {
-        //        print("currentIndex=",currentIndex)
-        //        print("selectedStations[currentIndex]=",self.selectedStations[currentIndex])
-        //        for station in self.selectedStations
-        //        {
-        //          print("station.chordOffset=",station.ChordOffsetKm)
-        //        }
-        //        print("self.weatherBarView.subviews[currentIndex].frame.origin.x=",self.weatherBarView.subviews[currentIndex].frame.origin.x)
-        //        print("self.weatherBarView.bounds.minX=",self.weatherBarView.bounds.minX)
-        //        print("self.weatherBarView.subviews[currentIndex].frame.origin.x=",self.weatherBarView.subviews[currentIndex].frame.origin.x)
-        //        print("self.weatherBarView.bounds.maxX=",self.weatherBarView.bounds.maxX)
         if self.weatherBarView.subviews[currentIndex].frame.origin.x >= self.weatherBarView.frame.minX
           && self.weatherBarView.subviews[currentIndex].frame.origin.x < self.weatherBarView.frame.maxX
         {
-          //          print("show station cursor")
           self.stationCursor.isHidden = false
           let currentStationView = self.weatherBarView.subviews[currentIndex]
-          //          currentStationView.backgroundColor = .red
           self.stationCursor.frame.origin.x = currentStationView.frame.origin.x + (currentStationView.frame.width / 2) - self.stationCursor.frame.width / 2
         } else {
-          //          print("hide station cursor")
           self.stationCursor.isHidden = true
         }
-        //        print("<moveCursorToStation")
-        //        print()
     }
-//    print("currentStationIndexPath=",currentStationIndexPath)
+
   }
 
   func visibleStationIndexPath() -> IndexPath
   {
-//    print()
-//    print("visibleStationIndexPath")
     let visibleRect = CGRect(origin: stationCollectionView.contentOffset, size: stationCollectionView.bounds.size)
-    //    print("visibleRect=",visibleRect)
     let visiblePoint = CGPoint(x: visibleRect.midX, y: visibleRect.midY)
-    //    print("visiblePoint=",visiblePoint)
     let visibleStationIndexPath = stationCollectionView.indexPathForItem(at: visiblePoint)!
-//    print("visibleStationIndexPath=",visibleStationIndexPath)
-//    print("visbleStationIndexPath.item=",visibleStationIndexPath.item)
-    //    print("visbleStationIndexPath.section=",visibleStationIndexPath.section)
-    //    currentStationIndexPath = visibleStationIndexPath
-//    print("currentStationIndexPath=",currentStationIndexPath)
-//    print()
     return visibleStationIndexPath
   }
 
   func addStationsSubviews(_ plotWidthKm: Double)
   {
-    //    if stationsExistBeyondSigma1
-    //    {
-    //
-    //      self.sigma2BarView.transform = CGAffineTransform(scaleX: CGFloat(plotBarFactors.sigma2BarFactor), y: 1.0)
-    //      self.sigma3BarView.transform = CGAffineTransform(scaleX: CGFloat(plotBarFactors.sigma3BarFactor), y: 1.0)
-    //      self.sigma2BarView.isHidden = false
-    //      self.sigma3BarView.isHidden = false  //always scaled to full width
-    //    }
-    //    else
-    //    {
-    //      self.sigma2BarView.isHidden = true
-    //      self.sigma3BarView.isHidden = true
-    //    }
-    
-    
-    
-    //    for (index,station) in item.Stations!.enumerated()
     for (index,station) in selectedStations.enumerated()
     {
-      //      let stationFactor = self.event.assignStationFactor(item, station: station, stationsExistPastSigma1: stationsExistBeyondSigma1)
       let stationFactor = plotStationBarFactor(station: station, totalPlotWidthKm: plotWidthKm)
       var stationView = UIView()
       stationView.frame.origin.x = self.centerBarView.frame.origin.x + (self.weatherBarView.bounds.width / 2) * CGFloat(stationFactor)
@@ -654,7 +505,6 @@ class DetailViewController: UIViewController
         stationView.backgroundColor = .gray
       }
       self.weatherBarView.addSubview(stationView)
-      //      print("index=",index,"stationView.frame.origin.x=",stationView.frame.origin.x)
     }
   }
   
@@ -677,40 +527,19 @@ extension DetailViewController: UICollectionViewDataSource,UICollectionViewDeleg
 {
   func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int
   {
-//    print("> number of items")
-//    print("selectedStations:")
-//    for (index,station) in self.selectedStations.enumerated()
-//    {
-//      print("index=",index)
-//      print(station)
-//      print()
-//    }
-//    print()
-//
     return selectedStations.count
   }
   
   func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell
   {
-//    print()
-//    print(">collectionView")
-//    print("cellForItemAt > indexPath:",indexPath)
-//    print("station=",selectedStations[indexPath.item])
     var cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as! StationCell
     cell.backgroundColor = #colorLiteral(red: 0.2043271959, green: 0.620110333, blue: 0.6497597098, alpha: 1)
     updateStationFlds(cell: &cell, indexPath: indexPath, stations: selectedStations, itm: selectedEventDetails)
-    //    moveCursorToStation(indexPath: indexPath)
-//    visibleIndexPaths = collectionView.indexPathsForVisibleItems
-//    currentStationIndexPath = visibleStationIndexPath()
-//    print("<collectionView")
-//    print()
     return cell
   }
   
   func adjustCellWidth()
   {
-//    print()
-//    print("adjustCellWidth")
     var cellHeight = stationCollectionView.bounds.height
     if let flowLayout = self.stationCollectionView.collectionViewLayout as? UICollectionViewFlowLayout
     {
@@ -719,26 +548,15 @@ extension DetailViewController: UICollectionViewDataSource,UICollectionViewDeleg
       flowLayout.sectionInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
       let totalHInsets = flowLayout.sectionInset.left + flowLayout.sectionInset.right
       var cellWidth = self.stationCollectionView.bounds.width - flowLayout.minimumLineSpacing
-      //      var cellWidth = self.view.safeAreaLayoutGuide.layout - flowLayout.minimumLineSpacing
-      //      print("stationCollectionView.bounds.width=",stationCollectionView.bounds.width)
-      //      print("adjusted cellWidth=",cellWidth)
       stationCollectionView.bounds.origin.x = 0
       flowLayout.itemSize = CGSize(width: cellWidth, height: CGFloat(cellHeight))
-//      print("flowLayout.itemSize=",flowLayout.itemSize)
-//      print("currentStationIndexPath=",currentStationIndexPath)
     }
   }
   
   func scrollViewDidEndDecelerating(_ scrollView: UIScrollView)
   {
-//    print()
-//    print(">scrollViewDidEndDecelerating")
-//    print("visibleIndexPaths=",visibleIndexPaths)
-//    moveCursorToStation(indexPath: visibleStationIndexPath)
     currentStationIndexPath = visibleStationIndexPath()
     moveCursorToStation(indexPath: visibleStationIndexPath())
-//    print("<scrollViewDidEndDecelerating")
-//    print("currentStationIndexPath=",currentStationIndexPath)
   }
 }
 
@@ -817,66 +635,4 @@ extension DetailViewController
     print("eventCamRotationAmplitude=\(eventCamRotationAmplitude.text)")
   }
   
-  func testStation()
-  {
-    //*********************station tests**********************
-    //    var testStations = [Station]()
-    //    var newStation = Station()
-    //    newStation.StationId = 1
-    //    newStation.StationName = "Station Name"
-    //    newStation.EventTimeUtc = "2019-07-04T21:04:57.488"
-    //    newStation.WeatherInfoAvailable = true
-    //    newStation.CloudCover = 5
-    //    newStation.Wind = 3
-    //    newStation.TempDegC = 24
-    //    newStation.HighCloud = false
-    //    newStation.StationPos = 1
-    //
-    //    newStation.ChordOffsetKm = 10     //test value
-    //
-    //    newStation.OccultDistanceKm = 1.1
-    //    newStation.IsOwnStation = true
-    //    newStation.IsPrimaryStation = true
-    //    testStations.append(newStation)
-    //
-    //    var testItem = EventDetails()
-    //    testItem.Id = "id123456789"
-    //    testItem.Object = "Test Object"
-    //    testItem.StarMag = 9.87
-    //    testItem.MagDrop = 6.54
-    //    testItem.MaxDurSec = 1.23
-    //    testItem.ErrorInTimeSec = 0.7
-    //    testItem.StarColour = 3
-    //    testItem.Stations = testStations
-    //    testItem.Feed = "Test Feed"
-    //    testItem.Rank = 97
-    //    testItem.BV = 0.543
-    //    testItem.CombMag = 9.99
-    //    testItem.AstMag = 14.7
-    //    testItem.MoonDist = 1.1
-    //    testItem.MoonPhase = 11
-    //
-    //    testItem.AstDiaKm = 20     //test value
-    //
-    //    testItem.AstDistUA = 1.1
-    //    testItem.RAHours = 12.345
-    //    testItem.DEDeg = 67.89
-    //    testItem.StarAlt = 35.7
-    //    testItem.StarAz = 123.4
-    //    testItem.SunAlt = -11
-    //    testItem.MoonAlt = 11
-    //    testItem.MoonAz = 11
-    //    testItem.StellarDia = 0.05
-    //    testItem.StarName = "TYC 123"
-    //    testItem.OtherStarNames = ""
-    //    testItem.AstClass = "NEO"
-    //    testItem.AstRotationHrs = 7.8
-    //    testItem.AstRotationAmplitude = 0.9
-    //    testItem.PredictionUpdated = "July 4, 2019"
-    //
-    //    testItem.OneSigmaErrorWidthKm = 20     //test value
-    //
-    //    item = testItem
-    //********************************************************
-  }
 }
