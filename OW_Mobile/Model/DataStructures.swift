@@ -88,7 +88,7 @@ struct ObserverStation: Codable
   var CombMag: Double?
   var StarColour: Double?
 }
-var eventWithDetails = [EventWithDetails]()
+var eventsWithDetails = [EventWithDetails]()
 var currentEvent = OccultationEvent()
 
 //Event structure matching JSON keys

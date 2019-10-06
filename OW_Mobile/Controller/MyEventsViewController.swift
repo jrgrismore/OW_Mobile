@@ -98,8 +98,9 @@ class MyEventsViewController: UIViewController, UICollectionViewDataSource,UICol
       lastUpdateAlert.addAction(UIAlertAction(title: alertExistingBtn, style: .default, handler: {_ in
         //restore existing list
         self.assignEventsWithDetails()
-        self.cellDataArray = OWWebAPI.shared.loadEvents()
-        self.cellStringArray = self.assignMyEventStrings(myEvents: self.cellDataArray)
+//        self.cellDataArray = OWWebAPI.shared.loadEvents()
+        self.cellEventDetailArray = OWWebAPI.shared.loadEventsWithDetails()
+        self.cellEventDetailStringArray = self.assignEventDetailStrings(eventPlusDetails: self.cellEventDetailArray)
         DispatchQueue.main.async{self.myEventsCollection.reloadData()}
       }))
     }
