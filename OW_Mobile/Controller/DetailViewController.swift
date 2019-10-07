@@ -37,12 +37,17 @@ class DetailViewController: UIViewController
   var complete: Bool = false
   
   var stationsDetails = [EventDetails]()
-  var selectedStations = [Station]()
-  var selectedEventDetails = EventDetails()
+//  var selectedStations = [Station]()
+  var selectedStations = [ObserverStation]()
+//  var selectedEventDetails = EventDetails()
+  var eventWithDetails = EventWithDetails()
+  var selectedEventDetails = EventWithDetails()
   var event = OccultationEvent()
   var stationCursor = UIView()
   var visibleIndexPaths = [IndexPath]()
   
+  var selectedEvent = EventWithDetails()
+
   var currentStationIndexPath = IndexPath()
   
   var stationBarSubViewsExist = false
@@ -119,15 +124,23 @@ class DetailViewController: UIViewController
     let detailObject = detailData.Object!.replacingOccurrences(of: "(-2147483648) ", with: "")
     self.title = detailObject
     
-    stationsDetails = OWWebAPI.shared.loadDetails()
-    let detailsIndex = stationsDetails.index(where: { $0.Id == detailData.Id  })
-    selectedEventDetails = stationsDetails[detailsIndex!]
-    let chordSortedStations = self.event.stationsSortedByChordOffset(selectedEventDetails, order: .ascending)
+//    stationsDetails = OWWebAPI.shared.loadDetails()
+//    let detailsIndex = stationsDetails.index(where: { $0.Id == detailData.Id  })
+//    selectedEventDetails = stationsDetails[detailsIndex!]
+    print("eventID=",eventID)
+    print()
+    print("eventsWithDetails=",eventsWithDetails)
+    let eventDetailIndex = eventsWithDetails.index(where: { $0.Id == eventID  } )
+    print("eventDetailIndex=",eventDetailIndex)
+    selectedEvent = eventsWithDetails[eventDetailIndex!]
+    
+//    let tempEvent = OccultationEvent()
+    let chordSortedStations = OccultationEvent.stationsSortedByChordOffset(selectedEvent, order: .ascending)
     
     selectedStations = chordSortedStations
     
-    let primaryIndex = self.event.primaryStationIndex(chordSortedStations)
-    updateEventInfoFields(eventItem: selectedEventDetails)
+    let primaryIndex = OccultationEvent.primaryStationIndex(selectedEvent)
+    updateEventInfoFields(eventItem: selectedEvent)
     if complete
     {
       self.navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.darkGray,
@@ -147,7 +160,7 @@ class DetailViewController: UIViewController
   override func viewDidAppear(_ animated: Bool)
   {
     adjustCellWidth()
-    let primaryIndex = self.event.primaryStationIndex(selectedStations)
+    let primaryIndex = OccultationEvent.primaryStationIndex(selectedStations)
     currentStationIndexPath = IndexPath(item:primaryIndex!, section: 0)
     DispatchQueue.main.async
       {
@@ -207,11 +220,11 @@ class DetailViewController: UIViewController
    }
   
   // MARK: - Event Detail Functions
-  func updateEventInfoFields(eventItem itm: EventDetails)
+  func updateEventInfoFields(eventItem itm: EventWithDetails)
   {
     //testing var
     var item = itm
-    selectedStations = self.event.stationsSortedByChordOffset(item, order: .ascending)
+    selectedStations = OccultationEvent.stationsSortedByChordOffset(item, order: .ascending)
     
     DispatchQueue.main.async
       {
@@ -260,7 +273,7 @@ class DetailViewController: UIViewController
     }   // end DispatchQueue.main.async
   }
   
-  func updateStationFlds(cell: inout StationCell, indexPath: IndexPath, stations: [Station], itm: EventDetails)
+  func updateStationFlds(cell: inout StationCell, indexPath: IndexPath, stations: [ObserverStation], itm: EventWithDetails)
   {
     var item = itm
     let stationIndex = indexPath.item
@@ -407,9 +420,9 @@ class DetailViewController: UIViewController
     }
   }
   
-  func updateShadowPlot(_ item: EventDetails)
+  func updateShadowPlot(_ item: EventWithDetails)
   {
-    let stationsExistBeyondSigma1:Bool = self.event.barPlotToSigma3(item)
+    let stationsExistBeyondSigma1:Bool = OccultationEvent.barPlotToSigma3(item)
     
     var plotWidthKm = totalPlotWidthKm(item, scale: .sigma3Edge)
     let outerChordWidth = farthestChordWidth(item)
@@ -452,7 +465,7 @@ class DetailViewController: UIViewController
     self.sigma2BarView.transform = CGAffineTransform(scaleX: CGFloat(plotBarFactors.sigma2BarFactor), y: 1.0)
     self.sigma3BarView.transform = CGAffineTransform(scaleX: CGFloat(plotBarFactors.sigma3BarFactor), y: 1.0)
     
-    let primaryStation = self.event.primaryStation(item)!
+    let primaryStation = OccultationEvent.primaryStation(item)!
     let primaryChordOffset = primaryStation.ChordOffsetKm!
     let primaryFactor = plotStationBarFactor(station: primaryStation, totalPlotWidthKm: plotWidthKm)
     self.userBarView.frame.origin.x = self.centerBarView.frame.origin.x + (self.weatherBarView.bounds.width / 2) * CGFloat(primaryFactor)

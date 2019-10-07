@@ -22,7 +22,8 @@ class MyEventsViewController: UIViewController, UICollectionViewDataSource,UICol
   var cellEventDetailArray = [EventWithDetails]()  //for rework
   var cellStringArray = [EventStrings]()
   var cellEventDetailStringArray = [EventDetailStrings]()
-  var eventsWithDetails = MyEventListDetails(eventList: [], eventsDetails: [])
+//  var eventsWithDetails = MyEventListDetails(eventList: [], eventsDetails: [])
+  var eventsWithDetails = [EventWithDetails]()
   //  var eventsWithDetailsData = EventWithDetails()
   var eventsWithDetailsData = [EventDetails]()
   var eventStore = EKEventStore()
@@ -75,6 +76,7 @@ class MyEventsViewController: UIViewController, UICollectionViewDataSource,UICol
       let updateTimeFormatter = DateFormatter()
       updateTimeFormatter.dateFormat = "MM-dd-yy'   'HH:mm:ss"
       let lastUpdateStr = updateTimeFormatter.string(from: lastUpdate)
+
       alertTitle = String(format:"Event List for User\n" + Credentials.username + "\nLast Updated\n%@",lastUpdateStr)
       alertMsg = "Update Event List or\nUse Existing List?"
       alertExistingBtn = "Use Existing"
@@ -97,9 +99,9 @@ class MyEventsViewController: UIViewController, UICollectionViewDataSource,UICol
     {
       lastUpdateAlert.addAction(UIAlertAction(title: alertExistingBtn, style: .default, handler: {_ in
         //restore existing list
-        self.assignEventsWithDetails()
-        self.cellDataArray = OWWebAPI.shared.loadEvents()
-        self.cellStringArray = self.assignMyEventStrings(myEvents: self.cellDataArray)
+//        self.assignEventsWithDetails()
+        self.cellEventDetailArray = OWWebAPI.shared.loadEventsWithDetails()
+        self.cellEventDetailStringArray = self.assignEventDetailStrings(eventPlusDetails: self.cellEventDetailArray)
         DispatchQueue.main.async{self.myEventsCollection.reloadData()}
       }))
     }
@@ -151,10 +153,15 @@ class MyEventsViewController: UIViewController, UICollectionViewDataSource,UICol
       if let dest = segue.destination as? DetailViewController,
         let index = myEventsCollection.indexPathsForSelectedItems?.first
       {
-        dest.selection = cellDataArray[index.row]!.Object
-        dest.detailData = cellDataArray[index.row]!
-        dest.eventID = cellDataArray[index.row]!.Id!
-        let timeRemaining = leadTime(timeString: cellDataArray[index.row]!.EventTimeUtc!)
+        dest.eventWithDetails = cellEventDetailArray[index.row]
+        dest.selection = cellEventDetailArray[index.row].Object
+//        dest.detailData = cellEventDetailArray[index.row]
+        dest.eventID = cellEventDetailArray[index.row].Id!
+        
+        eventsWithDetails = OWWebAPI.shared.loadEventsWithDetails()
+        print("myEventsController > dest.eventID=",dest.eventID)
+        print("eventsWithDetails=",eventsWithDetails)
+        let timeRemaining = leadTime(timeString: cellEventDetailArray[index.row].EventTimeUtc!)
         if timeRemaining == "completed"
         {eventCompleted = true} else {eventCompleted = false}
         if eventCompleted
@@ -357,12 +364,13 @@ extension MyEventsViewController
             print("granted = \(granted)")
             print("error = \(error)")
             print("point indexPath.item = ",indexPath.item)
-            let allDetails = OWWebAPI.shared.loadDetails()
-            let detailsIndex = allDetails.index(where: { $0.Id == self.cellDataArray[indexPath.item]?.Id  })
+//            let allDetails = OWWebAPI.shared.loadDetails()
+            let allEvents = OWWebAPI.shared.loadEventsWithDetails()
+            let detailsIndex = allEvents.index(where: { $0.Id == self.cellDataArray[indexPath.item]?.Id  })
             print("detailsIndex=",detailsIndex)
-            print("allDetails[detailsIndex]=",allDetails[detailsIndex!])
+            print("allEvents[detailsIndex]=",allEvents[detailsIndex!])
             currentEvent.eventData = self.cellEventDetailArray[detailsIndex!]
-            let primaryStation = currentEvent.primaryStation(allDetails[detailsIndex!])
+            let primaryStation = OccultationEvent.primaryStation(allEvents[detailsIndex!])
             do
             {
               DispatchQueue.main.async
@@ -374,18 +382,18 @@ extension MyEventsViewController
                   event.startDate = eventStartUTC
                   let eventEndUTC = event.startDate.addingTimeInterval( (self.cellDataArray[indexPath.row]?.MaxDurSec!)!)
                   event.endDate = eventEndUTC
-                  var noteStr = self.cellStringArray[indexPath.row].Object + " occults " +  allDetails[detailsIndex!].StarName!
-                  noteStr.append("\nRank: " + String(format: " %d ",allDetails[detailsIndex!].Rank!))
+                  var noteStr = self.cellStringArray[indexPath.row].Object + " occults " +  allEvents[detailsIndex!].StarName!
+                  noteStr.append("\nRank: " + String(format: " %d ",allEvents[detailsIndex!].Rank!))
                   noteStr.append(", Chord: " + String(format: " %0.1f km ",primaryStation!.ChordOffsetKm!))
-                  noteStr.append("\nmax duration: " + String(format: " %0.1f sec",allDetails[detailsIndex!].MaxDurSec!))
-                  noteStr.append("\ncombined mag: " + String(format: " %0.1f ",allDetails[detailsIndex!].CombMag!))
-                  noteStr.append(", mag drop: " + String(format: " %0.1f ",allDetails[detailsIndex!].MagDrop!))
-                  let raTuple = floatRAtoHMS(floatRA: allDetails[detailsIndex!].RAHours!)
+                  noteStr.append("\nmax duration: " + String(format: " %0.1f sec",allEvents[detailsIndex!].MaxDurSec!))
+                  noteStr.append("\ncombined mag: " + String(format: " %0.1f ",allEvents[detailsIndex!].CombMag!))
+                  noteStr.append(", mag drop: " + String(format: " %0.1f ",allEvents[detailsIndex!].MagDrop!))
+                  let raTuple = floatRAtoHMS(floatRA: allEvents[detailsIndex!].RAHours!)
                   let raStr = String(format: "%02dh %02dm %04.1fs",raTuple.hours,raTuple.minutes,raTuple.seconds)
                   noteStr.append("\nRA: " + raStr)
-                  noteStr.append(", Dec: " + String(format: " %0.1f° ",allDetails[detailsIndex!].DEDeg!))
-                  noteStr.append("\nAlt: " + String(format: " %0.1f° ",allDetails[detailsIndex!].StarAlt!))
-                  noteStr.append(", Az: " + String(format: " %0.1f° ",allDetails[detailsIndex!].StarAz!))
+                  noteStr.append(", Dec: " + String(format: " %0.1f° ",allEvents[detailsIndex!].DEDeg!))
+                  noteStr.append("\nAlt: " + String(format: " %0.1f° ",allEvents[detailsIndex!].StarAlt!))
+                  noteStr.append(", Az: " + String(format: " %0.1f° ",allEvents[detailsIndex!].StarAz!))
                   event.notes = noteStr
                   
                   self.vc.editViewDelegate = self as? EKEventEditViewDelegate
@@ -536,10 +544,10 @@ extension MyEventsViewController
     let magAttrStr = NSMutableAttributedString(string:"m", attributes:[NSAttributedString.Key.font : captionFont,
                                                                        NSAttributedString.Key.baselineOffset: 5])
     let events = OWWebAPI.shared.loadEvents()
-    if events.count == eventsWithDetails.eventsDetails.count
+    if events.count == eventsWithDetails.count
     {
       //use combined mag rather than star mag
-      let combMag = eventsWithDetails.eventsDetails[indexPath.row].CombMag
+      let combMag = eventsWithDetails[indexPath.row].CombMag
       let combMagStr = String(format: "%0.1f",combMag!)
       let combMagAttrStr = NSMutableAttributedString(string:combMagStr)
       combMagAttrStr.append(magAttrStr)
@@ -816,18 +824,18 @@ extension MyEventsViewController
     return eventDetailStringArray
   }
   
-  fileprivate func assignEventsWithDetails() {
-    let tempEvents = OWWebAPI.shared.loadEvents()
-    let tempDetails = OWWebAPI.shared.loadDetails()
-    self.eventsWithDetails.eventList = []
-    self.eventsWithDetails.eventsDetails = []
-    self.eventsWithDetails.eventList = tempEvents
-    for (index, event) in tempEvents.enumerated()
-    {
-      let detailsIndex = tempDetails.index(where: { $0.Id == event.Id  })
-      self.eventsWithDetails.eventsDetails.append(tempDetails[detailsIndex!])
-    }
-  }
+//  fileprivate func assignEventsWithDetails() {
+//    let tempEvents = OWWebAPI.shared.loadEvents()
+//    let tempDetails = OWWebAPI.shared.loadDetails()
+//    self.eventsWithDetails.eventList = []
+//    self.eventsWithDetails.eventsDetails = []
+//    self.eventsWithDetails.eventList = tempEvents
+//    for (index, event) in tempEvents.enumerated()
+//    {
+//      let detailsIndex = tempDetails.index(where: { $0.Id == event.Id  })
+//      self.eventsWithDetails.eventsDetails.append(tempDetails[detailsIndex!])
+//    }
+//  }
 }
 
 // MARK: - OW Web API functions

@@ -20,27 +20,27 @@ class OccultationEvent: NSObject
   
   
   // MARK: - event detail update functions
-  func updateObjectFld(_ item: EventDetails) -> NSAttributedString
+  func updateObjectFld(_ item: EventWithDetails) -> NSAttributedString
   {
     var objectAttrStr: NSAttributedString = NSMutableAttributedString(string: "—")
     if item.StarName != nil
     {
-      objectAttrStr = self.formatLabelandField(label:"", field: item.StarName!, units:"")
+      objectAttrStr = formatLabelandField(label:"", field: item.StarName!, units:"")
     }
     return objectAttrStr
   }
   
-  func updateRankFld(_ item: EventDetails) -> NSAttributedString
+  func updateRankFld(_ item: EventWithDetails) -> NSAttributedString
   {
     var rankAttrStr: NSAttributedString = NSMutableAttributedString(string: "Rank: —")
     if item.Rank != nil
     {
-      rankAttrStr = self.formatLabelandField(label:"Rank: ", field: String(format: "%d",item.Rank!), units:"")
+      rankAttrStr = formatLabelandField(label:"Rank: ", field: String(format: "%d",item.Rank!), units:"")
     }
     return rankAttrStr
   }
   
-  func updateFeedFld(_ item: EventDetails) -> NSAttributedString
+  func updateFeedFld(_ item: EventWithDetails) -> NSAttributedString
   {
     var feedAttrStr: NSAttributedString = NSMutableAttributedString(string: "—")
     if item.Feed != nil
@@ -51,7 +51,7 @@ class OccultationEvent: NSObject
     
   }
   
-  func updateRAFld(_ item: EventDetails) -> NSAttributedString
+  func updateRAFld(_ item: EventWithDetails) -> NSAttributedString
   {
     var raAttrStr: NSAttributedString = NSMutableAttributedString(string: "RA   —")
     if item.RAHours != nil
@@ -64,7 +64,7 @@ class OccultationEvent: NSObject
     return raAttrStr
   }
   
-  func updateDecFld(_ item: EventDetails) -> NSAttributedString
+  func updateDecFld(_ item: EventWithDetails) -> NSAttributedString
   {
     var decAttrStr: NSAttributedString = NSMutableAttributedString(string: "DE   —")
     if item.DEDeg != nil
@@ -77,7 +77,7 @@ class OccultationEvent: NSObject
     return decAttrStr
   }
   
-  func updateBVFld(_ item: EventDetails) -> NSAttributedString
+  func updateBVFld(_ item: EventWithDetails) -> NSAttributedString
   {
     var bvAttrStr: NSAttributedString = NSMutableAttributedString(string: "B-V   —")
     if item.BV != nil
@@ -88,18 +88,18 @@ class OccultationEvent: NSObject
     return bvAttrStr
   }
   
-  func updateStarDiamFld(_ item: EventDetails) -> NSAttributedString
+  func updateStarDiamFld(_ item: EventWithDetails) -> NSAttributedString
   {
     var starDiamAttrStr: NSAttributedString = NSMutableAttributedString(string: "Stellar Dia.          —")
-    if item.StellarDia != nil
+    if item.StellarDiaMas != nil
     {
-      starDiamAttrStr = self.formatLabelandField(label:"Stellar Dia: ", field: String(format: "%0.1f",item.StellarDia!), units:" mas")
+      starDiamAttrStr = self.formatLabelandField(label:"Stellar Dia: ", field: String(format: "%0.1f",item.StellarDiaMas!), units:" mas")
     }
     DispatchQueue.main.async{}
     return starDiamAttrStr
   }
   
-  func updateAsteroidClassFld(_ item: EventDetails) -> NSAttributedString
+  func updateAsteroidClassFld(_ item: EventWithDetails) -> NSAttributedString
   {
     var asteroidClassAttrStr: NSAttributedString = NSMutableAttributedString(string: "—")
     if item.AstClass != nil
@@ -109,7 +109,7 @@ class OccultationEvent: NSObject
     return asteroidClassAttrStr
   }
   
-  func updateAsteroidDiamKM(_ item: EventDetails) -> NSAttributedString
+  func updateAsteroidDiamKM(_ item: EventWithDetails) -> NSAttributedString
   {
     var asteroidDiamAttrStr: NSAttributedString = NSMutableAttributedString(string: "Diam        —")
     if item.AstDiaKm != nil
@@ -119,7 +119,7 @@ class OccultationEvent: NSObject
     return asteroidDiamAttrStr
   }
   
-  func updateStarMagFld(_ item: EventDetails) -> NSAttributedString
+  func updateStarMagFld(_ item: EventWithDetails) -> NSAttributedString
   {
     var starMagAttrStr: NSAttributedString = NSMutableAttributedString(string: "Star Mag     —")
     if item.StarMag != nil
@@ -129,7 +129,7 @@ class OccultationEvent: NSObject
     return starMagAttrStr
   }
   
-  func updateAsteroidMagFld(_ item: EventDetails) -> NSAttributedString
+  func updateAsteroidMagFld(_ item: EventWithDetails) -> NSAttributedString
   {
     var asterMagAttrStr: NSAttributedString = NSMutableAttributedString(string: "Aster. Mag     —")
     if item.AstMag != nil
@@ -139,7 +139,7 @@ class OccultationEvent: NSObject
     return asterMagAttrStr
   }
   
-  func updateCombinedMagFld(_ item: EventDetails) -> NSAttributedString
+  func updateCombinedMagFld(_ item: EventWithDetails) -> NSAttributedString
   {
     var combMagAttrStr: NSAttributedString = NSMutableAttributedString(string: "Comb. Mag       —")
     if item.CombMag != nil
@@ -149,7 +149,7 @@ class OccultationEvent: NSObject
     return combMagAttrStr
   }
   
-  func updateMagDropFld(_ item: EventDetails) -> NSAttributedString
+  func updateMagDropFld(_ item: EventWithDetails) -> NSAttributedString
   {
     var magDropAttrStr: NSAttributedString = NSMutableAttributedString(string: "Mag Drop       —")
     if item.MagDrop != nil
@@ -160,7 +160,7 @@ class OccultationEvent: NSObject
     return magDropAttrStr
   }
   
-  func updateAsteroidRotationFld(_ item: EventDetails) -> NSAttributedString
+  func updateAsteroidRotationFld(_ item: EventWithDetails) -> NSAttributedString
   {
     var asterRotationAttrStr: NSAttributedString = NSMutableAttributedString(string: "Rotation       —")
     if item.AstRotationHrs != nil
@@ -170,7 +170,7 @@ class OccultationEvent: NSObject
     return asterRotationAttrStr
   }
   
-  func updateAsteroidRotationAmpFld(_ item: EventDetails) -> NSAttributedString
+  func updateAsteroidRotationAmpFld(_ item: EventWithDetails) -> NSAttributedString
   {
     var asterAmpAttrStr: NSAttributedString = NSMutableAttributedString(string: "Amplitude       —")
     if item.AstRotationAmplitude != nil
@@ -180,9 +180,9 @@ class OccultationEvent: NSObject
     return asterAmpAttrStr
   }
   
-  func hideBVStarDiamView(_ item: EventDetails) -> Bool
+  func hideBVStarDiamView(_ item: EventWithDetails) -> Bool
   {
-    if item.BV == nil && item.StellarDia == nil
+    if item.BV == nil && item.StellarDiaMas == nil
     {
       return true
     }
@@ -192,7 +192,7 @@ class OccultationEvent: NSObject
     }
   }
   
-  func hideAsterRotAmpView(_ item: EventDetails) -> Bool
+  func hideAsterRotAmpView(_ item: EventWithDetails) -> Bool
   {
     if item.AstRotationHrs == nil && item.AstRotationAmplitude == nil
     {
@@ -205,7 +205,7 @@ class OccultationEvent: NSObject
   }
   
   // MARK: - shadow bar plot functions
-  func updateShadowBarView(_ item: EventDetails,stationsExistPastSigma1: Bool) -> (shadowFactor:Double,sig1Factor:Double,sig2Factor:Double,sig3Factor:Double)
+  func updateShadowBarView(_ item: EventWithDetails,stationsExistPastSigma1: Bool) -> (shadowFactor:Double,sig1Factor:Double,sig2Factor:Double,sig3Factor:Double)
   {
     print()
     print(">updateShadowBarView")
@@ -223,7 +223,7 @@ class OccultationEvent: NSObject
     return (shadowFactor,sigma1Factor,sigma2Factor,sigma3Factor)
   }
   
-  func assignStationFactor(_ item: EventDetails, station: Station, stationsExistPastSigma1: Bool) -> Double
+  func assignStationFactor(_ item: EventWithDetails, station: Station, stationsExistPastSigma1: Bool) -> Double
   {
     let stationChordOffset = station.ChordOffsetKm!
     let barPlotTotalWidth = pathBarsTotalWidth(astDiamKm: item.AstDiaKm!, sigma1WidthKm: item.OneSigmaErrorWidthKm!, stationsExistPastSigma1: stationsExistPastSigma1)
@@ -264,7 +264,7 @@ class OccultationEvent: NSObject
   }
   
   // MARK: - stations functions
-  func barPlotToSigma3(_ item: EventDetails) -> Bool
+  static func barPlotToSigma3(_ item: EventWithDetails) -> Bool
   {
     //implement station distance beyond sigma1 later
     for station in item.Stations!
@@ -286,7 +286,7 @@ class OccultationEvent: NSObject
     }
   }
   
-  func primaryStation(_ item: EventDetails) -> Station?
+  static func primaryStation(_ item: EventWithDetails) -> ObserverStation?
   {
     for station in item.Stations!
     {
@@ -295,9 +295,9 @@ class OccultationEvent: NSObject
     return nil
   }
   
-  func myStations(_ item: EventDetails) -> [Station]?
+  func myStations(_ item: EventWithDetails) -> [ObserverStation]?
   {
-    var myStations: [Station] = []
+    var myStations: [ObserverStation] = []
     for station in item.Stations!
     {
       if station.IsOwnStation! {myStations.append(station)}
@@ -305,9 +305,9 @@ class OccultationEvent: NSObject
     return myStations
   }
   
-  func otherStations(_ item: EventDetails) -> [Station]?
+  func otherStations(_ item: EventWithDetails) -> [ObserverStation]?
   {
-    var otherStations: [Station] = []
+    var otherStations: [ObserverStation] = []
     for station in item.Stations!
     {
       if !station.IsOwnStation! {otherStations.append(station)}
@@ -315,7 +315,7 @@ class OccultationEvent: NSObject
     return otherStations
   }
   
-  func primaryStationIndex(_ item: EventDetails) -> Int?
+  static func primaryStationIndex(_ item: EventWithDetails) -> Int?
   {
     if let index = item.Stations?.firstIndex(where: {$0.IsPrimaryStation!} )
     {
@@ -324,7 +324,7 @@ class OccultationEvent: NSObject
     return nil
   }
   
-  func primaryStationIndex(_ stations: [Station]) -> Int?
+  static func primaryStationIndex(_ stations: [ObserverStation]) -> Int?
   {
     if let index = stations.firstIndex(where: {$0.IsPrimaryStation!} )
     {
@@ -349,9 +349,9 @@ class OccultationEvent: NSObject
     case descending
   }
   
-  func stationsSortedByChordOffset(_ item: EventDetails, order: SortOrder) -> [Station]
+  static func stationsSortedByChordOffset(_ item: EventWithDetails, order: SortOrder) -> [ObserverStation]
   {
-    let stations: [Station] = item.Stations!
+    let stations: [ObserverStation] = item.Stations!
     let sortOrder: SortOrder = order
     switch sortOrder
     {
@@ -362,7 +362,7 @@ class OccultationEvent: NSObject
     }
   }
   
-  func stationsSortedByChordOffset(_ station: [Station], order: SortOrder) -> [Station]
+  static func stationsSortedByChordOffset(_ stations: [ObserverStation], order: SortOrder) -> [ObserverStation]
   {
     let sortOrder: SortOrder = order
     switch sortOrder
@@ -394,7 +394,7 @@ class OccultationEvent: NSObject
   }
   
   // MARK: - Field Update Functiosn
-  func updateEventTimeFlds(_ item: inout EventDetails) -> (eventTime:String, remainingTime:NSAttributedString)
+  func updateEventTimeFlds(_ item: inout EventWithDetails) -> (eventTime:String, remainingTime:NSAttributedString)
   {
     var eventUtcStr = "—"
     var leadTimeStr = "—"

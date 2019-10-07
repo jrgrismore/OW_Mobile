@@ -62,6 +62,7 @@ struct EventWithDetails: Codable
   var OneSigmaErrorWidthKm: Double?
 }
 
+//stations data structure to be embedded in unified event detail structure
 struct ObserverStation: Codable
 {
   var StationId: Int?
@@ -88,9 +89,12 @@ struct ObserverStation: Codable
   var CombMag: Double?
   var StarColour: Double?
 }
-var eventWithDetails = [EventWithDetails]()
-var currentEvent = OccultationEvent()
+var eventsWithDetails = [EventWithDetails]()  //event array of unified data
+var currentEvent = OccultationEvent()   //event
 
+
+
+//*** now superceded
 //Event structure matching JSON keys
 struct Event: Codable
 {
@@ -111,11 +115,13 @@ struct Event: Codable
 //  var Details: EventDetails
 }
 
+//*** now superceded
 struct MyEvents: Codable
 {
   var events: [Event]
 }
 
+//*** now superceded
 struct MyEventListDetails: Codable
 {
   var eventList: [Event]
@@ -140,6 +146,8 @@ struct EventStrings: Codable
   var BestStationPos: String = ""
   var StarColour: String = ""
  }
+
+//*** now superceded
 var myEventsStrings = EventStrings()    //???????/
 
 struct EventDetails: Codable
@@ -178,6 +186,7 @@ struct EventDetails: Codable
   var OneSigmaErrorWidthKm: Double?   //new
 }
 
+//*** now superceded
 struct Station: Codable
 {
   var StationId: Int?
@@ -195,7 +204,8 @@ struct Station: Codable
   var IsPrimaryStation: Bool?   //new
 }
 
-//EventDetaiol strings structure
+//*** now superceded
+//EventDetail strings structure
 struct EventDetailStrings: Codable
 {
   var Id: String = ""
@@ -213,4 +223,6 @@ struct EventDetailStrings: Codable
   var BestStationPos: String = ""
   var StarColour: String = ""
  }
+
+//*** now superceded
 var eventDetailStrings = EventDetailStrings()

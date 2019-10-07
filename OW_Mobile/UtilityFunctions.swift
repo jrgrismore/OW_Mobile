@@ -498,12 +498,12 @@ enum PlotScale: String
   case farthestChord
 }
 
-func shadowWidthKm(_ item: EventDetails) -> Double
+func shadowWidthKm(_ item: EventWithDetails) -> Double
 {
   return item.AstDiaKm!
 }
 
-func sigma1WidthKm(_ item: EventDetails) -> Double
+func sigma1WidthKm(_ item: EventWithDetails) -> Double
 {
   let shadowWidth = shadowWidthKm(item)
   let sigma1ErrorWidth = item.OneSigmaErrorWidthKm!   //shadow edge to sigma1 edge
@@ -512,21 +512,21 @@ func sigma1WidthKm(_ item: EventDetails) -> Double
 }
 
 
-func sigma2WidthKm(_ item: EventDetails) -> Double
+func sigma2WidthKm(_ item: EventWithDetails) -> Double
 {
   let sigma1ErrorWidth = item.OneSigmaErrorWidthKm!   //shadow edge to sigma1 edge
   let sigma1TotalWidth = sigma1WidthKm(item) + sigma1ErrorWidth * 2
   return sigma1TotalWidth
 }
 
-func sigma3WidthKm(_ item: EventDetails) -> Double
+func sigma3WidthKm(_ item: EventWithDetails) -> Double
 {
   let sigma1ErrorWidth = item.OneSigmaErrorWidthKm!   //shadow edge to sigma1 edge
   let sigma3TotalWidth = sigma2WidthKm(item)  + sigma1ErrorWidth * 2
   return sigma3TotalWidth
 }
 
-func farthestChordWidth(_ item: EventDetails) -> Double
+func farthestChordWidth(_ item: EventWithDetails) -> Double
 {
   var farthestChordKm = 0.0
   for station in item.Stations!
@@ -540,25 +540,13 @@ func farthestChordWidth(_ item: EventDetails) -> Double
   return farthestTotalWidth
 }
 
-func totalPlotWidthKm(_ item: EventDetails, scale: PlotScale) -> Double
+func totalPlotWidthKm(_ item: EventWithDetails, scale: PlotScale) -> Double
 {
   let shadowWidth = item.AstDiaKm!
-//  let shadowWidth = shadowWidthKm(item)
-//  let sigma1ErrorWidth = item.OneSigmaErrorWidthKm!   //shadow edge to sigma1 edge
-//  let sigma1TotalWidth = shadowWidth + sigma1ErrorWidth * 2
   let sigma1TotalWidth = sigma1WidthKm(item)
   let sigma2TotalWidth = sigma2WidthKm(item)
   let sigma3TotalWidth = sigma3WidthKm(item)
-//  var farthestChordKm = 0.0
   var farthestTotalWidth = farthestChordWidth(item)
-//  for station in item.Stations!
-//  {
-//    if fabs(station.ChordOffsetKm!) > farthestChordKm
-//    {
-//      farthestChordKm = fabs(station.ChordOffsetKm!)
-//    }
-//  }
-//  let farthestTotalWidth = farthestChordKm * 2 + farthestChordKm * 0.05
   switch scale
   {
   case .shadowEdge:
@@ -576,7 +564,7 @@ func totalPlotWidthKm(_ item: EventDetails, scale: PlotScale) -> Double
   }
 }
 
-func plotBarsWidthFactors(_ item: EventDetails, totalPlotWidthKm: Double) -> (shadowBarFactor:Double,sigma1BarFactor:Double,sigma2BarFactor:Double,sigma3BarFactor:Double)
+func plotBarsWidthFactors(_ item: EventWithDetails, totalPlotWidthKm: Double) -> (shadowBarFactor:Double,sigma1BarFactor:Double,sigma2BarFactor:Double,sigma3BarFactor:Double)
 {
   let shadowWidth = item.AstDiaKm!
   let sigma1ErrorWidth = item.OneSigmaErrorWidthKm!   //shadow edge to sigma1 edge
@@ -592,7 +580,7 @@ func plotBarsWidthFactors(_ item: EventDetails, totalPlotWidthKm: Double) -> (sh
   return (shadowBarWidthFactor, sigma1BarWidthFactor, sigma2BarWidthFactor, sigma3BarWidthFactor)
 }
 
-func plotStationBarFactor(station: Station, totalPlotWidthKm: Double) -> Double
+func plotStationBarFactor(station: ObserverStation, totalPlotWidthKm: Double) -> Double
 {
   let stationBarFactor = station.ChordOffsetKm! / (totalPlotWidthKm / 2)
   return stationBarFactor
