@@ -128,11 +128,16 @@ class DetailViewController: UIViewController
 //    let detailsIndex = stationsDetails.index(where: { $0.Id == detailData.Id  })
 //    selectedEventDetails = stationsDetails[detailsIndex!]
     print("eventID=",eventID)
-    print()
-    print("eventsWithDetails=",eventsWithDetails)
-    let eventDetailIndex = eventsWithDetails.index(where: { $0.Id == eventID  } )
-    print("eventDetailIndex=",eventDetailIndex)
-    selectedEvent = eventsWithDetails[eventDetailIndex!]
+
+    if let testIndex = eventsWithDetails.index(where: { $0.Id == nil })
+    { print("testIndex",testIndex) }
+    
+    let selectedEventIndex = eventsWithDetails.index(where: { $0.Id == eventID  } )
+    print("selectedEventIndex=",selectedEventIndex)
+    print("eventDetailIndex=",selectedEventIndex)
+    selectedEvent = eventsWithDetails[selectedEventIndex!]
+    let primaryStation = OccultationEvent.primaryStation(selectedEvent)
+    print("primaryStation=", primaryStation)
     
 //    let tempEvent = OccultationEvent()
     let chordSortedStations = OccultationEvent.stationsSortedByChordOffset(selectedEvent, order: .ascending)
@@ -167,7 +172,7 @@ class DetailViewController: UIViewController
         self.stationCollectionView.scrollToItem(at: IndexPath(item: primaryIndex!, section: 0), at: .centeredHorizontally, animated: false)
         self.moveCursorToStation(indexPath: IndexPath(item: primaryIndex!, section: 0))
     }
-    updateShadowPlot(selectedEventDetails)
+    updateShadowPlot(selectedEvent)
   }
   
   override func viewWillLayoutSubviews()
@@ -208,7 +213,7 @@ class DetailViewController: UIViewController
   DispatchQueue.main.async {
     self.stationCollectionView.setNeedsLayout()
     self.adjustCellWidth()
-    self.updateShadowPlot(self.selectedEventDetails)
+    self.updateShadowPlot(self.selectedEvent)
     self.stationCollectionView.scrollToItem(at: self.currentStationIndexPath, at: .centeredHorizontally, animated: false)
   }
   moveCursorToStation(indexPath: currentStationIndexPath)
@@ -224,13 +229,14 @@ class DetailViewController: UIViewController
   {
     //testing var
     var item = itm
+
     selectedStations = OccultationEvent.stationsSortedByChordOffset(item, order: .ascending)
     
+    self.eventTitle.attributedText = self.event.updateObjectFld(item)
+    self.eventRank.attributedText = self.event.updateRankFld(item)
     DispatchQueue.main.async
       {
-        self.eventTitle.attributedText = self.event.updateObjectFld(item)
-        self.eventRank.attributedText = self.event.updateRankFld(item)
-        let timeTuple = self.event.updateEventTimeFlds(&item)
+        let timeTuple = currentEvent.updateEventTimeFlds(&item)
         var remainingTime: NSMutableAttributedString = timeTuple.remainingTime as! NSMutableAttributedString
         if remainingTime.string == "completed"
         {
@@ -547,7 +553,7 @@ extension DetailViewController: UICollectionViewDataSource,UICollectionViewDeleg
   {
     var cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as! StationCell
     cell.backgroundColor = #colorLiteral(red: 0.2043271959, green: 0.620110333, blue: 0.6497597098, alpha: 1)
-    updateStationFlds(cell: &cell, indexPath: indexPath, stations: selectedStations, itm: selectedEventDetails)
+    updateStationFlds(cell: &cell, indexPath: indexPath, stations: selectedStations, itm: selectedEvent)
     return cell
   }
   

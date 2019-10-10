@@ -23,7 +23,7 @@ class MyEventsViewController: UIViewController, UICollectionViewDataSource,UICol
   var cellStringArray = [EventStrings]()
   var cellEventDetailStringArray = [EventDetailStrings]()
 //  var eventsWithDetails = MyEventListDetails(eventList: [], eventsDetails: [])
-  var eventsWithDetails = [EventWithDetails]()
+//  var eventsWithDetails = [EventWithDetails]()
   //  var eventsWithDetailsData = EventWithDetails()
   var eventsWithDetailsData = [EventDetails]()
   var eventStore = EKEventStore()
@@ -159,8 +159,6 @@ class MyEventsViewController: UIViewController, UICollectionViewDataSource,UICol
         dest.eventID = cellEventDetailArray[index.row].Id!
         
         eventsWithDetails = OWWebAPI.shared.loadEventsWithDetails()
-        print("myEventsController > dest.eventID=",dest.eventID)
-        print("eventsWithDetails=",eventsWithDetails)
         let timeRemaining = leadTime(timeString: cellEventDetailArray[index.row].EventTimeUtc!)
         if timeRemaining == "completed"
         {eventCompleted = true} else {eventCompleted = false}
@@ -195,6 +193,7 @@ class MyEventsViewController: UIViewController, UICollectionViewDataSource,UICol
           //fill cells
           if eventsWithDetailsData!.count < 1
           {
+            eventsWithDetails = eventsWithDetailsData!
             DispatchQueue.main.async
               {
                 self.cellDataArray = []
