@@ -142,9 +142,11 @@ class OccultationEvent: NSObject
   func updateCombinedMagFld(_ item: EventWithDetails) -> NSAttributedString
   {
     var combMagAttrStr: NSAttributedString = NSMutableAttributedString(string: "Comb. Mag       —")
-    if item.CombMag != nil
+    let primaryStation = OccultationEvent.primaryStation(item)!
+
+    if primaryStation.CombMag != nil
     {
-      combMagAttrStr = self.formatLabelandField(label:"Comb. Mag:  ", field: String(format: "%0.2f",item.CombMag!), units:"")
+      combMagAttrStr = self.formatLabelandField(label:"Comb. Mag:  ", field: String(format: "%0.2f",primaryStation.CombMag!), units:"")
     }
     return combMagAttrStr
   }
@@ -394,21 +396,21 @@ class OccultationEvent: NSObject
   }
   
   // MARK: - Field Update Functiosn
-  func updateEventTimeFlds(_ item: inout EventWithDetails) -> (eventTime:String, remainingTime:NSAttributedString)
+  func updateEventTimeFlds(_ item: inout EventWithDetails, stationIndex: Int) -> (eventTime:String, remainingTime:NSAttributedString)
   {
     var eventUtcStr = "—"
     var leadTimeStr = "—"
     var leadTimeAttrStr: NSAttributedString = NSMutableAttributedString(string: "—")
     var completionDateStr = "—"
-    if item.Stations![0].EventTimeUtc != nil
+    if item.Stations![stationIndex].EventTimeUtc != nil
     {
-      eventUtcStr = formatEventTime(timeString: item.Stations![0].EventTimeUtc!)
-      leadTimeStr = leadTime(timeString: item.Stations![0].EventTimeUtc!)
+      eventUtcStr = formatEventTime(timeString: item.Stations![stationIndex].EventTimeUtc!)
+      leadTimeStr = leadTime(timeString: item.Stations![stationIndex].EventTimeUtc!)
       leadTimeAttrStr = self.formatLabelandField(label:"", field: leadTimeStr, units:"")
       let eventDateFormatter = DateFormatter()
       eventDateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSS"
       eventDateFormatter.timeZone = TimeZone(abbreviation: "UTC")
-      let completionDate = eventDateFormatter.date(from: item.Stations![0].EventTimeUtc!)!
+      let completionDate = eventDateFormatter.date(from: item.Stations![stationIndex].EventTimeUtc!)!
       eventDateFormatter.dateFormat = "dd MMM, HH:mm:ss' UT'"
       completionDateStr = eventDateFormatter.string(from: completionDate )
     }

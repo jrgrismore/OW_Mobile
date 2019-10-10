@@ -304,7 +304,7 @@ func stationSigmaIcon(_ sigmaIconValue: Int?) -> UIImage
   return sigmaIconImage
 }
 
-func moonAltIcon(_ moonAltIconValue: Int?) -> UIImage
+func moonAltIcon(_ moonAltIconValue: Double?) -> UIImage
 {
   var moonAltIconImage: UIImage
   if moonAltIconValue != nil

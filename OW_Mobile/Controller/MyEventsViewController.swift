@@ -156,8 +156,9 @@ class MyEventsViewController: UIViewController, UICollectionViewDataSource,UICol
       if let dest = segue.destination as? DetailViewController,
         let index = myEventsCollection.indexPathsForSelectedItems?.first
       {
-        dest.eventWithDetails = cellEventDetailArray[index.row]
-        dest.selection = cellEventDetailArray[index.row].Object
+        dest.selectedEvent = cellEventDetailArray[index.row]
+        dest.eventsWithDetails = cellEventDetailArray
+        dest.selectionObject = cellEventDetailArray[index.row].Object
 //        dest.detailData = cellEventDetailArray[index.row]
         dest.eventID = cellEventDetailArray[index.row].Id!
         

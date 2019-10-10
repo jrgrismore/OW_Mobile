@@ -31,22 +31,23 @@ class DetailViewController: UIViewController
           StarColour:0
   )
 
-  var selection: String!
+  var selectionObject: String!
   var detailStr: String = ""
   var eventID: String = ""
   var complete: Bool = false
-  
+  var selectedEvent = EventWithDetails()
+  var eventsWithDetails = [EventWithDetails]()
+
   var stationsDetails = [EventDetails]()
 //  var selectedStations = [Station]()
   var selectedStations = [ObserverStation]()
 //  var selectedEventDetails = EventDetails()
-  var eventWithDetails = EventWithDetails()
     //  var selectedEventDetails = EventWithDetails()
   var event = OccultationEvent()
   var stationCursor = UIView()
   var visibleIndexPaths = [IndexPath]()
   
-  var selectedEvent = EventWithDetails()
+//  var selectedEvent = EventWithDetails()
 
   var currentStationIndexPath = IndexPath()
   
@@ -121,23 +122,19 @@ class DetailViewController: UIViewController
     stationBarSubViewsExist = false
     stationCursorExists = false
     
-    let detailObject = detailData.Object!.replacingOccurrences(of: "(-2147483648) ", with: "")
-    self.title = detailObject
+//    let detailObject = detailData.Object!.replacingOccurrences(of: "(-2147483648) ", with: "")
+//    self.title = detailObject
+    self.title = selectionObject
     
 //    stationsDetails = OWWebAPI.shared.loadDetails()
 //    let detailsIndex = stationsDetails.index(where: { $0.Id == detailData.Id  })
 //    selectedEventDetails = stationsDetails[detailsIndex!]
-    print("eventID=",eventID)
 
-    if let testIndex = eventsWithDetails.index(where: { $0.Id == nil })
-    { print("testIndex",testIndex) }
     
     let selectedEventIndex = eventsWithDetails.index(where: { $0.Id == eventID  } )
-    print("selectedEventIndex=",selectedEventIndex)
-    print("eventDetailIndex=",selectedEventIndex)
-    selectedEvent = eventsWithDetails[selectedEventIndex!]
+    
+//    selectedEvent = eventsWithDetails[selectedEventIndex!]
     let primaryStation = OccultationEvent.primaryStation(selectedEvent)
-    print("primaryStation=", primaryStation)
     
 //    let tempEvent = OccultationEvent()
     let chordSortedStations = OccultationEvent.stationsSortedByChordOffset(selectedEvent, order: .ascending)
@@ -148,11 +145,9 @@ class DetailViewController: UIViewController
     updateEventInfoFields(eventItem: selectedEvent)
     if complete
     {
-      self.navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.darkGray,
-                                                                      NSAttributedString.Key.font: UIFont.preferredFont(forTextStyle: .title3)]
+      self.navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.darkGray, NSAttributedString.Key.font: UIFont.preferredFont(forTextStyle: .title3)]
     } else {
-      self.navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.black,
-                                                                      NSAttributedString.Key.font: UIFont.preferredFont(forTextStyle: .title3)]
+      self.navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.black, NSAttributedString.Key.font: UIFont.preferredFont(forTextStyle: .title3)]
     }
     
      DispatchQueue.main.async
@@ -229,14 +224,16 @@ class DetailViewController: UIViewController
   {
     //testing var
     var item = itm
+    let primaryStation = OccultationEvent.primaryStation(item)!
 
     selectedStations = OccultationEvent.stationsSortedByChordOffset(item, order: .ascending)
-    
+
     self.eventTitle.attributedText = self.event.updateObjectFld(item)
     self.eventRank.attributedText = self.event.updateRankFld(item)
     DispatchQueue.main.async
       {
-        let timeTuple = currentEvent.updateEventTimeFlds(&item)
+        let primaryStationIndex = OccultationEvent.primaryStationIndex(self.selectedStations)
+        let timeTuple = currentEvent.updateEventTimeFlds(&item,stationIndex: primaryStationIndex!)
         var remainingTime: NSMutableAttributedString = timeTuple.remainingTime as! NSMutableAttributedString
         if remainingTime.string == "completed"
         {
@@ -282,6 +279,7 @@ class DetailViewController: UIViewController
   func updateStationFlds(cell: inout StationCell, indexPath: IndexPath, stations: [ObserverStation], itm: EventWithDetails)
   {
     var item = itm
+    
     let stationIndex = indexPath.item
     var stationPosIconVal : Int?
     stationPosIconVal = 0
@@ -305,7 +303,7 @@ class DetailViewController: UIViewController
     }
     cell.eventStationID.text = stationName
     
-    let timeTuple = event.updateEventTimeFlds(&item)
+    let timeTuple = event.updateEventTimeFlds(&item, stationIndex: indexPath.row)
     cell.eventTime.text = timeTuple.eventTime
     
     var errorTimeStr = "—"
@@ -362,17 +360,18 @@ class DetailViewController: UIViewController
     }
     
     var starAltStr = "—"
-    if item.StarAlt != nil
+//    if item.StarAlt != nil
+    if stations[stationIndex].StarAlt != nil
     {
-      starAltStr = String(format: "%0.0f°",item.StarAlt!)
+      starAltStr = String(format: "%0.0f°",stations[stationIndex].StarAlt!)
     }
     cell.eventStarAlt.text = starAltStr
     
     var sunAltStr = "—"
-    if item.SunAlt != nil
+    if stations[stationIndex].SunAlt != nil
     {
-      sunAltStr = String(format: "%0.0f°", item.SunAlt!)
-      if item.SunAlt! > -12.0
+      sunAltStr = String(format: "%0.0f°", stations[stationIndex].SunAlt!)
+      if stations[stationIndex].SunAlt! > -12.0
       {
         cell.sunAltImg.image =  #imageLiteral(resourceName: "sun")
         cell.eventSunAlt.text = sunAltStr
@@ -391,12 +390,12 @@ class DetailViewController: UIViewController
     
     var moonAltStr = "—"
     var moonPhaseImage: UIImage
-    if item.MoonAlt != nil
+    if stations[stationIndex].MoonAlt != nil
     {
-      moonAltStr = String(format: "%0.0f°", item.MoonAlt!)
-      if item.MoonPhase != nil
+      moonAltStr = String(format: "%0.0f°", stations[stationIndex].MoonAlt!)
+      if stations[stationIndex].MoonPhase != nil
       {
-        moonPhaseImage =  moonAltIcon(item.MoonPhase!)
+        moonPhaseImage =  moonAltIcon(stations[stationIndex].MoonPhase)
         cell.moonAltImg.image = moonPhaseImage
       }
       else
@@ -408,16 +407,16 @@ class DetailViewController: UIViewController
     cell.eventMoonAlt.text = moonAltStr
     
     var moonDist = "—"
-    if item.MoonDist != nil
+    if stations[stationIndex].MoonDist != nil
     {
-      moonDist = String(format: "%0.0f°", item.MoonDist!)
+      moonDist = String(format: "%0.0f°", stations[stationIndex].MoonDist!)
     }
     cell.eventMoonSeparation.text = moonDist
     
     var starColorImage: UIImage
-    if item.StarColour != nil
+    if stations[stationIndex].StarColour != nil
     {
-      starColorImage = starColorIcon(item.StarColour)
+      starColorImage = starColorIcon(Int(stations[stationIndex].StarColour!))
       cell.starAltImg.image = starColorImage
     }
     else
