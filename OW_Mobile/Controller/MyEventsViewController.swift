@@ -392,14 +392,14 @@ extension MyEventsViewController
                   noteStr.append("\nRank: " + String(format: " %d ",allEvents[detailsIndex!].Rank!))
                   noteStr.append(", Chord: " + String(format: " %0.1f km ",primaryStation!.ChordOffsetKm!))
                   noteStr.append("\nmax duration: " + String(format: " %0.1f sec",allEvents[detailsIndex!].MaxDurSec!))
-                  noteStr.append("\ncombined mag: " + String(format: " %0.1f ",allEvents[detailsIndex!].CombMag!))
+                  noteStr.append("\ncombined mag: " + String(format: " %0.1f ", primaryStation!.CombMag!))
                   noteStr.append(", mag drop: " + String(format: " %0.1f ",allEvents[detailsIndex!].MagDrop!))
                   let raTuple = floatRAtoHMS(floatRA: allEvents[detailsIndex!].RAHours!)
                   let raStr = String(format: "%02dh %02dm %04.1fs",raTuple.hours,raTuple.minutes,raTuple.seconds)
                   noteStr.append("\nRA: " + raStr)
                   noteStr.append(", Dec: " + String(format: " %0.1f° ",allEvents[detailsIndex!].DEDeg!))
-                  noteStr.append("\nAlt: " + String(format: " %0.1f° ",allEvents[detailsIndex!].StarAlt!))
-                  noteStr.append(", Az: " + String(format: " %0.1f° ",allEvents[detailsIndex!].StarAz!))
+                  noteStr.append("\nAlt: " + String(format: " %0.1f° ",primaryStation!.StarAlt!))
+                  noteStr.append(", Az: " + String(format: " %0.1f° ",primaryStation!.StarAz!))
                   event.notes = noteStr
                   
                   self.vc.editViewDelegate = self as? EKEventEditViewDelegate
@@ -433,6 +433,9 @@ extension MyEventsViewController
     let calloutFont =   UIFont.preferredFont(forTextStyle: .callout)
     let captionFont =   UIFont.preferredFont(forTextStyle: .caption1)
 //    cell.objectText.text = cellEventDetailArray[indexPath.row].Object
+    
+    let primaryStation = OccultationEvent.primaryStation(cellEventDetailArray[indexPath.row])
+    
     cell.objectText.text = cellEventDetailStringArray[indexPath.row].Object
     //create "m" superscript for star magnitude and magnitude drop
     let magAttrStr = NSMutableAttributedString(string:"m", attributes:[NSAttributedString.Key.font : captionFont,
@@ -440,7 +443,8 @@ extension MyEventsViewController
 //    let magDropAttrStr = NSMutableAttributedString(string:cellEventDetailStringArray[indexPath.row].MagDrop, attributes:[NSAttributedString.Key.font : calloutFont])
     
 //   use combined mag rather than star mag
-    let combMag = cellEventDetailArray[indexPath.row].CombMag
+//    let combMag = cellEventDetailArray[indexPath.row].CombMag
+    let combMag = primaryStation!.CombMag
     let combMagStr = String(format: "%0.1f",combMag!)
     let combMagAttrStr = NSMutableAttributedString(string:combMagStr)
     combMagAttrStr.append(magAttrStr)
@@ -478,7 +482,7 @@ extension MyEventsViewController
       cell.timeError.textColor = .white
     }
     
-    cell.eventTime.text = formatEventTime(timeString: cellEventDetailStringArray[indexPath.row].EventTimeUtc)
+    cell.eventTime.text = formatEventTime(timeString: (primaryStation?.EventTimeUtc!)!)
     //set time error field
     if cellEventDetailArray[indexPath.row].ErrorInTimeSec != nil
     {
@@ -512,31 +516,31 @@ extension MyEventsViewController
     }
     
     
-    if cellEventDetailArray[indexPath.row].WeatherInfoAvailable != nil
+    if primaryStation?.WeatherInfoAvailable != nil
     {
       //display weather info if forecast available, no display if no forecast
-      if cellEventDetailArray[indexPath.row].WeatherInfoAvailable!
+      if (primaryStation?.WeatherInfoAvailable)!
       {
-        if cellEventDetailArray[indexPath.row].CloudCover != nil
+        if primaryStation?.CloudCover != nil
         {
-          var cloudIconValue = cellEventDetailArray[indexPath.row].CloudCover
+          var cloudIconValue = primaryStation?.CloudCover
           cell.cloudImg.image = cloudIcon(cloudIconValue)   // set cloud % icon
-          cell.cloudText.text = String(format: "%d%%",cellEventDetailStringArray[indexPath.row].CloudCover)
+          cell.cloudText.text = String(format: "%d%%",(primaryStation?.CloudCover)!)
         }
         
-        if cellEventDetailArray[indexPath.row].Wind != nil
+        if primaryStation?.Wind != nil
         {
-          var windStrengthIconValue = cellEventDetailArray[indexPath.row].Wind
+          var windStrengthIconValue = primaryStation?.Wind
           cell.windStrengthImg.image = windStrengthIcon(windStrengthIconValue)   //set wind strength icon
           cell.windyImg.image = windSignIcon(windStrengthIconValue)   //set wind strength icon
         }
         
-        if cellEventDetailArray[indexPath.row].TempDegC != nil
+        if primaryStation?.TempDegC != nil
         {
-          var thermIconValue = cellEventDetailArray[indexPath.row].TempDegC
+          var thermIconValue = primaryStation?.TempDegC
           cell.tempImg.image = thermIcon(thermIconValue)
           //set weather text to appropriate text
-          cell.tempText.text = String(format: "%d°",cellEventDetailArray[indexPath.row].TempDegC!)
+          cell.tempText.text = String(format: "%d°",(primaryStation?.TempDegC)!)
         }
       } else {
         //set weather images and text empty because no forecast info is available
@@ -832,9 +836,9 @@ extension MyEventsViewController
       {
         eventStrings.BestStationPos = String(format: "%d",event!.BestStationPos!)
       }
-      if event!.StarColour != nil
+      if primaryStation!.StarColour != nil
       {
-        eventStrings.StarColour = String(format: "%d",event!.StarColour!)
+        eventStrings.StarColour = String(format: "%d",primaryStation!.StarColour!)
       }
       eventDetailStringArray.append(eventStrings)
     }
