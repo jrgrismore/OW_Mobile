@@ -41,7 +41,7 @@ class DetailViewController: UIViewController
   var selectedStations = [ObserverStation]()
 //  var selectedEventDetails = EventDetails()
   var eventWithDetails = EventWithDetails()
-  var selectedEventDetails = EventWithDetails()
+    //  var selectedEventDetails = EventWithDetails()
   var event = OccultationEvent()
   var stationCursor = UIView()
   var visibleIndexPaths = [IndexPath]()
