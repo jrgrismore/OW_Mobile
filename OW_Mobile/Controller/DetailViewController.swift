@@ -224,6 +224,7 @@ class DetailViewController: UIViewController
   {
     //testing var
     var item = itm
+    
     let primaryStation = OccultationEvent.primaryStation(item)!
 
     selectedStations = OccultationEvent.stationsSortedByChordOffset(item, order: .ascending)

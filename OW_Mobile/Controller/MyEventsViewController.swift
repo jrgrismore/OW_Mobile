@@ -157,6 +157,9 @@ class MyEventsViewController: UIViewController, UICollectionViewDataSource,UICol
         let index = myEventsCollection.indexPathsForSelectedItems?.first
       {
         dest.selectedEvent = cellEventDetailArray[index.row]
+        
+        printEventWithDetails(dest.selectedEvent)
+        
         dest.eventsWithDetails = cellEventDetailArray
         dest.selectionObject = cellEventDetailArray[index.row].Object
 //        dest.detailData = cellEventDetailArray[index.row]

@@ -43,6 +43,7 @@ class OccultationEvent: NSObject
   func updateFeedFld(_ item: EventWithDetails) -> NSAttributedString
   {
     var feedAttrStr: NSAttributedString = NSMutableAttributedString(string: "—")
+//    print("item.Feed=",item.Feed ?? "Feed is nil")
     if item.Feed != nil
     {
       feedAttrStr = self.formatLabelandField(label:"", field: item.Feed!, units:"")
