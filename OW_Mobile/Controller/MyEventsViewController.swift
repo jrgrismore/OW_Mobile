@@ -200,11 +200,11 @@ class MyEventsViewController: UIViewController, UICollectionViewDataSource,UICol
             eventsWithDetails = eventsWithDetailsData!
             DispatchQueue.main.async
               {
-                self.cellDataArray = []
+                self.cellEventDetailArray = []
                 self.cellStringArray = []
                 self.myEventsCollection.reloadData()
-                OWWebAPI.shared.saveEventsWithDetails([])
                 //save empty array to userdefaults
+                OWWebAPI.shared.saveEventsWithDetails([])
                 self.activitySpinner.stopAnimating()
                 self.spinnerView.isHidden = true
             }
