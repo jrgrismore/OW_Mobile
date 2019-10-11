@@ -38,7 +38,7 @@ class DetailViewController: UIViewController
   var selectedEvent = EventWithDetails()
   var eventsWithDetails = [EventWithDetails]()
 
-  var stationsDetails = [EventDetails]()
+//  var stationsDetails = [EventDetails]()
 //  var selectedStations = [Station]()
   var selectedStations = [ObserverStation]()
 //  var selectedEventDetails = EventDetails()

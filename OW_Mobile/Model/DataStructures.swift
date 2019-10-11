@@ -116,39 +116,39 @@ struct Event: Codable
 }
 
 //*** now superceded
-struct MyEvents: Codable
-{
-  var events: [Event]
-}
+//struct MyEvents: Codable
+//{
+//  var events: [Event]
+//}
 
 //*** now superceded
-struct MyEventListDetails: Codable
-{
-  var eventList: [Event]
-  var eventsDetails: [EventDetails]
-}
+//struct MyEventListDetails: Codable
+//{
+//  var eventList: [Event]
+//  var eventsDetails: [EventDetails]
+//}
 
 //Event strings structure
-struct EventStrings: Codable
-{
-  var Id: String = ""
-  var Object: String = ""
-  var StarMag: String = ""
-  var MagDrop: String = ""
-  var MaxDurSec: String = ""
-  var EventTimeUtc: String = ""
-  var ErrorInTimeSec: String = ""
-  var WeatherInfoAvailable: String = ""   //weather info available
-  var CloudCover: String = ""
-  var Wind: String = ""
-  var TempDegC: String = ""
-  var HighCloud: String = ""
-  var BestStationPos: String = ""
-  var StarColour: String = ""
- }
+//struct EventStrings: Codable
+//{
+//  var Id: String = ""
+//  var Object: String = ""
+//  var StarMag: String = ""
+//  var MagDrop: String = ""
+//  var MaxDurSec: String = ""
+//  var EventTimeUtc: String = ""
+//  var ErrorInTimeSec: String = ""
+//  var WeatherInfoAvailable: String = ""   //weather info available
+//  var CloudCover: String = ""
+//  var Wind: String = ""
+//  var TempDegC: String = ""
+//  var HighCloud: String = ""
+//  var BestStationPos: String = ""
+//  var StarColour: String = ""
+// }
 
 //*** now superceded
-var myEventsStrings = EventStrings()    //???????/
+//var myEventsStrings = EventStrings()    //???????/
 
 struct EventDetails: Codable
 {
