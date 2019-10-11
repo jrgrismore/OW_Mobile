@@ -302,6 +302,10 @@ class DetailViewController: UIViewController
     {
       stationName = stations[stationIndex].StationName!
     }
+    if stations[stationIndex].CountryCode != nil
+    {
+      stationName = stationName + " (" + stations[stationIndex].CountryCode! + ")"
+    }
     cell.eventStationID.text = stationName
     
     let timeTuple = event.updateEventTimeFlds(&item, stationIndex: indexPath.row)

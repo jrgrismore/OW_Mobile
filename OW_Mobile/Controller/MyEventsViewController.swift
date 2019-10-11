@@ -231,13 +231,13 @@ class MyEventsViewController: UIViewController, UICollectionViewDataSource,UICol
       UserDefaults.standard.set(Date(), forKey: UDKeys.lastEventListUpdate)
       OWWebAPI.shared.saveEventsWithDetails(eventsWithDetailsData!)
       let loadedEventDetailData = OWWebAPI.shared.loadEventsWithDetails()
-      print("loadedEventDetailData.count =",loadedEventDetailData.count)
-      print()
-      for event in loadedEventDetailData
-      {
-        print("loadedEventDetailData")
-        self.printEventWithDetails(event)
-      }
+//      print("loadedEventDetailData.count =",loadedEventDetailData.count)
+//      print()
+//      for event in loadedEventDetailData
+//      {
+//        print("loadedEventDetailData")
+////        self.printEventWithDetails(event)
+//      }
     })
   }
   
@@ -283,6 +283,10 @@ class MyEventsViewController: UIViewController, UICollectionViewDataSource,UICol
       print("   MoonPhase =",station.MoonPhase ?? "")
       print("   CombMag =",station.CombMag ?? "" )
       print("   StarColour =",station.StarColour ?? "")
+      print("   Report =",station.Report ?? "")
+      print("   ReportedDuration =",station.ReportedDuration ?? "")
+      print("   ReportComment =",station.ReportComment ?? "")
+      print("   CountryCode =",station.CountryCode ?? "")
     }
     print("Feed =",eventAndDetails.Feed ?? "")
     print("Rank =",eventAndDetails.Rank ?? "")

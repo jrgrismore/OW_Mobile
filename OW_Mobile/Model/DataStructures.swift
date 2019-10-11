@@ -88,7 +88,12 @@ struct ObserverStation: Codable
   var MoonPhase: Double?
   var CombMag: Double?
   var StarColour: Double?
+  var Report: Int?
+  var ReportedDuration: Double?
+  var ReportComment: String?
+  var CountryCode: String?
 }
+
 var eventsWithDetails = [EventWithDetails]()  //event array of unified data
 var currentEvent = OccultationEvent()   //event
 
