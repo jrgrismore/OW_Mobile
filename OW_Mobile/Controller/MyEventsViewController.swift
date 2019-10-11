@@ -18,14 +18,14 @@ class MyEventsViewController: UIViewController, UICollectionViewDataSource,UICol
   @IBOutlet weak var spinnerView: UIView!
   
   let reuseIdentifier = "MyEventCell"
-  var cellDataArray = [Event?]()
+//  var cellDataArray = [Event?]()
   var cellEventDetailArray = [EventWithDetails]()  //for rework
-  var cellStringArray = [EventStrings]()
+//  var cellStringArray = [EventStrings]()
   var cellEventDetailStringArray = [EventDetailStrings]()
 //  var eventsWithDetails = MyEventListDetails(eventList: [], eventsDetails: [])
 //  var eventsWithDetails = [EventWithDetails]()
   //  var eventsWithDetailsData = EventWithDetails()
-  var eventsWithDetailsData = [EventDetails]()
+//  var eventsWithDetailsData = [EventDetails]()
   var eventStore = EKEventStore()
   let vc = EKEventEditViewController()
   
@@ -42,7 +42,7 @@ class MyEventsViewController: UIViewController, UICollectionViewDataSource,UICol
     super.viewWillLayoutSubviews()
     myEventsCollection.collectionViewLayout.invalidateLayout()
     //set cell size
-    let cellsInRow = 1
+//    let cellsInRow = 1
     let cellHeight = 180
     //set layout attributes
     if let flowLayout = self.myEventsCollection.collectionViewLayout as? UICollectionViewFlowLayout
@@ -192,7 +192,7 @@ class MyEventsViewController: UIViewController, UICollectionViewDataSource,UICol
     OWWebAPI.shared.retrieveEventsWithDetails(completion: { (eventsWithDetailsData, error) in
       DispatchQueue.main.async
         {
-          print("event count =",eventsWithDetailsData?.count)
+//          print("event count =",eventsWithDetailsData?.count)
           self.spinnerLbl.text = "Event List \n Download Complete..."
           //fill cells
           if eventsWithDetailsData!.count < 1
@@ -201,7 +201,7 @@ class MyEventsViewController: UIViewController, UICollectionViewDataSource,UICol
             DispatchQueue.main.async
               {
                 self.cellEventDetailArray = []
-                self.cellStringArray = []
+                self.cellEventDetailStringArray = []
                 self.myEventsCollection.reloadData()
                 //save empty array to userdefaults
                 OWWebAPI.shared.saveEventsWithDetails([])
@@ -241,31 +241,31 @@ class MyEventsViewController: UIViewController, UICollectionViewDataSource,UICol
   func printEventWithDetails(_ eventAndDetails: EventWithDetails)
   {
     print()
-    print("Id =", eventAndDetails.Id!)
-    print("Object =", eventAndDetails.Object!)
-    print("StarMag =", eventAndDetails.StarMag!)
-    print("MagDrop =", eventAndDetails.MagDrop!)
-    print("MaxDurSec =", eventAndDetails.MaxDurSec!)
-    print("EventTimeUtc =", eventAndDetails.EventTimeUtc!)
-    print("ErrorInTimeSec =", eventAndDetails.ErrorInTimeSec!)
-    print("WeatherInfoAvailable =", eventAndDetails.WeatherInfoAvailable!)
-    print("CloudCover =", eventAndDetails.CloudCover!)
-    print("Wind =", eventAndDetails.Wind!)
-    print("TempDegC =", eventAndDetails.TempDegC!)
-    print("HighCloud =", eventAndDetails.HighCloud!)
-    print("BestStationPos =", eventAndDetails.BestStationPos!)
-    print("StarColour =", eventAndDetails.StarColour!)
+    print("Id =", eventAndDetails.Id ?? "")
+    print("Object =", eventAndDetails.Object ?? "")
+    print("StarMag =", eventAndDetails.StarMag ?? "")
+    print("MagDrop =", eventAndDetails.MagDrop ?? "")
+    print("MaxDurSec =", eventAndDetails.MaxDurSec ?? "")
+    print("EventTimeUtc =", eventAndDetails.EventTimeUtc ?? "")
+    print("ErrorInTimeSec =", eventAndDetails.ErrorInTimeSec ?? "")
+    print("WeatherInfoAvailable =", eventAndDetails.WeatherInfoAvailable ?? "")
+    print("CloudCover =", eventAndDetails.CloudCover ?? "")
+    print("Wind =", eventAndDetails.Wind ?? "")
+    print("TempDegC =", eventAndDetails.TempDegC ?? "")
+    print("HighCloud =", eventAndDetails.HighCloud ?? "")
+    print("BestStationPos =", eventAndDetails.BestStationPos ?? "")
+    print("StarColour =", eventAndDetails.StarColour ?? "")
     for station in eventAndDetails.Stations!
     {
-      print(" StationID =",station.StationId!)
+      print(" StationID =",station.StationId ?? "")
       print("   StationName =",station.StationName ?? "")
-      print("   EventTimeUtc =",station.EventTimeUtc!)
-      print("   WeatherInfoAvailable =",station.WeatherInfoAvailable!)
-      print("   CloudCover =",station.CloudCover!)
-      print("   Wind =",station.Wind!)
-      print("   TempDegC =",station.TempDegC!)
-      print("   HighCloud =",station.HighCloud!)
-      print("   StationPos =",station.StationPos!)
+      print("   EventTimeUtc =",station.EventTimeUtc ?? "")
+      print("   WeatherInfoAvailable =",station.WeatherInfoAvailable ?? "")
+      print("   CloudCover =",station.CloudCover ?? "")
+      print("   Wind =",station.Wind ?? "")
+      print("   TempDegC =",station.TempDegC ?? "")
+      print("   HighCloud =",station.HighCloud ?? "")
+      print("   StationPos =",station.StationPos ?? "")
       print("   ChordOffsetKm =",station.ChordOffsetKm ?? "")
       print("   OccultDistanceKm =",station.OccultDistanceKm ?? "")
       print("   IsOwnStation =",station.IsOwnStation!)
@@ -278,35 +278,34 @@ class MyEventsViewController: UIViewController, UICollectionViewDataSource,UICol
       print("   MoonAz =",station.MoonAz ?? "")
       print("   MoonDist =",station.MoonDist ?? "")
       print("   MoonPhase =",station.MoonPhase ?? "")
-      print("   CombMag =",station.CombMag!)
-      print("   StarColour =",station.StarColour!)
+      print("   CombMag =",station.CombMag ?? "" )
+      print("   StarColour =",station.StarColour ?? "")
     }
-    print("Feed =",eventAndDetails.Feed!)
-    print("Rank =",eventAndDetails.Rank!)
-    print("BV =",eventAndDetails.BV)
-    print("CombMag =",eventAndDetails.CombMag!)
-    print("AstMag =",eventAndDetails.AstMag!)
-    print("MoonDist =",eventAndDetails.MoonDist!)
-    print("MoonPhase =",eventAndDetails.MoonPhase!)
-    print("AstDiaKm =",eventAndDetails.AstDiaKm!)
-    print("AstDistUA =",eventAndDetails.AstDistUA!)
-    print("RAHours =",eventAndDetails.RAHours!)
-    print("DEDeg =",eventAndDetails.DEDeg!)
-    print("StarAlt =",eventAndDetails.StarAlt!)
-    print("StarAz =",eventAndDetails.StarAz!)
-    print("SunAlt =",eventAndDetails.SunAlt!)
-    print("MoonAlt =",eventAndDetails.MoonAlt!)
-    print("MoonAz =",eventAndDetails.MoonAz!)
-    print("StellarDiaMas =",eventAndDetails.StellarDiaMas)
-    print("StarName =",eventAndDetails.StarName!)
-    print("OtherStarNames =",eventAndDetails.OtherStarNames!)
-    print("AstClass =",eventAndDetails.AstClass!)
-    print("AstRotationHrs =",eventAndDetails.AstRotationHrs)
-    print("AstRotationAmplitude =",eventAndDetails.AstRotationAmplitude)
-    print("PredictionUpdated =",eventAndDetails.PredictionUpdated!)
-    print("OneSigmaErrorWidthKm =",eventAndDetails.OneSigmaErrorWidthKm!)
+    print("Feed =",eventAndDetails.Feed ?? "")
+    print("Rank =",eventAndDetails.Rank ?? "")
+    print("BV =",eventAndDetails.BV ?? "")
+    print("CombMag =",eventAndDetails.CombMag ?? "")
+    print("AstMag =",eventAndDetails.AstMag ?? "")
+    print("MoonDist =",eventAndDetails.MoonDist ?? "")
+    print("MoonPhase =",eventAndDetails.MoonPhase ?? "")
+    print("AstDiaKm =",eventAndDetails.AstDiaKm ?? "")
+    print("AstDistUA =",eventAndDetails.AstDistUA ?? "")
+    print("RAHours =",eventAndDetails.RAHours ?? "")
+    print("DEDeg =",eventAndDetails.DEDeg ?? "")
+    print("StarAlt =",eventAndDetails.StarAlt ?? "")
+    print("StarAz =",eventAndDetails.StarAz ?? "")
+    print("SunAlt =",eventAndDetails.SunAlt ?? "")
+    print("MoonAlt =",eventAndDetails.MoonAlt ?? "")
+    print("MoonAz =",eventAndDetails.MoonAz ?? "")
+    print("StellarDiaMas =",eventAndDetails.StellarDiaMas ?? "")
+    print("StarName =",eventAndDetails.StarName ?? "")
+    print("OtherStarNames =",eventAndDetails.OtherStarNames ?? "")
+    print("AstClass =",eventAndDetails.AstClass ?? "")
+    print("AstRotationHrs =",eventAndDetails.AstRotationHrs ?? "")
+    print("AstRotationAmplitude =",eventAndDetails.AstRotationAmplitude ?? "")
+    print("PredictionUpdated =",eventAndDetails.PredictionUpdated ?? "")
+    print("OneSigmaErrorWidthKm =",eventAndDetails.OneSigmaErrorWidthKm ?? "")
     print()
-    
   }
   
   func updateCellArray()
@@ -320,9 +319,6 @@ class MyEventsViewController: UIViewController, UICollectionViewDataSource,UICol
     //get cookie info
     OWWebAPI.shared.getCookieData()
   }
-  
-  // MARK: - Utility functions
-  
   
 }
 
@@ -352,34 +348,22 @@ extension MyEventsViewController
   {
     if gesture.state == UIGestureRecognizer.State.began
     {
-      print("long press gesture began")
       let p = gesture.location(in: self.myEventsCollection)
-      
       if let indexPath = self.myEventsCollection.indexPathForItem(at: p)
       {
         // get the cell at indexPath (the one you long pressed)
-        print("point indexPath.item = ",indexPath.item)
-        print("cellEventDetailArray[indexPath.item]=",cellEventDetailArray[indexPath.item])
-        print("create calender event entry")
         eventStore.requestAccess(to: .event, completion: {(granted,error) -> Void in
           if granted && error == nil
           {
-            print("granted = \(granted)")
-            print("error = \(error)")
-            print("point indexPath.item = ",indexPath.item)
-//            let allDetails = OWWebAPI.shared.loadDetails()
             let allEvents = OWWebAPI.shared.loadEventsWithDetails()
-//            let detailsIndex = allEvents.index(where: { $0.Id == self.cellDataArray[indexPath.item]?.Id  })
             let detailsIndex = allEvents.index(where: { $0.Id == self.cellEventDetailArray[indexPath.item].Id  })
-            print("detailsIndex=",detailsIndex)
-            print("allEvents[detailsIndex]=",allEvents[detailsIndex!])
             currentEvent.eventData = self.cellEventDetailArray[detailsIndex!]
             let primaryStation = OccultationEvent.primaryStation(allEvents[detailsIndex!])
             do
             {
               DispatchQueue.main.async
                 {
-                  var event = EKEvent(eventStore: self.eventStore)
+                  let event = EKEvent(eventStore: self.eventStore)
 //                  event.title = self.cellStringArray[indexPath.row].Object
                   event.title = self.cellEventDetailStringArray[indexPath.row].Object
                   event.location = primaryStation!.StationName
@@ -398,12 +382,14 @@ extension MyEventsViewController
                   let raTuple = floatRAtoHMS(floatRA: allEvents[detailsIndex!].RAHours!)
                   let raStr = String(format: "%02dh %02dm %04.1fs",raTuple.hours,raTuple.minutes,raTuple.seconds)
                   noteStr.append("\nRA: " + raStr)
-                  noteStr.append(", Dec: " + String(format: " %0.1f° ",allEvents[detailsIndex!].DEDeg!))
+                  let decTuple = floatDecToDMS(floatDegrees: allEvents[detailsIndex!].DEDeg!)
+                  let decStr = String(format: "%02d° %02d' %04.1fs\"",decTuple.degrees,decTuple.minutes,decTuple.seconds)
+                  noteStr.append(", Dec: " + decStr)
                   noteStr.append("\nAlt: " + String(format: " %0.1f° ",primaryStation!.StarAlt!))
                   noteStr.append(", Az: " + String(format: " %0.1f° ",primaryStation!.StarAz!))
                   event.notes = noteStr
                   
-                  self.vc.editViewDelegate = self as? EKEventEditViewDelegate
+                  self.vc.editViewDelegate = self as EKEventEditViewDelegate
                   self.vc.event = nil
                   self.vc.event = event
                   self.vc.eventStore = self.eventStore   //????????
@@ -414,7 +400,7 @@ extension MyEventsViewController
             }
             print("saved event")
           } else {
-            print("failed to save event with error \(error) or access not granted")
+            print("failed to save event with error \(String(describing: error)) or access not granted")
           }
         })
         
@@ -507,7 +493,7 @@ extension MyEventsViewController
     
     if cellEventDetailArray[indexPath.row].BestStationPos != nil
     {
-      var sigmaIconValue = cellEventDetailArray[indexPath.row].BestStationPos!
+      let sigmaIconValue = cellEventDetailArray[indexPath.row].BestStationPos!
       cell.sigmaImg.image = stationSigmaIcon(sigmaIconValue)   //set station sigma icon
     }
     
@@ -524,21 +510,21 @@ extension MyEventsViewController
       {
         if primaryStation?.CloudCover != nil
         {
-          var cloudIconValue = primaryStation?.CloudCover
+          let cloudIconValue = primaryStation?.CloudCover
           cell.cloudImg.image = cloudIcon(cloudIconValue)   // set cloud % icon
           cell.cloudText.text = String(format: "%d%%",(primaryStation?.CloudCover)!)
         }
         
         if primaryStation?.Wind != nil
         {
-          var windStrengthIconValue = primaryStation?.Wind
+          let windStrengthIconValue = primaryStation?.Wind
           cell.windStrengthImg.image = windStrengthIcon(windStrengthIconValue)   //set wind strength icon
           cell.windyImg.image = windSignIcon(windStrengthIconValue)   //set wind strength icon
         }
         
         if primaryStation?.TempDegC != nil
         {
-          var thermIconValue = primaryStation?.TempDegC
+          let thermIconValue = primaryStation?.TempDegC
           cell.tempImg.image = thermIcon(thermIconValue)
           //set weather text to appropriate text
           cell.tempText.text = String(format: "%d°",(primaryStation?.TempDegC)!)
@@ -684,20 +670,20 @@ extension MyEventsViewController
   func printEventInfo(eventItem item: Event)
   {
     print()
-    print("Id =", item.Id)
-    print("Object =", item.Object)
-    print("StarMag =", item.StarMag)
-    print("MagDrop =", item.MagDrop)
-    print("MaxDurSec =", item.MaxDurSec)
-    print("EventTimeUtc =", item.EventTimeUtc)
-    print("ErrorInTimeSec =", item.ErrorInTimeSec)
-    print("WeatherInfoAvailable =", item.WeatherInfoAvailable)
-    print("CloudCover =", item.CloudCover)
-    print("Wind =", item.Wind)
-    print("TempDegC =", item.TempDegC)
-    print("HighCloud =", item.HighCloud)
-    print("BestStationPos =", item.BestStationPos)
-    print("StarColour =",item.StarColour)
+    print("Id =", item.Id ?? "")
+    print("Object =", item.Object ?? "")
+    print("StarMag =", item.StarMag ?? "")
+    print("MagDrop =", item.MagDrop ?? "")
+    print("MaxDurSec =", item.MaxDurSec ?? "")
+    print("EventTimeUtc =", item.EventTimeUtc ?? "")
+    print("ErrorInTimeSec =", item.ErrorInTimeSec ?? "")
+    print("WeatherInfoAvailable =", item.WeatherInfoAvailable ?? "")
+    print("CloudCover =", item.CloudCover ?? "")
+    print("Wind =", item.Wind ?? "")
+    print("TempDegC =", item.TempDegC ?? "")
+    print("HighCloud =", item.HighCloud ?? "")
+    print("BestStationPos =", item.BestStationPos ?? "")
+    print("StarColour =",item.StarColour ?? "")
   }
   
 //  func assignMyEventStrings(myEvents: [Event?]) -> [EventStrings]
@@ -778,10 +764,10 @@ extension MyEventsViewController
   
   func assignEventDetailStrings(eventPlusDetails: [EventWithDetails?]) -> [EventDetailStrings]
   {
-    let calloutFont =   UIFont.preferredFont(forTextStyle: .callout)
-    let captionFont =   UIFont.preferredFont(forTextStyle: .caption1)
+//    let calloutFont =   UIFont.preferredFont(forTextStyle: .callout)
+//    let captionFont =   UIFont.preferredFont(forTextStyle: .caption1)
     var eventDetailStringArray = [EventDetailStrings]()
-    for (index, event) in eventPlusDetails.enumerated()
+    for (_, event) in eventPlusDetails.enumerated()
     {
       var eventStrings = EventDetailStrings()
       let primaryStation = OccultationEvent.primaryStation(event!)
