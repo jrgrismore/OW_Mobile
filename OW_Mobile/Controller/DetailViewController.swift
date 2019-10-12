@@ -326,7 +326,7 @@ class DetailViewController: UIViewController
       var cloudIconValue: Int?
       if stations[stationIndex].CloudCover != nil
       {
-        cloudCoverStr = String(format: " %d%%",stations[stationIndex].CloudCover!)
+        cloudCoverStr = String(format: " %d%%",stations[stationIndex].CloudCover! * 10)
         cloudIconValue = stations[stationIndex].CloudCover!
       }
       cell.eventClouds.text = cloudCoverStr
