@@ -318,6 +318,67 @@ class DetailViewController: UIViewController
     }
     cell.eventTimeError.text = errorTimeStr
     
+    
+    let report = stations[stationIndex].Report
+    switch report {
+    case 0:
+      //NotReported
+      //leave event time and time error visible
+      cell.reportImg.image = nil
+      cell.eventTime.isHidden = false
+      cell.eventTimeError.isHidden = false
+    case 1:
+      //Miss
+      //show negative icon and hide event time and time error
+      cell.reportImg.image = #imageLiteral(resourceName: "rep_neg.png")
+      cell.eventTime.text = "Miss"
+      cell.eventTimeError.isHidden = true
+    case 2:
+      //Clouded
+      //show grey icon? and hide event time and time error
+      cell.reportImg.image = #imageLiteral(resourceName: "rep_grey.png")
+      cell.eventTime.text = "Clouded"
+      cell.eventTimeError.isHidden = true
+    case 3:
+      //Failed (reported in OW as 'Technical Failure')
+      //show fail icon and hide event time and time error
+      cell.reportImg.image = #imageLiteral(resourceName: "rep_fail.png")
+      cell.eventTime.text = "Fail"
+      cell.eventTimeError.isHidden = true
+    case 4:
+      //Positive
+      //show positive icon and hide event time and time error
+      cell.eventTime.text = "Positive"
+      if let eventDuration = stations[stationIndex].ReportedDuration   // original
+      {
+        let eventDurationStr = String(format: "  %0.2f sec",eventDuration)
+        cell.eventTime.text = "Positive" + eventDurationStr
+      }
+      cell.reportImg.image = #imageLiteral(resourceName: "rep_pos.png")
+      cell.eventTimeError.isHidden = true
+    case 5:
+      //NoObservation
+      //leave event time and time error visible
+      cell.reportImg.image = #imageLiteral(resourceName: "rep_grey.png")
+      cell.eventTime.text = "No Observation"
+      cell.eventTimeError.isHidden = true
+    case 6:
+      //ReportToFollow (reported in OW as 'Observed, Report to follow')
+      //show follow icon and hide event time and time error
+      cell.reportImg.image = #imageLiteral(resourceName: "rep_follow.png")
+      cell.eventTime.text = "Report to Follow"
+      cell.eventTimeError.isHidden = true
+    default:
+      //NotReported
+      //leave event time and time error visible
+      cell.reportImg.image = nil
+      cell.eventTime.isHidden = false
+      cell.eventTimeError.isHidden = false
+    }
+
+    
+    
+    
     //determine if there's weather info available
     if stations[stationIndex].WeatherInfoAvailable != nil && stations[stationIndex].WeatherInfoAvailable!
     {
@@ -423,7 +484,7 @@ class DetailViewController: UIViewController
     var starColorImage: UIImage
     if stations[stationIndex].StarColour != nil
     {
-      starColorImage = starColorIcon(Int(stations[stationIndex].StarColour!))
+      starColorImage = starColorIcon(stations[stationIndex].StarColour!)
       cell.starAltImg.image = starColorImage
     }
     else

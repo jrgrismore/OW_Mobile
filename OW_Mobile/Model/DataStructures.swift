@@ -87,7 +87,7 @@ struct ObserverStation: Codable
   var MoonDist: Double?
   var MoonPhase: Double?
   var CombMag: Double?
-  var StarColour: Double?
+  var StarColour: Int?
   var Report: Int?
   var ReportedDuration: Double?
   var ReportComment: String?
