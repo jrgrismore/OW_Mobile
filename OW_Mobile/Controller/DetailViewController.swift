@@ -383,12 +383,16 @@ class DetailViewController: UIViewController
     if stations[stationIndex].WeatherInfoAvailable != nil && stations[stationIndex].WeatherInfoAvailable!
     {
       //cloud info
+      var cloudCoverValue: Int?
       var cloudCoverStr = " —"
       var cloudIconValue: Int?
-      if stations[stationIndex].CloudCover != nil
+      print("CloudCover=",stations[stationIndex].CloudCover)
+       if stations[stationIndex].CloudCover != nil
       {
-        cloudCoverStr = String(format: " %d%%",stations[stationIndex].CloudCover! * 10)
-        cloudIconValue = stations[stationIndex].CloudCover!
+        cloudCoverValue = stations[stationIndex].CloudCover! * 10
+//        cloudCoverStr = String(format: " %d%%",stations[stationIndex].CloudCover!)
+        cloudCoverStr = String(format: " %d%%",cloudCoverValue!)
+        cloudIconValue = cloudCoverValue
       }
       cell.eventClouds.text = cloudCoverStr
       cell.eventCloudImg.image = cloudIcon(cloudIconValue)

@@ -517,9 +517,10 @@ extension MyEventsViewController
       {
         if primaryStation?.CloudCover != nil
         {
-          let cloudIconValue = primaryStation?.CloudCover
-          cell.cloudImg.image = cloudIcon(cloudIconValue)   // set cloud % icon
-          cell.cloudText.text = String(format: "%d%%",(primaryStation?.CloudCover)!)
+          let cloudCoverValue = (primaryStation?.CloudCover!)! * 10
+          cell.cloudImg.image = cloudIcon(cloudCoverValue)   // set cloud % icon
+//          cell.cloudText.text = String(format: "%d%%",(primaryStation?.CloudCover)!)
+          cell.cloudText.text = String(format: "%d%%",cloudCoverValue)
         }
         
         if primaryStation?.Wind != nil

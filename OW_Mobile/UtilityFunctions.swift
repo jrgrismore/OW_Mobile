@@ -72,12 +72,6 @@ func starColorIcon(_ starColorIconVal: Int?) -> UIImage
   var starColorImage: UIImage
   if starColorIconVal != nil
   {
-    //    Unknown (0) = star_black.png,
-    //    Blue (1) = star_b.png,
-    //    White (2) = star_w.png,
-    //    Yellow (3) = star_y.png,
-    //    Orange (4) = star_o.png,
-    //    Red (5) = star_r.png
     switch starColorIconVal
     {
     case 0:
@@ -386,8 +380,6 @@ func limitTo24Hours(floatHrs: Double) -> Double
 {
   let moduloTuple = remainderCycles(dividend: floatHrs, divisor: 24.0)
   var remainderHrs = moduloTuple.remainder
-  //  let hrCycles = moduloTuple.cycles
-  //  print("remainder=",remainderHrs,"   cycles=",hrCycles)
   if remainderHrs > 24.0
   {
     remainderHrs = remainderHrs - 24.0
