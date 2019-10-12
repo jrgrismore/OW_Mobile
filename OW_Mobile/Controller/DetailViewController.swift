@@ -368,7 +368,7 @@ class DetailViewController: UIViewController
     if stations[stationIndex].StarAlt != nil
     {
       starAltStr = String(format: "%0.0f°",stations[stationIndex].StarAlt!)
-      starAltStr = starAltStr + assignStarAzStr(station: stations[stationIndex], azFormat: true)  //azFormat user prefs?
+      starAltStr = starAltStr + assignAzIndicatorStr(azimuth: stations[stationIndex].StarAz!, azFormat: false)  //azFormat user prefs?
       print("starAltStr=",starAltStr)
     }
     cell.eventStarAlt.text = starAltStr
@@ -399,6 +399,7 @@ class DetailViewController: UIViewController
     if stations[stationIndex].MoonAlt != nil
     {
       moonAltStr = String(format: "%0.0f°", stations[stationIndex].MoonAlt!)
+      moonAltStr = moonAltStr + assignAzIndicatorStr(azimuth: stations[stationIndex].MoonAz!, azFormat: false)
       if stations[stationIndex].MoonPhase != nil
       {
         moonPhaseImage =  moonAltIcon(stations[stationIndex].MoonPhase)
@@ -431,45 +432,45 @@ class DetailViewController: UIViewController
     }
   }
   
-  func assignStarAzStr(station: ObserverStation, azFormat: Bool) -> String
+  func assignAzIndicatorStr(azimuth: Double, azFormat: Bool) -> String
   {
-    let azimuth = station.StarAz
+//    let azimuth = station.StarAz
     var azStr = ""
     if (azFormat)
     {
-      azStr = String(format: "@%d°", Int(azimuth!))
+      azStr = String(format: "@%d°", Int(azimuth))
       return azStr
     }
     
-    if (azimuth! <= 0 + 22.5 || azimuth! > 360 - 22.5)
+    if (azimuth <= 0 + 22.5 || azimuth > 360 - 22.5)
     {
       azStr = "N"
     }
-    else if (azimuth! <= 45 * 1 + 22.5 && azimuth! > 45 * 1 - 22.5)
+    else if (azimuth <= 45 * 1 + 22.5 && azimuth > 45 * 1 - 22.5)
     {
       azStr = "NE"
     }
-    else if (azimuth! <= 45 * 2 + 22.5 && azimuth! > 45 * 2 - 22.5)
+    else if (azimuth <= 45 * 2 + 22.5 && azimuth > 45 * 2 - 22.5)
     {
       azStr = "E"
     }
-    else if (azimuth! <= 45 * 3 + 22.5 && azimuth! > 45 * 3 - 22.5)
+    else if (azimuth <= 45 * 3 + 22.5 && azimuth > 45 * 3 - 22.5)
     {
       azStr  = "SE"
     }
-    else if (azimuth! <= 45 * 4 + 22.5 && azimuth! > 45 * 4 - 22.5)
+    else if (azimuth <= 45 * 4 + 22.5 && azimuth > 45 * 4 - 22.5)
     {
       azStr = "S"
     }
-    else if (azimuth! <= 45 * 5 + 22.5 && azimuth! > 45 * 5 - 22.5)
+    else if (azimuth <= 45 * 5 + 22.5 && azimuth > 45 * 5 - 22.5)
     {
       azStr = "SW"
     }
-    else if (azimuth! <= 45 * 6 + 22.5 && azimuth! > 45 * 6 - 22.5)
+    else if (azimuth <= 45 * 6 + 22.5 && azimuth > 45 * 6 - 22.5)
     {
       azStr = "W"
     }
-    else if (azimuth! <= 45 * 7 + 22.5 && azimuth! > 45 * 7 - 22.5)
+    else if (azimuth <= 45 * 7 + 22.5 && azimuth > 45 * 7 - 22.5)
     {
       azStr = "NW"
     }
