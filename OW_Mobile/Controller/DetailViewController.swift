@@ -30,19 +30,18 @@ class DetailViewController: UIViewController
           BestStationPos:0,
           StarColour:0
   )
-
-  var selection: String!
+  
+  var selectionObject: String!
   var detailStr: String = ""
   var eventID: String = ""
   var complete: Bool = false
+  var selectedEvent = EventWithDetails()
+  var eventsWithDetails = [EventWithDetails]()
   
-  var stationsDetails = [EventDetails]()
-  var selectedStations = [Station]()
-  var selectedEventDetails = EventDetails()
+  var selectedStations = [ObserverStation]()
   var event = OccultationEvent()
   var stationCursor = UIView()
   var visibleIndexPaths = [IndexPath]()
-  
   var currentStationIndexPath = IndexPath()
   
   var stationBarSubViewsExist = false
@@ -112,187 +111,107 @@ class DetailViewController: UIViewController
   
   override func viewWillAppear(_ animated: Bool)
   {
-//    print()
-//    print("viewWillAppear")
-//    
-//    print("complete=",complete)
-    
-
     eventDetailView.isHidden = false
     stationBarSubViewsExist = false
     stationCursorExists = false
+    self.title = selectionObject
     
-    let detailObject = detailData.Object!.replacingOccurrences(of: "(-2147483648) ", with: "")
-    self.title = detailObject
-    
-    stationsDetails = OWWebAPI.shared.loadDetails()
-    let detailsIndex = stationsDetails.index(where: { $0.Id == detailData.Id  })
-    selectedEventDetails = stationsDetails[detailsIndex!]
-    let chordSortedStations = self.event.stationsSortedByChordOffset(selectedEventDetails, order: .ascending)
+    let chordSortedStations = OccultationEvent.stationsSortedByChordOffset(selectedEvent, order: .ascending)
     
     selectedStations = chordSortedStations
     
-    let primaryIndex = self.event.primaryStationIndex(chordSortedStations)
-    updateEventInfoFields(eventItem: selectedEventDetails)
+    let primaryIndex = OccultationEvent.primaryStationIndex(selectedEvent)
+    updateEventInfoFields(eventItem: selectedEvent)
     if complete
     {
-//      print(":::::set color to darkGray")
-      self.navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.darkGray,
-                                                                      NSAttributedString.Key.font: UIFont.preferredFont(forTextStyle: .title3)]
+      self.navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.darkGray, NSAttributedString.Key.font: UIFont.preferredFont(forTextStyle: .title3)]
     } else {
-//      print(":::::set color to white")
-      self.navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.black,
-                                                                      NSAttributedString.Key.font: UIFont.preferredFont(forTextStyle: .title3)]
+      self.navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.black, NSAttributedString.Key.font: UIFont.preferredFont(forTextStyle: .title3)]
     }
     
-     DispatchQueue.main.async
-    {
+    DispatchQueue.main.async
+      {
         self.stationCollectionView.scrollToItem(at: IndexPath(item: primaryIndex!, section: 0), at: .centeredHorizontally, animated: false)
         self.stationCollectionView.layoutIfNeeded()
-//        self.navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.purple]
     }
-//      print("currentStationIndexPath=",currentStationIndexPath)
-    }
+  }
   
   override func viewDidAppear(_ animated: Bool)
   {
-//    print()
-//    print("viewDidAppear")
-
-    // temporarily added to test station left scroll problem
-    // seems to work 8/25/19
     adjustCellWidth()
-    
-    
-    //    print("safe area height =",self.view.safeAreaLayoutGuide.layoutFrame.size.height)
-    //    print("safe area width =",self.view.safeAreaLayoutGuide.layoutFrame.size.width)
-    //    print("stationCollectionView.bounds.width=",stationCollectionView.bounds.width)
-    let primaryIndex = self.event.primaryStationIndex(selectedStations)
+    let primaryIndex = OccultationEvent.primaryStationIndex(selectedStations)
     currentStationIndexPath = IndexPath(item:primaryIndex!, section: 0)
     DispatchQueue.main.async
       {
         self.stationCollectionView.scrollToItem(at: IndexPath(item: primaryIndex!, section: 0), at: .centeredHorizontally, animated: false)
         self.moveCursorToStation(indexPath: IndexPath(item: primaryIndex!, section: 0))
     }
-    updateShadowPlot(selectedEventDetails)
-//    print("currentStationIndexPath=",currentStationIndexPath)
-//    print()
+    updateShadowPlot(selectedEvent)
   }
   
   override func viewWillLayoutSubviews()
   {
-//    print()
     stationCollectionView.frame.size.width = self.view.safeAreaLayoutGuide.layoutFrame.size.width
-//    print("viewWillLayoutSubviews")
-//    print("safe area height =",self.view.safeAreaLayoutGuide.layoutFrame.size.height)
-//    print("safe area width =",self.view.safeAreaLayoutGuide.layoutFrame.size.width)
-//    print("stationCollectionView.bounds.width=",stationCollectionView.bounds.width)
     super.viewWillLayoutSubviews()
-    
-    
-    //temporarily disabled to test station left scroll problem
-//      adjustCellWidth()
-    
-    
-//    currentStationIndexPath = visibleStationIndexPath()
-//    print("currentStationIndexPath=",currentStationIndexPath)
-//   print()
   }
   
   override func viewDidLayoutSubviews()
   {
-//    print()
-//    print("viewDidLayoutSubviews")
-//    print("safe area height =",self.view.safeAreaLayoutGuide.layoutFrame.size.height)
-//    print("safe area width =",self.view.safeAreaLayoutGuide.layoutFrame.size.width)
-//    print("stationCollectionView.bounds.width=",stationCollectionView.bounds.width)
     super.viewDidLayoutSubviews()
-//    print("stationCollectionView.bounds.width=",stationCollectionView.bounds.width)
-//    currentStationIndexPath = visibleStationIndexPath()
-//    print("currentStationIndexPath=",currentStationIndexPath)
-//    stationCollectionView.collectionViewLayout.invalidateLayout()
-//    print("==================")
-   }
-
+  }
+  
   override func willTransition(to newCollection: UITraitCollection, with coordinator: UIViewControllerTransitionCoordinator)
   {
-//    print()
-//    print("willTransition")
     super.willTransition(to: newCollection, with: coordinator)
-//    print("safe area width =",self.view.safeAreaLayoutGuide.layoutFrame.size.width)
-//    print("stationCollectionView.bounds.width=",stationCollectionView.bounds.width)
-//    currentStationIndexPath = visibleStationIndexPath()
-//    print("currentStationIndexPath=",currentStationIndexPath)
-//  print("currentStationIndexPath=",currentStationIndexPath)
-//   print()
   }
   
   @objc func deviceRotated()
   {
-//  print()
-//  print("deviceRotated")
-  //    print("safe area height =",self.view.safeAreaLayoutGuide.layoutFrame.size.height)
-//  print("safe area width =",self.view.safeAreaLayoutGuide.layoutFrame.size.width)
-//  print("stationCollectionView.bounds.width=",stationCollectionView.bounds.width)
-  switch UIDevice.current.orientation {
-  case .landscapeLeft:
-    print("landscape left")
-  case .landscapeRight:
-    print("landscape right")
-  case .portrait:
-    print("portrait")
-  case .portraitUpsideDown:
-    print("portrait upsidedown")
-  case .faceUp:
-    print("face up")
-  case .faceDown:
-    print("face down")
-  default:
-    print("other")
+    switch UIDevice.current.orientation {
+    case .landscapeLeft:
+      print("landscape left")
+    case .landscapeRight:
+      print("landscape right")
+    case .portrait:
+      print("portrait")
+    case .portraitUpsideDown:
+      print("portrait upsidedown")
+    case .faceUp:
+      print("face up")
+    case .faceDown:
+      print("face down")
+    default:
+      print("other")
+    }
+    
+    DispatchQueue.main.async {
+      self.stationCollectionView.setNeedsLayout()
+      self.adjustCellWidth()
+      self.updateShadowPlot(self.selectedEvent)
+      self.stationCollectionView.scrollToItem(at: self.currentStationIndexPath, at: .centeredHorizontally, animated: false)
+    }
+    moveCursorToStation(indexPath: currentStationIndexPath)
   }
-//  print("stationCollectionView.bounds.width=",stationCollectionView.bounds.width)
-//  print()
-//  currentStationIndexPath = visibleStationIndexPath()
-
-  DispatchQueue.main.async {
-    self.stationCollectionView.setNeedsLayout()
-    self.adjustCellWidth()
-    self.updateShadowPlot(self.selectedEventDetails)
-//    self.currentStationIndexPath = self.visibleStationIndexPath()
-    self.stationCollectionView.scrollToItem(at: self.currentStationIndexPath, at: .centeredHorizontally, animated: false)
-  }
-//  print("currentStationIndexPath=",currentStationIndexPath)
-//  let chordSortedStations = self.event.stationsSortedByChordOffset(selectedEventDetails, order: .ascending)
-//  let primaryIndex = self.event.primaryStationIndex(chordSortedStations)
-//  moveCursorToStation(indexPath: IndexPath(item: primaryIndex!, section: 0))
-//  print("deviceRotated > visibleStationIndexPath()=",visibleStationIndexPath())
-//  print("deviceRotated > currentStationIndexPath=",currentStationIndexPath)
-//  moveCursorToStation(indexPath: visibleStationIndexPath())
-  moveCursorToStation(indexPath: currentStationIndexPath)
-
-//  stationCollectionView.reloadData()
-
-//  print()
-}
-
+  
   override func viewWillDisappear(_ animated: Bool)
   {
     eventDetailView.isHidden = true
-//    self.navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.red]
-   }
+  }
   
   // MARK: - Event Detail Functions
-  func updateEventInfoFields(eventItem itm: EventDetails)
+  func updateEventInfoFields(eventItem itm: EventWithDetails)
   {
     //testing var
     var item = itm
-    selectedStations = self.event.stationsSortedByChordOffset(item, order: .ascending)
     
+    selectedStations = OccultationEvent.stationsSortedByChordOffset(item, order: .ascending)
+    
+    self.eventTitle.attributedText = self.event.updateObjectFld(item)
+    self.eventRank.attributedText = self.event.updateRankFld(item)
     DispatchQueue.main.async
       {
-        self.eventTitle.attributedText = self.event.updateObjectFld(item)
-        self.eventRank.attributedText = self.event.updateRankFld(item)
-        let timeTuple = self.event.updateEventTimeFlds(&item)
+        let primaryStationIndex = OccultationEvent.primaryStationIndex(self.selectedStations)
+        let timeTuple = currentEvent.updateEventTimeFlds(&item,stationIndex: primaryStationIndex!)
         var remainingTime: NSMutableAttributedString = timeTuple.remainingTime as! NSMutableAttributedString
         if remainingTime.string == "completed"
         {
@@ -306,12 +225,11 @@ class DetailViewController: UIViewController
         //this does not take effect until return to previous view controller
         self.navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.black,
                                                                         NSAttributedString.Key.font: UIFont.preferredFont(forTextStyle: .title3)]
-
+        
         self.eventTimeRemaining.attributedText = remainingTime
         self.eventFeed.attributedText = self.event.updateFeedFld(item)
         self.eventRA.attributedText = self.event.updateRAFld(item)
         self.eventDec.attributedText = self.event.updateDecFld(item)
-        //insert BVStarDiamView here
         self.eventAsteroidOrigin.attributedText = self.event.updateAsteroidClassFld(item)
         self.eventAsteroidDiameter.attributedText = self.event.updateAsteroidDiamKM(item)
         self.eventStarMagnitude.attributedText = self.event.updateStarMagFld(item)
@@ -336,9 +254,10 @@ class DetailViewController: UIViewController
     }   // end DispatchQueue.main.async
   }
   
-  func updateStationFlds(cell: inout StationCell, indexPath: IndexPath, stations: [Station], itm: EventDetails)
+  func updateStationFlds(cell: inout StationCell, indexPath: IndexPath, stations: [ObserverStation], itm: EventWithDetails)
   {
     var item = itm
+    
     let stationIndex = indexPath.item
     var stationPosIconVal : Int?
     stationPosIconVal = 0
@@ -360,10 +279,13 @@ class DetailViewController: UIViewController
     {
       stationName = stations[stationIndex].StationName!
     }
+    if stations[stationIndex].CountryCode != nil
+    {
+      stationName = stationName + " (" + stations[stationIndex].CountryCode! + ")"
+    }
     cell.eventStationID.text = stationName
     
-//    let timeTuple = updateEventTimeFlds(&item)
-    let timeTuple = event.updateEventTimeFlds(&item)
+    let timeTuple = event.updateEventTimeFlds(&item, stationIndex: indexPath.row)
     cell.eventTime.text = timeTuple.eventTime
     
     var errorTimeStr = "—"
@@ -373,21 +295,79 @@ class DetailViewController: UIViewController
     }
     cell.eventTimeError.text = errorTimeStr
     
+    
+    let report = stations[stationIndex].Report
+    switch report {
+    case 0:
+      //NotReported
+      //leave event time and time error visible
+      cell.reportImg.image = nil
+      cell.eventTime.isHidden = false
+      cell.eventTimeError.isHidden = false
+    case 1:
+      //Miss
+      //show negative icon and hide event time and time error
+      cell.reportImg.image = #imageLiteral(resourceName: "rep_neg.png")
+      cell.eventTime.text = "Miss"
+      cell.eventTimeError.isHidden = true
+    case 2:
+      //Clouded
+      //show grey icon? and hide event time and time error
+      cell.reportImg.image = #imageLiteral(resourceName: "rep_grey.png")
+      cell.eventTime.text = "Clouded"
+      cell.eventTimeError.isHidden = true
+    case 3:
+      //Failed (reported in OW as 'Technical Failure')
+      //show fail icon and hide event time and time error
+      cell.reportImg.image = #imageLiteral(resourceName: "rep_fail.png")
+      cell.eventTime.text = "Fail"
+      cell.eventTimeError.isHidden = true
+    case 4:
+      //Positive
+      //show positive icon and hide event time and time error
+      cell.eventTime.text = "Positive"
+      if let eventDuration = stations[stationIndex].ReportedDuration   // original
+      {
+        let eventDurationStr = String(format: "  %0.2f sec",eventDuration)
+        cell.eventTime.text = "Positive" + eventDurationStr
+      }
+      cell.reportImg.image = #imageLiteral(resourceName: "rep_pos.png")
+      cell.eventTimeError.isHidden = true
+    case 5:
+      //NoObservation
+      //leave event time and time error visible
+      cell.reportImg.image = #imageLiteral(resourceName: "rep_grey.png")
+      cell.eventTime.text = "No Observation"
+      cell.eventTimeError.isHidden = true
+    case 6:
+      //ReportToFollow (reported in OW as 'Observed, Report to follow')
+      //show follow icon and hide event time and time error
+      cell.reportImg.image = #imageLiteral(resourceName: "rep_follow.png")
+      cell.eventTime.text = "Report to Follow"
+      cell.eventTimeError.isHidden = true
+    default:
+      //NotReported
+      //leave event time and time error visible
+      cell.reportImg.image = nil
+      cell.eventTime.isHidden = false
+      cell.eventTimeError.isHidden = false
+    }
+    
     //determine if there's weather info available
     if stations[stationIndex].WeatherInfoAvailable != nil && stations[stationIndex].WeatherInfoAvailable!
     {
       //cloud info
+      var cloudCoverValue: Int?
       var cloudCoverStr = " —"
       var cloudIconValue: Int?
       if stations[stationIndex].CloudCover != nil
       {
-        cloudCoverStr = String(format: " %d%%",stations[stationIndex].CloudCover!)
-        cloudIconValue = stations[stationIndex].CloudCover!
+        cloudCoverValue = stations[stationIndex].CloudCover! * 10
+        cloudCoverStr = String(format: " %d%%",cloudCoverValue!)
+        cloudIconValue = cloudCoverValue
       }
-      
       cell.eventClouds.text = cloudCoverStr
       cell.eventCloudImg.image = cloudIcon(cloudIconValue)
-      
       //wind info
       var windSpeedIconValue: Int?
       var windSignIconValue: Int?
@@ -398,24 +378,20 @@ class DetailViewController: UIViewController
       }
       cell.eventWindStrengthImg.image = windStrengthIcon(windSpeedIconValue)
       cell.eventWindSignImg.image = windSignIcon(windSignIconValue)
-      
       //temp info
       var tempStr = "—"
       if stations[stationIndex].TempDegC != nil
       {
         tempStr = String(format: "%d°C",stations[stationIndex].TempDegC!)
       }
-      
       cell.eventTemperature.text = tempStr
       cell.eventTempImg.image = thermIcon(stations[stationIndex].TempDegC!)
-      
       //high cloud info
       var highCloudStr = ""
       if stations[stationIndex].HighCloud != nil
       {
         highCloudStr = String(format: "%@",stations[stationIndex].HighCloud!.description)
       }
-      
     } else {
       cell.eventCloudImg.image = nil
       cell.eventClouds.text = ""
@@ -426,17 +402,18 @@ class DetailViewController: UIViewController
     }
     
     var starAltStr = "—"
-    if item.StarAlt != nil
+    if stations[stationIndex].StarAlt != nil
     {
-      starAltStr = String(format: "%0.0f°",item.StarAlt!)
+      starAltStr = String(format: "%0.0f°",stations[stationIndex].StarAlt!)
+      starAltStr = starAltStr + assignAzIndicatorStr(azimuth: stations[stationIndex].StarAz!, azFormat: false)
     }
     cell.eventStarAlt.text = starAltStr
     
     var sunAltStr = "—"
-    if item.SunAlt != nil
+    if stations[stationIndex].SunAlt != nil
     {
-      sunAltStr = String(format: "%0.0f°", item.SunAlt!)
-      if item.SunAlt! > -12.0
+      sunAltStr = String(format: "%0.0f°", stations[stationIndex].SunAlt!)
+      if stations[stationIndex].SunAlt! > -12.0
       {
         cell.sunAltImg.image =  #imageLiteral(resourceName: "sun")
         cell.eventSunAlt.text = sunAltStr
@@ -453,15 +430,15 @@ class DetailViewController: UIViewController
       cell.eventSunAlt.text = "   "
     }
     
-    
     var moonAltStr = "—"
     var moonPhaseImage: UIImage
-    if item.MoonAlt != nil
+    if stations[stationIndex].MoonAlt != nil
     {
-      moonAltStr = String(format: "%0.0f°", item.MoonAlt!)
-      if item.MoonPhase != nil
+      moonAltStr = String(format: "%0.0f°", stations[stationIndex].MoonAlt!)
+      moonAltStr = moonAltStr + assignAzIndicatorStr(azimuth: stations[stationIndex].MoonAz!, azFormat: false)
+      if stations[stationIndex].MoonPhase != nil
       {
-        moonPhaseImage =  moonAltIcon(item.MoonPhase!)
+        moonPhaseImage =  moonAltIcon(stations[stationIndex].MoonPhase)
         cell.moonAltImg.image = moonPhaseImage
       }
       else
@@ -473,16 +450,16 @@ class DetailViewController: UIViewController
     cell.eventMoonAlt.text = moonAltStr
     
     var moonDist = "—"
-    if item.MoonDist != nil
+    if stations[stationIndex].MoonDist != nil
     {
-      moonDist = String(format: "%0.0f°", item.MoonDist!)
+      moonDist = String(format: "%0.0f°", stations[stationIndex].MoonDist!)
     }
     cell.eventMoonSeparation.text = moonDist
     
     var starColorImage: UIImage
-    if item.StarColour != nil
+    if stations[stationIndex].StarColour != nil
     {
-      starColorImage = starColorIcon(item.StarColour)
+      starColorImage = starColorIcon(stations[stationIndex].StarColour!)
       cell.starAltImg.image = starColorImage
     }
     else
@@ -491,16 +468,53 @@ class DetailViewController: UIViewController
     }
   }
   
-  func updateShadowPlot(_ item: EventDetails)
+  func assignAzIndicatorStr(azimuth: Double, azFormat: Bool) -> String
   {
-//    print()
-//    print("updateShadowPlot")
-    //update shadow bars plot
-    let stationsExistBeyondSigma1:Bool = self.event.barPlotToSigma3(item)
-    
+    var azStr = ""
+    if (azFormat)
+    {
+      azStr = String(format: "@%d°", Int(azimuth))
+      return azStr
+    }
+    if (azimuth <= 0 + 22.5 || azimuth > 360 - 22.5)
+    {
+      azStr = "N"
+    }
+    else if (azimuth <= 45 * 1 + 22.5 && azimuth > 45 * 1 - 22.5)
+    {
+      azStr = "NE"
+    }
+    else if (azimuth <= 45 * 2 + 22.5 && azimuth > 45 * 2 - 22.5)
+    {
+      azStr = "E"
+    }
+    else if (azimuth <= 45 * 3 + 22.5 && azimuth > 45 * 3 - 22.5)
+    {
+      azStr  = "SE"
+    }
+    else if (azimuth <= 45 * 4 + 22.5 && azimuth > 45 * 4 - 22.5)
+    {
+      azStr = "S"
+    }
+    else if (azimuth <= 45 * 5 + 22.5 && azimuth > 45 * 5 - 22.5)
+    {
+      azStr = "SW"
+    }
+    else if (azimuth <= 45 * 6 + 22.5 && azimuth > 45 * 6 - 22.5)
+    {
+      azStr = "W"
+    }
+    else if (azimuth <= 45 * 7 + 22.5 && azimuth > 45 * 7 - 22.5)
+    {
+      azStr = "NW"
+    }
+    return azStr
+  }
+  
+  func updateShadowPlot(_ item: EventWithDetails)
+  {
     var plotWidthKm = totalPlotWidthKm(item, scale: .sigma3Edge)
     let outerChordWidth = farthestChordWidth(item)
-    //    print("outerChordWidth=",outerChordWidth)
     sigma1BarView.isHidden = false
     sigma2BarView.isHidden = false
     sigma3BarView.isHidden = false
@@ -527,7 +541,6 @@ class DetailViewController: UIViewController
       sigma2BarView.isHidden = true
       sigma3BarView.isHidden = true
     }
-    //    print("plotWidthKm=",plotWidthKm)
     
     let plotBarFactors = plotBarsWidthFactors(item, totalPlotWidthKm: plotWidthKm)
     
@@ -541,108 +554,47 @@ class DetailViewController: UIViewController
     self.sigma2BarView.transform = CGAffineTransform(scaleX: CGFloat(plotBarFactors.sigma2BarFactor), y: 1.0)
     self.sigma3BarView.transform = CGAffineTransform(scaleX: CGFloat(plotBarFactors.sigma3BarFactor), y: 1.0)
     
-    let primaryStation = self.event.primaryStation(item)!
-    let primaryChordOffset = primaryStation.ChordOffsetKm!
-    //    print("primaryChordOffset=",primaryChordOffset)
+    let primaryStation = OccultationEvent.primaryStation(item)!
     let primaryFactor = plotStationBarFactor(station: primaryStation, totalPlotWidthKm: plotWidthKm)
-    //    print("primaryFactor=",primaryFactor)
     self.userBarView.frame.origin.x = self.centerBarView.frame.origin.x + (self.weatherBarView.bounds.width / 2) * CGFloat(primaryFactor)
     
     self.weatherBarView.subviews.forEach( { $0 .removeFromSuperview() })
     addStationsSubviews(plotWidthKm)
     addStationCursor()
-    
-    //    print("primary station index = ",self.event.primaryStationIndex(self.selectedStations))
-    //    print("<updateEventInfoFields")
-//    print("currentStationIndexPath=",currentStationIndexPath)
   }
   
   func moveCursorToStation(indexPath: IndexPath)
   {
-//    print()
-//    print(">moveCursorToStation")
-    //    print("station indexPath.item=",indexPath.item)
-    //    for subview in self.weatherBarView.subviews
-    //    {
-    //      subview.backgroundColor = .black
-    //    }
-    var currentIndex = indexPath.item
-    //    if let tempIndex = self.weatherBarView.subviews.firstIndex(where: {$0.tag == indexPath.item} )
-    //    {
-    //      currentIndex = tempIndex
-    //    }
+    let currentIndex = indexPath.item
     DispatchQueue.main.async
       {
-        //        print("currentIndex=",currentIndex)
-        //        print("selectedStations[currentIndex]=",self.selectedStations[currentIndex])
-        //        for station in self.selectedStations
-        //        {
-        //          print("station.chordOffset=",station.ChordOffsetKm)
-        //        }
-        //        print("self.weatherBarView.subviews[currentIndex].frame.origin.x=",self.weatherBarView.subviews[currentIndex].frame.origin.x)
-        //        print("self.weatherBarView.bounds.minX=",self.weatherBarView.bounds.minX)
-        //        print("self.weatherBarView.subviews[currentIndex].frame.origin.x=",self.weatherBarView.subviews[currentIndex].frame.origin.x)
-        //        print("self.weatherBarView.bounds.maxX=",self.weatherBarView.bounds.maxX)
         if self.weatherBarView.subviews[currentIndex].frame.origin.x >= self.weatherBarView.frame.minX
           && self.weatherBarView.subviews[currentIndex].frame.origin.x < self.weatherBarView.frame.maxX
         {
-          //          print("show station cursor")
           self.stationCursor.isHidden = false
           let currentStationView = self.weatherBarView.subviews[currentIndex]
-          //          currentStationView.backgroundColor = .red
           self.stationCursor.frame.origin.x = currentStationView.frame.origin.x + (currentStationView.frame.width / 2) - self.stationCursor.frame.width / 2
         } else {
-          //          print("hide station cursor")
           self.stationCursor.isHidden = true
         }
-        //        print("<moveCursorToStation")
-        //        print()
     }
-//    print("currentStationIndexPath=",currentStationIndexPath)
+    
   }
-
+  
   func visibleStationIndexPath() -> IndexPath
   {
-//    print()
-//    print("visibleStationIndexPath")
     let visibleRect = CGRect(origin: stationCollectionView.contentOffset, size: stationCollectionView.bounds.size)
-    //    print("visibleRect=",visibleRect)
     let visiblePoint = CGPoint(x: visibleRect.midX, y: visibleRect.midY)
-    //    print("visiblePoint=",visiblePoint)
     let visibleStationIndexPath = stationCollectionView.indexPathForItem(at: visiblePoint)!
-//    print("visibleStationIndexPath=",visibleStationIndexPath)
-//    print("visbleStationIndexPath.item=",visibleStationIndexPath.item)
-    //    print("visbleStationIndexPath.section=",visibleStationIndexPath.section)
-    //    currentStationIndexPath = visibleStationIndexPath
-//    print("currentStationIndexPath=",currentStationIndexPath)
-//    print()
     return visibleStationIndexPath
   }
-
+  
   func addStationsSubviews(_ plotWidthKm: Double)
   {
-    //    if stationsExistBeyondSigma1
-    //    {
-    //
-    //      self.sigma2BarView.transform = CGAffineTransform(scaleX: CGFloat(plotBarFactors.sigma2BarFactor), y: 1.0)
-    //      self.sigma3BarView.transform = CGAffineTransform(scaleX: CGFloat(plotBarFactors.sigma3BarFactor), y: 1.0)
-    //      self.sigma2BarView.isHidden = false
-    //      self.sigma3BarView.isHidden = false  //always scaled to full width
-    //    }
-    //    else
-    //    {
-    //      self.sigma2BarView.isHidden = true
-    //      self.sigma3BarView.isHidden = true
-    //    }
-    
-    
-    
-    //    for (index,station) in item.Stations!.enumerated()
-    for (index,station) in selectedStations.enumerated()
+    for station in selectedStations
     {
-      //      let stationFactor = self.event.assignStationFactor(item, station: station, stationsExistPastSigma1: stationsExistBeyondSigma1)
       let stationFactor = plotStationBarFactor(station: station, totalPlotWidthKm: plotWidthKm)
-      var stationView = UIView()
+      let stationView = UIView()
       stationView.frame.origin.x = self.centerBarView.frame.origin.x + (self.weatherBarView.bounds.width / 2) * CGFloat(stationFactor)
       stationView.frame.origin.y = self.weatherBarView.frame.origin.y
       stationView.frame.size.width = 3
@@ -654,7 +606,6 @@ class DetailViewController: UIViewController
         stationView.backgroundColor = .gray
       }
       self.weatherBarView.addSubview(stationView)
-      //      print("index=",index,"stationView.frame.origin.x=",stationView.frame.origin.x)
     }
   }
   
@@ -677,68 +628,35 @@ extension DetailViewController: UICollectionViewDataSource,UICollectionViewDeleg
 {
   func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int
   {
-//    print("> number of items")
-//    print("selectedStations:")
-//    for (index,station) in self.selectedStations.enumerated()
-//    {
-//      print("index=",index)
-//      print(station)
-//      print()
-//    }
-//    print()
-//
     return selectedStations.count
   }
   
   func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell
   {
-//    print()
-//    print(">collectionView")
-//    print("cellForItemAt > indexPath:",indexPath)
-//    print("station=",selectedStations[indexPath.item])
     var cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as! StationCell
     cell.backgroundColor = #colorLiteral(red: 0.2043271959, green: 0.620110333, blue: 0.6497597098, alpha: 1)
-    updateStationFlds(cell: &cell, indexPath: indexPath, stations: selectedStations, itm: selectedEventDetails)
-    //    moveCursorToStation(indexPath: indexPath)
-//    visibleIndexPaths = collectionView.indexPathsForVisibleItems
-//    currentStationIndexPath = visibleStationIndexPath()
-//    print("<collectionView")
-//    print()
+    updateStationFlds(cell: &cell, indexPath: indexPath, stations: selectedStations, itm: selectedEvent)
     return cell
   }
   
   func adjustCellWidth()
   {
-//    print()
-//    print("adjustCellWidth")
-    var cellHeight = stationCollectionView.bounds.height
+    let cellHeight = stationCollectionView.bounds.height
     if let flowLayout = self.stationCollectionView.collectionViewLayout as? UICollectionViewFlowLayout
     {
       flowLayout.minimumLineSpacing = 0
       flowLayout.minimumInteritemSpacing = 0
       flowLayout.sectionInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
-      let totalHInsets = flowLayout.sectionInset.left + flowLayout.sectionInset.right
-      var cellWidth = self.stationCollectionView.bounds.width - flowLayout.minimumLineSpacing
-      //      var cellWidth = self.view.safeAreaLayoutGuide.layout - flowLayout.minimumLineSpacing
-      //      print("stationCollectionView.bounds.width=",stationCollectionView.bounds.width)
-      //      print("adjusted cellWidth=",cellWidth)
+      let cellWidth = self.stationCollectionView.bounds.width - flowLayout.minimumLineSpacing
       stationCollectionView.bounds.origin.x = 0
       flowLayout.itemSize = CGSize(width: cellWidth, height: CGFloat(cellHeight))
-//      print("flowLayout.itemSize=",flowLayout.itemSize)
-//      print("currentStationIndexPath=",currentStationIndexPath)
     }
   }
   
   func scrollViewDidEndDecelerating(_ scrollView: UIScrollView)
   {
-//    print()
-//    print(">scrollViewDidEndDecelerating")
-//    print("visibleIndexPaths=",visibleIndexPaths)
-//    moveCursorToStation(indexPath: visibleStationIndexPath)
     currentStationIndexPath = visibleStationIndexPath()
     moveCursorToStation(indexPath: visibleStationIndexPath())
-//    print("<scrollViewDidEndDecelerating")
-//    print("currentStationIndexPath=",currentStationIndexPath)
   }
 }
 
@@ -756,7 +674,7 @@ extension DetailViewController
     let fieldAttributes: [NSMutableAttributedString.Key: Any] = [.font: fieldFont]
     let unitsAttributes: [NSMutableAttributedString.Key: Any] = [.font: unitsFont]
     
-    var labelAttrStr = NSMutableAttributedString(string: label, attributes: labelAttributes)
+    let labelAttrStr = NSMutableAttributedString(string: label, attributes: labelAttributes)
     let fieldAttrStr = NSAttributedString(string: field, attributes: fieldAttributes)
     let unitsAttrStr = NSAttributedString(string: units, attributes: unitsAttributes)
     
@@ -768,7 +686,6 @@ extension DetailViewController
   
   func clearFieldsAndIcons()
   {
-    print("begin clearFieldsAndIcons")
     self.eventTitle.text = "—"
     self.eventRank.text = "Rank: —"
     self.eventTimeRemaining.text = "_"
@@ -787,96 +704,33 @@ extension DetailViewController
     self.eventCamRotationAmplitude.text = "Amplitude       —"
     self.eventCamCombinedMag.text = "Comb. Mag  —"
     self.eventCamMagDrop.text = "Mag Drop  —"
-    print("end clearFieldsAndIcons")
   }
   
   func printEventDetails()
   {
-    print("eventTitle=\(eventTitle!.text!)")
-    print("eventRank=\(eventRank!.text!)")
-    print("eventTimeRemaining=\(eventTimeRemaining!.text!)")
-    print("eventFeed=\(eventFeed!.text!)")
+    print("eventTitle=\(eventTitle!.text ?? "")")
+    print("eventRank=\(eventRank!.text ?? "")")
+    print("eventTimeRemaining=\(eventTimeRemaining!.text ?? "")")
+    print("eventFeed=\(eventFeed!.text ?? "")")
     print("weatherBarView=\(weatherBarView!)")
     print("sigma1BarView=\(sigma1BarView!)")
     print("shadowBarView=\(shadowBarView!)")
     print("centerBarView=\(centerBarView!)")
-    print("eventRA=\(eventRA.text)")
-    print("eventDec=\(eventDec.text)")
-    print("eventStarBV=\(eventStarBV.text)")
-    print("eventStarDiameter=\(eventStarDiameter.text)")
-    print("eventAsteroidOrigin=\(eventAsteroidOrigin.text)")
-    print("eventAsteroidDiameter=\(eventAsteroidDiameter.text)")
-    print("eventStarMagnitude=\(eventStarMagnitude.text)")
-    print("eventAsteroidMagnitude=\(eventAsteroidMagnitude.text)")
-    print("eventCombinedMagnitude=\(eventCombinedMagnitude.text)")
-    print("eventMagnitudeDrop=\(eventMagnitudeDrop.text)")
-    print("eventCameraSectionTitle=\(eventCameraSectionTitle.text)")
-    print("eventCamCombinedMag=\(eventCamCombinedMag.text)")
-    print("eventCamMagDrop=\(eventCamMagDrop.text)")
-    print("eventCamAseroidRotation=\(eventCamAseroidRotation.text)")
-    print("eventCamRotationAmplitude=\(eventCamRotationAmplitude.text)")
+    print("eventRA=\(eventRA.text ?? "")")
+    print("eventDec=\(eventDec.text ?? "")")
+    print("eventStarBV=\(eventStarBV.text ?? "")")
+    print("eventStarDiameter=\(eventStarDiameter.text ?? "")")
+    print("eventAsteroidOrigin=\(eventAsteroidOrigin.text ?? "")")
+    print("eventAsteroidDiameter=\(eventAsteroidDiameter.text ?? "")")
+    print("eventStarMagnitude=\(eventStarMagnitude.text ?? "")")
+    print("eventAsteroidMagnitude=\(eventAsteroidMagnitude.text ?? "")")
+    print("eventCombinedMagnitude=\(eventCombinedMagnitude.text ?? "")")
+    print("eventMagnitudeDrop=\(eventMagnitudeDrop.text ?? "")")
+    print("eventCameraSectionTitle=\(eventCameraSectionTitle.text ?? "")")
+    print("eventCamCombinedMag=\(eventCamCombinedMag.text ?? "")")
+    print("eventCamMagDrop=\(eventCamMagDrop.text ?? "")")
+    print("eventCamAseroidRotation=\(eventCamAseroidRotation.text ?? "")")
+    print("eventCamRotationAmplitude=\(eventCamRotationAmplitude.text ?? "")")
   }
   
-  func testStation()
-  {
-    //*********************station tests**********************
-    //    var testStations = [Station]()
-    //    var newStation = Station()
-    //    newStation.StationId = 1
-    //    newStation.StationName = "Station Name"
-    //    newStation.EventTimeUtc = "2019-07-04T21:04:57.488"
-    //    newStation.WeatherInfoAvailable = true
-    //    newStation.CloudCover = 5
-    //    newStation.Wind = 3
-    //    newStation.TempDegC = 24
-    //    newStation.HighCloud = false
-    //    newStation.StationPos = 1
-    //
-    //    newStation.ChordOffsetKm = 10     //test value
-    //
-    //    newStation.OccultDistanceKm = 1.1
-    //    newStation.IsOwnStation = true
-    //    newStation.IsPrimaryStation = true
-    //    testStations.append(newStation)
-    //
-    //    var testItem = EventDetails()
-    //    testItem.Id = "id123456789"
-    //    testItem.Object = "Test Object"
-    //    testItem.StarMag = 9.87
-    //    testItem.MagDrop = 6.54
-    //    testItem.MaxDurSec = 1.23
-    //    testItem.ErrorInTimeSec = 0.7
-    //    testItem.StarColour = 3
-    //    testItem.Stations = testStations
-    //    testItem.Feed = "Test Feed"
-    //    testItem.Rank = 97
-    //    testItem.BV = 0.543
-    //    testItem.CombMag = 9.99
-    //    testItem.AstMag = 14.7
-    //    testItem.MoonDist = 1.1
-    //    testItem.MoonPhase = 11
-    //
-    //    testItem.AstDiaKm = 20     //test value
-    //
-    //    testItem.AstDistUA = 1.1
-    //    testItem.RAHours = 12.345
-    //    testItem.DEDeg = 67.89
-    //    testItem.StarAlt = 35.7
-    //    testItem.StarAz = 123.4
-    //    testItem.SunAlt = -11
-    //    testItem.MoonAlt = 11
-    //    testItem.MoonAz = 11
-    //    testItem.StellarDia = 0.05
-    //    testItem.StarName = "TYC 123"
-    //    testItem.OtherStarNames = ""
-    //    testItem.AstClass = "NEO"
-    //    testItem.AstRotationHrs = 7.8
-    //    testItem.AstRotationAmplitude = 0.9
-    //    testItem.PredictionUpdated = "July 4, 2019"
-    //
-    //    testItem.OneSigmaErrorWidthKm = 20     //test value
-    //
-    //    item = testItem
-    //********************************************************
-  }
 }

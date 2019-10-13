@@ -37,6 +37,8 @@ class StationCell: UICollectionViewCell
   
   @IBOutlet weak var eventMoonSeparation: UILabel!
   
+  @IBOutlet weak var reportImg: UIImageView!
+  
   func clearStationFields()
   {
     self.sigmaImg.image = nil
