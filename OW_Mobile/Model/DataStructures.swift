@@ -98,8 +98,6 @@ var eventsWithDetails = [EventWithDetails]()  //event array of unified data
 var currentEvent = OccultationEvent()   //event
 
 
-
-//*** now superceded
 //Event structure matching JSON keys
 struct Event: Codable
 {
@@ -119,41 +117,6 @@ struct Event: Codable
   var StarColour: Int?
 //  var Details: EventDetails
 }
-
-//*** now superceded
-//struct MyEvents: Codable
-//{
-//  var events: [Event]
-//}
-
-//*** now superceded
-//struct MyEventListDetails: Codable
-//{
-//  var eventList: [Event]
-//  var eventsDetails: [EventDetails]
-//}
-
-//Event strings structure
-//struct EventStrings: Codable
-//{
-//  var Id: String = ""
-//  var Object: String = ""
-//  var StarMag: String = ""
-//  var MagDrop: String = ""
-//  var MaxDurSec: String = ""
-//  var EventTimeUtc: String = ""
-//  var ErrorInTimeSec: String = ""
-//  var WeatherInfoAvailable: String = ""   //weather info available
-//  var CloudCover: String = ""
-//  var Wind: String = ""
-//  var TempDegC: String = ""
-//  var HighCloud: String = ""
-//  var BestStationPos: String = ""
-//  var StarColour: String = ""
-// }
-
-//*** now superceded
-//var myEventsStrings = EventStrings()    //???????/
 
 struct EventDetails: Codable
 {
@@ -229,5 +192,4 @@ struct EventDetailStrings: Codable
   var StarColour: String = ""
  }
 
-//*** now superceded
 var eventDetailStrings = EventDetailStrings()

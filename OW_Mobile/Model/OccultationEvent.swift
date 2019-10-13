@@ -13,8 +13,8 @@ import UIKit
 class OccultationEvent: NSObject
 {
   
-  var details = EventDetails()
-  var stations = [Station]()
+//  var details = EventDetails()
+//  var stations = [Station]()
   
   var eventData = EventWithDetails()
   
@@ -43,7 +43,6 @@ class OccultationEvent: NSObject
   func updateFeedFld(_ item: EventWithDetails) -> NSAttributedString
   {
     var feedAttrStr: NSAttributedString = NSMutableAttributedString(string: "—")
-//    print("item.Feed=",item.Feed ?? "Feed is nil")
     if item.Feed != nil
     {
       feedAttrStr = self.formatLabelandField(label:"", field: item.Feed!, units:"")
@@ -210,8 +209,6 @@ class OccultationEvent: NSObject
   // MARK: - shadow bar plot functions
   func updateShadowBarView(_ item: EventWithDetails,stationsExistPastSigma1: Bool) -> (shadowFactor:Double,sig1Factor:Double,sig2Factor:Double,sig3Factor:Double)
   {
-    print()
-    print(">updateShadowBarView")
     let shadowWidth = item.AstDiaKm!
     let sig1Width = item.OneSigmaErrorWidthKm!
     let totalBarsWidthKm = pathBarsTotalWidth(astDiamKm: item.AstDiaKm!, sigma1WidthKm: sig1Width, stationsExistPastSigma1: stationsExistPastSigma1)
@@ -221,8 +218,6 @@ class OccultationEvent: NSObject
     let sigma2Factor = (shadowWidth + (4 * sig1Width)) / totalBarsWidthKm
     let sigma3Factor = (shadowWidth + (6 * sig1Width)) / totalBarsWidthKm
     
-    print("<updateShadowBarView")
-    print()
     return (shadowFactor,sigma1Factor,sigma2Factor,sigma3Factor)
   }
   
@@ -230,12 +225,12 @@ class OccultationEvent: NSObject
   {
     let stationChordOffset = station.ChordOffsetKm!
     let barPlotTotalWidth = pathBarsTotalWidth(astDiamKm: item.AstDiaKm!, sigma1WidthKm: item.OneSigmaErrorWidthKm!, stationsExistPastSigma1: stationsExistPastSigma1)
-    var stationFactor = stationChordOffset / (barPlotTotalWidth / 2)
-    print()
-    print("#######")
-    print("station.ChordOffsetKm=",station.ChordOffsetKm!)
-    print("barPlotTotalWidth=",barPlotTotalWidth)
-    print("stationFactor=",stationFactor)
+    let stationFactor = stationChordOffset / (barPlotTotalWidth / 2)
+//    print()
+//    print("#######")
+//    print("station.ChordOffsetKm=",station.ChordOffsetKm!)
+//    print("barPlotTotalWidth=",barPlotTotalWidth)
+//    print("stationFactor=",stationFactor)
     
     return stationFactor
   }
@@ -256,7 +251,7 @@ class OccultationEvent: NSObject
     let fieldAttributes: [NSMutableAttributedString.Key: Any] = [.font: fieldFont]
     let unitsAttributes: [NSMutableAttributedString.Key: Any] = [.font: unitsFont]
     
-    var labelAttrStr = NSMutableAttributedString(string: label, attributes: labelAttributes)
+    let labelAttrStr = NSMutableAttributedString(string: label, attributes: labelAttributes)
     let fieldAttrStr = NSAttributedString(string: field, attributes: fieldAttributes)
     let unitsAttrStr = NSAttributedString(string: units, attributes: unitsAttributes)
     
@@ -399,13 +394,11 @@ class OccultationEvent: NSObject
   // MARK: - Field Update Functiosn
   func updateEventTimeFlds(_ item: inout EventWithDetails, stationIndex: Int) -> (eventTime:String, remainingTime:NSAttributedString)
   {
-    var eventUtcStr = "—"
     var leadTimeStr = "—"
     var leadTimeAttrStr: NSAttributedString = NSMutableAttributedString(string: "—")
     var completionDateStr = "—"
     if item.Stations![stationIndex].EventTimeUtc != nil
     {
-      eventUtcStr = formatEventTime(timeString: item.Stations![stationIndex].EventTimeUtc!)
       leadTimeStr = leadTime(timeString: item.Stations![stationIndex].EventTimeUtc!)
       leadTimeAttrStr = self.formatLabelandField(label:"", field: leadTimeStr, units:"")
       let eventDateFormatter = DateFormatter()

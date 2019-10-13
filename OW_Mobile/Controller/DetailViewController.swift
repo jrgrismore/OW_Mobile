@@ -30,25 +30,18 @@ class DetailViewController: UIViewController
           BestStationPos:0,
           StarColour:0
   )
-
+  
   var selectionObject: String!
   var detailStr: String = ""
   var eventID: String = ""
   var complete: Bool = false
   var selectedEvent = EventWithDetails()
   var eventsWithDetails = [EventWithDetails]()
-
-//  var stationsDetails = [EventDetails]()
-//  var selectedStations = [Station]()
+  
   var selectedStations = [ObserverStation]()
-//  var selectedEventDetails = EventDetails()
-    //  var selectedEventDetails = EventWithDetails()
   var event = OccultationEvent()
   var stationCursor = UIView()
   var visibleIndexPaths = [IndexPath]()
-  
-//  var selectedEvent = EventWithDetails()
-
   var currentStationIndexPath = IndexPath()
   
   var stationBarSubViewsExist = false
@@ -121,22 +114,8 @@ class DetailViewController: UIViewController
     eventDetailView.isHidden = false
     stationBarSubViewsExist = false
     stationCursorExists = false
-    
-//    let detailObject = detailData.Object!.replacingOccurrences(of: "(-2147483648) ", with: "")
-//    self.title = detailObject
     self.title = selectionObject
     
-//    stationsDetails = OWWebAPI.shared.loadDetails()
-//    let detailsIndex = stationsDetails.index(where: { $0.Id == detailData.Id  })
-//    selectedEventDetails = stationsDetails[detailsIndex!]
-
-    
-    let selectedEventIndex = eventsWithDetails.index(where: { $0.Id == eventID  } )
-    
-//    selectedEvent = eventsWithDetails[selectedEventIndex!]
-    let primaryStation = OccultationEvent.primaryStation(selectedEvent)
-    
-//    let tempEvent = OccultationEvent()
     let chordSortedStations = OccultationEvent.stationsSortedByChordOffset(selectedEvent, order: .ascending)
     
     selectedStations = chordSortedStations
@@ -150,12 +129,12 @@ class DetailViewController: UIViewController
       self.navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.black, NSAttributedString.Key.font: UIFont.preferredFont(forTextStyle: .title3)]
     }
     
-     DispatchQueue.main.async
-    {
+    DispatchQueue.main.async
+      {
         self.stationCollectionView.scrollToItem(at: IndexPath(item: primaryIndex!, section: 0), at: .centeredHorizontally, animated: false)
         self.stationCollectionView.layoutIfNeeded()
     }
-    }
+  }
   
   override func viewDidAppear(_ animated: Bool)
   {
@@ -179,8 +158,8 @@ class DetailViewController: UIViewController
   override func viewDidLayoutSubviews()
   {
     super.viewDidLayoutSubviews()
-   }
-
+  }
+  
   override func willTransition(to newCollection: UITraitCollection, with coordinator: UIViewControllerTransitionCoordinator)
   {
     super.willTransition(to: newCollection, with: coordinator)
@@ -188,36 +167,36 @@ class DetailViewController: UIViewController
   
   @objc func deviceRotated()
   {
-  switch UIDevice.current.orientation {
-  case .landscapeLeft:
-    print("landscape left")
-  case .landscapeRight:
-    print("landscape right")
-  case .portrait:
-    print("portrait")
-  case .portraitUpsideDown:
-    print("portrait upsidedown")
-  case .faceUp:
-    print("face up")
-  case .faceDown:
-    print("face down")
-  default:
-    print("other")
+    switch UIDevice.current.orientation {
+    case .landscapeLeft:
+      print("landscape left")
+    case .landscapeRight:
+      print("landscape right")
+    case .portrait:
+      print("portrait")
+    case .portraitUpsideDown:
+      print("portrait upsidedown")
+    case .faceUp:
+      print("face up")
+    case .faceDown:
+      print("face down")
+    default:
+      print("other")
+    }
+    
+    DispatchQueue.main.async {
+      self.stationCollectionView.setNeedsLayout()
+      self.adjustCellWidth()
+      self.updateShadowPlot(self.selectedEvent)
+      self.stationCollectionView.scrollToItem(at: self.currentStationIndexPath, at: .centeredHorizontally, animated: false)
+    }
+    moveCursorToStation(indexPath: currentStationIndexPath)
   }
-
-  DispatchQueue.main.async {
-    self.stationCollectionView.setNeedsLayout()
-    self.adjustCellWidth()
-    self.updateShadowPlot(self.selectedEvent)
-    self.stationCollectionView.scrollToItem(at: self.currentStationIndexPath, at: .centeredHorizontally, animated: false)
-  }
-  moveCursorToStation(indexPath: currentStationIndexPath)
-}
-
+  
   override func viewWillDisappear(_ animated: Bool)
   {
     eventDetailView.isHidden = true
-   }
+  }
   
   // MARK: - Event Detail Functions
   func updateEventInfoFields(eventItem itm: EventWithDetails)
@@ -225,10 +204,8 @@ class DetailViewController: UIViewController
     //testing var
     var item = itm
     
-    let primaryStation = OccultationEvent.primaryStation(item)!
-
     selectedStations = OccultationEvent.stationsSortedByChordOffset(item, order: .ascending)
-
+    
     self.eventTitle.attributedText = self.event.updateObjectFld(item)
     self.eventRank.attributedText = self.event.updateRankFld(item)
     DispatchQueue.main.async
@@ -248,7 +225,7 @@ class DetailViewController: UIViewController
         //this does not take effect until return to previous view controller
         self.navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.black,
                                                                         NSAttributedString.Key.font: UIFont.preferredFont(forTextStyle: .title3)]
-
+        
         self.eventTimeRemaining.attributedText = remainingTime
         self.eventFeed.attributedText = self.event.updateFeedFld(item)
         self.eventRA.attributedText = self.event.updateRAFld(item)
@@ -375,9 +352,6 @@ class DetailViewController: UIViewController
       cell.eventTime.isHidden = false
       cell.eventTimeError.isHidden = false
     }
-
-    
-    
     
     //determine if there's weather info available
     if stations[stationIndex].WeatherInfoAvailable != nil && stations[stationIndex].WeatherInfoAvailable!
@@ -386,11 +360,9 @@ class DetailViewController: UIViewController
       var cloudCoverValue: Int?
       var cloudCoverStr = " —"
       var cloudIconValue: Int?
-      print("CloudCover=",stations[stationIndex].CloudCover)
-       if stations[stationIndex].CloudCover != nil
+      if stations[stationIndex].CloudCover != nil
       {
         cloudCoverValue = stations[stationIndex].CloudCover! * 10
-//        cloudCoverStr = String(format: " %d%%",stations[stationIndex].CloudCover!)
         cloudCoverStr = String(format: " %d%%",cloudCoverValue!)
         cloudIconValue = cloudCoverValue
       }
@@ -429,15 +401,14 @@ class DetailViewController: UIViewController
       cell.eventTemperature.text = ""
     }
     
-    var starAltStr = "—"//    if item.StarAlt != nil
+    var starAltStr = "—"
     if stations[stationIndex].StarAlt != nil
     {
       starAltStr = String(format: "%0.0f°",stations[stationIndex].StarAlt!)
-      starAltStr = starAltStr + assignAzIndicatorStr(azimuth: stations[stationIndex].StarAz!, azFormat: false)  //azFormat user prefs?
-      print("starAltStr=",starAltStr)
+      starAltStr = starAltStr + assignAzIndicatorStr(azimuth: stations[stationIndex].StarAz!, azFormat: false)
     }
     cell.eventStarAlt.text = starAltStr
-
+    
     var sunAltStr = "—"
     if stations[stationIndex].SunAlt != nil
     {
@@ -499,14 +470,12 @@ class DetailViewController: UIViewController
   
   func assignAzIndicatorStr(azimuth: Double, azFormat: Bool) -> String
   {
-//    let azimuth = station.StarAz
     var azStr = ""
     if (azFormat)
     {
       azStr = String(format: "@%d°", Int(azimuth))
       return azStr
     }
-    
     if (azimuth <= 0 + 22.5 || azimuth > 360 - 22.5)
     {
       azStr = "N"
@@ -541,11 +510,9 @@ class DetailViewController: UIViewController
     }
     return azStr
   }
-
+  
   func updateShadowPlot(_ item: EventWithDetails)
   {
-    let stationsExistBeyondSigma1:Bool = OccultationEvent.barPlotToSigma3(item)
-    
     var plotWidthKm = totalPlotWidthKm(item, scale: .sigma3Edge)
     let outerChordWidth = farthestChordWidth(item)
     sigma1BarView.isHidden = false
@@ -588,7 +555,6 @@ class DetailViewController: UIViewController
     self.sigma3BarView.transform = CGAffineTransform(scaleX: CGFloat(plotBarFactors.sigma3BarFactor), y: 1.0)
     
     let primaryStation = OccultationEvent.primaryStation(item)!
-    let primaryChordOffset = primaryStation.ChordOffsetKm!
     let primaryFactor = plotStationBarFactor(station: primaryStation, totalPlotWidthKm: plotWidthKm)
     self.userBarView.frame.origin.x = self.centerBarView.frame.origin.x + (self.weatherBarView.bounds.width / 2) * CGFloat(primaryFactor)
     
@@ -599,7 +565,7 @@ class DetailViewController: UIViewController
   
   func moveCursorToStation(indexPath: IndexPath)
   {
-    var currentIndex = indexPath.item
+    let currentIndex = indexPath.item
     DispatchQueue.main.async
       {
         if self.weatherBarView.subviews[currentIndex].frame.origin.x >= self.weatherBarView.frame.minX
@@ -612,9 +578,9 @@ class DetailViewController: UIViewController
           self.stationCursor.isHidden = true
         }
     }
-
+    
   }
-
+  
   func visibleStationIndexPath() -> IndexPath
   {
     let visibleRect = CGRect(origin: stationCollectionView.contentOffset, size: stationCollectionView.bounds.size)
@@ -622,13 +588,13 @@ class DetailViewController: UIViewController
     let visibleStationIndexPath = stationCollectionView.indexPathForItem(at: visiblePoint)!
     return visibleStationIndexPath
   }
-
+  
   func addStationsSubviews(_ plotWidthKm: Double)
   {
-    for (index,station) in selectedStations.enumerated()
+    for station in selectedStations
     {
       let stationFactor = plotStationBarFactor(station: station, totalPlotWidthKm: plotWidthKm)
-      var stationView = UIView()
+      let stationView = UIView()
       stationView.frame.origin.x = self.centerBarView.frame.origin.x + (self.weatherBarView.bounds.width / 2) * CGFloat(stationFactor)
       stationView.frame.origin.y = self.weatherBarView.frame.origin.y
       stationView.frame.size.width = 3
@@ -675,14 +641,13 @@ extension DetailViewController: UICollectionViewDataSource,UICollectionViewDeleg
   
   func adjustCellWidth()
   {
-    var cellHeight = stationCollectionView.bounds.height
+    let cellHeight = stationCollectionView.bounds.height
     if let flowLayout = self.stationCollectionView.collectionViewLayout as? UICollectionViewFlowLayout
     {
       flowLayout.minimumLineSpacing = 0
       flowLayout.minimumInteritemSpacing = 0
       flowLayout.sectionInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
-      let totalHInsets = flowLayout.sectionInset.left + flowLayout.sectionInset.right
-      var cellWidth = self.stationCollectionView.bounds.width - flowLayout.minimumLineSpacing
+      let cellWidth = self.stationCollectionView.bounds.width - flowLayout.minimumLineSpacing
       stationCollectionView.bounds.origin.x = 0
       flowLayout.itemSize = CGSize(width: cellWidth, height: CGFloat(cellHeight))
     }
@@ -709,7 +674,7 @@ extension DetailViewController
     let fieldAttributes: [NSMutableAttributedString.Key: Any] = [.font: fieldFont]
     let unitsAttributes: [NSMutableAttributedString.Key: Any] = [.font: unitsFont]
     
-    var labelAttrStr = NSMutableAttributedString(string: label, attributes: labelAttributes)
+    let labelAttrStr = NSMutableAttributedString(string: label, attributes: labelAttributes)
     let fieldAttrStr = NSAttributedString(string: field, attributes: fieldAttributes)
     let unitsAttrStr = NSAttributedString(string: units, attributes: unitsAttributes)
     
@@ -721,7 +686,6 @@ extension DetailViewController
   
   func clearFieldsAndIcons()
   {
-    print("begin clearFieldsAndIcons")
     self.eventTitle.text = "—"
     self.eventRank.text = "Rank: —"
     self.eventTimeRemaining.text = "_"
@@ -740,34 +704,33 @@ extension DetailViewController
     self.eventCamRotationAmplitude.text = "Amplitude       —"
     self.eventCamCombinedMag.text = "Comb. Mag  —"
     self.eventCamMagDrop.text = "Mag Drop  —"
-    print("end clearFieldsAndIcons")
   }
   
   func printEventDetails()
   {
-    print("eventTitle=\(eventTitle!.text!)")
-    print("eventRank=\(eventRank!.text!)")
-    print("eventTimeRemaining=\(eventTimeRemaining!.text!)")
-    print("eventFeed=\(eventFeed!.text!)")
+    print("eventTitle=\(eventTitle!.text ?? "")")
+    print("eventRank=\(eventRank!.text ?? "")")
+    print("eventTimeRemaining=\(eventTimeRemaining!.text ?? "")")
+    print("eventFeed=\(eventFeed!.text ?? "")")
     print("weatherBarView=\(weatherBarView!)")
     print("sigma1BarView=\(sigma1BarView!)")
     print("shadowBarView=\(shadowBarView!)")
     print("centerBarView=\(centerBarView!)")
-    print("eventRA=\(eventRA.text)")
-    print("eventDec=\(eventDec.text)")
-    print("eventStarBV=\(eventStarBV.text)")
-    print("eventStarDiameter=\(eventStarDiameter.text)")
-    print("eventAsteroidOrigin=\(eventAsteroidOrigin.text)")
-    print("eventAsteroidDiameter=\(eventAsteroidDiameter.text)")
-    print("eventStarMagnitude=\(eventStarMagnitude.text)")
-    print("eventAsteroidMagnitude=\(eventAsteroidMagnitude.text)")
-    print("eventCombinedMagnitude=\(eventCombinedMagnitude.text)")
-    print("eventMagnitudeDrop=\(eventMagnitudeDrop.text)")
-    print("eventCameraSectionTitle=\(eventCameraSectionTitle.text)")
-    print("eventCamCombinedMag=\(eventCamCombinedMag.text)")
-    print("eventCamMagDrop=\(eventCamMagDrop.text)")
-    print("eventCamAseroidRotation=\(eventCamAseroidRotation.text)")
-    print("eventCamRotationAmplitude=\(eventCamRotationAmplitude.text)")
+    print("eventRA=\(eventRA.text ?? "")")
+    print("eventDec=\(eventDec.text ?? "")")
+    print("eventStarBV=\(eventStarBV.text ?? "")")
+    print("eventStarDiameter=\(eventStarDiameter.text ?? "")")
+    print("eventAsteroidOrigin=\(eventAsteroidOrigin.text ?? "")")
+    print("eventAsteroidDiameter=\(eventAsteroidDiameter.text ?? "")")
+    print("eventStarMagnitude=\(eventStarMagnitude.text ?? "")")
+    print("eventAsteroidMagnitude=\(eventAsteroidMagnitude.text ?? "")")
+    print("eventCombinedMagnitude=\(eventCombinedMagnitude.text ?? "")")
+    print("eventMagnitudeDrop=\(eventMagnitudeDrop.text ?? "")")
+    print("eventCameraSectionTitle=\(eventCameraSectionTitle.text ?? "")")
+    print("eventCamCombinedMag=\(eventCamCombinedMag.text ?? "")")
+    print("eventCamMagDrop=\(eventCamMagDrop.text ?? "")")
+    print("eventCamAseroidRotation=\(eventCamAseroidRotation.text ?? "")")
+    print("eventCamRotationAmplitude=\(eventCamRotationAmplitude.text ?? "")")
   }
   
 }
