@@ -43,13 +43,39 @@ class OccultationEvent: NSObject
   func updateFeedFld(_ item: EventWithDetails) -> NSAttributedString
   {
     var feedAttrStr: NSAttributedString = NSMutableAttributedString(string: "—")
+    var shortFeed = ""
     if item.Feed != nil
     {
-      feedAttrStr = self.formatLabelandField(label:"", field: item.Feed!, units:"")
+      let originalFeed = item.Feed!.replacingOccurrences(of:":", with: "")
+      switch originalFeed
+      {
+      case "Asteroid Occultations":
+        shortFeed = "IOTA"
+      case "LuckyStar":
+        shortFeed = "LuckyStar"
+      case "TNOExtras":
+        shortFeed = "TNOExtras"
+      case "Personal":
+        shortFeed = "Personal"
+      case "RioSatellites":
+        shortFeed = "RioSat"
+      case "IBEROC":
+        shortFeed = "IBEROC"
+      case "UKOCL":
+        shortFeed = "UKOCL"
+      case "CometOcc":
+        shortFeed = "CometOcc"
+      case "TT14":
+        shortFeed = "TT14"
+      case "NALowMag":
+        shortFeed = "NALowMag"
+      default:
+        shortFeed = "Other"
+      }
+      feedAttrStr = self.formatLabelandField(label:"", field: shortFeed, units:"")
     }
     return feedAttrStr
-    
-  }
+   }
   
   func updateRAFld(_ item: EventWithDetails) -> NSAttributedString
   {
