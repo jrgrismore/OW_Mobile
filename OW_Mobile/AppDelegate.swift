@@ -6,8 +6,6 @@
 //  Copyright © 2019 John Grismore. All rights reserved.
 //
 
-//Comment for Git Push Test
-//Another Push Test Comment
 
 import UIKit
 import CoreData
