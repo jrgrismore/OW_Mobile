@@ -460,13 +460,13 @@
                                                             <rect key="frame" x="0.0" y="0.0" width="359" height="60"/>
                                                             <subviews>
                                                                 <stackView opaque="NO" contentMode="scaleToFill" alignment="center" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="SiR-w3-v12" userLabel="Sigma Object Stack">
-                                                                    <rect key="frame" x="0.0" y="14" width="130" height="32"/>
+                                                                    <rect key="frame" x="0.0" y="20.5" width="123" height="19.5"/>
                                                                     <subviews>
                                                                         <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="spos_0" translatesAutoresizingMaskIntoConstraints="NO" id="goc-bJ-aDw" userLabel="Sigma Img">
-                                                                            <rect key="frame" x="0.0" y="0.0" width="0.0" height="32"/>
+                                                                            <rect key="frame" x="0.0" y="1.5" width="0.0" height="16"/>
                                                                         </imageView>
                                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" text="(133868) 2004 FD30" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3lL-7q-SYa" userLabel="Object Text">
-                                                                            <rect key="frame" x="4" y="6.5" width="126" height="19.5"/>
+                                                                            <rect key="frame" x="4" y="0.0" width="119" height="19.5"/>
                                                                             <fontDescription key="fontDescription" style="UICTFontTextStyleCallout"/>
                                                                             <nil key="textColor"/>
                                                                             <nil key="highlightedColor"/>
@@ -477,13 +477,13 @@
                                                                     </subviews>
                                                                 </stackView>
                                                                 <stackView opaque="NO" contentMode="scaleToFill" alignment="center" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="KOz-Gl-YiC" userLabel="Cloud Stack">
-                                                                    <rect key="frame" x="138" y="5" width="71" height="50"/>
+                                                                    <rect key="frame" x="131" y="5" width="73" height="50"/>
                                                                     <subviews>
                                                                         <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="mdf-fg-Frm" userLabel="Cloud Img">
-                                                                            <rect key="frame" x="0.0" y="0.0" width="17" height="50"/>
+                                                                            <rect key="frame" x="0.0" y="0.0" width="19" height="50"/>
                                                                         </imageView>
                                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="OMz-ve-LOT" userLabel="Cloud Text">
-                                                                            <rect key="frame" x="21" y="0.0" width="50" height="50"/>
+                                                                            <rect key="frame" x="23" y="0.0" width="50" height="50"/>
                                                                             <fontDescription key="fontDescription" style="UICTFontTextStyleCallout"/>
                                                                             <nil key="textColor"/>
                                                                             <nil key="highlightedColor"/>
@@ -494,18 +494,18 @@
                                                                     </subviews>
                                                                 </stackView>
                                                                 <stackView opaque="NO" contentMode="scaleToFill" alignment="center" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="ZsT-dS-LUL" userLabel="Wind Stack">
-                                                                    <rect key="frame" x="217" y="5" width="71" height="50"/>
+                                                                    <rect key="frame" x="212" y="5" width="73" height="50"/>
                                                                     <subviews>
                                                                         <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="749" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="BnN-xC-jCs" userLabel="Wind Strength Img">
-                                                                            <rect key="frame" x="0.0" y="0.0" width="17" height="50"/>
+                                                                            <rect key="frame" x="0.0" y="0.0" width="19" height="50"/>
                                                                         </imageView>
                                                                         <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Ff1-cW-r7z" userLabel="Windy  Img">
-                                                                            <rect key="frame" x="21" y="0.0" width="50" height="50"/>
+                                                                            <rect key="frame" x="23" y="0.0" width="50" height="50"/>
                                                                         </imageView>
                                                                     </subviews>
                                                                 </stackView>
                                                                 <stackView opaque="NO" contentMode="scaleToFill" alignment="center" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="JPI-CT-nlb" userLabel="Temp Stack">
-                                                                    <rect key="frame" x="296" y="5" width="63" height="50"/>
+                                                                    <rect key="frame" x="293" y="5" width="66" height="50"/>
                                                                     <subviews>
                                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" text="" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Pkq-xT-rFf" userLabel="Temp Text">
                                                                             <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
@@ -517,7 +517,7 @@
                                                                             </variation>
                                                                         </label>
                                                                         <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="zAQ-lb-Hoc" userLabel="Temp  Img">
-                                                                            <rect key="frame" x="54" y="0.0" width="9" height="50"/>
+                                                                            <rect key="frame" x="54" y="0.0" width="12" height="50"/>
                                                                         </imageView>
                                                                     </subviews>
                                                                 </stackView>
@@ -716,7 +716,15 @@
                                 <view key="customView" contentMode="scaleToFill" id="RT4-ac-n5k" userLabel="OW Icon">
                                     <rect key="frame" x="84" y="9.5" width="25" height="25"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                    <color key="backgroundColor" red="0.016804177310000001" green="0.19835099580000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                    <subviews>
+                                        <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" image="owmIcon_25x25" translatesAutoresizingMaskIntoConstraints="NO" id="ZBe-uL-FZu">
+                                            <rect key="frame" x="-8" y="0.0" width="41" height="25"/>
+                                            <constraints>
+                                                <constraint firstAttribute="width" constant="25" id="5c2-GZ-G5V"/>
+                                                <constraint firstAttribute="height" constant="25" id="fz7-6x-GJM"/>
+                                            </constraints>
+                                        </imageView>
+                                    </subviews>
                                     <constraints>
                                         <constraint firstAttribute="height" constant="25" id="VFl-GB-tut"/>
                                         <constraint firstAttribute="width" constant="25" id="kIb-u3-N5r"/>
@@ -734,7 +742,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="sOo-ur-tWp" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="858" y="-101"/>
+            <point key="canvasLocation" x="856.79999999999995" y="-101.19940029985008"/>
         </scene>
         <!--Event Detail Scene-->
         <scene sceneID="dBr-Mp-zNY">
@@ -1075,14 +1083,14 @@
                                                                             </variation>
                                                                         </label>
                                                                         <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="WNP-z6-cIl" userLabel="Report Image View">
-                                                                            <rect key="frame" x="106.5" y="0.0" width="98" height="16"/>
+                                                                            <rect key="frame" x="106.5" y="0.0" width="98.5" height="16"/>
                                                                             <constraints>
                                                                                 <constraint firstAttribute="height" constant="16" id="3V8-Hm-fQk"/>
                                                                                 <constraint firstAttribute="width" constant="16" id="YhK-CA-eFr"/>
                                                                             </constraints>
                                                                         </imageView>
                                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" text="23:16:03 UT" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FBz-Rz-wCN" userLabel="Event Time">
-                                                                            <rect key="frame" x="204.5" y="0.0" width="90.5" height="16"/>
+                                                                            <rect key="frame" x="205" y="0.0" width="90" height="16"/>
                                                                             <fontDescription key="fontDescription" style="UICTFontTextStyleCallout"/>
                                                                             <nil key="textColor"/>
                                                                             <nil key="highlightedColor"/>
