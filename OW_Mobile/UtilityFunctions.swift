@@ -539,6 +539,12 @@ func totalPlotWidthKm(_ item: EventWithDetails, scale: PlotScale) -> Double
   let sigma2TotalWidth = sigma2WidthKm(item)
   let sigma3TotalWidth = sigma3WidthKm(item)
   var farthestTotalWidth = farthestChordWidth(item)
+//  print("shadowWidth=",shadowWidth)
+//  print("OneSigmaErrorWidthKm=",item.OneSigmaErrorWidthKm)
+//  print("sigma1TotalWidth=",sigma1TotalWidth)
+//  print("sigma2TotalWidth=",sigma2TotalWidth)
+//  print("sigma3TotalWidth=",sigma3TotalWidth)
+//  print("farthestTotalWidth=",farthestTotalWidth)
   switch scale
   {
   case .shadowEdge:

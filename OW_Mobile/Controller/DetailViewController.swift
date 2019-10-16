@@ -48,6 +48,7 @@ class DetailViewController: UIViewController
   var stationCursorExists = false
   var dimGray = #colorLiteral(red: 0.6666666667, green: 0.6666666667, blue: 0.6666666667, alpha: 1)
   
+  
   // MARK: - Spinner Outlets
   @IBOutlet weak var spinnerView: UIView!
   @IBOutlet weak var activitySpinner: UIActivityIndicatorView!
@@ -86,6 +87,7 @@ class DetailViewController: UIViewController
   @IBOutlet weak var sigma1BarView: UIView!
   @IBOutlet weak var shadowBarView: UIView!
   @IBOutlet weak var centerBarView: UIView!
+//  @IBOutlet weak var userBarView: UIView!
   @IBOutlet weak var userBarView: UIView!
   
   @IBOutlet weak var asterRotAmpView: UIStackView!
@@ -189,6 +191,7 @@ class DetailViewController: UIViewController
       self.adjustCellWidth()
       self.updateShadowPlot(self.selectedEvent)
       self.stationCollectionView.scrollToItem(at: self.currentStationIndexPath, at: .centeredHorizontally, animated: false)
+    self.updateShadowPlot(self.selectedEvent)
     }
     moveCursorToStation(indexPath: currentStationIndexPath)
   }
@@ -511,16 +514,35 @@ class DetailViewController: UIViewController
     return azStr
   }
   
+  fileprivate func movePrimaryStationBar(_ item: EventWithDetails, _ plotWidthKm: Double)
+  {
+    DispatchQueue.main.async {
+          var primaryStation = OccultationEvent.primaryStation(item)!
+         //test value
+         //    primaryStation.ChordOffsetKm = 100 //km
+         
+         //    print("primaryStation=",primaryStation)
+         let primaryFactor = plotStationBarFactor(station: primaryStation, totalPlotWidthKm: plotWidthKm)
+         //    print("primaryFactor=",primaryFactor)
+         DispatchQueue.main.async
+           {
+             self.userBarView.frame.origin.x = self.centerBarView.frame.origin.x + (self.weatherBarView.bounds.width / 2) * CGFloat(primaryFactor)
+         }
+    }
+ }
+  
   func updateShadowPlot(_ item: EventWithDetails)
   {
+    print("updateShadowPlot")
     var plotWidthKm = totalPlotWidthKm(item, scale: .sigma3Edge)
     let outerChordWidth = farthestChordWidth(item)
+//    print("outerChordWidth=",outerChordWidth)
     sigma1BarView.isHidden = false
     sigma2BarView.isHidden = false
     sigma3BarView.isHidden = false
     if outerChordWidth > sigma3WidthKm(item)
     {
-      print(".farthesChord")
+//      print(".farthesChord")
       plotWidthKm = totalPlotWidthKm(item, scale: .farthestChord)
     } else if outerChordWidth > sigma2WidthKm(item)
     {
@@ -541,8 +563,10 @@ class DetailViewController: UIViewController
       sigma2BarView.isHidden = true
       sigma3BarView.isHidden = true
     }
-    
+//    print("plotWidthKm=",plotWidthKm)
+
     let plotBarFactors = plotBarsWidthFactors(item, totalPlotWidthKm: plotWidthKm)
+//    print("plotBarFactors=",plotBarFactors)
     
     self.shadowBarView.bounds.size.width = self.weatherBarView.bounds.width
     self.sigma1BarView.bounds.size.width = self.weatherBarView.bounds.width
@@ -554,13 +578,14 @@ class DetailViewController: UIViewController
     self.sigma2BarView.transform = CGAffineTransform(scaleX: CGFloat(plotBarFactors.sigma2BarFactor), y: 1.0)
     self.sigma3BarView.transform = CGAffineTransform(scaleX: CGFloat(plotBarFactors.sigma3BarFactor), y: 1.0)
     
-    let primaryStation = OccultationEvent.primaryStation(item)!
-    let primaryFactor = plotStationBarFactor(station: primaryStation, totalPlotWidthKm: plotWidthKm)
-    self.userBarView.frame.origin.x = self.centerBarView.frame.origin.x + (self.weatherBarView.bounds.width / 2) * CGFloat(primaryFactor)
+//    print("self.centerBarView.frame.origin.x=",self.centerBarView.frame.origin.x)
+//    print("self.weatherBarView.bounds.width=",self.weatherBarView.bounds.width)
+//    print("self.userBarView.frame.origin.x=",self.userBarView.frame.origin.x)
     
     self.weatherBarView.subviews.forEach( { $0 .removeFromSuperview() })
     addStationsSubviews(plotWidthKm)
     addStationCursor()
+    movePrimaryStationBar(item, plotWidthKm)
   }
   
   func moveCursorToStation(indexPath: IndexPath)
@@ -578,7 +603,6 @@ class DetailViewController: UIViewController
           self.stationCursor.isHidden = true
         }
     }
-    
   }
   
   func visibleStationIndexPath() -> IndexPath

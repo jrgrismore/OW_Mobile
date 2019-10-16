@@ -885,7 +885,7 @@
                                                     <constraint firstAttribute="width" constant="3" id="g1g-i6-fIa"/>
                                                 </constraints>
                                             </view>
-                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="KZq-4J-gy2" userLabel="User Station Bar View">
+                                            <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="KZq-4J-gy2" userLabel="User Station Bar View">
                                                 <rect key="frame" x="140.5" y="38" width="3" height="127"/>
                                                 <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <constraints>
@@ -948,7 +948,6 @@
                                             <constraint firstItem="Zlt-mA-YQ5" firstAttribute="centerY" secondItem="ITw-Gp-ShU" secondAttribute="centerY" id="fVe-O3-BFM"/>
                                             <constraint firstAttribute="trailing" secondItem="FQK-Sk-eUM" secondAttribute="trailing" id="iw5-0P-Yig"/>
                                             <constraint firstItem="KZq-4J-gy2" firstAttribute="bottom" secondItem="Zlt-mA-YQ5" secondAttribute="bottom" id="kTa-0V-ZfQ"/>
-                                            <constraint firstItem="KZq-4J-gy2" firstAttribute="leading" secondItem="c4Z-ek-M3c" secondAttribute="leading" id="kZj-By-6w1"/>
                                             <constraint firstItem="c4Z-ek-M3c" firstAttribute="centerY" secondItem="Zlt-mA-YQ5" secondAttribute="centerY" id="noL-x6-gLC"/>
                                             <constraint firstItem="RoV-Cl-X5I" firstAttribute="trailing" secondItem="ITw-Gp-ShU" secondAttribute="trailing" id="oCW-bn-8jV"/>
                                             <constraint firstItem="Zlt-mA-YQ5" firstAttribute="bottom" secondItem="ITw-Gp-ShU" secondAttribute="bottom" id="pUw-J6-POB"/>
@@ -1090,7 +1089,7 @@
                                                                             </constraints>
                                                                         </imageView>
                                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" text="23:16:03 UT" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FBz-Rz-wCN" userLabel="Event Time">
-                                                                            <rect key="frame" x="205" y="0.0" width="90" height="16"/>
+                                                                            <rect key="frame" x="205" y="0.0" width="90.5" height="16"/>
                                                                             <fontDescription key="fontDescription" style="UICTFontTextStyleCallout"/>
                                                                             <nil key="textColor"/>
                                                                             <nil key="highlightedColor"/>
@@ -1099,7 +1098,7 @@
                                                                             </variation>
                                                                         </label>
                                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" text="+/- 16 sec" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gKT-CG-MfV" userLabel="Time Error">
-                                                                            <rect key="frame" x="295" y="0.0" width="74" height="16"/>
+                                                                            <rect key="frame" x="295.5" y="0.0" width="73.5" height="16"/>
                                                                             <fontDescription key="fontDescription" style="UICTFontTextStyleCallout"/>
                                                                             <nil key="textColor"/>
                                                                             <nil key="highlightedColor"/>
@@ -1519,7 +1518,7 @@
                         <outlet property="spinnerLbl" destination="rfp-J5-iaI" id="aRy-5Z-I6Y"/>
                         <outlet property="spinnerView" destination="bUk-xQ-arM" id="jqD-TJ-Hko"/>
                         <outlet property="stationCollectionView" destination="BOt-Xz-Vv8" id="767-TT-DNo"/>
-                        <outlet property="userBarView" destination="KZq-4J-gy2" id="yQe-hN-5f4"/>
+                        <outlet property="userBarView" destination="KZq-4J-gy2" id="uVu-Rr-Bs7"/>
                         <outlet property="weatherBarView" destination="RoV-Cl-X5I" id="Hvn-UQ-dkk"/>
                     </connections>
                 </viewController>
