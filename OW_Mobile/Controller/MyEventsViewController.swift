@@ -145,7 +145,7 @@ class MyEventsViewController: UIViewController, UICollectionViewDataSource,UICol
       {
         dest.selectedEvent = cellEventDetailArray[index.row]
         
-        printEventWithDetails(dest.selectedEvent)
+//        printEventWithDetails(dest.selectedEvent)
         
         dest.eventsWithDetails = cellEventDetailArray
         dest.selectionObject = cellEventDetailArray[index.row].Object

@@ -474,7 +474,7 @@ func pathBarsTotalWidth(astDiamKm: Double, sigma1WidthKm: Double, stationsExistP
   var totalWidth = sigma1BarWidth
   if stationsExistPastSigma1
   {
-    print("total plot width includes sigma2 and sigma3")
+//    print("total plot width includes sigma2 and sigma3")
     totalWidth = sigma1BarWidth + (4 * sigma1WidthKm)
   }
   return totalWidth
@@ -506,15 +506,15 @@ func sigma1WidthKm(_ item: EventWithDetails) -> Double
 
 func sigma2WidthKm(_ item: EventWithDetails) -> Double
 {
-  let sigma1ErrorWidth = item.OneSigmaErrorWidthKm!   //shadow edge to sigma1 edge
-  let sigma1TotalWidth = sigma1WidthKm(item) + sigma1ErrorWidth * 2
-  return sigma1TotalWidth
+  let sigma2ErrorWidth = item.OneSigmaErrorWidthKm!   //shadow edge to sigma1 edge
+  let sigma2TotalWidth = sigma1WidthKm(item) + sigma2ErrorWidth * 2
+  return sigma2TotalWidth
 }
 
 func sigma3WidthKm(_ item: EventWithDetails) -> Double
 {
-  let sigma1ErrorWidth = item.OneSigmaErrorWidthKm!   //shadow edge to sigma1 edge
-  let sigma3TotalWidth = sigma2WidthKm(item)  + sigma1ErrorWidth * 2
+  let sigma3ErrorWidth = item.OneSigmaErrorWidthKm!   //shadow edge to sigma1 edge
+  let sigma3TotalWidth = sigma2WidthKm(item)  + sigma3ErrorWidth * 2
   return sigma3TotalWidth
 }
 
@@ -545,6 +545,7 @@ func totalPlotWidthKm(_ item: EventWithDetails, scale: PlotScale) -> Double
 //  print("sigma2TotalWidth=",sigma2TotalWidth)
 //  print("sigma3TotalWidth=",sigma3TotalWidth)
 //  print("farthestTotalWidth=",farthestTotalWidth)
+//  print("PlotScale=",scale)
   switch scale
   {
   case .shadowEdge:
@@ -564,17 +565,28 @@ func totalPlotWidthKm(_ item: EventWithDetails, scale: PlotScale) -> Double
 
 func plotBarsWidthFactors(_ item: EventWithDetails, totalPlotWidthKm: Double) -> (shadowBarFactor:Double,sigma1BarFactor:Double,sigma2BarFactor:Double,sigma3BarFactor:Double)
 {
+//  print("plotBarsWidthFactors")
+//  print("totalPlotWidthKm=",totalPlotWidthKm)
   let shadowWidth = item.AstDiaKm!
   let sigma1ErrorWidth = item.OneSigmaErrorWidthKm!   //shadow edge to sigma1 edge
   let sigma1TotalWidth = shadowWidth + sigma1ErrorWidth * 2
   let sigma2TotalWidth = sigma1TotalWidth + sigma1ErrorWidth * 2
   let sigma3TotalWidth = sigma2TotalWidth + sigma1ErrorWidth * 2
-  
+//  print("shadowWidth=",shadowWidth)
+//  print("sigma1TotalWidth=",sigma1TotalWidth)
+//  print("sigma2TotalWidth=",sigma2TotalWidth)
+//  print("sigma3TotalWidth=",sigma3TotalWidth)
+
+
   let shadowBarWidthFactor = shadowWidth / totalPlotWidthKm
   let sigma1BarWidthFactor = sigma1TotalWidth / totalPlotWidthKm
   let sigma2BarWidthFactor = sigma2TotalWidth / totalPlotWidthKm
   let sigma3BarWidthFactor = sigma3TotalWidth / totalPlotWidthKm
-  
+//  print("shadowBarWidthFactor=",shadowBarWidthFactor)
+//  print("sigma1BarWidthFactor=",sigma1BarWidthFactor)
+//  print("sigma2BarWidthFactor=",sigma2BarWidthFactor)
+//  print("sigma3BarWidthFactor=",sigma3BarWidthFactor)
+
   return (shadowBarWidthFactor, sigma1BarWidthFactor, sigma2BarWidthFactor, sigma3BarWidthFactor)
 }
 

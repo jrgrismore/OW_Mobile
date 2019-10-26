@@ -17,6 +17,17 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
   
   func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
     // Override point for customization after application launch.
+    
+    //Temporary last resort for debugging!
+    print()
+    print("*****************************************************")
+    print("UI Layout Constraints have been temporarily disabled!")
+    print("This is a last resort for debugging!!")
+    print("Remember to re-enable!!!")
+    print("*****************************************************")
+    print()
+    //Hide Autolayout Warning
+    UserDefaults.standard.setValue(false, forKey:"_UIConstraintBasedLayoutLogUnsatisfiable")
     return true
   }
 

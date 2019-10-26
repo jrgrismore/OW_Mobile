@@ -37,7 +37,25 @@ class StationCell: UICollectionViewCell
   
   @IBOutlet weak var eventMoonSeparation: UILabel!
   
+  //@IBOutlet weak var reportImg: UIImageView!
   @IBOutlet weak var reportImg: UIImageView!
+  
+  
+  //these outlets only needed for layout debugging
+  @IBOutlet weak var stationStack: UIStackView!
+  @IBOutlet weak var topStack: UIStackView!
+    @IBOutlet weak var locationStack: UIStackView!
+    @IBOutlet weak var cloudStack: UIStackView!
+    @IBOutlet weak var windStack: UIStackView!
+    @IBOutlet weak var tempStack: UIStackView!
+  @IBOutlet weak var middleStack: UIStackView!
+  @IBOutlet weak var bottomStack: UIStackView!
+    @IBOutlet weak var starAltStack: UIStackView!
+    @IBOutlet weak var sunAltStack: UIStackView!
+    @IBOutlet weak var moonAltStack: UIStackView!
+    @IBOutlet weak var moonSepStack: UIStackView!
+  
+  
   
   func clearStationFields()
   {
@@ -57,5 +75,5 @@ class StationCell: UICollectionViewCell
     self.eventMoonAlt.text = "—"
     self.eventMoonSeparation.text = "—"
   }
-  
+    
 }
