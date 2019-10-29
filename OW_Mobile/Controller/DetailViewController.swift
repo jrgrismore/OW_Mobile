@@ -669,10 +669,11 @@ class DetailViewController: UIViewController
       {
         let stationFactor = plotStationBarFactor(station: station, totalPlotWidthKm: plotWidthKm)
         let stationView = UIView()
-        stationView.frame.origin.x = self.centerBarView.frame.origin.x + (self.weatherBarView.bounds.width / 2) * CGFloat(stationFactor)
-        stationView.frame.origin.y = self.weatherBarView.frame.origin.y
         stationView.frame.size.width = 2
         stationView.frame.size.height = self.weatherBarView.frame.height
+        let stationViewHalfWidth = (stationView.frame.size.width / 2)
+        stationView.frame.origin.x = self.centerBarView.frame.origin.x + (self.centerBarView.frame.size.width / 2) - stationViewHalfWidth + (self.weatherBarView.bounds.width / 2) * CGFloat(stationFactor)
+        stationView.frame.origin.y = self.weatherBarView.frame.origin.y
         if self.detailData.WeatherInfoAvailable!
         {
           stationView.backgroundColor = cloudColor(station.CloudCover)
@@ -740,14 +741,16 @@ class DetailViewController: UIViewController
           positiveTick.frame.size.width = CGFloat(tickWidth)
           positiveTick.frame.size.height = CGFloat(tickHeight)
           positiveTick.backgroundColor = tickColor
-          positiveTick.frame.origin.x = self.centerBarView.frame.origin.x + (self.weatherBarView.bounds.width / 2) * CGFloat(tickKM / (plotWidthKM / 2))
+//          positiveTick.frame.origin.x = self.centerBarView.frame.origin.x + (self.weatherBarView.bounds.width / 2) * CGFloat(tickKM / (plotWidthKM / 2))
+          positiveTick.frame.origin.x = self.centerBarView.frame.origin.x + (self.centerBarView.frame.size.width / 2) - (zeroTick.frame.size.width / 2) + (self.weatherBarView.bounds.width / 2) * CGFloat(tickKM / (plotWidthKM / 2))
           positiveTick.frame.origin.y = self.tickBar.bounds.origin.y
           self.tickBar.addSubview(positiveTick)
 
           negativeTick.frame.size.width = CGFloat(tickWidth)
           negativeTick.frame.size.height = CGFloat(tickHeight)
           negativeTick.backgroundColor = tickColor
-          negativeTick.frame.origin.x = self.centerBarView.frame.origin.x - (self.weatherBarView.bounds.width / 2) * CGFloat(tickKM / (plotWidthKM / 2))
+//          negativeTick.frame.origin.x = self.centerBarView.frame.origin.x - (self.weatherBarView.bounds.width / 2) * CGFloat(tickKM / (plotWidthKM / 2))
+          negativeTick.frame.origin.x = self.centerBarView.frame.origin.x + (self.centerBarView.frame.size.width / 2) - (zeroTick.frame.size.width / 2) - (self.weatherBarView.bounds.width / 2) * CGFloat(tickKM / (plotWidthKM / 2))
           negativeTick.frame.origin.y = self.tickBar.bounds.origin.y
           self.tickBar.addSubview(negativeTick)
         }
