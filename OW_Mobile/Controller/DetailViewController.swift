@@ -123,6 +123,7 @@ class DetailViewController: UIViewController
   {
     print("viewWillAppear")
     eventDetailView.isHidden = false
+    shadowSigmaView.isHidden = true
     stationCollectionView.isHidden = true
     stationBarSubViewsExist = false
     stationCursorExists = false
@@ -156,7 +157,8 @@ class DetailViewController: UIViewController
     updateEventInfoFields(eventItem: selectedEvent)
     updateShadowPlot(self.selectedEvent)
     stationCollectionView.scrollToItem(at: IndexPath(item: primaryIndex!, section: 0), at: .centeredHorizontally, animated: false)
-     stationCollectionView.isHidden = false
+    stationCollectionView.isHidden = false
+    shadowSigmaView.isHidden = false
    }
   
   override func viewWillLayoutSubviews()
@@ -608,8 +610,9 @@ class DetailViewController: UIViewController
         self.shadowBarWidth.constant = self.weatherBarView.bounds.width * CGFloat(plotBarFactors.shadowBarFactor)
         self.sigma1Width.constant = self.weatherBarView.bounds.width * CGFloat(plotBarFactors.sigma1BarFactor)
         self.sigma2Width.constant = self.weatherBarView.bounds.width * CGFloat(plotBarFactors.sigma2BarFactor)
+        self.sigma3Width.constant = self.weatherBarView.bounds.width * CGFloat(plotBarFactors.sigma3BarFactor)
 
-        self.sigma3BarView.frame.size.width = self.weatherBarView.bounds.width
+//        self.sigma3BarView.frame.size.width = self.weatherBarView.bounds.width * CGFloat(plotBarFactors.sigma3BarFactor)
 
         self.weatherBarView.subviews.forEach( { $0 .removeFromSuperview() })
         self.addStationsSubviews(plotWidthKm)
@@ -704,16 +707,29 @@ class DetailViewController: UIViewController
     let tickColor = UIColor.darkGray
     let tickStep = 100.0
     let tickEnd = plotWidthKM / 2
+    self.tickBar.backgroundColor = #colorLiteral(red: 0.9991671443, green: 0.8578354716, blue: 0.7157068849, alpha: 1)
+    self.tickBar.frame.size.width = self.shadowSigmaView.frame.size.width
+    self.tickBar.frame.size.height = 5
+    self.tickBar.frame.origin.y = self.bottomGrayBar.frame.origin.y + (self.bottomGrayBar.frame.size.height - self.tickBar.frame.size.height) / 2
+    self.shadowSigmaView.addSubview(self.tickBar)
+    
     for view in self.tickBar.subviews
     {
       view.removeFromSuperview()
     }
+    
+    //zero tick
+    let zeroTick = UIView()
+    zeroTick.frame.size.width = CGFloat(tickWidth)
+    zeroTick.frame.size.height = CGFloat(tickHeight)
+    zeroTick.backgroundColor = tickColor
+    zeroTick.frame.origin.x = self.centerBarView.frame.origin.x + (self.centerBarView.frame.size.width / 2) - (zeroTick.frame.size.width / 2)
+    zeroTick.frame.origin.y = self.tickBar.bounds.origin.y
+    self.tickBar.addSubview(zeroTick)
+
     if plotWidthKM > tickStep
     {
-      self.tickBar.backgroundColor = #colorLiteral(red: 0.9991671443, green: 0.8578354716, blue: 0.7157068849, alpha: 1)
-      self.tickBar.frame.size.width = self.shadowSigmaView.frame.size.width
-      self.tickBar.frame.size.height = 5
-      self.shadowSigmaView.addSubview(self.tickBar)
+
       for tickKM in stride(from: 0,to: tickEnd, by: tickStep)
       {
         if tickKM > 0
@@ -736,11 +752,10 @@ class DetailViewController: UIViewController
           self.tickBar.addSubview(negativeTick)
         }
       }
-      self.tickBar.frame.origin.y = self.bottomGrayBar.frame.origin.y + (self.bottomGrayBar.frame.size.height - self.tickBar.frame.size.height) / 2
-      self.tickBar.setNeedsLayout()
     }
+    self.tickBar.setNeedsLayout()
   }
-
+  
 }
 
 // MARK: -  Extension - Colllection functions
