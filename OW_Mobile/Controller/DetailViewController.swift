@@ -47,6 +47,8 @@ class DetailViewController: UIViewController
   var stationBarSubViewsExist = false
   var stationCursorExists = false
   var dimGray = #colorLiteral(red: 0.6666666667, green: 0.6666666667, blue: 0.6666666667, alpha: 1)
+  let tickBar = UIView()
+
   
   
   // MARK: - Spinner Outlets
@@ -93,6 +95,7 @@ class DetailViewController: UIViewController
   
   @IBOutlet weak var asterRotAmpView: UIStackView!
   @IBOutlet weak var bvStarDiamView: UIStackView!
+  @IBOutlet weak var bottomGrayBar: UIView!
   
   // MARK: - Constraint Outlets
   @IBOutlet weak var shadowBarWidth: NSLayoutConstraint!
@@ -165,7 +168,6 @@ class DetailViewController: UIViewController
   {
     print("viewDidLayoutSubviews")
     super.viewDidLayoutSubviews()
-    
   }
   
   override func willTransition(to newCollection: UITraitCollection, with coordinator: UIViewControllerTransitionCoordinator)
@@ -547,19 +549,8 @@ class DetailViewController: UIViewController
     }
     return azStr
   }
-  
-  func movePrimaryStationBar(_ item: EventWithDetails, _ plotWidthKm: Double)
-  {
-    print("movePrimaryStationBar")
-      var primaryStation = OccultationEvent.primaryStation(item)!
-         let primaryFactor = plotStationBarFactor(station: primaryStation, totalPlotWidthKm: plotWidthKm)
-         DispatchQueue.main.async
-           {
-             self.userBarView.frame.origin.x = self.centerBarView.frame.origin.x + (self.weatherBarView.bounds.width / 2) * CGFloat(primaryFactor)
-         }
- }
-  
-  fileprivate func printShadowPlotDiagnostics(headerStr: String)
+    
+  func printShadowPlotDiagnostics(headerStr: String)
   {
     print()
     print(headerStr)
@@ -580,60 +571,65 @@ class DetailViewController: UIViewController
     var plotWidthKm = totalPlotWidthKm(item, scale: .sigma3Edge)
     DispatchQueue.main.async
       {
-    print()
+        print()
         print("updateShadowPlot")
         let outerChordWidth = farthestChordWidth(item)
-//        print("outerChordWidth=",outerChordWidth)
+        //        print("outerChordWidth=",outerChordWidth)
         self.sigma1BarView.isHidden = false
         self.sigma2BarView.isHidden = false
         self.sigma3BarView.isHidden = false
         if outerChordWidth > sigma3WidthKm(item)
         {
-//          print(".farthestChord")
+          //          print(".farthestChord")
           plotWidthKm = totalPlotWidthKm(item, scale: .farthestChord)
         } else if outerChordWidth > sigma2WidthKm(item)
         {
           plotWidthKm = totalPlotWidthKm(item, scale: .sigma3Edge)
-//          print(".sigma3Edge")
+          //          print(".sigma3Edge")
         } else if outerChordWidth > sigma1WidthKm(item)
         {
           plotWidthKm = totalPlotWidthKm(item, scale: .sigma2Edge)
-//          print(".sigma2Edge")
+          //          print(".sigma2Edge")
           self.sigma3BarView.isHidden = true
         } else if outerChordWidth > shadowWidthKm(item)
         {
           plotWidthKm = totalPlotWidthKm(item, scale: .sigma1Edge)
-//          print(".sigma1Edge")
+          //          print(".sigma1Edge")
           self.sigma2BarView.isHidden = true
           self.sigma3BarView.isHidden = true
         } else if outerChordWidth <= shadowWidthKm(item)
         {
           plotWidthKm = totalPlotWidthKm(item, scale: .shadowEdge)
-//          print(".shadowEdge")
+          //          print(".shadowEdge")
           self.sigma1BarView.isHidden = true
           self.sigma2BarView.isHidden = true
           self.sigma3BarView.isHidden = true
         }
-//        print("plotWidthKm=",plotWidthKm)
+        //        print("plotWidthKm=",plotWidthKm)
         
         let plotBarFactors = plotBarsWidthFactors(item, totalPlotWidthKm: plotWidthKm)
-    
-    self.shadowBarWidth.constant = self.weatherBarView.bounds.width * CGFloat(plotBarFactors.shadowBarFactor)
-    self.sigma1Width.constant = self.weatherBarView.bounds.width * CGFloat(plotBarFactors.sigma1BarFactor)
-    self.sigma2Width.constant = self.weatherBarView.bounds.width * CGFloat(plotBarFactors.sigma2BarFactor)
-    self.sigma3Width.constant = self.weatherBarView.bounds.width * CGFloat(plotBarFactors.sigma3BarFactor)
-    
-    self.weatherBarView.subviews.forEach( { $0 .removeFromSuperview() })
-    self.addStationsSubviews(plotWidthKm)
-    self.addStationCursor()
-        self.moveCursorToStation(indexPath: IndexPath(item: OccultationEvent.primaryStationIndex(self.selectedStations)!, section: 0))
-      self.movePrimaryStationBar(item, plotWidthKm)
-      }  // dispatch end
+
+//        self.sigma3BarView.translatesAutoresizingMaskIntoConstraints = false
+        self.shadowBarWidth.constant = self.weatherBarView.bounds.width * CGFloat(plotBarFactors.shadowBarFactor)
+        self.sigma1Width.constant = self.weatherBarView.bounds.width * CGFloat(plotBarFactors.sigma1BarFactor)
+        self.sigma2Width.constant = self.weatherBarView.bounds.width * CGFloat(plotBarFactors.sigma2BarFactor)
+
+        self.sigma3BarView.frame.size.width = self.weatherBarView.bounds.width
+
+        self.weatherBarView.subviews.forEach( { $0 .removeFromSuperview() })
+        self.addStationsSubviews(plotWidthKm)
+        self.addStationCursor()
+
+        self.moveCursorToStation(indexPath: self.visibleStationIndexPath())
+        self.movePrimaryStationBar(item, plotWidthKm)
+        self.addPlotTicks(plotWidthKM: plotWidthKm)
+    }  // dispatch end
   }
   
   func moveCursorToStation(indexPath: IndexPath)
   {
     let currentIndex = indexPath.item
+    print("currentIndex=",currentIndex)
 //    DispatchQueue.main.async
 //      {
         print("moveCursorToStation")
@@ -648,7 +644,18 @@ class DetailViewController: UIViewController
         }
 //    }
   }
-  
+
+   func movePrimaryStationBar(_ item: EventWithDetails, _ plotWidthKm: Double)
+   {
+     print("movePrimaryStationBar")
+       var primaryStation = OccultationEvent.primaryStation(item)!
+          let primaryFactor = plotStationBarFactor(station: primaryStation, totalPlotWidthKm: plotWidthKm)
+          DispatchQueue.main.async
+            {
+              self.userBarView.frame.origin.x = self.centerBarView.frame.origin.x + (self.weatherBarView.bounds.width / 2) * CGFloat(primaryFactor)
+          }
+  }
+
   func visibleStationIndexPath() -> IndexPath
   {
     let visibleRect = CGRect(origin: stationCollectionView.contentOffset, size: stationCollectionView.bounds.size)
@@ -660,6 +667,7 @@ class DetailViewController: UIViewController
   func addStationsSubviews(_ plotWidthKm: Double)
   {
     print("addStationsSubviews")
+    print("addStationsSubviews > plotWidthKM=",plotWidthKm)
 //    DispatchQueue.main.async
 //      {
         for station in self.selectedStations
@@ -668,7 +676,7 @@ class DetailViewController: UIViewController
         let stationView = UIView()
         stationView.frame.origin.x = self.centerBarView.frame.origin.x + (self.weatherBarView.bounds.width / 2) * CGFloat(stationFactor)
         stationView.frame.origin.y = self.weatherBarView.frame.origin.y
-        stationView.frame.size.width = 3
+        stationView.frame.size.width = 2
         stationView.frame.size.height = self.weatherBarView.frame.height
         if self.detailData.WeatherInfoAvailable!
         {
@@ -697,9 +705,52 @@ class DetailViewController: UIViewController
 //    }
   }
   
-  
-}
+  func addPlotTicks(plotWidthKM: Double)
+  {
+    print("addPlotTicks")
+    let tickWidth = 1.0
+    let tickHeight = 3.0
+    let tickColor = UIColor.darkGray
+    let tickStep = 100.0
+    let tickEnd = plotWidthKM / 2
+    for view in self.tickBar.subviews
+    {
+      view.removeFromSuperview()
+    }
+    if plotWidthKM > tickStep
+    {
+      self.tickBar.backgroundColor = #colorLiteral(red: 0.9991671443, green: 0.8578354716, blue: 0.7157068849, alpha: 1)
+      self.tickBar.frame.size.width = self.shadowSigmaView.frame.size.width
+      self.tickBar.frame.size.height = 5
+      self.shadowSigmaView.addSubview(self.tickBar)
+      for tickKM in stride(from: 0,to: tickEnd, by: tickStep)
+      {
+        if tickKM > 0
+        {
+          let positiveTick = UIView()
+          let negativeTick = UIView()
 
+          positiveTick.frame.size.width = CGFloat(tickWidth)
+          positiveTick.frame.size.height = CGFloat(tickHeight)
+          positiveTick.backgroundColor = tickColor
+          positiveTick.frame.origin.x = self.centerBarView.frame.origin.x + (self.weatherBarView.bounds.width / 2) * CGFloat(tickKM / (plotWidthKM / 2))
+          positiveTick.frame.origin.y = self.tickBar.bounds.origin.y
+          self.tickBar.addSubview(positiveTick)
+
+          negativeTick.frame.size.width = CGFloat(tickWidth)
+          negativeTick.frame.size.height = CGFloat(tickHeight)
+          negativeTick.backgroundColor = tickColor
+          negativeTick.frame.origin.x = self.centerBarView.frame.origin.x - (self.weatherBarView.bounds.width / 2) * CGFloat(tickKM / (plotWidthKM / 2))
+          negativeTick.frame.origin.y = self.tickBar.bounds.origin.y
+          self.tickBar.addSubview(negativeTick)
+        }
+      }
+      self.tickBar.frame.origin.y = self.bottomGrayBar.frame.origin.y + (self.bottomGrayBar.frame.size.height - self.tickBar.frame.size.height) / 2
+      self.tickBar.setNeedsLayout()
+    }
+  }
+
+}
 
 // MARK: -  Extension - Colllection functions
 extension DetailViewController: UICollectionViewDataSource,UICollectionViewDelegate,UICollectionViewDelegateFlowLayout

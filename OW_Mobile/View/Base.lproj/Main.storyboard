@@ -818,60 +818,59 @@
                                         <directionalEdgeInsets key="directionalLayoutMargins" top="0.0" leading="3" bottom="0.0" trailing="3"/>
                                     </stackView>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="HuD-ai-6Aw" userLabel="Shadow Sigma View">
-                                        <rect key="frame" x="0.0" y="39" width="375" height="181.5"/>
+                                        <rect key="frame" x="0.0" y="39" width="375" height="50"/>
                                         <subviews>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="RoV-Cl-X5I" userLabel="Weather Bar View">
-                                                <rect key="frame" x="0.0" y="0.0" width="375" height="38"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="375" height="15"/>
                                                 <color key="backgroundColor" red="0.97609192132949829" green="0.86297106742858887" blue="0.73330008983612061" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                             </view>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ITw-Gp-ShU" userLabel="Sigma3 Bar View">
-                                                <rect key="frame" x="87.5" y="38" width="200" height="127"/>
+                                                <rect key="frame" x="0.0" y="15" width="375" height="35"/>
                                                 <subviews>
-                                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="UQ5-4h-qzg" userLabel="Sig3L View">
-                                                        <rect key="frame" x="0.0" y="0.0" width="2" height="127"/>
+                                                    <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="UQ5-4h-qzg" userLabel="Sig3L View">
+                                                        <rect key="frame" x="0.0" y="0.0" width="2" height="35"/>
                                                         <color key="backgroundColor" red="0.83480781319999997" green="0.49831014870000001" blue="0.48625296350000002" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                                         <constraints>
                                                             <constraint firstAttribute="width" constant="2" id="Xl3-zT-KVF"/>
                                                         </constraints>
                                                     </view>
-                                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Jkd-xP-M4W" userLabel="Sig3R View">
-                                                        <rect key="frame" x="198" y="0.0" width="2" height="127"/>
+                                                    <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Jkd-xP-M4W" userLabel="Sig3R View">
+                                                        <rect key="frame" x="373" y="0.0" width="2" height="35"/>
                                                         <color key="backgroundColor" red="0.83480781319999997" green="0.49831014870000001" blue="0.48625296350000002" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                                         <constraints>
                                                             <constraint firstAttribute="width" constant="2" id="3dd-9J-Rix"/>
                                                         </constraints>
                                                     </view>
                                                 </subviews>
-                                                <color key="backgroundColor" red="0.97609192132949829" green="0.86297106742858887" blue="0.73330008983612061" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                                <color key="backgroundColor" red="0.95575989007949835" green="0.84473964435826454" blue="0.71378737845998441" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                                 <constraints>
                                                     <constraint firstAttribute="trailing" secondItem="Jkd-xP-M4W" secondAttribute="trailing" id="4tY-ZJ-Je8"/>
                                                     <constraint firstItem="UQ5-4h-qzg" firstAttribute="top" secondItem="ITw-Gp-ShU" secondAttribute="top" id="KNe-gL-aLX"/>
                                                     <constraint firstAttribute="bottom" secondItem="Jkd-xP-M4W" secondAttribute="bottom" id="S5p-vD-Dc5"/>
-                                                    <constraint firstAttribute="width" constant="200" id="UfL-vu-8ar"/>
                                                     <constraint firstItem="UQ5-4h-qzg" firstAttribute="leading" secondItem="ITw-Gp-ShU" secondAttribute="leading" id="ddW-mK-T1F"/>
                                                     <constraint firstAttribute="bottom" secondItem="UQ5-4h-qzg" secondAttribute="bottom" id="g7f-mZ-iF0"/>
                                                     <constraint firstItem="Jkd-xP-M4W" firstAttribute="top" secondItem="ITw-Gp-ShU" secondAttribute="top" id="yR9-Oc-r9C"/>
                                                 </constraints>
                                             </view>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Mhe-Il-VFc" userLabel="Sigma2 Bar View">
-                                                <rect key="frame" x="112.5" y="38" width="150" height="127"/>
+                                                <rect key="frame" x="112.5" y="15" width="150" height="35"/>
                                                 <subviews>
-                                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="tRx-8d-MMU" userLabel="Sig2L View">
-                                                        <rect key="frame" x="0.0" y="0.0" width="3" height="127"/>
+                                                    <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="tRx-8d-MMU" userLabel="Sig2L View">
+                                                        <rect key="frame" x="0.0" y="0.0" width="3" height="35"/>
                                                         <color key="backgroundColor" red="0.83480781316757202" green="0.4983101487159729" blue="0.48625296354293823" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                                         <constraints>
                                                             <constraint firstAttribute="width" constant="3" id="e8G-ZX-x98"/>
                                                         </constraints>
                                                     </view>
-                                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hOO-hA-eYW" userLabel="Sig2R View">
-                                                        <rect key="frame" x="173.5" y="0.0" width="3" height="127"/>
+                                                    <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hOO-hA-eYW" userLabel="Sig2R View">
+                                                        <rect key="frame" x="173.5" y="0.0" width="3" height="35"/>
                                                         <color key="backgroundColor" red="0.83480781316757202" green="0.4983101487159729" blue="0.48625296354293823" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                                         <constraints>
                                                             <constraint firstAttribute="width" constant="3" id="fIA-OI-N04"/>
                                                         </constraints>
                                                     </view>
                                                 </subviews>
-                                                <color key="backgroundColor" red="0.96825426816940308" green="0.85512328147888184" blue="0.72937923669815063" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                                <color key="backgroundColor" red="0.87150965073529418" green="0.7702758402590969" blue="0.65086701728943597" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                                 <constraints>
                                                     <constraint firstItem="tRx-8d-MMU" firstAttribute="leading" secondItem="Mhe-Il-VFc" secondAttribute="leading" id="0ku-sp-VgO"/>
                                                     <constraint firstAttribute="bottom" secondItem="tRx-8d-MMU" secondAttribute="bottom" id="Kwf-mm-bag"/>
@@ -883,65 +882,66 @@
                                                 </constraints>
                                             </view>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Zlt-mA-YQ5" userLabel="Sigma1 Bar View">
-                                                <rect key="frame" x="137.5" y="38" width="100" height="127"/>
+                                                <rect key="frame" x="137.5" y="15" width="100" height="35"/>
                                                 <color key="backgroundColor" red="0.83480781316757202" green="0.4983101487159729" blue="0.48625296354293823" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" constant="100" id="tjy-av-Snp"/>
                                                 </constraints>
                                             </view>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="c4Z-ek-M3c" userLabel="Shadow Bar View">
-                                                <rect key="frame" x="162.5" y="38" width="50" height="127"/>
+                                                <rect key="frame" x="162.5" y="15" width="50" height="35"/>
                                                 <color key="backgroundColor" red="0.44024449586868286" green="0.79986923933029175" blue="0.78823524713516235" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" constant="50" id="Dpo-AN-iF1"/>
                                                 </constraints>
                                             </view>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qFM-b9-xCf" userLabel="Center Bar View">
-                                                <rect key="frame" x="186" y="38" width="3" height="127"/>
+                                                <rect key="frame" x="186" y="15" width="3" height="35"/>
                                                 <color key="backgroundColor" red="0.39985933899879456" green="0.78460901975631714" blue="0.29790294170379639" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" constant="3" id="g1g-i6-fIa"/>
                                                 </constraints>
                                             </view>
                                             <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="KZq-4J-gy2" userLabel="User Station Bar View">
-                                                <rect key="frame" x="140.5" y="38" width="3" height="127"/>
+                                                <rect key="frame" x="140.5" y="15" width="3" height="35"/>
                                                 <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" constant="3" id="M7M-OZ-B1T"/>
                                                 </constraints>
                                             </view>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="dfW-aU-Wim" userLabel="Top Gray Bar">
-                                                <rect key="frame" x="0.0" y="0.0" width="375" height="3"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="375" height="2"/>
                                                 <color key="backgroundColor" red="0.49804407358169556" green="0.49803286790847778" blue="0.49803507328033447" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                                 <constraints>
-                                                    <constraint firstAttribute="height" constant="3" id="BV0-Rq-JbV"/>
+                                                    <constraint firstAttribute="height" constant="2" id="BV0-Rq-JbV"/>
                                                 </constraints>
                                             </view>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ncD-JH-6k1" userLabel="Center Gray Bar">
-                                                <rect key="frame" x="0.0" y="35" width="375" height="3"/>
+                                                <rect key="frame" x="0.0" y="13" width="375" height="2"/>
                                                 <color key="backgroundColor" red="0.49804407360000003" green="0.49803286790000001" blue="0.49803507330000002" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                                 <constraints>
-                                                    <constraint firstAttribute="height" constant="3" id="X5F-eM-ExL"/>
+                                                    <constraint firstAttribute="height" constant="2" id="X5F-eM-ExL"/>
                                                 </constraints>
                                             </view>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="FQK-Sk-eUM" userLabel="Bottom Gray Bar">
-                                                <rect key="frame" x="0.0" y="162" width="375" height="3"/>
+                                                <rect key="frame" x="0.0" y="41" width="375" height="9"/>
                                                 <color key="backgroundColor" red="0.49804407360000003" green="0.49803286790000001" blue="0.49803507330000002" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                                 <constraints>
-                                                    <constraint firstAttribute="height" constant="3" id="pkT-Qr-Pur"/>
+                                                    <constraint firstAttribute="height" constant="9" id="pkT-Qr-Pur"/>
                                                 </constraints>
                                             </view>
                                         </subviews>
                                         <color key="backgroundColor" red="0.098501719534397125" green="0.2234555184841156" blue="0.23921835422515869" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                         <constraints>
-                                            <constraint firstItem="RoV-Cl-X5I" firstAttribute="height" secondItem="Zlt-mA-YQ5" secondAttribute="height" multiplier="0.3" id="0te-33-Fns"/>
+                                            <constraint firstItem="RoV-Cl-X5I" firstAttribute="height" secondItem="HuD-ai-6Aw" secondAttribute="height" multiplier="0.3" id="0te-33-Fns"/>
                                             <constraint firstItem="dfW-aU-Wim" firstAttribute="top" secondItem="HuD-ai-6Aw" secondAttribute="top" id="3DZ-8O-6Vp"/>
                                             <constraint firstItem="RoV-Cl-X5I" firstAttribute="top" secondItem="HuD-ai-6Aw" secondAttribute="top" id="3Zs-RO-hB0"/>
                                             <constraint firstItem="Zlt-mA-YQ5" firstAttribute="height" secondItem="HuD-ai-6Aw" secondAttribute="height" multiplier="0.7" id="432-fH-z7a"/>
-                                            <constraint firstItem="ITw-Gp-ShU" firstAttribute="centerX" secondItem="HuD-ai-6Aw" secondAttribute="centerX" id="8Ov-5Z-IRg"/>
                                             <constraint firstItem="FQK-Sk-eUM" firstAttribute="leading" secondItem="HuD-ai-6Aw" secondAttribute="leading" id="8Tx-XJ-FWc"/>
+                                            <constraint firstItem="ITw-Gp-ShU" firstAttribute="trailing" secondItem="RoV-Cl-X5I" secondAttribute="trailing" id="BE8-iz-TOW"/>
                                             <constraint firstItem="Mhe-Il-VFc" firstAttribute="bottom" secondItem="Zlt-mA-YQ5" secondAttribute="bottom" id="BhI-3v-V23"/>
                                             <constraint firstItem="c4Z-ek-M3c" firstAttribute="bottom" secondItem="Zlt-mA-YQ5" secondAttribute="bottom" id="CvF-p1-1zc"/>
+                                            <constraint firstAttribute="bottom" secondItem="c4Z-ek-M3c" secondAttribute="bottom" id="FMk-04-S4H"/>
                                             <constraint firstItem="RoV-Cl-X5I" firstAttribute="leading" secondItem="HuD-ai-6Aw" secondAttribute="leading" id="G7S-Ma-GiA"/>
                                             <constraint firstItem="Mhe-Il-VFc" firstAttribute="centerX" secondItem="HuD-ai-6Aw" secondAttribute="centerX" id="H3q-b7-4jN"/>
                                             <constraint firstItem="qFM-b9-xCf" firstAttribute="top" secondItem="c4Z-ek-M3c" secondAttribute="top" id="Kc5-uG-YxX"/>
@@ -959,6 +959,7 @@
                                             <constraint firstItem="Zlt-mA-YQ5" firstAttribute="centerY" secondItem="Mhe-Il-VFc" secondAttribute="centerY" id="aA6-4X-vt7"/>
                                             <constraint firstItem="ncD-JH-6k1" firstAttribute="bottom" secondItem="RoV-Cl-X5I" secondAttribute="bottom" id="aqI-ao-dqj"/>
                                             <constraint firstItem="ncD-JH-6k1" firstAttribute="leading" secondItem="HuD-ai-6Aw" secondAttribute="leading" id="cfa-3b-yfp"/>
+                                            <constraint firstItem="ITw-Gp-ShU" firstAttribute="leading" secondItem="HuD-ai-6Aw" secondAttribute="leading" id="dkj-Cx-YMq"/>
                                             <constraint firstItem="Zlt-mA-YQ5" firstAttribute="centerY" secondItem="ITw-Gp-ShU" secondAttribute="centerY" id="fVe-O3-BFM"/>
                                             <constraint firstAttribute="trailing" secondItem="FQK-Sk-eUM" secondAttribute="trailing" id="iw5-0P-Yig"/>
                                             <constraint firstItem="KZq-4J-gy2" firstAttribute="bottom" secondItem="Zlt-mA-YQ5" secondAttribute="bottom" id="kTa-0V-ZfQ"/>
@@ -967,12 +968,14 @@
                                             <constraint firstItem="Zlt-mA-YQ5" firstAttribute="bottom" secondItem="qFM-b9-xCf" secondAttribute="bottom" id="qLn-uO-iAH"/>
                                             <constraint firstItem="dfW-aU-Wim" firstAttribute="leading" secondItem="HuD-ai-6Aw" secondAttribute="leading" id="r3w-h4-aou"/>
                                             <constraint firstAttribute="trailing" secondItem="dfW-aU-Wim" secondAttribute="trailing" id="tcF-wn-6Cw"/>
+                                            <constraint firstItem="Zlt-mA-YQ5" firstAttribute="top" secondItem="RoV-Cl-X5I" secondAttribute="bottom" id="wuH-Bl-Itb"/>
                                             <constraint firstItem="Zlt-mA-YQ5" firstAttribute="top" secondItem="ITw-Gp-ShU" secondAttribute="top" id="x5q-Pi-uGe"/>
+                                            <constraint firstItem="ITw-Gp-ShU" firstAttribute="width" secondItem="RoV-Cl-X5I" secondAttribute="width" id="xOh-sQ-J34"/>
                                         </constraints>
-                                        <viewLayoutGuide key="safeArea" id="LmH-6Y-lO7"/>
+                                        <viewLayoutGuide key="safeArea" id="rc2-Az-8zL"/>
                                     </view>
                                     <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" verticalHuggingPriority="251" insetsLayoutMarginsFromSafeArea="NO" pagingEnabled="YES" dataMode="prototypes" springLoaded="YES" translatesAutoresizingMaskIntoConstraints="NO" id="BOt-Xz-Vv8" userLabel="Station Collection View">
-                                        <rect key="frame" x="0.0" y="220.5" width="375" height="182"/>
+                                        <rect key="frame" x="0.0" y="89" width="375" height="50"/>
                                         <color key="backgroundColor" red="0.1884797215461731" green="0.27445071935653687" blue="0.28627580404281616" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="110" id="zj3-Es-FSf"/>
@@ -1261,7 +1264,7 @@
                                         </connections>
                                     </collectionView>
                                     <stackView opaque="NO" contentMode="scaleToFill" distribution="fillProportionally" translatesAutoresizingMaskIntoConstraints="NO" id="EYo-j8-VAk" userLabel="RA/Dec HStack">
-                                        <rect key="frame" x="0.0" y="402.5" width="375" height="19.5"/>
+                                        <rect key="frame" x="0.0" y="139" width="375" height="19.5"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" text="RA  07h 08m 05.6s" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qHW-5v-fWt">
                                                 <rect key="frame" x="3" y="0.0" width="184" height="19.5"/>
@@ -1285,7 +1288,7 @@
                                         <directionalEdgeInsets key="directionalLayoutMargins" top="0.0" leading="3" bottom="0.0" trailing="3"/>
                                     </stackView>
                                     <stackView opaque="NO" contentMode="scaleToFill" distribution="fillProportionally" translatesAutoresizingMaskIntoConstraints="NO" id="SeI-hh-4GI" userLabel="BV HStack">
-                                        <rect key="frame" x="0.0" y="422" width="375" height="19.5"/>
+                                        <rect key="frame" x="0.0" y="158.5" width="375" height="19.5"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" text="BV  0.861" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4Oq-hn-pVL">
                                                 <rect key="frame" x="3" y="0.0" width="125.5" height="19.5"/>
@@ -1309,7 +1312,7 @@
                                         <directionalEdgeInsets key="directionalLayoutMargins" top="0.0" leading="3" bottom="0.0" trailing="3"/>
                                     </stackView>
                                     <stackView opaque="NO" contentMode="scaleToFill" distribution="fillProportionally" translatesAutoresizingMaskIntoConstraints="NO" id="46l-Gg-6LX" userLabel="Mag Drop HStack">
-                                        <rect key="frame" x="0.0" y="441.5" width="375" height="19.5"/>
+                                        <rect key="frame" x="0.0" y="178" width="375" height="19.5"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" text="Comb. Mag  11.87" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UXk-A1-aT8">
                                                 <rect key="frame" x="3" y="0.0" width="200" height="19.5"/>
@@ -1333,7 +1336,7 @@
                                         <directionalEdgeInsets key="directionalLayoutMargins" top="0.0" leading="3" bottom="0.0" trailing="3"/>
                                     </stackView>
                                     <stackView opaque="NO" contentMode="scaleToFill" distribution="fillProportionally" translatesAutoresizingMaskIntoConstraints="NO" id="bux-Q1-B81" userLabel="Aster Mag HStack">
-                                        <rect key="frame" x="0.0" y="461" width="375" height="19.5"/>
+                                        <rect key="frame" x="0.0" y="197.5" width="375" height="19.5"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" text="Star Mag 11.90" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7hI-nL-0Ep">
                                                 <rect key="frame" x="3" y="0.0" width="176" height="19.5"/>
@@ -1357,7 +1360,7 @@
                                         <directionalEdgeInsets key="directionalLayoutMargins" top="0.0" leading="3" bottom="0.0" trailing="3"/>
                                     </stackView>
                                     <stackView opaque="NO" contentMode="scaleToFill" distribution="fillProportionally" translatesAutoresizingMaskIntoConstraints="NO" id="uVe-H2-ekN" userLabel="Aster Diam HStack">
-                                        <rect key="frame" x="0.0" y="480.5" width="375" height="19.5"/>
+                                        <rect key="frame" x="0.0" y="217" width="375" height="19.5"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" text="Main Asteroid Belt" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ncY-ji-tEs">
                                                 <rect key="frame" x="3" y="0.0" width="199" height="19.5"/>
@@ -1384,7 +1387,7 @@
                                         <directionalEdgeInsets key="directionalLayoutMargins" top="0.0" leading="3" bottom="0.0" trailing="3"/>
                                     </stackView>
                                     <stackView opaque="NO" contentMode="scaleToFill" distribution="fillProportionally" translatesAutoresizingMaskIntoConstraints="NO" id="GgE-i9-KDU" userLabel="Rotation HStack">
-                                        <rect key="frame" x="0.0" y="500" width="375" height="19.5"/>
+                                        <rect key="frame" x="0.0" y="236.5" width="375" height="19.5"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" text="Rotation  6.107 h" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iG2-N3-nzj">
                                                 <rect key="frame" x="3" y="0.0" width="182" height="19.5"/>
@@ -1408,7 +1411,7 @@
                                         <directionalEdgeInsets key="directionalLayoutMargins" top="0.0" leading="3" bottom="0.0" trailing="3"/>
                                     </stackView>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="WrZ-vQ-H69" userLabel="Bottom Pad View">
-                                        <rect key="frame" x="0.0" y="519.5" width="375" height="54.5"/>
+                                        <rect key="frame" x="0.0" y="256" width="375" height="318"/>
                                         <constraints>
                                             <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="1" id="BIv-Gz-dRf"/>
                                         </constraints>
@@ -1485,6 +1488,7 @@
                     <connections>
                         <outlet property="activitySpinner" destination="L5X-Y9-CwX" id="Blp-v0-6yC"/>
                         <outlet property="asterRotAmpView" destination="GgE-i9-KDU" id="iAL-0e-7ir"/>
+                        <outlet property="bottomGrayBar" destination="FQK-Sk-eUM" id="RNn-Tx-0XD"/>
                         <outlet property="bvStarDiamView" destination="SeI-hh-4GI" id="17s-ZJ-VBu"/>
                         <outlet property="centerBarView" destination="qFM-b9-xCf" id="NVd-Cg-hVg"/>
                         <outlet property="centerGrayBar" destination="ncD-JH-6k1" id="Jdc-Bl-25g"/>
@@ -1513,7 +1517,7 @@
                         <outlet property="sigma2BarView" destination="Mhe-Il-VFc" id="Vra-vz-fYp"/>
                         <outlet property="sigma2Width" destination="MxD-xW-2Nm" id="1Fb-da-AA2"/>
                         <outlet property="sigma3BarView" destination="ITw-Gp-ShU" id="O0u-ag-rub"/>
-                        <outlet property="sigma3Width" destination="UfL-vu-8ar" id="NAg-93-Lr8"/>
+                        <outlet property="sigma3Width" destination="xOh-sQ-J34" id="I9B-la-YSK"/>
                         <outlet property="spinnerLbl" destination="rfp-J5-iaI" id="aRy-5Z-I6Y"/>
                         <outlet property="spinnerView" destination="bUk-xQ-arM" id="jqD-TJ-Hko"/>
                         <outlet property="stationCollectionView" destination="BOt-Xz-Vv8" id="767-TT-DNo"/>
