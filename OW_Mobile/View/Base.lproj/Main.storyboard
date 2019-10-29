@@ -791,6 +791,10 @@
                                                 </variation>
                                             </label>
                                         </subviews>
+                                        <constraints>
+                                            <constraint firstAttribute="trailing" secondItem="b2e-3J-HL7" secondAttribute="trailing" constant="8" id="QHX-bY-9BV"/>
+                                            <constraint firstItem="Bxb-g6-GRG" firstAttribute="leading" secondItem="Rdg-PA-2Mk" secondAttribute="leading" constant="8" id="lkp-Lu-7d3"/>
+                                        </constraints>
                                         <directionalEdgeInsets key="directionalLayoutMargins" top="0.0" leading="3" bottom="0.0" trailing="3"/>
                                     </stackView>
                                     <stackView opaque="NO" contentMode="scaleToFill" distribution="fillProportionally" translatesAutoresizingMaskIntoConstraints="NO" id="PkI-Hu-aI0" userLabel="Feed HStack View">
@@ -815,6 +819,10 @@
                                                 </variation>
                                             </label>
                                         </subviews>
+                                        <constraints>
+                                            <constraint firstAttribute="trailing" secondItem="Sfx-M4-Kzx" secondAttribute="trailing" constant="8" id="EHY-eH-yRn"/>
+                                            <constraint firstItem="HIB-G2-7ts" firstAttribute="leading" secondItem="PkI-Hu-aI0" secondAttribute="leading" constant="8" id="Kk2-bP-XWa"/>
+                                        </constraints>
                                         <directionalEdgeInsets key="directionalLayoutMargins" top="0.0" leading="3" bottom="0.0" trailing="3"/>
                                     </stackView>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="HuD-ai-6Aw" userLabel="Shadow Sigma View">
@@ -1130,14 +1138,14 @@
                                                                             <rect key="frame" x="0.0" y="0.0" width="87.5" height="8"/>
                                                                             <subviews>
                                                                                 <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" insetsLayoutMarginsFromSafeArea="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hCF-5z-ejD" userLabel="Star Alt Img">
-                                                                                    <rect key="frame" x="0.0" y="0.0" width="49" height="8"/>
+                                                                                    <rect key="frame" x="0.0" y="0.0" width="48.5" height="8"/>
                                                                                     <constraints>
                                                                                         <constraint firstAttribute="height" constant="16" id="Xz8-Ze-MA5"/>
                                                                                         <constraint firstAttribute="width" constant="16" id="fXC-Oh-A46"/>
                                                                                     </constraints>
                                                                                 </imageView>
                                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="23°E" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wp1-Nk-bLl" userLabel="Star Alt Text">
-                                                                                    <rect key="frame" x="54" y="0.0" width="33.5" height="8"/>
+                                                                                    <rect key="frame" x="53.5" y="0.0" width="34" height="8"/>
                                                                                     <fontDescription key="fontDescription" style="UICTFontTextStyleCallout"/>
                                                                                     <nil key="textColor"/>
                                                                                     <nil key="highlightedColor"/>
@@ -1285,6 +1293,10 @@
                                                 </variation>
                                             </label>
                                         </subviews>
+                                        <constraints>
+                                            <constraint firstAttribute="trailing" secondItem="QrG-cJ-86B" secondAttribute="trailing" constant="8" id="T5R-dT-OXT"/>
+                                            <constraint firstItem="qHW-5v-fWt" firstAttribute="leading" secondItem="EYo-j8-VAk" secondAttribute="leading" constant="8" id="Umw-P5-K4K"/>
+                                        </constraints>
                                         <directionalEdgeInsets key="directionalLayoutMargins" top="0.0" leading="3" bottom="0.0" trailing="3"/>
                                     </stackView>
                                     <stackView opaque="NO" contentMode="scaleToFill" distribution="fillProportionally" translatesAutoresizingMaskIntoConstraints="NO" id="SeI-hh-4GI" userLabel="BV HStack">
@@ -1309,6 +1321,10 @@
                                                 </variation>
                                             </label>
                                         </subviews>
+                                        <constraints>
+                                            <constraint firstAttribute="trailing" secondItem="vPb-Rx-DhT" secondAttribute="trailing" constant="8" id="ufC-DV-uyD"/>
+                                            <constraint firstItem="4Oq-hn-pVL" firstAttribute="leading" secondItem="SeI-hh-4GI" secondAttribute="leading" constant="8" id="xZO-yD-xCz"/>
+                                        </constraints>
                                         <directionalEdgeInsets key="directionalLayoutMargins" top="0.0" leading="3" bottom="0.0" trailing="3"/>
                                     </stackView>
                                     <stackView opaque="NO" contentMode="scaleToFill" distribution="fillProportionally" translatesAutoresizingMaskIntoConstraints="NO" id="46l-Gg-6LX" userLabel="Mag Drop HStack">
@@ -1333,6 +1349,10 @@
                                                 </variation>
                                             </label>
                                         </subviews>
+                                        <constraints>
+                                            <constraint firstAttribute="trailing" secondItem="cqt-Iv-OMa" secondAttribute="trailing" constant="8" id="p6W-jy-cRR"/>
+                                            <constraint firstItem="UXk-A1-aT8" firstAttribute="leading" secondItem="46l-Gg-6LX" secondAttribute="leading" constant="8" id="vPS-aG-ohV"/>
+                                        </constraints>
                                         <directionalEdgeInsets key="directionalLayoutMargins" top="0.0" leading="3" bottom="0.0" trailing="3"/>
                                     </stackView>
                                     <stackView opaque="NO" contentMode="scaleToFill" distribution="fillProportionally" translatesAutoresizingMaskIntoConstraints="NO" id="bux-Q1-B81" userLabel="Aster Mag HStack">
@@ -1357,6 +1377,10 @@
                                                 </variation>
                                             </label>
                                         </subviews>
+                                        <constraints>
+                                            <constraint firstAttribute="trailing" secondItem="dVX-Qz-Run" secondAttribute="trailing" constant="8" id="Bao-sf-xfr"/>
+                                            <constraint firstItem="7hI-nL-0Ep" firstAttribute="leading" secondItem="bux-Q1-B81" secondAttribute="leading" constant="8" id="bVz-nJ-xU5"/>
+                                        </constraints>
                                         <directionalEdgeInsets key="directionalLayoutMargins" top="0.0" leading="3" bottom="0.0" trailing="3"/>
                                     </stackView>
                                     <stackView opaque="NO" contentMode="scaleToFill" distribution="fillProportionally" translatesAutoresizingMaskIntoConstraints="NO" id="uVe-H2-ekN" userLabel="Aster Diam HStack">
@@ -1382,7 +1406,9 @@
                                             </label>
                                         </subviews>
                                         <constraints>
+                                            <constraint firstItem="ncY-ji-tEs" firstAttribute="leading" secondItem="uVe-H2-ekN" secondAttribute="leading" constant="8" id="JL4-cL-xZl"/>
                                             <constraint firstItem="RX4-MR-uvs" firstAttribute="centerY" secondItem="ncY-ji-tEs" secondAttribute="centerY" id="MwD-De-fee"/>
+                                            <constraint firstAttribute="trailing" secondItem="RX4-MR-uvs" secondAttribute="trailing" constant="8" id="vi1-cB-imy"/>
                                         </constraints>
                                         <directionalEdgeInsets key="directionalLayoutMargins" top="0.0" leading="3" bottom="0.0" trailing="3"/>
                                     </stackView>
@@ -1408,6 +1434,10 @@
                                                 </variation>
                                             </label>
                                         </subviews>
+                                        <constraints>
+                                            <constraint firstItem="iG2-N3-nzj" firstAttribute="leading" secondItem="GgE-i9-KDU" secondAttribute="leading" constant="8" id="7CZ-LY-Ua6"/>
+                                            <constraint firstAttribute="trailing" secondItem="NsS-pb-9cN" secondAttribute="trailing" constant="8" id="XtE-To-1qY"/>
+                                        </constraints>
                                         <directionalEdgeInsets key="directionalLayoutMargins" top="0.0" leading="3" bottom="0.0" trailing="3"/>
                                     </stackView>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="WrZ-vQ-H69" userLabel="Bottom Pad View">
