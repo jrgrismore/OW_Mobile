@@ -124,7 +124,7 @@ class DetailViewController: UIViewController
     print("viewWillAppear")
     eventDetailView.isHidden = false
     shadowSigmaView.isHidden = true
-    stationCollectionView.isHidden = true
+//    stationCollectionView.isHidden = true
     stationBarSubViewsExist = false
     stationCursorExists = false
     self.title = selectionObject
@@ -157,7 +157,7 @@ class DetailViewController: UIViewController
     updateEventInfoFields(eventItem: selectedEvent)
     updateShadowPlot(self.selectedEvent)
     stationCollectionView.scrollToItem(at: IndexPath(item: primaryIndex!, section: 0), at: .centeredHorizontally, animated: false)
-    stationCollectionView.isHidden = false
+//    stationCollectionView.isHidden = false
     shadowSigmaView.isHidden = false
    }
   
