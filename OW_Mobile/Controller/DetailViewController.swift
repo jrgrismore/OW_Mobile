@@ -123,6 +123,7 @@ class DetailViewController: UIViewController
   {
     print("viewWillAppear")
     eventDetailView.isHidden = false
+    stationCollectionView.isHidden = true
     stationBarSubViewsExist = false
     stationCursorExists = false
     self.title = selectionObject
@@ -138,23 +139,25 @@ class DetailViewController: UIViewController
       self.navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.black, NSAttributedString.Key.font: UIFont.preferredFont(forTextStyle: .title3)]
     }
 
-    DispatchQueue.main.async
-      {
-        self.stationCollectionView.scrollToItem(at: IndexPath(item: primaryIndex!, section: 0), at: .centeredHorizontally, animated: false)
-        self.stationCollectionView.layoutIfNeeded()
-    }
+//    DispatchQueue.main.async
+//      {
+//        self.stationCollectionView.scrollToItem(at: IndexPath(item: primaryIndex!, section: 0), at: .centeredHorizontally, animated: false)
+//        self.stationCollectionView.layoutIfNeeded()
+//    }
   }
   
   override func viewDidAppear(_ animated: Bool)
   {
+    eventDetailView.isHidden = false
     print("viewDidAppear")
     adjustCellWidth()
     let primaryIndex = OccultationEvent.primaryStationIndex(selectedStations)
     currentStationIndexPath = IndexPath(item:primaryIndex!, section: 0)
     updateEventInfoFields(eventItem: selectedEvent)
-        updateShadowPlot(self.selectedEvent)
-        stationCollectionView.scrollToItem(at: IndexPath(item: primaryIndex!, section: 0), at: .centeredHorizontally, animated: false)
-  }
+    updateShadowPlot(self.selectedEvent)
+    stationCollectionView.scrollToItem(at: IndexPath(item: primaryIndex!, section: 0), at: .centeredHorizontally, animated: false)
+     stationCollectionView.isHidden = false
+   }
   
   override func viewWillLayoutSubviews()
   {
@@ -271,6 +274,7 @@ class DetailViewController: UIViewController
   
   func updateStationFlds(cell: inout StationCell, indexPath: IndexPath, stations: [ObserverStation], itm: EventWithDetails)
   {
+    print("updateStationFlds")
     var item = itm
     
     cell.sigmaImg.accessibilityIdentifier = "sigmaImg"
@@ -574,42 +578,33 @@ class DetailViewController: UIViewController
         print()
         print("updateShadowPlot")
         let outerChordWidth = farthestChordWidth(item)
-        //        print("outerChordWidth=",outerChordWidth)
         self.sigma1BarView.isHidden = false
         self.sigma2BarView.isHidden = false
         self.sigma3BarView.isHidden = false
         if outerChordWidth > sigma3WidthKm(item)
         {
-          //          print(".farthestChord")
           plotWidthKm = totalPlotWidthKm(item, scale: .farthestChord)
         } else if outerChordWidth > sigma2WidthKm(item)
         {
           plotWidthKm = totalPlotWidthKm(item, scale: .sigma3Edge)
-          //          print(".sigma3Edge")
         } else if outerChordWidth > sigma1WidthKm(item)
         {
           plotWidthKm = totalPlotWidthKm(item, scale: .sigma2Edge)
-          //          print(".sigma2Edge")
           self.sigma3BarView.isHidden = true
         } else if outerChordWidth > shadowWidthKm(item)
         {
           plotWidthKm = totalPlotWidthKm(item, scale: .sigma1Edge)
-          //          print(".sigma1Edge")
-          self.sigma2BarView.isHidden = true
+           self.sigma2BarView.isHidden = true
           self.sigma3BarView.isHidden = true
         } else if outerChordWidth <= shadowWidthKm(item)
         {
           plotWidthKm = totalPlotWidthKm(item, scale: .shadowEdge)
-          //          print(".shadowEdge")
           self.sigma1BarView.isHidden = true
           self.sigma2BarView.isHidden = true
           self.sigma3BarView.isHidden = true
         }
-        //        print("plotWidthKm=",plotWidthKm)
-        
         let plotBarFactors = plotBarsWidthFactors(item, totalPlotWidthKm: plotWidthKm)
 
-//        self.sigma3BarView.translatesAutoresizingMaskIntoConstraints = false
         self.shadowBarWidth.constant = self.weatherBarView.bounds.width * CGFloat(plotBarFactors.shadowBarFactor)
         self.sigma1Width.constant = self.weatherBarView.bounds.width * CGFloat(plotBarFactors.sigma1BarFactor)
         self.sigma2Width.constant = self.weatherBarView.bounds.width * CGFloat(plotBarFactors.sigma2BarFactor)
@@ -667,9 +662,6 @@ class DetailViewController: UIViewController
   func addStationsSubviews(_ plotWidthKm: Double)
   {
     print("addStationsSubviews")
-    print("addStationsSubviews > plotWidthKM=",plotWidthKm)
-//    DispatchQueue.main.async
-//      {
         for station in self.selectedStations
       {
         let stationFactor = plotStationBarFactor(station: station, totalPlotWidthKm: plotWidthKm)
@@ -686,7 +678,6 @@ class DetailViewController: UIViewController
         }
         self.weatherBarView.addSubview(stationView)
       }
-//    }
   }
   
   func addStationCursor()
@@ -762,6 +753,7 @@ extension DetailViewController: UICollectionViewDataSource,UICollectionViewDeleg
   
   func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell
   {
+    print("cellForItemAt")
     var cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as! StationCell
     cell.backgroundColor = #colorLiteral(red: 0.2043271959, green: 0.620110333, blue: 0.6497597098, alpha: 1)
     updateStationFlds(cell: &cell, indexPath: indexPath, stations: selectedStations, itm: selectedEvent)
