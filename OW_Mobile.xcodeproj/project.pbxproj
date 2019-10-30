@@ -62,7 +62,7 @@
 		529C1BC623298A62000C8F11 /* OW_Mobile.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = OW_Mobile.entitlements; sourceTree = "<group>"; };
 		529C4611228DFEB200F9DB55 /* DataStructures.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataStructures.swift; sourceTree = "<group>"; };
 		52B2BE3A22C5B9430082852F /* StationCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StationCell.swift; sourceTree = "<group>"; };
-		52C8020521F9510D00E66A13 /* OW_Mobile.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = OW_Mobile.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		52C8020521F9510D00E66A13 /* OW Mobile.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "OW Mobile.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		52C8020821F9510D00E66A13 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		52C8020D21F9510D00E66A13 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		52C8021021F9510D00E66A13 /* OW_Mobile.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = OW_Mobile.xcdatamodel; sourceTree = "<group>"; };
@@ -158,7 +158,7 @@
 		52C8020621F9510D00E66A13 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				52C8020521F9510D00E66A13 /* OW_Mobile.app */,
+				52C8020521F9510D00E66A13 /* OW Mobile.app */,
 				52C8021C21F9510F00E66A13 /* OW_MobileTests.xctest */,
 				52C8022721F9510F00E66A13 /* OW_MobileUITests.xctest */,
 			);
@@ -218,7 +218,7 @@
 			);
 			name = OW_Mobile;
 			productName = OW_Mobile;
-			productReference = 52C8020521F9510D00E66A13 /* OW_Mobile.app */;
+			productReference = 52C8020521F9510D00E66A13 /* OW Mobile.app */;
 			productType = "com.apple.product-type.application";
 		};
 		52C8021B21F9510F00E66A13 /* OW_MobileTests */ = {
@@ -546,7 +546,7 @@
 					"@executable_path/Frameworks",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.keplertech.OW-Mobile";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = "OW Mobile";
 				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -565,7 +565,7 @@
 					"@executable_path/Frameworks",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.keplertech.OW-Mobile";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = "OW Mobile";
 				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
