@@ -166,7 +166,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                         </subviews>
-                        <color key="backgroundColor" red="0.098501719534397125" green="0.2234555184841156" blue="0.23921835422515869" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                        <color key="backgroundColor" red="0.18823529411764706" green="0.27450980392156865" blue="0.28627450980392155" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                         <constraints>
                             <constraint firstItem="IjN-u9-65v" firstAttribute="top" secondItem="FIc-7P-eEO" secondAttribute="bottom" constant="30" id="1TW-1B-u98"/>
                             <constraint firstItem="FIc-7P-eEO" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="B7l-uM-7U2"/>
@@ -428,7 +428,7 @@
                         <subviews>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="SDS-j7-v4J">
                                 <rect key="frame" x="0.0" y="47" width="375" height="555"/>
-                                <color key="backgroundColor" red="0.098501719534397125" green="0.2234555184841156" blue="0.23921835422515869" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                <color key="backgroundColor" red="0.10800489091236139" green="0.15804516494359294" blue="0.16414560355392149" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="Mhx-5N-kTJ">
                                     <size key="itemSize" width="375" height="180"/>
                                     <size key="headerReferenceSize" width="0.0" height="0.0"/>

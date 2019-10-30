@@ -55,7 +55,7 @@ class MyEventsViewController: UIViewController, UICollectionViewDataSource,UICol
     
     self.spinnerView.layer.cornerRadius = 20
     OWWebAPI.shared.delegate = self
-    myEventsCollection.backgroundColor =  _ColorLiteralType(red: 0.03605184332, green: 0.2271486223, blue: 0.2422576547, alpha: 1)
+    myEventsCollection.backgroundColor =  #colorLiteral(red: 0.1621451974, green: 0.2774310112, blue: 0.2886824906, alpha: 1)
     // show alert displaying last update and asking update or use existing event list
     var alertTitle = ""
     var alertMsg = ""
