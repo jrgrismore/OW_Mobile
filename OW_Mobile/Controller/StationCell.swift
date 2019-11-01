@@ -39,7 +39,7 @@ class StationCell: UICollectionViewCell
   
   //@IBOutlet weak var reportImg: UIImageView!
   @IBOutlet weak var reportImg: UIImageView!
-  
+   
   
   //these outlets only needed for layout debugging
   @IBOutlet weak var stationStack: UIStackView!
@@ -55,6 +55,7 @@ class StationCell: UICollectionViewCell
     @IBOutlet weak var moonAltStack: UIStackView!
     @IBOutlet weak var moonSepStack: UIStackView!
   
+  @IBOutlet weak var reportBtn: UIButton!
   
   
   func clearStationFields()
