@@ -97,6 +97,9 @@ class DetailViewController: UIViewController
   @IBOutlet weak var bvStarDiamView: UIStackView!
   @IBOutlet weak var bottomGrayBar: UIView!
   
+  
+  @IBOutlet weak var reportBtn: UIButton!
+  
   // MARK: - Constraint Outlets
   @IBOutlet weak var shadowBarWidth: NSLayoutConstraint!
   @IBOutlet weak var sigma1Width: NSLayoutConstraint!
@@ -139,13 +142,7 @@ class DetailViewController: UIViewController
     } else {
       self.navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.black, NSAttributedString.Key.font: UIFont.preferredFont(forTextStyle: .title3)]
     }
-
-//    DispatchQueue.main.async
-//      {
-//        self.stationCollectionView.scrollToItem(at: IndexPath(item: primaryIndex!, section: 0), at: .centeredHorizontally, animated: false)
-//        self.stationCollectionView.layoutIfNeeded()
-//    }
-  }
+   }
   
   override func viewDidAppear(_ animated: Bool)
   {
@@ -159,7 +156,6 @@ class DetailViewController: UIViewController
     stationCollectionView.scrollToItem(at: IndexPath(item: primaryIndex!, section: 0), at: .centeredHorizontally, animated: false)
 //    stationCollectionView.isHidden = false
     shadowSigmaView.isHidden = false
-    
    }
   
   override func viewWillLayoutSubviews()
@@ -359,6 +355,7 @@ class DetailViewController: UIViewController
           cell.reportImg.isHidden = true
           cell.eventTime.isHidden = false
           cell.eventTimeError.isHidden = false
+          cell.reportBtn.isHidden = true
         }
 //        }
       case 1:
@@ -808,10 +805,24 @@ class DetailViewController: UIViewController
   }
 
   
-  @IBAction func handleReport(_ sender: Any)
+//  @IBAction func handleReport(_ sender: Any)
+//  {
+//    print(">>>Report Obervations button tapped<<<")
+//  }
+  
+  override func prepare(for segue: UIStoryboardSegue, sender: Any?)
   {
-    print(">>>Report Obervations button tapped<<<")
+    if segue.identifier == "SubmitReportSegue"
+    {
+      if let dest = segue.destination as? ReportViewController
+      {
+        dest.astroName = selectionObject
+        dest.observedLocation = selectedStations[currentStationIndexPath.item].StationName
+      }
+    }
   }
+
+  
   
   
 }

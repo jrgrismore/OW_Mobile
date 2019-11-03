@@ -207,7 +207,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1671.2" y="-101.19940029985008"/>
+            <point key="canvasLocation" x="-1582" y="-91"/>
         </scene>
         <!--Reminders-->
         <scene sceneID="xbd-Jm-ffx">
@@ -1147,7 +1147,7 @@
                                                                     <rect key="frame" x="0.0" y="16" width="359" height="16"/>
                                                                     <subviews>
                                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Chord: 128 km" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dt1-f6-0jp" userLabel="Chord Dist">
-                                                                            <rect key="frame" x="0.0" y="0.0" width="105.5" height="16"/>
+                                                                            <rect key="frame" x="0.0" y="0.0" width="70" height="16"/>
                                                                             <fontDescription key="fontDescription" style="UICTFontTextStyleFootnote"/>
                                                                             <nil key="textColor"/>
                                                                             <nil key="highlightedColor"/>
@@ -1156,22 +1156,25 @@
                                                                             </variation>
                                                                         </label>
                                                                         <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" insetsLayoutMarginsFromSafeArea="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ngm-5t-zzd" userLabel="Report Image View">
-                                                                            <rect key="frame" x="105.5" y="0.0" width="90.5" height="16"/>
+                                                                            <rect key="frame" x="70" y="0.0" width="40" height="16"/>
                                                                             <constraints>
                                                                                 <constraint firstAttribute="height" constant="16" id="P4S-3n-yIn"/>
                                                                                 <constraint firstAttribute="width" constant="16" id="k8Q-ZX-Flz"/>
                                                                             </constraints>
                                                                         </imageView>
-                                                                        <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hY4-uC-Fj9" userLabel="Report Btn">
-                                                                            <rect key="frame" x="196" y="-7" width="0.0" height="30"/>
+                                                                        <button contentMode="scaleToFill" horizontalHuggingPriority="1000" horizontalCompressionResistancePriority="250" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hY4-uC-Fj9" userLabel="Report Btn">
+                                                                            <rect key="frame" x="110" y="0.0" width="140.5" height="16"/>
                                                                             <color key="backgroundColor" red="0.16114404800000001" green="0.27836221459999999" blue="0.29019790890000002" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
-                                                                            <state key="normal" title="Report Observation"/>
+                                                                            <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                                                                            <state key="normal" title="  Report Observation  ">
+                                                                                <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                                            </state>
                                                                             <connections>
-                                                                                <action selector="handleReport:" destination="CsV-hu-Udn" eventType="touchUpInside" id="na9-JY-bHy"/>
+                                                                                <segue destination="EMB-yJ-fZO" kind="presentation" identifier="SubmitReportSegue" id="DDF-hI-DpQ"/>
                                                                             </connections>
                                                                         </button>
                                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="23:16:03 UT" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FBz-Rz-wCN" userLabel="Event Time">
-                                                                            <rect key="frame" x="196" y="0.0" width="90" height="16"/>
+                                                                            <rect key="frame" x="250.5" y="0.0" width="59.5" height="16"/>
                                                                             <fontDescription key="fontDescription" style="UICTFontTextStyleFootnote"/>
                                                                             <nil key="textColor"/>
                                                                             <nil key="highlightedColor"/>
@@ -1180,7 +1183,7 @@
                                                                             </variation>
                                                                         </label>
                                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="+/- 16 sec" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gKT-CG-MfV" userLabel="Time Error">
-                                                                            <rect key="frame" x="286" y="0.0" width="73" height="16"/>
+                                                                            <rect key="frame" x="310" y="0.0" width="49" height="16"/>
                                                                             <fontDescription key="fontDescription" style="UICTFontTextStyleFootnote"/>
                                                                             <nil key="textColor"/>
                                                                             <nil key="highlightedColor"/>
@@ -1619,6 +1622,144 @@
             </objects>
             <point key="canvasLocation" x="1728.8" y="-101.19940029985008"/>
         </scene>
+        <!--Submit Report-->
+        <scene sceneID="oAJ-MG-eDB">
+            <objects>
+                <viewController title="Submit Report" id="EMB-yJ-fZO" customClass="ReportViewController" customModule="OW_Mobile" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="1xo-FO-SR4">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="647"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eoO-Ot-ems">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                                <items>
+                                    <barButtonItem systemItem="cancel" id="sU0-q3-vlN">
+                                        <color key="tintColor" red="0.016804177310000001" green="0.19835099580000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <connections>
+                                            <action selector="dismissVC:" destination="EMB-yJ-fZO" id="Y0t-7a-Ep8"/>
+                                        </connections>
+                                    </barButtonItem>
+                                </items>
+                                <color key="barTintColor" red="0.34588140249999999" green="0.59201639890000002" blue="0.61569029090000005" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                            </toolbar>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Report Observation" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xOC-ie-Pz8">
+                                <rect key="frame" x="103" y="10" width="169" height="24"/>
+                                <fontDescription key="fontDescription" style="UICTFontTextStyleTitle3"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="AsteroidNameLbl" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cZQ-W0-nA1">
+                                <rect key="frame" x="20" y="89" width="335" height="24"/>
+                                <fontDescription key="fontDescription" style="UICTFontTextStyleTitle3"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="ObservedAtLbl" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9Sj-4R-hGf">
+                                <rect key="frame" x="20" y="133" width="335" height="24"/>
+                                <fontDescription key="fontDescription" style="UICTFontTextStyleTitle3"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <pickerView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="5Oy-0E-LYt">
+                                <rect key="frame" x="62.5" y="167" width="250" height="200"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="250" id="fLM-EV-Bja"/>
+                                    <constraint firstAttribute="height" constant="200" id="pD2-N9-yiq"/>
+                                </constraints>
+                            </pickerView>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="equalSpacing" alignment="center" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="3Vn-kV-HEc" userLabel="Dur, Com, Btn Stack View">
+                                <rect key="frame" x="20" y="377" width="335" height="142"/>
+                                <subviews>
+                                    <stackView opaque="NO" contentMode="scaleToFill" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="BGG-eW-5c7" userLabel="Pos Dur Stack View">
+                                        <rect key="frame" x="65" y="0.0" width="205.5" height="34"/>
+                                        <subviews>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Duration" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="R0d-HA-yOa">
+                                                <rect key="frame" x="0.0" y="0.0" width="74.5" height="34"/>
+                                                <fontDescription key="fontDescription" style="UICTFontTextStyleTitle2"/>
+                                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="xju-kQ-qWf" userLabel="DurationFld">
+                                                <rect key="frame" x="84.5" y="0.0" width="80" height="34"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="width" constant="80" id="aEt-pj-BfE"/>
+                                                </constraints>
+                                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                <textInputTraits key="textInputTraits" keyboardType="decimalPad"/>
+                                                <connections>
+                                                    <action selector="textEditingChanged:" destination="EMB-yJ-fZO" eventType="editingChanged" id="fzt-wG-knb"/>
+                                                    <action selector="textEdittingDidEnd:" destination="EMB-yJ-fZO" eventType="editingDidEnd" id="38Z-zI-lZB"/>
+                                                </connections>
+                                            </textField>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="sec" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ncU-ky-Vmx">
+                                                <rect key="frame" x="174.5" y="0.0" width="31" height="34"/>
+                                                <fontDescription key="fontDescription" style="UICTFontTextStyleTitle2"/>
+                                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                        </subviews>
+                                    </stackView>
+                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Comment" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="gqw-dd-SCc">
+                                        <rect key="frame" x="0.0" y="54" width="335" height="34"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <textInputTraits key="textInputTraits"/>
+                                    </textField>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="IwA-S3-bQF" userLabel="Submit Report Btn">
+                                        <rect key="frame" x="92.5" y="108" width="150" height="34"/>
+                                        <color key="backgroundColor" red="0.121848546" green="0.21170690659999999" blue="0.22353115679999999" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="150" id="l3v-eo-Wmu"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="18"/>
+                                        <state key="normal" title="Submit Report">
+                                            <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="submitReport:" destination="EMB-yJ-fZO" eventType="touchUpInside" id="qad-RA-8YL"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                            </stackView>
+                        </subviews>
+                        <color key="backgroundColor" red="0.29451838139999997" green="0.41949969529999998" blue="0.45098418000000001" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                        <constraints>
+                            <constraint firstItem="cZQ-W0-nA1" firstAttribute="top" secondItem="eoO-Ot-ems" secondAttribute="bottom" constant="45" id="NdZ-KY-90U"/>
+                            <constraint firstItem="5Oy-0E-LYt" firstAttribute="centerX" secondItem="1xo-FO-SR4" secondAttribute="centerX" id="SkK-An-gX6"/>
+                            <constraint firstItem="xOC-ie-Pz8" firstAttribute="centerY" secondItem="eoO-Ot-ems" secondAttribute="centerY" id="Ud8-tL-2AI"/>
+                            <constraint firstItem="eid-HP-tJT" firstAttribute="trailing" secondItem="3Vn-kV-HEc" secondAttribute="trailing" constant="20" id="VEq-8R-JEo"/>
+                            <constraint firstItem="9Sj-4R-hGf" firstAttribute="top" secondItem="cZQ-W0-nA1" secondAttribute="bottom" constant="20" id="WJS-gy-r2D"/>
+                            <constraint firstItem="eid-HP-tJT" firstAttribute="trailing" secondItem="9Sj-4R-hGf" secondAttribute="trailing" constant="20" id="YOj-Wx-uwg"/>
+                            <constraint firstItem="cZQ-W0-nA1" firstAttribute="leading" secondItem="eid-HP-tJT" secondAttribute="leading" constant="20" id="Yz6-kG-oHg"/>
+                            <constraint firstItem="3Vn-kV-HEc" firstAttribute="centerX" secondItem="1xo-FO-SR4" secondAttribute="centerX" id="Zzf-O5-ehv"/>
+                            <constraint firstItem="xOC-ie-Pz8" firstAttribute="centerX" secondItem="eoO-Ot-ems" secondAttribute="centerX" id="aD1-xN-qCI"/>
+                            <constraint firstItem="3Vn-kV-HEc" firstAttribute="leading" secondItem="eid-HP-tJT" secondAttribute="leading" constant="20" id="aDo-Wb-zNS"/>
+                            <constraint firstItem="eid-HP-tJT" firstAttribute="trailing" secondItem="cZQ-W0-nA1" secondAttribute="trailing" constant="20" id="aaA-E9-IaX"/>
+                            <constraint firstItem="gqw-dd-SCc" firstAttribute="leading" secondItem="eid-HP-tJT" secondAttribute="leading" constant="20" id="coO-IC-Tt2"/>
+                            <constraint firstItem="eid-HP-tJT" firstAttribute="trailing" secondItem="gqw-dd-SCc" secondAttribute="trailing" constant="20" id="eJO-h3-lc3"/>
+                            <constraint firstItem="9Sj-4R-hGf" firstAttribute="leading" secondItem="eid-HP-tJT" secondAttribute="leading" constant="20" id="gkd-sp-hiQ"/>
+                            <constraint firstItem="eoO-Ot-ems" firstAttribute="leading" secondItem="1xo-FO-SR4" secondAttribute="leading" id="go1-Sj-fSh"/>
+                            <constraint firstItem="3Vn-kV-HEc" firstAttribute="top" secondItem="5Oy-0E-LYt" secondAttribute="bottom" constant="10" id="gvf-I4-I7k"/>
+                            <constraint firstItem="5Oy-0E-LYt" firstAttribute="top" secondItem="9Sj-4R-hGf" secondAttribute="bottom" constant="10" id="hoK-Dg-edp"/>
+                            <constraint firstItem="eoO-Ot-ems" firstAttribute="trailing" secondItem="1xo-FO-SR4" secondAttribute="trailing" id="ni6-5L-Bbh"/>
+                            <constraint firstItem="eoO-Ot-ems" firstAttribute="top" secondItem="eid-HP-tJT" secondAttribute="top" id="vR0-NN-tdM"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="eid-HP-tJT"/>
+                    </view>
+                    <toolbarItems/>
+                    <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
+                    <connections>
+                        <outlet property="astroNameLbl" destination="cZQ-W0-nA1" id="QtZ-2n-e3B"/>
+                        <outlet property="durationFld" destination="xju-kQ-qWf" id="0nb-Zn-Eqm"/>
+                        <outlet property="observationPicker" destination="5Oy-0E-LYt" id="Kci-ED-1Tq"/>
+                        <outlet property="observedAtLbl" destination="9Sj-4R-hGf" id="kpF-su-3h7"/>
+                        <outlet property="posDurStackView" destination="BGG-eW-5c7" id="kfH-RG-qAM"/>
+                        <outlet property="submitBtn" destination="IwA-S3-bQF" id="DOJ-J3-vyq"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="4gX-cE-8UV" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2592.8000000000002" y="-101.19940029985008"/>
+        </scene>
         <!--MyEvents Nav-->
         <scene sceneID="Zvg-LJ-nOj">
             <objects>
@@ -1640,7 +1781,7 @@
                         <autoresizingMask key="autoresizingMask"/>
                     </toolbar>
                     <connections>
-                        <segue destination="EDh-iT-nzC" kind="relationship" relationship="rootViewController" id="LW8-MZ-Dq9"/>
+                        <segue destination="EDh-iT-nzC" kind="relationship" relationship="rootViewController" destinationCreationSelector="SubmitReportSegue" id="LW8-MZ-Dq9"/>
                     </connections>
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="FkB-m1-rPZ" userLabel="First Responder" sceneMemberID="firstResponder"/>
