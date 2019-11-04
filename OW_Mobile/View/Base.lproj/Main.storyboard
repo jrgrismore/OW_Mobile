@@ -1754,6 +1754,8 @@
                         <outlet property="observedAtLbl" destination="9Sj-4R-hGf" id="kpF-su-3h7"/>
                         <outlet property="posDurStackView" destination="BGG-eW-5c7" id="kfH-RG-qAM"/>
                         <outlet property="submitBtn" destination="IwA-S3-bQF" id="DOJ-J3-vyq"/>
+                        <outlet property="toolBar" destination="eoO-Ot-ems" id="fUF-lg-EKj"/>
+                        <outlet property="toolBarBack" destination="sU0-q3-vlN" id="eM7-Ku-z9g"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="4gX-cE-8UV" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>

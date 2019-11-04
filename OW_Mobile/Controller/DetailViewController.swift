@@ -125,6 +125,8 @@ class DetailViewController: UIViewController
   override func viewWillAppear(_ animated: Bool)
   {
     print("viewWillAppear")
+    stationCollectionView.isHidden = true
+    
     eventDetailView.isHidden = false
     shadowSigmaView.isHidden = true
 //    stationCollectionView.isHidden = true
@@ -156,6 +158,8 @@ class DetailViewController: UIViewController
     stationCollectionView.scrollToItem(at: IndexPath(item: primaryIndex!, section: 0), at: .centeredHorizontally, animated: false)
 //    stationCollectionView.isHidden = false
     shadowSigmaView.isHidden = false
+    
+    stationCollectionView.isHidden = false
    }
   
   override func viewWillLayoutSubviews()

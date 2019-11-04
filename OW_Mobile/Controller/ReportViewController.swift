@@ -23,6 +23,8 @@ class ReportViewController: UIViewController,UIPickerViewDelegate,UIPickerViewDa
   @IBOutlet weak var posDurStackView: UIStackView!
   @IBOutlet weak var submitBtn: UIButton!
   @IBOutlet weak var durationFld: UITextField!
+  @IBOutlet weak var toolBar: UIToolbar!
+  @IBOutlet weak var toolBarBack: UIBarButtonItem!
   
   
   override func viewDidLoad()
@@ -115,7 +117,7 @@ class ReportViewController: UIViewController,UIPickerViewDelegate,UIPickerViewDa
     {
       print("duration=",durationFld.text)
     }
-    
+    dismissVC(ReportViewController.self)
   }
   
   
