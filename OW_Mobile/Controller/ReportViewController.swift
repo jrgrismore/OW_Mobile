@@ -25,23 +25,24 @@ class ReportViewController: UIViewController,UIPickerViewDelegate,UIPickerViewDa
   @IBOutlet weak var durationFld: UITextField!
   @IBOutlet weak var toolBar: UIToolbar!
   @IBOutlet weak var toolBarBack: UIBarButtonItem!
-  
+  @IBOutlet weak var commentFld: UITextField!
   
   override func viewDidLoad()
-    {
-        super.viewDidLoad()
+  {
+    super.viewDidLoad()
+    
+    observationPicker.delegate = self
+    observationPicker.dataSource = self
+    observationPicker.backgroundColor = .lightGray
+    durationFld.backgroundColor = .lightGray
+    commentFld.backgroundColor = .lightGray
 
-        // Do any additional setup after loading the view.
-      self.observationPicker.delegate = self
-      self.observationPicker.dataSource = self
-      self.observationPicker.setValue(UIColor.white, forKey: "textColor")
-      
       pickerData = ["Not reported","Observed a miss","Clouded out","Technical failure","Positive detection","No observation"]
       
       //dismiss keyboard after tap
       let tap = UITapGestureRecognizer(target: self.view, action: #selector(UIView.endEditing))
       self.view.addGestureRecognizer(tap)
-    }
+          }
   
   override func viewWillAppear(_ animated: Bool)
   {

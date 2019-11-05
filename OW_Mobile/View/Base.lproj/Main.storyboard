@@ -708,7 +708,7 @@
                     <navigationItem key="navigationItem" title="My Events" id="eoE-G9-e6E">
                         <leftBarButtonItems>
                             <barButtonItem style="plain" id="Kc8-Dy-cw5">
-                                <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="6rY-Nl-7is">
+                                <button key="customView" opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="6rY-Nl-7is">
                                     <rect key="frame" x="16" y="5.5" width="60" height="33"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
@@ -770,10 +770,10 @@
                                 <rect key="frame" x="0.0" y="44" width="375" height="574"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" horizontalCompressionResistancePriority="250" insetsLayoutMarginsFromSafeArea="NO" distribution="fillProportionally" translatesAutoresizingMaskIntoConstraints="NO" id="Rdg-PA-2Mk" userLabel="Rank HStack View">
-                                        <rect key="frame" x="0.0" y="0.0" width="375" height="17.5"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="375" height="25.5"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" text="occults UCAC4 702-047231" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Bxb-g6-GRG">
-                                                <rect key="frame" x="3" y="0.0" width="285" height="17.5"/>
+                                                <rect key="frame" x="3" y="0.0" width="285" height="25.5"/>
                                                 <fontDescription key="fontDescription" style="UICTFontTextStyleCallout"/>
                                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <nil key="highlightedColor"/>
@@ -782,7 +782,7 @@
                                                 </variation>
                                             </label>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" text="Rank: 38" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="b2e-3J-HL7">
-                                                <rect key="frame" x="288" y="0.0" width="84" height="17.5"/>
+                                                <rect key="frame" x="288" y="0.0" width="84" height="25.5"/>
                                                 <fontDescription key="fontDescription" style="UICTFontTextStyleCallout"/>
                                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <nil key="highlightedColor"/>
@@ -798,10 +798,10 @@
                                         <directionalEdgeInsets key="directionalLayoutMargins" top="0.0" leading="3" bottom="0.0" trailing="3"/>
                                     </stackView>
                                     <stackView opaque="NO" contentMode="scaleToFill" distribution="fillProportionally" translatesAutoresizingMaskIntoConstraints="NO" id="PkI-Hu-aI0" userLabel="Feed HStack View">
-                                        <rect key="frame" x="0.0" y="17.5" width="375" height="17"/>
+                                        <rect key="frame" x="0.0" y="25.5" width="375" height="25.5"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" text="in 29 hours on 2 Feb 2019" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HIB-G2-7ts">
-                                                <rect key="frame" x="3" y="0.0" width="292.5" height="17"/>
+                                                <rect key="frame" x="3" y="0.0" width="292.5" height="25.5"/>
                                                 <fontDescription key="fontDescription" style="UICTFontTextStyleCallout"/>
                                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <nil key="highlightedColor"/>
@@ -810,7 +810,7 @@
                                                 </variation>
                                             </label>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" text="UKOCL" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Sfx-M4-Kzx">
-                                                <rect key="frame" x="295.5" y="0.0" width="76.5" height="17"/>
+                                                <rect key="frame" x="295.5" y="0.0" width="76.5" height="25.5"/>
                                                 <fontDescription key="fontDescription" style="UICTFontTextStyleCallout"/>
                                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <nil key="highlightedColor"/>
@@ -826,7 +826,7 @@
                                         <directionalEdgeInsets key="directionalLayoutMargins" top="0.0" leading="3" bottom="0.0" trailing="3"/>
                                     </stackView>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="HuD-ai-6Aw" userLabel="Shadow Sigma View">
-                                        <rect key="frame" x="0.0" y="34.5" width="375" height="0.0"/>
+                                        <rect key="frame" x="0.0" y="51" width="375" height="0.0"/>
                                         <subviews>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="RoV-Cl-X5I" userLabel="Weather Bar View">
                                                 <rect key="frame" x="0.0" y="0.0" width="375" height="0.0"/>
@@ -1034,7 +1034,7 @@
                                         <viewLayoutGuide key="safeArea" id="rc2-Az-8zL"/>
                                     </view>
                                     <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" verticalHuggingPriority="251" insetsLayoutMarginsFromSafeArea="NO" pagingEnabled="YES" dataMode="prototypes" springLoaded="YES" translatesAutoresizingMaskIntoConstraints="NO" id="BOt-Xz-Vv8" userLabel="Station Collection View">
-                                        <rect key="frame" x="0.0" y="34.5" width="375" height="44.5"/>
+                                        <rect key="frame" x="0.0" y="51" width="375" height="66"/>
                                         <color key="backgroundColor" red="0.1884797215461731" green="0.27445071935653687" blue="0.28627580404281616" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="90" id="zj3-Es-FSf"/>
@@ -1047,7 +1047,7 @@
                                         </collectionViewFlowLayout>
                                         <cells>
                                             <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="StationCell" id="uvV-yw-RoR" customClass="StationCell" customModule="OW_Mobile" customModuleProvider="target">
-                                                <rect key="frame" x="0.0" y="-3" width="375" height="50"/>
+                                                <rect key="frame" x="0.0" y="8" width="375" height="50"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO">
                                                     <rect key="frame" x="0.0" y="0.0" width="375" height="50"/>
@@ -1335,10 +1335,10 @@
                                         </connections>
                                     </collectionView>
                                     <stackView opaque="NO" contentMode="scaleToFill" distribution="fillProportionally" translatesAutoresizingMaskIntoConstraints="NO" id="EYo-j8-VAk" userLabel="RA/Dec HStack">
-                                        <rect key="frame" x="0.0" y="79" width="375" height="17.5"/>
+                                        <rect key="frame" x="0.0" y="117" width="375" height="25.5"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" text="RA  07h 08m 05.6s" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qHW-5v-fWt">
-                                                <rect key="frame" x="3" y="0.0" width="184" height="17.5"/>
+                                                <rect key="frame" x="3" y="0.0" width="184" height="25.5"/>
                                                 <fontDescription key="fontDescription" style="UICTFontTextStyleCallout"/>
                                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <nil key="highlightedColor"/>
@@ -1347,7 +1347,7 @@
                                                 </variation>
                                             </label>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" text="Dec  +20° 06' 50.9&quot;" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QrG-cJ-86B">
-                                                <rect key="frame" x="187" y="0.0" width="185" height="17.5"/>
+                                                <rect key="frame" x="187" y="0.0" width="185" height="25.5"/>
                                                 <fontDescription key="fontDescription" style="UICTFontTextStyleCallout"/>
                                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <nil key="highlightedColor"/>
@@ -1363,10 +1363,10 @@
                                         <directionalEdgeInsets key="directionalLayoutMargins" top="0.0" leading="3" bottom="0.0" trailing="3"/>
                                     </stackView>
                                     <stackView opaque="NO" contentMode="scaleToFill" distribution="fillProportionally" translatesAutoresizingMaskIntoConstraints="NO" id="SeI-hh-4GI" userLabel="BV HStack">
-                                        <rect key="frame" x="0.0" y="96.5" width="375" height="17"/>
+                                        <rect key="frame" x="0.0" y="142.5" width="375" height="25.5"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" text="BV  0.861" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4Oq-hn-pVL">
-                                                <rect key="frame" x="3" y="0.0" width="125.5" height="17"/>
+                                                <rect key="frame" x="3" y="0.0" width="125.5" height="25.5"/>
                                                 <fontDescription key="fontDescription" style="UICTFontTextStyleCallout"/>
                                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <nil key="highlightedColor"/>
@@ -1375,7 +1375,7 @@
                                                 </variation>
                                             </label>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" text="Stella Dia.  0.0 mas" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vPb-Rx-DhT">
-                                                <rect key="frame" x="128.5" y="0.0" width="243.5" height="17"/>
+                                                <rect key="frame" x="128.5" y="0.0" width="243.5" height="25.5"/>
                                                 <fontDescription key="fontDescription" style="UICTFontTextStyleCallout"/>
                                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <nil key="highlightedColor"/>
@@ -1391,10 +1391,10 @@
                                         <directionalEdgeInsets key="directionalLayoutMargins" top="0.0" leading="3" bottom="0.0" trailing="3"/>
                                     </stackView>
                                     <stackView opaque="NO" contentMode="scaleToFill" distribution="fillProportionally" translatesAutoresizingMaskIntoConstraints="NO" id="46l-Gg-6LX" userLabel="Mag Drop HStack">
-                                        <rect key="frame" x="0.0" y="113.5" width="375" height="17.5"/>
+                                        <rect key="frame" x="0.0" y="168" width="375" height="25.5"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" text="Comb. Mag  11.87" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UXk-A1-aT8">
-                                                <rect key="frame" x="3" y="0.0" width="200" height="17.5"/>
+                                                <rect key="frame" x="3" y="0.0" width="200" height="25.5"/>
                                                 <fontDescription key="fontDescription" style="UICTFontTextStyleCallout"/>
                                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <nil key="highlightedColor"/>
@@ -1403,7 +1403,7 @@
                                                 </variation>
                                             </label>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" text="Mag Drop  4.03" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cqt-Iv-OMa">
-                                                <rect key="frame" x="203" y="0.0" width="169" height="17.5"/>
+                                                <rect key="frame" x="203" y="0.0" width="169" height="25.5"/>
                                                 <fontDescription key="fontDescription" style="UICTFontTextStyleCallout"/>
                                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <nil key="highlightedColor"/>
@@ -1419,10 +1419,10 @@
                                         <directionalEdgeInsets key="directionalLayoutMargins" top="0.0" leading="3" bottom="0.0" trailing="3"/>
                                     </stackView>
                                     <stackView opaque="NO" contentMode="scaleToFill" distribution="fillProportionally" translatesAutoresizingMaskIntoConstraints="NO" id="bux-Q1-B81" userLabel="Aster Mag HStack">
-                                        <rect key="frame" x="0.0" y="131" width="375" height="17"/>
+                                        <rect key="frame" x="0.0" y="193.5" width="375" height="25.5"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" text="Star Mag 11.90" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7hI-nL-0Ep">
-                                                <rect key="frame" x="3" y="0.0" width="176" height="17"/>
+                                                <rect key="frame" x="3" y="0.0" width="176" height="25.5"/>
                                                 <fontDescription key="fontDescription" style="UICTFontTextStyleCallout"/>
                                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <nil key="highlightedColor"/>
@@ -1431,7 +1431,7 @@
                                                 </variation>
                                             </label>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" text="Aster. Mag 15.90" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dVX-Qz-Run">
-                                                <rect key="frame" x="179" y="0.0" width="193" height="17"/>
+                                                <rect key="frame" x="179" y="0.0" width="193" height="25.5"/>
                                                 <fontDescription key="fontDescription" style="UICTFontTextStyleCallout"/>
                                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <nil key="highlightedColor"/>
@@ -1447,10 +1447,10 @@
                                         <directionalEdgeInsets key="directionalLayoutMargins" top="0.0" leading="3" bottom="0.0" trailing="3"/>
                                     </stackView>
                                     <stackView opaque="NO" contentMode="scaleToFill" distribution="fillProportionally" translatesAutoresizingMaskIntoConstraints="NO" id="uVe-H2-ekN" userLabel="Aster Diam HStack">
-                                        <rect key="frame" x="0.0" y="148" width="375" height="17.5"/>
+                                        <rect key="frame" x="0.0" y="219" width="375" height="25.5"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" text="Main Asteroid Belt" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ncY-ji-tEs">
-                                                <rect key="frame" x="3" y="0.0" width="199" height="17.5"/>
+                                                <rect key="frame" x="3" y="0.0" width="199" height="25.5"/>
                                                 <fontDescription key="fontDescription" style="UICTFontTextStyleCallout"/>
                                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <nil key="highlightedColor"/>
@@ -1459,7 +1459,7 @@
                                                 </variation>
                                             </label>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" text="Diameter 7.0 km" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RX4-MR-uvs">
-                                                <rect key="frame" x="202" y="0.0" width="170" height="17.5"/>
+                                                <rect key="frame" x="202" y="0.0" width="170" height="25.5"/>
                                                 <fontDescription key="fontDescription" style="UICTFontTextStyleCallout"/>
                                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <nil key="highlightedColor"/>
@@ -1476,10 +1476,10 @@
                                         <directionalEdgeInsets key="directionalLayoutMargins" top="0.0" leading="3" bottom="0.0" trailing="3"/>
                                     </stackView>
                                     <stackView opaque="NO" contentMode="scaleToFill" distribution="fillProportionally" translatesAutoresizingMaskIntoConstraints="NO" id="GgE-i9-KDU" userLabel="Rotation HStack">
-                                        <rect key="frame" x="0.0" y="165.5" width="375" height="17.5"/>
+                                        <rect key="frame" x="0.0" y="244.5" width="375" height="26"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" text="Rotation  6.107 h" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iG2-N3-nzj">
-                                                <rect key="frame" x="3" y="0.0" width="182" height="17.5"/>
+                                                <rect key="frame" x="3" y="0.0" width="182" height="26"/>
                                                 <fontDescription key="fontDescription" style="UICTFontTextStyleCallout"/>
                                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <nil key="highlightedColor"/>
@@ -1488,7 +1488,7 @@
                                                 </variation>
                                             </label>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" text="Amplitude  0.45m" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NsS-pb-9cN">
-                                                <rect key="frame" x="185" y="0.0" width="187" height="17.5"/>
+                                                <rect key="frame" x="185" y="0.0" width="187" height="26"/>
                                                 <fontDescription key="fontDescription" style="UICTFontTextStyleCallout"/>
                                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <nil key="highlightedColor"/>
@@ -1504,7 +1504,7 @@
                                         <directionalEdgeInsets key="directionalLayoutMargins" top="0.0" leading="3" bottom="0.0" trailing="3"/>
                                     </stackView>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="WrZ-vQ-H69" userLabel="Bottom Pad View">
-                                        <rect key="frame" x="0.0" y="183" width="375" height="391"/>
+                                        <rect key="frame" x="0.0" y="270.5" width="375" height="303.5"/>
                                         <constraints>
                                             <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="1" id="BIv-Gz-dRf"/>
                                         </constraints>
@@ -1664,7 +1664,9 @@
                                 <rect key="frame" x="62.5" y="167" width="250" height="200"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="250" id="fLM-EV-Bja"/>
-                                    <constraint firstAttribute="height" constant="200" id="pD2-N9-yiq"/>
+                                    <constraint firstAttribute="height" constant="200" id="pD2-N9-yiq">
+                                        <variation key="heightClass=compact" constant="150"/>
+                                    </constraint>
                                 </constraints>
                             </pickerView>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="equalSpacing" alignment="center" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="3Vn-kV-HEc" userLabel="Dur, Com, Btn Stack View">
@@ -1723,19 +1725,26 @@
                         </subviews>
                         <color key="backgroundColor" red="0.29451838139999997" green="0.41949969529999998" blue="0.45098418000000001" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                         <constraints>
+                            <constraint firstItem="5Oy-0E-LYt" firstAttribute="top" secondItem="eoO-Ot-ems" secondAttribute="bottom" constant="10" id="20s-KT-sme"/>
+                            <constraint firstAttribute="trailing" secondItem="5Oy-0E-LYt" secondAttribute="trailing" constant="10" id="D2Z-bM-Edx"/>
                             <constraint firstItem="cZQ-W0-nA1" firstAttribute="top" secondItem="eoO-Ot-ems" secondAttribute="bottom" constant="45" id="NdZ-KY-90U"/>
                             <constraint firstItem="5Oy-0E-LYt" firstAttribute="centerX" secondItem="1xo-FO-SR4" secondAttribute="centerX" id="SkK-An-gX6"/>
                             <constraint firstItem="xOC-ie-Pz8" firstAttribute="centerY" secondItem="eoO-Ot-ems" secondAttribute="centerY" id="Ud8-tL-2AI"/>
+                            <constraint firstItem="5Oy-0E-LYt" firstAttribute="trailing" secondItem="3Vn-kV-HEc" secondAttribute="trailing" id="Upi-y2-Rfy"/>
                             <constraint firstItem="eid-HP-tJT" firstAttribute="trailing" secondItem="3Vn-kV-HEc" secondAttribute="trailing" constant="20" id="VEq-8R-JEo"/>
+                            <constraint firstItem="5Oy-0E-LYt" firstAttribute="leading" secondItem="cZQ-W0-nA1" secondAttribute="trailing" constant="20" id="W9G-aH-txa"/>
                             <constraint firstItem="9Sj-4R-hGf" firstAttribute="top" secondItem="cZQ-W0-nA1" secondAttribute="bottom" constant="20" id="WJS-gy-r2D"/>
-                            <constraint firstItem="eid-HP-tJT" firstAttribute="trailing" secondItem="9Sj-4R-hGf" secondAttribute="trailing" constant="20" id="YOj-Wx-uwg"/>
+                            <constraint firstItem="eid-HP-tJT" firstAttribute="trailing" secondItem="9Sj-4R-hGf" secondAttribute="trailing" constant="20" id="YOj-Wx-uwg">
+                                <variation key="heightClass=compact" constant="0.0"/>
+                            </constraint>
                             <constraint firstItem="cZQ-W0-nA1" firstAttribute="leading" secondItem="eid-HP-tJT" secondAttribute="leading" constant="20" id="Yz6-kG-oHg"/>
                             <constraint firstItem="3Vn-kV-HEc" firstAttribute="centerX" secondItem="1xo-FO-SR4" secondAttribute="centerX" id="Zzf-O5-ehv"/>
                             <constraint firstItem="xOC-ie-Pz8" firstAttribute="centerX" secondItem="eoO-Ot-ems" secondAttribute="centerX" id="aD1-xN-qCI"/>
                             <constraint firstItem="3Vn-kV-HEc" firstAttribute="leading" secondItem="eid-HP-tJT" secondAttribute="leading" constant="20" id="aDo-Wb-zNS"/>
-                            <constraint firstItem="eid-HP-tJT" firstAttribute="trailing" secondItem="cZQ-W0-nA1" secondAttribute="trailing" constant="20" id="aaA-E9-IaX"/>
                             <constraint firstItem="gqw-dd-SCc" firstAttribute="leading" secondItem="eid-HP-tJT" secondAttribute="leading" constant="20" id="coO-IC-Tt2"/>
                             <constraint firstItem="eid-HP-tJT" firstAttribute="trailing" secondItem="gqw-dd-SCc" secondAttribute="trailing" constant="20" id="eJO-h3-lc3"/>
+                            <constraint firstItem="5Oy-0E-LYt" firstAttribute="leading" secondItem="9Sj-4R-hGf" secondAttribute="trailing" constant="20" id="eiM-8V-GRS"/>
+                            <constraint firstItem="eid-HP-tJT" firstAttribute="trailing" secondItem="cZQ-W0-nA1" secondAttribute="trailing" constant="20" id="fId-uu-Jqk"/>
                             <constraint firstItem="9Sj-4R-hGf" firstAttribute="leading" secondItem="eid-HP-tJT" secondAttribute="leading" constant="20" id="gkd-sp-hiQ"/>
                             <constraint firstItem="eoO-Ot-ems" firstAttribute="leading" secondItem="1xo-FO-SR4" secondAttribute="leading" id="go1-Sj-fSh"/>
                             <constraint firstItem="3Vn-kV-HEc" firstAttribute="top" secondItem="5Oy-0E-LYt" secondAttribute="bottom" constant="10" id="gvf-I4-I7k"/>
@@ -1744,11 +1753,34 @@
                             <constraint firstItem="eoO-Ot-ems" firstAttribute="top" secondItem="eid-HP-tJT" secondAttribute="top" id="vR0-NN-tdM"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="eid-HP-tJT"/>
+                        <variation key="default">
+                            <mask key="constraints">
+                                <exclude reference="20s-KT-sme"/>
+                                <exclude reference="D2Z-bM-Edx"/>
+                                <exclude reference="Upi-y2-Rfy"/>
+                                <exclude reference="W9G-aH-txa"/>
+                                <exclude reference="eiM-8V-GRS"/>
+                            </mask>
+                        </variation>
+                        <variation key="heightClass=compact">
+                            <mask key="constraints">
+                                <exclude reference="YOj-Wx-uwg"/>
+                                <exclude reference="fId-uu-Jqk"/>
+                                <include reference="20s-KT-sme"/>
+                                <exclude reference="D2Z-bM-Edx"/>
+                                <exclude reference="SkK-An-gX6"/>
+                                <include reference="Upi-y2-Rfy"/>
+                                <include reference="W9G-aH-txa"/>
+                                <include reference="eiM-8V-GRS"/>
+                                <exclude reference="hoK-Dg-edp"/>
+                            </mask>
+                        </variation>
                     </view>
                     <toolbarItems/>
                     <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
                         <outlet property="astroNameLbl" destination="cZQ-W0-nA1" id="QtZ-2n-e3B"/>
+                        <outlet property="commentFld" destination="gqw-dd-SCc" id="fF5-Ph-XYP"/>
                         <outlet property="durationFld" destination="xju-kQ-qWf" id="0nb-Zn-Eqm"/>
                         <outlet property="observationPicker" destination="5Oy-0E-LYt" id="Kci-ED-1Tq"/>
                         <outlet property="observedAtLbl" destination="9Sj-4R-hGf" id="kpF-su-3h7"/>
