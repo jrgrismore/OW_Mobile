@@ -114,10 +114,20 @@ class ReportViewController: UIViewController,UIPickerViewDelegate,UIPickerViewDa
   {
     
     print("observation code=",selectedRow,"   observation string=",pickerData[selectedRow])
+    var duration: Double? = nil
     if selectedRow == 4
     {
       print("duration=",durationFld.text)
+      duration = Double(durationFld.text!)
     }
+    //populate data structure
+    let postReportData = ObservationReport.init(Outcome: selectedRow, Duration: duration, Comment: commentFld.text)
+    //submit report
+//    OWWebAPI.shared.postReport(reportCode: 99, duration: 99.99, completion: { (data, error) in
+    OWWebAPI.shared.postReport(reportData: postReportData, completion: { (data, error) in
+      print("do completion closure")
+    })
+    
     dismissVC(ReportViewController.self)
   }
   

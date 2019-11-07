@@ -24,6 +24,8 @@ class OWWebAPI: NSObject
   static let owDetailConfig = URLSessionConfiguration.default
   static var owDetailSession = URLSession(configuration: owDetailConfig)
   
+  static var owmSession = URLSession(configuration: .default)
+  
   //create singleton for managing session during app lifetime
   static let shared = OWWebAPI()
   
@@ -31,6 +33,8 @@ class OWWebAPI: NSObject
   let myEventsPath = "/api/v1/events/list"
   let eventDetailsPath = "/api/v1/events/"
   let eventWithDetailsPath = "/api/v1/events/details-list"
+  //temporarily prepended ZZZ to prevent accidental execution during testing
+  let postReportPath = "/ZZZ/api/v1/events/EVENT-ID/STATION-ID/report-observation"
   let scheme = "https"
   
   var parsedJSON = [Event]()
@@ -57,6 +61,26 @@ class OWWebAPI: NSObject
     urlComponents.password = password
     let eventWithDetailsURL = urlComponents.url!
     return eventWithDetailsURL
+  }
+  
+  func createPostReportURL(owSession: URLSession) -> URL
+  {
+    let user = Credentials.username
+    let password = Credentials.password
+    let credential = URLCredential(user: user, password: password, persistence: .permanent)
+    //create url
+    let protectionSpace = URLProtectionSpace(host: host, port: 443, protocol: scheme, realm: "Restricted", authenticationMethod: NSURLAuthenticationMethodHTTPBasic)
+    URLCredentialStorage.shared.setDefaultCredential(credential, for: protectionSpace)
+    
+    var urlComponents = URLComponents()
+    urlComponents.scheme = scheme
+    urlComponents.host = host
+    urlComponents.path = postReportPath
+    urlComponents.user = user
+    urlComponents.password = password
+
+    let postReportURL = urlComponents.url!
+    return postReportURL
   }
   
   func retrieveEventsWithDetails( completion: @escaping ([EventWithDetails]?, Error?) -> Void)
@@ -287,6 +311,49 @@ class OWWebAPI: NSObject
     }
     owDetailTask.resume()
   }
+  
+//  func postReport(reportCode: Int, duration: Double?, completion: @escaping (Data?, Error?) -> () )
+  func postReport(reportData: ObservationReport, completion: @escaping (Data?, Error?) -> () )
+  {
+    print("do urlsession datatask")
+    let postReportURL = createPostReportURL(owSession: OWWebAPI.owmSession)
+    print("postReportURL=",postReportURL)
+    var request = URLRequest(url: postReportURL)
+    request.httpMethod = "POST"
+    
+    print("postReport > reportCode=",reportData.Outcome)
+    print("postReport > duration=",reportData.Duration)
+    print("postReport > comment=",reportData.Comment)
+    
+    //json encode data
+    let jsonPostData = try! JSONEncoder().encode(reportData)
+    print("jsonPostData=",jsonPostData)
+    let jsonPostString = String(data: jsonPostData, encoding: .utf8)
+    print("jsonPostString=",jsonPostString!)
+    
+    
+    
+//    let jsonPostData = "tempPost".data(using: .utf8)  //need to use json serialization
+    
+    let owmTask = OWWebAPI.owmSession.uploadTask(with: request, from: jsonPostData)
+    {
+      (data,response,error) in
+      if let error = error {
+        print("error: \(error)")
+      } else {
+        if let response = response as? HTTPURLResponse {
+          print("statusCode: \(response.statusCode)")
+        }
+        if let data = data, let dataString = String(data: data, encoding: .utf8) {
+          print("data: \(dataString)")
+        }
+      }
+      completion(data,error)
+    }
+    owmTask.resume()
+  }
+  
+  
 }
 
 extension OWWebAPI: URLSessionDelegate, URLSessionTaskDelegate

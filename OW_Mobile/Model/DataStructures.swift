@@ -98,6 +98,16 @@ var eventsWithDetails = [EventWithDetails]()  //event array of unified data
 var currentEvent = OccultationEvent()   //event
 
 
+//Observation Report Post Structure
+struct ObservationReport: Codable
+{
+  var Outcome: Int?   // ObservationOutcome     from enum???
+  var Duration: Double?
+  var Comment: String?
+}
+
+
+
 //Event structure matching JSON keys
 struct Event: Codable
 {
