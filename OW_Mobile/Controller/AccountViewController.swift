@@ -198,6 +198,12 @@ class AccountViewController: UIViewController, UITextFieldDelegate
     userHasChanged = true
   }
   
+  @IBAction func resetPassword(_ sender: Any)
+  {
+    print("reset password tapped")
+  }
+  
+  
   func versionBuild() -> String {
     let dictionary = Bundle.main.infoDictionary!
     let version = dictionary["CFBundleShortVersionString"] as! String

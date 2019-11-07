@@ -16,7 +16,7 @@ class MyEventsViewController: UIViewController, UICollectionViewDataSource,UICol
   @IBOutlet weak var activitySpinner: UIActivityIndicatorView!
   @IBOutlet weak var spinnerLbl: UILabel!
   @IBOutlet weak var spinnerView: UIView!
-  
+    
   let reuseIdentifier = "MyEventCell"
   var cellEventDetailArray = [EventWithDetails]()  //for rework
   var cellEventDetailStringArray = [EventDetailStrings]()
@@ -49,9 +49,22 @@ class MyEventsViewController: UIViewController, UICollectionViewDataSource,UICol
     }
   }
   
+  @objc func testRefresh()
+  {
+    print("testRefresh called")
+    updateCellArray()
+    //get cookie info
+    OWWebAPI.shared.getCookieData()
+    myEventsCollection.refreshControl?.endRefreshing()
+  }
+  
+  
   override func viewDidLoad()
   {
     super.viewDidLoad()
+    let refreshControl = UIRefreshControl()
+    refreshControl.addTarget(self, action: #selector(testRefresh), for: .valueChanged)
+   myEventsCollection.refreshControl = refreshControl
     
     self.spinnerView.layer.cornerRadius = 20
     OWWebAPI.shared.delegate = self
@@ -103,6 +116,13 @@ class MyEventsViewController: UIViewController, UICollectionViewDataSource,UICol
     self.present(lastUpdateAlert, animated: true, completion: nil)
     self.navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.black,
                                                                     NSAttributedString.Key.font: UIFont.preferredFont(forTextStyle: .title3)]
+  
+    eventUpdateTimer = Timer.scheduledTimer(timeInterval: 5.0, target: self, selector: #selector(handleEventTimer), userInfo: nil, repeats: true)
+}
+  
+  @objc func handleEventTimer()
+  {
+    print("eventUpdateTimer Triggered: ",Date())
   }
   
   override func viewWillAppear(_ animated: Bool)
@@ -295,7 +315,7 @@ class MyEventsViewController: UIViewController, UICollectionViewDataSource,UICol
     print()
   }
   
-  func updateCellArray()
+  @objc func updateCellArray()
   {
     getEventsWithDetails()
   }

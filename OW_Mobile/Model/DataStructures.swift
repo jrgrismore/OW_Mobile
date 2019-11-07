@@ -18,6 +18,8 @@ struct UDKeys
   static let eventsWithDetails = "eventsWithDetails"
 }
 
+var eventUpdateTimer = Timer()
+
 //Unified event with details structure matching JSON keys
 struct EventWithDetails: Codable
 {
