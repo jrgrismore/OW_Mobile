@@ -116,8 +116,8 @@ class MyEventsViewController: UIViewController, UICollectionViewDataSource,UICol
     self.present(lastUpdateAlert, animated: true, completion: nil)
     self.navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.black,
                                                                     NSAttributedString.Key.font: UIFont.preferredFont(forTextStyle: .title3)]
-  
-    eventUpdateTimer = Timer.scheduledTimer(timeInterval: 5.0, target: self, selector: #selector(handleEventTimer), userInfo: nil, repeats: true)
+  //temporarily disabled
+//    eventUpdateTimer = Timer.scheduledTimer(timeInterval: 5.0, target: self, selector: #selector(handleEventTimer), userInfo: nil, repeats: true)
 }
   
   @objc func handleEventTimer()
