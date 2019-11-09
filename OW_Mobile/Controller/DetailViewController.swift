@@ -34,6 +34,7 @@ class DetailViewController: UIViewController
   var selectionObject: String!
   var detailStr: String = ""
   var eventID: String = ""
+  var reportStationId: Int?
   var complete: Bool = false
   var selectedEvent = EventWithDetails()
   var eventsWithDetails = [EventWithDetails]()
@@ -109,7 +110,7 @@ class DetailViewController: UIViewController
   // MARK: - View functions
   override func viewDidLoad()
   {
-    print("viewDidLoad")
+//    print("viewDidLoad")
     super.viewDidLoad()
     stationCollectionView.delegate = self
     stationCollectionView.dataSource = self
@@ -124,7 +125,7 @@ class DetailViewController: UIViewController
   
   override func viewWillAppear(_ animated: Bool)
   {
-    print("viewWillAppear")
+//    print("viewWillAppear")
     stationCollectionView.isHidden = true
     
     eventDetailView.isHidden = false
@@ -149,7 +150,7 @@ class DetailViewController: UIViewController
   override func viewDidAppear(_ animated: Bool)
   {
     eventDetailView.isHidden = false
-    print("viewDidAppear")
+//    print("viewDidAppear")
     adjustCellWidth()
     let primaryIndex = OccultationEvent.primaryStationIndex(selectedStations)
     currentStationIndexPath = IndexPath(item:primaryIndex!, section: 0)
@@ -164,7 +165,7 @@ class DetailViewController: UIViewController
   
   override func viewWillLayoutSubviews()
   {
-    print("viewWillLayoutSubviews")
+//    print("viewWillLayoutSubviews")
     stationCollectionView.frame.size.width = self.view.safeAreaLayoutGuide.layoutFrame.size.width
 
     super.viewWillLayoutSubviews()
@@ -172,7 +173,7 @@ class DetailViewController: UIViewController
   
   override func viewDidLayoutSubviews()
   {
-    print("viewDidLayoutSubviews")
+//    print("viewDidLayoutSubviews")
     super.viewDidLayoutSubviews()
   }
   
@@ -183,24 +184,24 @@ class DetailViewController: UIViewController
   
   @objc func deviceRotated()
   {
-    print()
-    print("deviceRotated")
-    switch UIDevice.current.orientation {
-    case .landscapeLeft:
-      print("landscape left")
-    case .landscapeRight:
-      print("landscape right")
-    case .portrait:
-      print("portrait")
-    case .portraitUpsideDown:
-      print("portrait upsidedown")
-    case .faceUp:
-      print("face up")
-    case .faceDown:
-      print("face down")
-    default:
-      print("other")
-    }
+//    print()
+//    print("deviceRotated")
+//    switch UIDevice.current.orientation {
+//    case .landscapeLeft:
+//      print("landscape left")
+//    case .landscapeRight:
+//      print("landscape right")
+//    case .portrait:
+//      print("portrait")
+//    case .portraitUpsideDown:
+//      print("portrait upsidedown")
+//    case .faceUp:
+//      print("face up")
+//    case .faceDown:
+//      print("face down")
+//    default:
+//      print("other")
+//    }
     
     DispatchQueue.main.async {
       self.stationCollectionView.setNeedsLayout()
@@ -214,7 +215,7 @@ class DetailViewController: UIViewController
   
   override func viewWillDisappear(_ animated: Bool)
   {
-    print("viewWillDisappear")
+//    print("viewWillDisappear")
     eventDetailView.isHidden = true
 //printShadowPlotDiagnostics(headerStr: "viewWillDisappear end")
   }
@@ -236,7 +237,7 @@ class DetailViewController: UIViewController
         var remainingTime: NSMutableAttributedString = timeTuple.remainingTime as! NSMutableAttributedString
         if remainingTime.string == "completed"
         {
-          print("Detail > found completed")
+//          print("Detail > found completed")
           remainingTime = NSMutableAttributedString(string: "")
           //dim/gray out asteriod hame, date and time
           self.eventTitle.textColor = self.dimGray
@@ -277,7 +278,7 @@ class DetailViewController: UIViewController
   
   func updateStationFlds(cell: inout StationCell, indexPath: IndexPath, stations: [ObserverStation], itm: EventWithDetails)
   {
-    print("updateStationFlds")
+//    print("updateStationFlds")
     var item = itm
     
     cell.sigmaImg.accessibilityIdentifier = "sigmaImg"
@@ -305,6 +306,7 @@ class DetailViewController: UIViewController
 
     
     let stationIndex = indexPath.item
+//    print("updateStationFlds > stations[stationIndex].StationId=",stations[stationIndex].StationId)
     var stationPosIconVal : Int?
     stationPosIconVal = 0
     if stations[stationIndex].StationPos != nil
@@ -342,6 +344,7 @@ class DetailViewController: UIViewController
     cell.eventTimeError.text = errorTimeStr
     
     let report = stations[stationIndex].Report
+    reportStationId = stations[stationIndex].StationId
     if complete
     {
       switch report {
@@ -486,7 +489,7 @@ class DetailViewController: UIViewController
         highCloudStr = String(format: "%@",stations[stationIndex].HighCloud!.description)
       }
     } else {
-      print("not complete")
+//      print("not complete")
       cell.eventCloudImg.image = nil
       cell.eventClouds.text = ""
       cell.eventWindStrengthImg.image = nil
@@ -626,8 +629,8 @@ class DetailViewController: UIViewController
     var plotWidthKm = totalPlotWidthKm(item, scale: .sigma3Edge)
     DispatchQueue.main.async
       {
-        print()
-        print("updateShadowPlot")
+//        print()
+//        print("updateShadowPlot")
         let outerChordWidth = farthestChordWidth(item)
         self.sigma1BarView.isHidden = false
         self.sigma2BarView.isHidden = false
@@ -679,7 +682,7 @@ class DetailViewController: UIViewController
 //    print("currentIndex=",currentIndex)
 //    DispatchQueue.main.async
 //      {
-        print("moveCursorToStation")
+//        print("moveCursorToStation")
         if self.weatherBarView.subviews[currentIndex].frame.origin.x >= self.weatherBarView.frame.minX
           && self.weatherBarView.subviews[currentIndex].frame.origin.x < self.weatherBarView.frame.maxX
         {
@@ -694,7 +697,7 @@ class DetailViewController: UIViewController
 
    func movePrimaryStationBar(_ item: EventWithDetails, _ plotWidthKm: Double)
    {
-     print("movePrimaryStationBar")
+//     print("movePrimaryStationBar")
        var primaryStation = OccultationEvent.primaryStation(item)!
           let primaryFactor = plotStationBarFactor(station: primaryStation, totalPlotWidthKm: plotWidthKm)
           DispatchQueue.main.async
@@ -713,7 +716,7 @@ class DetailViewController: UIViewController
   
   func addStationsSubviews(_ plotWidthKm: Double)
   {
-    print("addStationsSubviews")
+//    print("addStationsSubviews")
         for station in self.selectedStations
       {
         let stationFactor = plotStationBarFactor(station: station, totalPlotWidthKm: plotWidthKm)
@@ -736,7 +739,7 @@ class DetailViewController: UIViewController
   func addStationCursor()
   {
     //add station cursor subview
-    print("addStationCursor")
+//    print("addStationCursor")
 //    DispatchQueue.main.async
 //      {
     self.stationCursor.frame.size.width = 11
@@ -751,7 +754,7 @@ class DetailViewController: UIViewController
   
   func addPlotTicks(plotWidthKM: Double)
   {
-    print("addPlotTicks")
+//    print("addPlotTicks")
     let tickWidth = 1.0
     let tickHeight = 3.0
     let tickColor = UIColor.darkGray
@@ -812,6 +815,7 @@ class DetailViewController: UIViewController
 //  @IBAction func handleReport(_ sender: Any)
 //  {
 //    print(">>>Report Obervations button tapped<<<")
+//    print("reportStationId=",reportStationId)
 //  }
   
   override func prepare(for segue: UIStoryboardSegue, sender: Any?)
@@ -820,6 +824,10 @@ class DetailViewController: UIViewController
     {
       if let dest = segue.destination as? ReportViewController
       {
+        dest.eventId = selectedEvent.Id
+        print("dest.eventId=",dest.eventId)
+        dest.stationId = reportStationId
+        print("dest.stationId=",dest.stationId)
         dest.astroName = selectionObject
         dest.observedLocation = selectedStations[currentStationIndexPath.item].StationName
       }
@@ -841,7 +849,7 @@ extension DetailViewController: UICollectionViewDataSource,UICollectionViewDeleg
   
   func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell
   {
-    print("cellForItemAt")
+//    print("cellForItemAt")
     var cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as! StationCell
     cell.backgroundColor = #colorLiteral(red: 0.2043271959, green: 0.620110333, blue: 0.6497597098, alpha: 1)
     updateStationFlds(cell: &cell, indexPath: indexPath, stations: selectedStations, itm: selectedEvent)
@@ -865,7 +873,7 @@ extension DetailViewController: UICollectionViewDataSource,UICollectionViewDeleg
   
   func scrollViewDidEndDecelerating(_ scrollView: UIScrollView)
   {
-    DispatchQueue.main.async {print("scrollViewDidEndDecelerating")}
+//    DispatchQueue.main.async {print("scrollViewDidEndDecelerating")}
     currentStationIndexPath = visibleStationIndexPath()
     moveCursorToStation(indexPath: visibleStationIndexPath())
   }

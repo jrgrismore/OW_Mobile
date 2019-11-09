@@ -33,8 +33,7 @@ class OWWebAPI: NSObject
   let myEventsPath = "/api/v1/events/list"
   let eventDetailsPath = "/api/v1/events/"
   let eventWithDetailsPath = "/api/v1/events/details-list"
-  //temporarily prepended ZZZ to prevent accidental execution during testing
-  let postReportPath = "/ZZZ/api/v1/events/EVENT-ID/STATION-ID/report-observation"
+  let postReportPath = "/api/v1/events/EVENT-ID/STATION-ID/report-observation"
   let scheme = "https"
   
   var parsedJSON = [Event]()
@@ -63,7 +62,7 @@ class OWWebAPI: NSObject
     return eventWithDetailsURL
   }
   
-  func createPostReportURL(owSession: URLSession) -> URL
+  func createPostReportURL(eventId: String, stationId: Int, owSession: URLSession) -> URL
   {
     let user = Credentials.username
     let password = Credentials.password
@@ -75,7 +74,7 @@ class OWWebAPI: NSObject
     var urlComponents = URLComponents()
     urlComponents.scheme = scheme
     urlComponents.host = host
-    urlComponents.path = postReportPath
+    urlComponents.path = "/api/v1/events/" + eventId + "/" + String(stationId) + "/report-observation"
     urlComponents.user = user
     urlComponents.password = password
 
@@ -313,28 +312,28 @@ class OWWebAPI: NSObject
   }
   
 //  func postReport(reportCode: Int, duration: Double?, completion: @escaping (Data?, Error?) -> () )
-  func postReport(reportData: ObservationReport, completion: @escaping (Data?, Error?) -> () )
+  func postReport(eventId: String, stationId: Int, reportData: ObservationReport, completion: @escaping (Data?, Error?) -> () )
   {
     print("do urlsession datatask")
-    let postReportURL = createPostReportURL(owSession: OWWebAPI.owmSession)
+    print("eventId=",eventId)
+    print("stationId=",stationId)
+    let postReportURL = createPostReportURL(eventId: eventId, stationId: stationId, owSession: OWWebAPI.owmSession)
     print("postReportURL=",postReportURL)
     var request = URLRequest(url: postReportURL)
     request.httpMethod = "POST"
     
-    print("postReport > reportCode=",reportData.Outcome)
-    print("postReport > duration=",reportData.Duration)
-    print("postReport > comment=",reportData.Comment)
-    
     //json encode data
+    print("reportData=",reportData)
     let jsonPostData = try! JSONEncoder().encode(reportData)
     print("jsonPostData=",jsonPostData)
     let jsonPostString = String(data: jsonPostData, encoding: .utf8)
     print("jsonPostString=",jsonPostString!)
     
-    
+    //temporary break
+//    return
     
 //    let jsonPostData = "tempPost".data(using: .utf8)  //need to use json serialization
-    
+
     let owmTask = OWWebAPI.owmSession.uploadTask(with: request, from: jsonPostData)
     {
       (data,response,error) in
