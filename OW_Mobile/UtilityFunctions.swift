@@ -596,3 +596,74 @@ func plotStationBarFactor(station: ObserverStation, totalPlotWidthKm: Double) ->
   return stationBarFactor
 }
 
+
+  func loadSettings() -> Settings
+  {
+    guard let encodedSettings = UserDefaults.standard.data(forKey: UDKeys.settings) else {
+      return Settings()
+    }
+    let decodedSettings = try! JSONDecoder().decode(Settings.self, from: encodedSettings)
+    return decodedSettings
+  }
+
+  func saveSettings(_ settings: Settings)
+  {
+    let data = try? JSONEncoder().encode(settings)
+    UserDefaults.standard.set(data, forKey: UDKeys.settings)
+//    print("saved and reloaded settings = ",loadSettings())
+  }
+
+
+func assignAzIndicatorStr(azimuth: Double, azFormat: Bool) -> String
+{
+  var azStr = ""
+  if (azFormat)
+  {
+    azStr = String(format: "@%d°", Int(azimuth))
+    return azStr
+  }
+  if (azimuth <= 0 + 22.5 || azimuth > 360 - 22.5)
+  {
+    azStr = "N"
+  }
+  else if (azimuth <= 45 * 1 + 22.5 && azimuth > 45 * 1 - 22.5)
+  {
+    azStr = "NE"
+  }
+  else if (azimuth <= 45 * 2 + 22.5 && azimuth > 45 * 2 - 22.5)
+  {
+    azStr = "E"
+  }
+  else if (azimuth <= 45 * 3 + 22.5 && azimuth > 45 * 3 - 22.5)
+  {
+    azStr  = "SE"
+  }
+  else if (azimuth <= 45 * 4 + 22.5 && azimuth > 45 * 4 - 22.5)
+  {
+    azStr = "S"
+  }
+  else if (azimuth <= 45 * 5 + 22.5 && azimuth > 45 * 5 - 22.5)
+  {
+    azStr = "SW"
+  }
+  else if (azimuth <= 45 * 6 + 22.5 && azimuth > 45 * 6 - 22.5)
+  {
+    azStr = "W"
+  }
+  else if (azimuth <= 45 * 7 + 22.5 && azimuth > 45 * 7 - 22.5)
+  {
+    azStr = "NW"
+  }
+  return azStr
+}
+
+func celsiusToFahrenheit(degreesC: Double) -> Double
+{
+  return (9 / 5) * degreesC + 32
+}
+
+func fahrenheitToCelsius(degreesF: Double) -> Double
+{
+  return (degreesF - 32) * 5 / 9
+}
+

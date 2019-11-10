@@ -154,6 +154,8 @@ class MyEventsViewController: UIViewController, UICollectionViewDataSource,UICol
       }) )
       self.present(userChangeAlert, animated: true, completion: nil)
     }
+    //test???
+    self.myEventsCollection.reloadData()
   }
   
   override func prepare(for segue: UIStoryboardSegue, sender: Any?)
@@ -524,7 +526,13 @@ extension MyEventsViewController
           let thermIconValue = primaryStation?.TempDegC
           cell.tempImg.image = thermIcon(thermIconValue)
           //set weather text to appropriate text
+          if appSettings.tempIsCelsius
+          {
           cell.tempText.text = String(format: "%d°",(primaryStation?.TempDegC)!)
+          } else {
+            var tempF = celsiusToFahrenheit(degreesC: Double((primaryStation?.TempDegC)!))
+            cell.tempText.text = String(format: "%d°F",Int(tempF.rounded()))
+          }
         }
       } else {
         //set weather images and text empty because no forecast info is available

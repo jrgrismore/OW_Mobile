@@ -28,6 +28,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     print()
     //Hide Autolayout Warning
     UserDefaults.standard.setValue(false, forKey:"_UIConstraintBasedLayoutLogUnsatisfiable")
+    
+    appSettings = loadSettings()
+    
     return true
   }
 
@@ -54,6 +57,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     // Saves changes in the application's managed object context before the application terminates.
     self.saveContext()
     eventUpdateTimer.invalidate()
+    
+    saveSettings(appSettings)
   }
 
   // MARK: - Core Data stack
