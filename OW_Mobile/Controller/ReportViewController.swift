@@ -122,7 +122,7 @@ class ReportViewController: UIViewController,UIPickerViewDelegate,UIPickerViewDa
       duration = Double(durationFld.text!)
     }
     //populate data structure
-    let postReportData = ObservationReport.init(Outcome: selectedRow, Duration: duration, Comment: commentFld.text)
+    let postReportData = ObservationReport.init(Report: selectedRow, ReportedDuration: duration, ReportComment: commentFld.text)
     //submit report
 //    OWWebAPI.shared.postReport(reportCode: 99, duration: 99.99, completion: { (data, error) in
     OWWebAPI.shared.postReport(eventId: eventId!, stationId: stationId!, reportData: postReportData, completion: { (data, error) in

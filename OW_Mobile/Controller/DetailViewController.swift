@@ -126,6 +126,7 @@ class DetailViewController: UIViewController
   override func viewWillAppear(_ animated: Bool)
   {
 //    print("viewWillAppear")
+    print("selectedEvent=",selectedEvent)
     stationCollectionView.isHidden = true
     
     eventDetailView.isHidden = false

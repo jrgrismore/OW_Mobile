@@ -16,6 +16,7 @@ struct UDKeys
   static let myEventDetails = "myEventDetails"
   static let lastEventListUpdate = "lastEventListUpdate"
   static let eventsWithDetails = "eventsWithDetails"
+  static let settings = "settings"
 }
 
 var eventUpdateTimer = Timer()
@@ -101,13 +102,27 @@ var currentEvent = OccultationEvent()   //event
 
 
 //Observation Report Post Structure
+//struct ObservationReport: Codable
+//{
+//  var Outcome: Int?   // ObservationOutcome     from enum???
+//  var Duration: Double?
+//  var Comment: String?
+//}
 struct ObservationReport: Codable
 {
-  var Outcome: Int?   // ObservationOutcome     from enum???
-  var Duration: Double?
-  var Comment: String?
+  var Report: Int?   // ObservationOutcome     from enum???
+  var ReportedDuration: Double?
+  var ReportComment: String?
 }
 
+struct Settings: Codable
+{
+  var tempIsCelsius = true
+  var azimuthIsDegrees = true
+  var summaryTimeIsLocal = true
+  var detailTimeIsLocal = true
+  var starEpochIsJ2000 = true
+}
 
 
 //Event structure matching JSON keys

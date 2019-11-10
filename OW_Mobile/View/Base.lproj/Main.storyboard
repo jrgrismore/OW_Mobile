@@ -243,8 +243,8 @@
                             <scrollView clipsSubviews="YES" contentMode="scaleToFill" ambiguous="YES" directionalLockEnabled="YES" pagingEnabled="YES" showsHorizontalScrollIndicator="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XGd-3v-gZP">
                                 <rect key="frame" x="16" y="50" width="343" height="518"/>
                                 <subviews>
-                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="equalSpacing" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="8T8-GZ-Lcn" userLabel="Settings Stack View">
-                                        <rect key="frame" x="0.0" y="0.0" width="343" height="780"/>
+                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="equalSpacing" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="8T8-GZ-Lcn" userLabel="Settings Stack View">
+                                        <rect key="frame" x="0.0" y="0.0" width="343" height="720"/>
                                         <subviews>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hAp-M7-UOG" userLabel="View 1 - Temp">
                                                 <rect key="frame" x="0.0" y="0.0" width="343" height="80"/>
@@ -255,7 +255,7 @@
                                                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
-                                                    <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="3ZQ-p8-mXp">
+                                                    <segmentedControl opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="3ZQ-p8-mXp">
                                                         <rect key="frame" x="215.5" y="24.5" width="69" height="32"/>
                                                         <segments>
                                                             <segment title="°C"/>
@@ -274,8 +274,8 @@
                                                 </constraints>
                                                 <viewLayoutGuide key="safeArea" id="XbC-5C-B8l"/>
                                             </view>
-                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="zdT-b5-ogC" userLabel="View 2">
-                                                <rect key="frame" x="0.0" y="100" width="343" height="80"/>
+                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="zdT-b5-ogC" userLabel="View 2 - Azimuth">
+                                                <rect key="frame" x="0.0" y="90" width="343" height="80"/>
                                                 <subviews>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Azimuth: " textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Wi7-qA-wDk">
                                                         <rect key="frame" x="10" y="30" width="72" height="20.5"/>
@@ -301,8 +301,8 @@
                                                 </constraints>
                                                 <viewLayoutGuide key="safeArea" id="JrH-AT-dKd"/>
                                             </view>
-                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4cc-aW-FLs" userLabel="View 3">
-                                                <rect key="frame" x="0.0" y="200" width="343" height="80"/>
+                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4cc-aW-FLs" userLabel="View 3 - Summary Time">
+                                                <rect key="frame" x="0.0" y="180" width="343" height="80"/>
                                                 <subviews>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Summary Event Time:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QMh-5j-ctw">
                                                         <rect key="frame" x="10" y="30" width="167" height="20.5"/>
@@ -310,7 +310,7 @@
                                                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
-                                                    <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="Spe-CB-8cj">
+                                                    <segmentedControl opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="Spe-CB-8cj">
                                                         <rect key="frame" x="198.5" y="24.5" width="103" height="32"/>
                                                         <segments>
                                                             <segment title="Local"/>
@@ -328,8 +328,8 @@
                                                 </constraints>
                                                 <viewLayoutGuide key="safeArea" id="vxN-Po-xpt"/>
                                             </view>
-                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="buS-v8-Ts3" userLabel="View 4">
-                                                <rect key="frame" x="0.0" y="300" width="343" height="80"/>
+                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="buS-v8-Ts3" userLabel="View 4 - Detail Time">
+                                                <rect key="frame" x="0.0" y="270" width="343" height="80"/>
                                                 <subviews>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Detail Event Time:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5E9-xq-xrA">
                                                         <rect key="frame" x="10" y="30" width="138" height="20.5"/>
@@ -337,7 +337,7 @@
                                                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
-                                                    <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="Ex1-T4-gcQ">
+                                                    <segmentedControl opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="Ex1-T4-gcQ">
                                                         <rect key="frame" x="198.5" y="24.5" width="103" height="32"/>
                                                         <segments>
                                                             <segment title="Local"/>
@@ -355,16 +355,16 @@
                                                 </constraints>
                                                 <viewLayoutGuide key="safeArea" id="Qgr-XA-Gbv"/>
                                             </view>
-                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="atx-Kf-g08" userLabel="View 5">
-                                                <rect key="frame" x="0.0" y="400" width="343" height="80"/>
+                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="atx-Kf-g08" userLabel="View 5 - Star Epoch">
+                                                <rect key="frame" x="0.0" y="360" width="343" height="80"/>
                                                 <subviews>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Star Coordinates" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7py-aD-UX6">
                                                         <rect key="frame" x="10" y="30" width="128.5" height="20.5"/>
                                                         <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
-                                                        <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                        <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
-                                                    <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="nP6-hc-xnC">
+                                                    <segmentedControl opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="nP6-hc-xnC">
                                                         <rect key="frame" x="190.5" y="24.5" width="119" height="32"/>
                                                         <segments>
                                                             <segment title="J2000"/>
@@ -382,16 +382,22 @@
                                                 </constraints>
                                             </view>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xi5-17-G1h" userLabel="View 6">
-                                                <rect key="frame" x="0.0" y="500" width="343" height="80"/>
+                                                <rect key="frame" x="0.0" y="450" width="343" height="80"/>
                                                 <color key="backgroundColor" red="0.18823529410000001" green="0.2784313725" blue="0.2901960784" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                             </view>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="10M-uv-39f" userLabel="View 7">
-                                                <rect key="frame" x="0.0" y="600" width="343" height="80"/>
+                                                <rect key="frame" x="0.0" y="540" width="343" height="80"/>
                                                 <color key="backgroundColor" red="0.18823529410000001" green="0.2784313725" blue="0.2901960784" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                             </view>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hTL-3w-Wad" userLabel="View 8">
-                                                <rect key="frame" x="0.0" y="700" width="343" height="80"/>
+                                                <rect key="frame" x="0.0" y="630" width="343" height="80"/>
                                                 <color key="backgroundColor" red="0.18823529410000001" green="0.2784313725" blue="0.2901960784" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                            </view>
+                                            <view contentMode="scaleToFill" id="HjN-8D-zrl" userLabel="View 9 - Bottom">
+                                                <rect key="frame" x="0.0" y="720" width="343" height="0.0"/>
+                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                <color key="backgroundColor" red="0.18823529410000001" green="0.2784313725" blue="0.2901960784" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                                <viewLayoutGuide key="safeArea" id="KGg-Qy-8S0"/>
                                             </view>
                                         </subviews>
                                         <constraints>
@@ -409,6 +415,7 @@
                                     <constraint firstItem="8T8-GZ-Lcn" firstAttribute="leading" secondItem="XGd-3v-gZP" secondAttribute="leading" id="0Tb-Qd-dU1"/>
                                     <constraint firstItem="8T8-GZ-Lcn" firstAttribute="width" secondItem="XGd-3v-gZP" secondAttribute="width" id="8QO-qM-pSw"/>
                                     <constraint firstItem="8T8-GZ-Lcn" firstAttribute="top" secondItem="XGd-3v-gZP" secondAttribute="top" id="DRY-ii-jTv"/>
+                                    <constraint firstItem="hAp-M7-UOG" firstAttribute="top" secondItem="XGd-3v-gZP" secondAttribute="top" id="H4a-63-Vz5"/>
                                     <constraint firstAttribute="trailing" secondItem="8T8-GZ-Lcn" secondAttribute="trailing" id="Wox-Kd-mFF"/>
                                 </constraints>
                             </scrollView>
