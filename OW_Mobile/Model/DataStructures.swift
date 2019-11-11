@@ -63,6 +63,8 @@ struct EventWithDetails: Codable
   var AstRotationAmplitude: Double?
   var PredictionUpdated: String?
   var OneSigmaErrorWidthKm: Double?
+  var RAJ2000Hours: Double?
+  var DEJ2000Deg: Double?
 }
 
 //stations data structure to be embedded in unified event detail structure
