@@ -108,11 +108,11 @@ var currentEvent = OccultationEvent()   //event
 //  var Duration: Double?
 //  var Comment: String?
 //}
-struct ObservationReport: Codable
+public struct ObservationReport: Codable   //OWObservationReport ???
 {
-  var Report: Int?   // ObservationOutcome     from enum???
-  var ReportedDuration: Double?
-  var ReportComment: String?
+  public var Outcome: Int?
+  public var Duration: Double?
+  public var Comment: String?
 }
 
 struct Settings: Codable

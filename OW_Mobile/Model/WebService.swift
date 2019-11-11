@@ -321,6 +321,7 @@ class OWWebAPI: NSObject
     print("postReportURL=",postReportURL)
     var request = URLRequest(url: postReportURL)
     request.httpMethod = "POST"
+    request.setValue("application/json", forHTTPHeaderField: "Content-Type")   //added on advice from Hristo
     
     //json encode data
     print("reportData=",reportData)
