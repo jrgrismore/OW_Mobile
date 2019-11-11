@@ -124,11 +124,13 @@ struct Settings: Codable
   var summaryTimeIsLocal = true
   var detailTimeIsLocal = true
   var starEpochIsJ2000 = true
+  var latlonFormatIsDMS = true
+  var eventDayFormat = 0
 }
 
 
 //Event structure matching JSON keys
-struct Event: Codable
+struct Event: Codable 
 {
   var Id: String?
   var Object: String?

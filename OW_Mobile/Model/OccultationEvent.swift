@@ -80,12 +80,24 @@ class OccultationEvent: NSObject
   func updateRAFld(_ item: EventWithDetails) -> NSAttributedString
   {
     var raAttrStr: NSAttributedString = NSMutableAttributedString(string: "RA   —")
-    if item.RAHours != nil
+ 
+    if appSettings.starEpochIsJ2000
     {
-      //******convert decimal hours to hh:mm:ss
-      let raTuple = floatRAtoHMS(floatRA: item.RAHours!)
-      let raFldStr = String(format: "%02dh %02dm %04.1fs",raTuple.hours,raTuple.minutes,raTuple.seconds)
-      raAttrStr = self.formatLabelandField(label:"RA: ", field: raFldStr, units:"")
+      if item.RAJ2000Hours != nil
+      {
+        //******convert decimal hours to hh:mm:ss
+        let raTuple = floatRAtoHMS(floatRA: item.RAJ2000Hours!)
+        let raFldStr = String(format: "%02dh %02dm %04.1fs",raTuple.hours,raTuple.minutes,raTuple.seconds)
+        raAttrStr = self.formatLabelandField(label:"RA: ", field: raFldStr, units:" ")
+      }
+    } else {
+      if item.RAHours != nil
+      {
+        //******convert decimal hours to hh:mm:ss
+        let raTuple = floatRAtoHMS(floatRA: item.RAHours!)
+        let raFldStr = String(format: "%02dh %02dm %04.1fs",raTuple.hours,raTuple.minutes,raTuple.seconds)
+        raAttrStr = self.formatLabelandField(label:"RA: ", field: raFldStr, units:"")
+      }
     }
     return raAttrStr
   }
@@ -93,12 +105,23 @@ class OccultationEvent: NSObject
   func updateDecFld(_ item: EventWithDetails) -> NSAttributedString
   {
     var decAttrStr: NSAttributedString = NSMutableAttributedString(string: "DE   —")
-    if item.DEDeg != nil
+    if appSettings.starEpochIsJ2000
     {
-      //******convert decimal degrees to dd:mm:ss
-      let decTuple = floatDecToDMS(floatDegrees: item.DEDeg!)
-      let decFldStr = String(format: "%+03d° %02d' %04.1f\"",decTuple.degrees,labs(decTuple.minutes),fabs(decTuple.seconds))
-      decAttrStr = self.formatLabelandField(label:"DE: ", field: decFldStr, units:"")
+      if item.DEJ2000Deg != nil
+      {
+        //******convert decimal degrees to dd:mm:ss
+        let decTuple = floatDecToDMS(floatDegrees: item.DEJ2000Deg!)
+        let decFldStr = String(format: "%+03d° %02d' %04.1f\"",decTuple.degrees,labs(decTuple.minutes),fabs(decTuple.seconds))
+        decAttrStr = self.formatLabelandField(label:"DE: ", field: decFldStr, units:"")
+      }
+    } else {
+      if item.DEDeg != nil
+      {
+        //******convert decimal degrees to dd:mm:ss
+        let decTuple = floatDecToDMS(floatDegrees: item.DEDeg!)
+        let decFldStr = String(format: "%+03d° %02d' %04.1f\"",decTuple.degrees,labs(decTuple.minutes),fabs(decTuple.seconds))
+        decAttrStr = self.formatLabelandField(label:"DE: ", field: decFldStr, units:"")
+      }
     }
     return decAttrStr
   }
@@ -418,7 +441,7 @@ class OccultationEvent: NSObject
   }
   
   // MARK: - Field Update Functiosn
-  func updateEventTimeFlds(_ item: inout EventWithDetails, stationIndex: Int) -> (eventTime:String, remainingTime:NSAttributedString)
+  func updateUTCEventTimeFlds(_ item: inout EventWithDetails, stationIndex: Int) -> (eventTime:String, remainingTime:NSAttributedString)
   {
     var leadTimeStr = "—"
     var leadTimeAttrStr: NSAttributedString = NSMutableAttributedString(string: "—")
@@ -432,6 +455,27 @@ class OccultationEvent: NSObject
       eventDateFormatter.timeZone = TimeZone(abbreviation: "UTC")
       let completionDate = eventDateFormatter.date(from: item.Stations![stationIndex].EventTimeUtc!)!
       eventDateFormatter.dateFormat = "dd MMM, HH:mm:ss' UT'"
+      completionDateStr = eventDateFormatter.string(from: completionDate )
+    }
+    return (completionDateStr,leadTimeAttrStr)
+  }
+  
+  func updateLocalEventTimeFlds(_ item: inout EventWithDetails, stationIndex: Int) -> (eventTime:String, remainingTime:NSAttributedString)
+  {
+    var leadTimeStr = "—"
+    var leadTimeAttrStr: NSAttributedString = NSMutableAttributedString(string: "—")
+    var completionDateStr = "—"
+    if item.Stations![stationIndex].EventTimeUtc != nil
+    {
+      leadTimeStr = leadTime(timeString: item.Stations![stationIndex].EventTimeUtc!)
+      leadTimeAttrStr = self.formatLabelandField(label:"", field: leadTimeStr, units:"")
+      let eventDateFormatter = DateFormatter()
+      eventDateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSS"
+      eventDateFormatter.timeZone = TimeZone(abbreviation: "UTC")
+      let completionDate = eventDateFormatter.date(from: item.Stations![stationIndex].EventTimeUtc!)!
+      eventDateFormatter.dateFormat = "dd MMM, HH:mm:ss"
+      eventDateFormatter.timeZone = TimeZone.current
+
       completionDateStr = eventDateFormatter.string(from: completionDate )
     }
     return (completionDateStr,leadTimeAttrStr)

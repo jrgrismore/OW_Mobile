@@ -64,6 +64,7 @@ class DetailViewController: UIViewController
   @IBOutlet weak var eventFeed: UILabel!
   
   @IBOutlet weak var eventRA: UILabel!
+  @IBOutlet weak var j2000Lbl: UILabel!
   @IBOutlet weak var eventDec: UILabel!
   @IBOutlet weak var eventStarBV: UILabel!
   @IBOutlet weak var eventStarDiameter: UILabel!
@@ -234,7 +235,7 @@ class DetailViewController: UIViewController
     DispatchQueue.main.async
       {
         let primaryStationIndex = OccultationEvent.primaryStationIndex(self.selectedStations)
-        let timeTuple = currentEvent.updateEventTimeFlds(&item,stationIndex: primaryStationIndex!)
+        let timeTuple = currentEvent.updateUTCEventTimeFlds(&item,stationIndex: primaryStationIndex!)
         var remainingTime: NSMutableAttributedString = timeTuple.remainingTime as! NSMutableAttributedString
         if remainingTime.string == "completed"
         {
@@ -252,6 +253,12 @@ class DetailViewController: UIViewController
         self.eventTimeRemaining.attributedText = remainingTime
         self.eventFeed.attributedText = self.event.updateFeedFld(item)
         self.eventRA.attributedText = self.event.updateRAFld(item)
+        if appSettings.starEpochIsJ2000
+        {
+          self.j2000Lbl.isHidden = false
+        } else {
+          self.j2000Lbl.isHidden = true
+        }
         self.eventDec.attributedText = self.event.updateDecFld(item)
         self.eventAsteroidOrigin.attributedText = self.event.updateAsteroidClassFld(item)
         self.eventAsteroidDiameter.attributedText = self.event.updateAsteroidDiamKM(item)
@@ -334,9 +341,15 @@ class DetailViewController: UIViewController
     }
     cell.eventStationID.text = stationName
     
-    let timeTuple = event.updateEventTimeFlds(&item, stationIndex: indexPath.row)
-    cell.eventTime.text = timeTuple.eventTime
-    
+    if appSettings.detailTimeIsLocal
+    {
+      let timeTuple = event.updateLocalEventTimeFlds(&item, stationIndex: indexPath.row)
+      cell.eventTime.text = timeTuple.eventTime
+    } else {
+      let timeTuple = event.updateUTCEventTimeFlds(&item, stationIndex: indexPath.row)
+      cell.eventTime.text = timeTuple.eventTime
+    }
+
     var errorTimeStr = "—"
     if item.ErrorInTimeSec != nil
     {

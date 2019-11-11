@@ -10,7 +10,9 @@ import UIKit
 
 var appSettings = Settings()
 
-class SettingsViewController: UIViewController {
+class SettingsViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource {
+  
+  var pickerData: [String] = []
 
   @IBOutlet weak var scrollView: UIScrollView!
   @IBOutlet weak var settingsStackView: UIStackView!
@@ -20,14 +22,20 @@ class SettingsViewController: UIViewController {
   @IBOutlet weak var summaryTimeSeg: UISegmentedControl!
   @IBOutlet weak var detailTimeSeg: UISegmentedControl!
   @IBOutlet weak var starEpochSeg: UISegmentedControl!
-
+  @IBOutlet weak var latlonFormatSeg: UISegmentedControl!
+  
+  @IBOutlet weak var eventDayFormatPicker: UIPickerView!
   
   override func viewDidLoad() {
     super.viewDidLoad()
     var segmentFont =   UIFont.preferredFont(forTextStyle: .body)
+    
+    eventDayFormatPicker.delegate = self
+    eventDayFormatPicker.dataSource = self
+    eventDayFormatPicker.backgroundColor = .lightGray
 
-//    summaryTimeSeg.setTitleTextAttributes([NSAttributedString.Key.font : segmentFont, NSAttributedString.Key.foregroundColor: UIColor.init(red: 87, green: 87, blue: 87, alpha: 1.0)], for: .normal)
-//    summaryTimeSeg.setTitleTextAttributes([NSAttributedString.Key.font : segmentFont, NSAttributedString.Key.foregroundColor: UIColor.black], for: .normal)
+    
+    pickerData = ["Thursday (Evening/Night/Morning)","Thursday (Evening/Night)","07 November 2019"]
   }
   
   override func viewWillAppear(_ animated: Bool) {
@@ -93,6 +101,11 @@ class SettingsViewController: UIViewController {
     saveSettings(appSettings)
   }
   
+  
+  
+  
+  
+  
   @IBAction func toggleSummaryTime(_ sender: Any) {
     switch summaryTimeSeg.selectedSegmentIndex
     {
@@ -141,6 +154,58 @@ class SettingsViewController: UIViewController {
     saveSettings(appSettings)
   }
   
+  @IBAction func toggleLatLonFormat(_ sender: Any) {
+   switch latlonFormatSeg.selectedSegmentIndex
+   {
+   case 0:
+     print("show lat/lon format as DMS")
+//     appSettings.latlonFormatIsDMS = true
+   case 1:
+     print("show lat/lon format as decimal")
+//     appSettings.latlonFormatIsDMS = false
+   default:
+     print("show lat/lon format as DMS")
+//     appSettings.latlonFormatIsDMS = true
+   }
+   saveSettings(appSettings)
+}
+  
+  
+  
+  
+  func numberOfComponents(in pickerView: UIPickerView) -> Int
+  {
+    return 1
+  }
+  
+  func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int
+  {
+    return pickerData.count
+  }
+  
+//  func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String?
+//  {
+//       return pickerData[row]
+//   }
 
-
+  func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int)
+  {
+    print("eventDayFormatPicker row=",row,"   eventDayFormatPicker value=",pickerData[row])
+    
+  }
+  
+  func pickerView(_ pickerView: UIPickerView, viewForRow row: Int, forComponent component: Int, reusing view: UIView?) -> UIView
+  {
+    var label = UILabel()
+    if let v = view
+    {
+      label = v as! UILabel
+    }
+    label.font = UIFont (name: "Helvetica", size: 17)
+    label.text =  pickerData[row]
+    label.textAlignment = .center
+    return label
+  }
+  
+  
 }

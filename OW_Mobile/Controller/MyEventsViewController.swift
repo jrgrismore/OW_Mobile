@@ -374,7 +374,7 @@ extension MyEventsViewController
                   let event = EKEvent(eventStore: self.eventStore)
                   event.title = self.cellEventDetailStringArray[indexPath.row].Object
                   event.location = primaryStation!.StationName
-                  let eventStartUTC = utcStrToDate(eventTimeStr: primaryStation!.EventTimeUtc!)
+                  let eventStartUTC = utcStrToUTCDate(eventTimeStr: primaryStation!.EventTimeUtc!)
                   event.startDate = eventStartUTC
                   let eventEndUTC = event.startDate.addingTimeInterval( (self.cellEventDetailArray[indexPath.row].MaxDurSec!))
                   event.endDate = eventEndUTC
@@ -468,7 +468,12 @@ extension MyEventsViewController
       cell.timeError.textColor = .white
     }
     
-    cell.eventTime.text = formatEventTime(timeString: (primaryStation?.EventTimeUtc!)!)
+    if appSettings.summaryTimeIsLocal
+    {
+      cell.eventTime.text = formatLocalEventTime(timeString: (primaryStation?.EventTimeUtc!)!)
+    } else {      
+      cell.eventTime.text = formatUTCEventTime(timeString: (primaryStation?.EventTimeUtc!)!)
+    }
     //set time error field
     if cellEventDetailArray[indexPath.row].ErrorInTimeSec != nil
     {

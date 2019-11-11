@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 
-func formatEventTime(timeString: String) -> String
+func formatUTCEventTime(timeString: String) -> String
 {
   let eventTimeFormatter = DateFormatter()
   eventTimeFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSS"
@@ -17,6 +17,20 @@ func formatEventTime(timeString: String) -> String
   if let formattedDate = eventTimeFormatter.date(from: timeString)
   {
     eventTimeFormatter.dateFormat = "dd MMM, HH:mm:ss 'UT'"
+    return eventTimeFormatter.string(from: formattedDate)
+  }
+  return timeString
+}
+
+func formatLocalEventTime(timeString: String) -> String
+{
+  let eventTimeFormatter = DateFormatter()
+  eventTimeFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSS"
+  eventTimeFormatter.timeZone = TimeZone(abbreviation: "UTC")
+  if let formattedDate = eventTimeFormatter.date(from: timeString)
+  {
+    eventTimeFormatter.dateFormat = "dd MMM, HH:mm:ss"
+    eventTimeFormatter.timeZone = TimeZone.current
     return eventTimeFormatter.string(from: formattedDate)
   }
   return timeString
@@ -55,11 +69,23 @@ func leadTime(timeString: String) -> String
   return leadTimeString
 }
 
-func utcStrToDate(eventTimeStr: String) -> Date?
+func utcStrToUTCDate(eventTimeStr: String) -> Date?
 {
   let eventTimeFormatter = DateFormatter()
   eventTimeFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSS"
   eventTimeFormatter.timeZone = TimeZone(abbreviation: "UTC")
+  if let formattedDate = eventTimeFormatter.date(from: eventTimeStr)
+  {
+    return formattedDate
+  }
+  return nil
+}
+
+func utcStrToLocalDate(eventTimeStr: String) -> Date?
+{
+  let eventTimeFormatter = DateFormatter()
+  eventTimeFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSS"
+  eventTimeFormatter.timeZone = TimeZone.current
   if let formattedDate = eventTimeFormatter.date(from: eventTimeStr)
   {
     return formattedDate

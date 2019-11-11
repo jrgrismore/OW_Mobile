@@ -29,6 +29,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     //Hide Autolayout Warning
     UserDefaults.standard.setValue(false, forKey:"_UIConstraintBasedLayoutLogUnsatisfiable")
     
+    //temporary
+//    UserDefaults.standard.removeObject(forKey: UDKeys.settings)
     appSettings = loadSettings()
     
     return true
