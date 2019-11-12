@@ -881,7 +881,7 @@
                                                                     <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                     <nil key="highlightedColor"/>
                                                                     <variation key="heightClass=regular-widthClass=regular">
-                                                                        <fontDescription key="fontDescription" style="UICTFontTextStyleTitle2"/>
+                                                                        <fontDescription key="fontDescription" style="UICTFontTextStyleCallout"/>
                                                                     </variation>
                                                                 </label>
                                                                 <stackView opaque="NO" contentMode="scaleToFill" alignment="center" spacingType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="NeU-zG-7ya" userLabel="Star Mag Stack View">
@@ -1117,10 +1117,10 @@
                                         <directionalEdgeInsets key="directionalLayoutMargins" top="0.0" leading="3" bottom="0.0" trailing="3"/>
                                     </stackView>
                                     <stackView opaque="NO" contentMode="scaleToFill" distribution="fillProportionally" translatesAutoresizingMaskIntoConstraints="NO" id="PkI-Hu-aI0" userLabel="Feed HStack View">
-                                        <rect key="frame" x="0.0" y="17.5" width="375" height="18"/>
+                                        <rect key="frame" x="0.0" y="17.5" width="375" height="17.5"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" text="in 29 hours on 2 Feb 2019" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HIB-G2-7ts">
-                                                <rect key="frame" x="3" y="0.0" width="292.5" height="18"/>
+                                                <rect key="frame" x="3" y="0.0" width="292.5" height="17.5"/>
                                                 <fontDescription key="fontDescription" style="UICTFontTextStyleCallout"/>
                                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <nil key="highlightedColor"/>
@@ -1129,7 +1129,7 @@
                                                 </variation>
                                             </label>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" text="UKOCL" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Sfx-M4-Kzx">
-                                                <rect key="frame" x="295.5" y="0.0" width="76.5" height="18"/>
+                                                <rect key="frame" x="295.5" y="0.0" width="76.5" height="17.5"/>
                                                 <fontDescription key="fontDescription" style="UICTFontTextStyleCallout"/>
                                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <nil key="highlightedColor"/>
@@ -1145,7 +1145,7 @@
                                         <directionalEdgeInsets key="directionalLayoutMargins" top="0.0" leading="3" bottom="0.0" trailing="3"/>
                                     </stackView>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="HuD-ai-6Aw" userLabel="Shadow Sigma View">
-                                        <rect key="frame" x="0.0" y="35.5" width="375" height="0.0"/>
+                                        <rect key="frame" x="0.0" y="35" width="375" height="0.0"/>
                                         <subviews>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="RoV-Cl-X5I" userLabel="Weather Bar View">
                                                 <rect key="frame" x="0.0" y="0.0" width="375" height="0.0"/>
@@ -1353,7 +1353,7 @@
                                         <viewLayoutGuide key="safeArea" id="rc2-Az-8zL"/>
                                     </view>
                                     <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" verticalHuggingPriority="251" insetsLayoutMarginsFromSafeArea="NO" pagingEnabled="YES" dataMode="prototypes" springLoaded="YES" translatesAutoresizingMaskIntoConstraints="NO" id="BOt-Xz-Vv8" userLabel="Station Collection View">
-                                        <rect key="frame" x="0.0" y="35.5" width="375" height="45.5"/>
+                                        <rect key="frame" x="0.0" y="35" width="375" height="44.5"/>
                                         <color key="backgroundColor" red="0.1884797215461731" green="0.27445071935653687" blue="0.28627580404281616" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="90" id="zj3-Es-FSf"/>
@@ -1366,7 +1366,7 @@
                                         </collectionViewFlowLayout>
                                         <cells>
                                             <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="StationCell" id="uvV-yw-RoR" customClass="StationCell" customModule="OW_Mobile" customModuleProvider="target">
-                                                <rect key="frame" x="0.0" y="-2.5" width="375" height="50"/>
+                                                <rect key="frame" x="0.0" y="-3" width="375" height="50"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO">
                                                     <rect key="frame" x="0.0" y="0.0" width="375" height="50"/>
@@ -1654,28 +1654,23 @@
                                         </connections>
                                     </collectionView>
                                     <stackView opaque="NO" contentMode="scaleToFill" distribution="fillProportionally" translatesAutoresizingMaskIntoConstraints="NO" id="EYo-j8-VAk" userLabel="RA/Dec HStack">
-                                        <rect key="frame" x="0.0" y="81" width="375" height="17.5"/>
+                                        <rect key="frame" x="0.0" y="79.5" width="375" height="17.5"/>
                                         <subviews>
-                                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillProportionally" spacing="1" translatesAutoresizingMaskIntoConstraints="NO" id="c5x-LZ-CIW" userLabel="RAEpoch Stack View">
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" text="RA  07h 08m 05.6s" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qHW-5v-fWt">
                                                 <rect key="frame" x="3" y="0.0" width="184" height="17.5"/>
-                                                <subviews>
-                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" text="RA  07h 08m 05.6s" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qHW-5v-fWt">
-                                                        <rect key="frame" x="0.0" y="0.0" width="184" height="17.5"/>
-                                                        <fontDescription key="fontDescription" style="UICTFontTextStyleCallout"/>
-                                                        <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                        <nil key="highlightedColor"/>
-                                                        <variation key="heightClass=regular-widthClass=regular">
-                                                            <fontDescription key="fontDescription" style="UICTFontTextStyleTitle2"/>
-                                                        </variation>
-                                                    </label>
-                                                    <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="J2000" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aAX-sW-kWg" userLabel="J2000">
-                                                        <rect key="frame" x="0.0" y="0.0" width="184" height="0.0"/>
-                                                        <fontDescription key="fontDescription" style="UICTFontTextStyleCaption2"/>
-                                                        <color key="textColor" systemColor="systemYellowColor" red="1" green="0.80000000000000004" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                        <nil key="highlightedColor"/>
-                                                    </label>
-                                                </subviews>
-                                            </stackView>
+                                                <fontDescription key="fontDescription" style="UICTFontTextStyleCallout"/>
+                                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <nil key="highlightedColor"/>
+                                                <variation key="heightClass=regular-widthClass=regular">
+                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleTitle2"/>
+                                                </variation>
+                                            </label>
+                                            <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" verticalCompressionResistancePriority="751" text="(J2000)" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aAX-sW-kWg" userLabel="J2000">
+                                                <rect key="frame" x="187" y="0.0" width="0.0" height="17.5"/>
+                                                <fontDescription key="fontDescription" style="UICTFontTextStyleCaption2"/>
+                                                <color key="textColor" systemColor="systemYellowColor" red="1" green="0.80000000000000004" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" text="Dec  +20° 06' 50.9&quot;" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QrG-cJ-86B">
                                                 <rect key="frame" x="187" y="0.0" width="185" height="17.5"/>
                                                 <fontDescription key="fontDescription" style="UICTFontTextStyleCallout"/>
@@ -1692,10 +1687,10 @@
                                         <directionalEdgeInsets key="directionalLayoutMargins" top="0.0" leading="3" bottom="0.0" trailing="3"/>
                                     </stackView>
                                     <stackView opaque="NO" contentMode="scaleToFill" distribution="fillProportionally" translatesAutoresizingMaskIntoConstraints="NO" id="SeI-hh-4GI" userLabel="BV HStack">
-                                        <rect key="frame" x="0.0" y="98.5" width="375" height="18"/>
+                                        <rect key="frame" x="0.0" y="97" width="375" height="17.5"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" text="BV  0.861" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4Oq-hn-pVL">
-                                                <rect key="frame" x="3" y="0.0" width="125.5" height="18"/>
+                                                <rect key="frame" x="3" y="0.0" width="125.5" height="17.5"/>
                                                 <fontDescription key="fontDescription" style="UICTFontTextStyleCallout"/>
                                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <nil key="highlightedColor"/>
@@ -1704,7 +1699,7 @@
                                                 </variation>
                                             </label>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" text="Stella Dia.  0.0 mas" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vPb-Rx-DhT">
-                                                <rect key="frame" x="128.5" y="0.0" width="243.5" height="18"/>
+                                                <rect key="frame" x="128.5" y="0.0" width="243.5" height="17.5"/>
                                                 <fontDescription key="fontDescription" style="UICTFontTextStyleCallout"/>
                                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <nil key="highlightedColor"/>
@@ -1719,64 +1714,8 @@
                                         </constraints>
                                         <directionalEdgeInsets key="directionalLayoutMargins" top="0.0" leading="3" bottom="0.0" trailing="3"/>
                                     </stackView>
-                                    <stackView opaque="NO" contentMode="scaleToFill" distribution="fillProportionally" translatesAutoresizingMaskIntoConstraints="NO" id="46l-Gg-6LX" userLabel="Mag Drop HStack">
-                                        <rect key="frame" x="0.0" y="116.5" width="375" height="17.5"/>
-                                        <subviews>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" text="Comb. Mag  11.87" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UXk-A1-aT8">
-                                                <rect key="frame" x="3" y="0.0" width="200" height="17.5"/>
-                                                <fontDescription key="fontDescription" style="UICTFontTextStyleCallout"/>
-                                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                <nil key="highlightedColor"/>
-                                                <variation key="heightClass=regular-widthClass=regular">
-                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleTitle2"/>
-                                                </variation>
-                                            </label>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" text="Mag Drop  4.03" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cqt-Iv-OMa">
-                                                <rect key="frame" x="203" y="0.0" width="169" height="17.5"/>
-                                                <fontDescription key="fontDescription" style="UICTFontTextStyleCallout"/>
-                                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                <nil key="highlightedColor"/>
-                                                <variation key="heightClass=regular-widthClass=regular">
-                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleTitle2"/>
-                                                </variation>
-                                            </label>
-                                        </subviews>
-                                        <constraints>
-                                            <constraint firstAttribute="trailing" secondItem="cqt-Iv-OMa" secondAttribute="trailing" constant="8" id="p6W-jy-cRR"/>
-                                            <constraint firstItem="UXk-A1-aT8" firstAttribute="leading" secondItem="46l-Gg-6LX" secondAttribute="leading" constant="8" id="vPS-aG-ohV"/>
-                                        </constraints>
-                                        <directionalEdgeInsets key="directionalLayoutMargins" top="0.0" leading="3" bottom="0.0" trailing="3"/>
-                                    </stackView>
-                                    <stackView opaque="NO" contentMode="scaleToFill" distribution="fillProportionally" translatesAutoresizingMaskIntoConstraints="NO" id="bux-Q1-B81" userLabel="Aster Mag HStack">
-                                        <rect key="frame" x="0.0" y="134" width="375" height="18"/>
-                                        <subviews>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" text="Star Mag 11.90" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7hI-nL-0Ep">
-                                                <rect key="frame" x="3" y="0.0" width="176" height="18"/>
-                                                <fontDescription key="fontDescription" style="UICTFontTextStyleCallout"/>
-                                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                <nil key="highlightedColor"/>
-                                                <variation key="heightClass=regular-widthClass=regular">
-                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleTitle2"/>
-                                                </variation>
-                                            </label>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" text="Aster. Mag 15.90" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dVX-Qz-Run">
-                                                <rect key="frame" x="179" y="0.0" width="193" height="18"/>
-                                                <fontDescription key="fontDescription" style="UICTFontTextStyleCallout"/>
-                                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                <nil key="highlightedColor"/>
-                                                <variation key="heightClass=regular-widthClass=regular">
-                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleTitle2"/>
-                                                </variation>
-                                            </label>
-                                        </subviews>
-                                        <constraints>
-                                            <constraint firstAttribute="trailing" secondItem="dVX-Qz-Run" secondAttribute="trailing" constant="8" id="Bao-sf-xfr"/>
-                                            <constraint firstItem="7hI-nL-0Ep" firstAttribute="leading" secondItem="bux-Q1-B81" secondAttribute="leading" constant="8" id="bVz-nJ-xU5"/>
-                                        </constraints>
-                                        <directionalEdgeInsets key="directionalLayoutMargins" top="0.0" leading="3" bottom="0.0" trailing="3"/>
-                                    </stackView>
                                     <stackView opaque="NO" contentMode="scaleToFill" distribution="fillProportionally" translatesAutoresizingMaskIntoConstraints="NO" id="uVe-H2-ekN" userLabel="Aster Diam HStack">
-                                        <rect key="frame" x="0.0" y="152" width="375" height="17.5"/>
+                                        <rect key="frame" x="0.0" y="114.5" width="375" height="17.5"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" text="Main Asteroid Belt" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ncY-ji-tEs">
                                                 <rect key="frame" x="3" y="0.0" width="199" height="17.5"/>
@@ -1804,8 +1743,74 @@
                                         </constraints>
                                         <directionalEdgeInsets key="directionalLayoutMargins" top="0.0" leading="3" bottom="0.0" trailing="3"/>
                                     </stackView>
+                                    <stackView opaque="NO" contentMode="scaleToFill" distribution="fillProportionally" translatesAutoresizingMaskIntoConstraints="NO" id="bux-Q1-B81" userLabel="Aster Mag HStack">
+                                        <rect key="frame" x="0.0" y="132" width="375" height="17.5"/>
+                                        <subviews>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" text="Comb. Mag  11.87" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UXk-A1-aT8">
+                                                <rect key="frame" x="3" y="0.0" width="193" height="17.5"/>
+                                                <fontDescription key="fontDescription" style="UICTFontTextStyleCallout"/>
+                                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <nil key="highlightedColor"/>
+                                                <variation key="heightClass=regular-widthClass=regular">
+                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleTitle2"/>
+                                                </variation>
+                                            </label>
+                                            <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" text="Star Mag 11.90" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7hI-nL-0Ep">
+                                                <rect key="frame" x="8" y="0.0" width="0.0" height="17.5"/>
+                                                <fontDescription key="fontDescription" style="UICTFontTextStyleCallout"/>
+                                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <nil key="highlightedColor"/>
+                                                <variation key="heightClass=regular-widthClass=regular">
+                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleTitle2"/>
+                                                </variation>
+                                            </label>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" text="Aster. Mag 15.90" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dVX-Qz-Run">
+                                                <rect key="frame" x="196" y="0.0" width="176" height="17.5"/>
+                                                <fontDescription key="fontDescription" style="UICTFontTextStyleCallout"/>
+                                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <nil key="highlightedColor"/>
+                                                <variation key="heightClass=regular-widthClass=regular">
+                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleTitle2"/>
+                                                </variation>
+                                            </label>
+                                        </subviews>
+                                        <constraints>
+                                            <constraint firstAttribute="trailing" secondItem="dVX-Qz-Run" secondAttribute="trailing" constant="8" id="Bao-sf-xfr"/>
+                                            <constraint firstItem="UXk-A1-aT8" firstAttribute="leading" secondItem="bux-Q1-B81" secondAttribute="leading" constant="8" id="RfJ-8a-Eis"/>
+                                            <constraint firstItem="7hI-nL-0Ep" firstAttribute="leading" secondItem="bux-Q1-B81" secondAttribute="leading" constant="8" id="bVz-nJ-xU5"/>
+                                        </constraints>
+                                        <directionalEdgeInsets key="directionalLayoutMargins" top="0.0" leading="3" bottom="0.0" trailing="3"/>
+                                    </stackView>
+                                    <stackView opaque="NO" contentMode="scaleToFill" distribution="fillProportionally" translatesAutoresizingMaskIntoConstraints="NO" id="46l-Gg-6LX" userLabel="Mag Drop HStack">
+                                        <rect key="frame" x="0.0" y="149.5" width="375" height="17"/>
+                                        <subviews>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" text="Mag Drop  4.03" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cqt-Iv-OMa">
+                                                <rect key="frame" x="3" y="0.0" width="203.5" height="17"/>
+                                                <fontDescription key="fontDescription" style="UICTFontTextStyleCallout"/>
+                                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <nil key="highlightedColor"/>
+                                                <variation key="heightClass=regular-widthClass=regular">
+                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleTitle2"/>
+                                                </variation>
+                                            </label>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="259" text="Max Dur 12.3" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NIk-Fp-lz0">
+                                                <rect key="frame" x="206.5" y="0.0" width="165.5" height="17"/>
+                                                <fontDescription key="fontDescription" style="UICTFontTextStyleCallout"/>
+                                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <nil key="highlightedColor"/>
+                                                <variation key="heightClass=regular-widthClass=regular">
+                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleTitle2"/>
+                                                </variation>
+                                            </label>
+                                        </subviews>
+                                        <constraints>
+                                            <constraint firstAttribute="trailing" secondItem="NIk-Fp-lz0" secondAttribute="trailing" constant="8" id="htN-kG-gvp"/>
+                                            <constraint firstItem="cqt-Iv-OMa" firstAttribute="leading" secondItem="46l-Gg-6LX" secondAttribute="leading" constant="8" id="p6W-jy-cRR"/>
+                                        </constraints>
+                                        <directionalEdgeInsets key="directionalLayoutMargins" top="0.0" leading="3" bottom="0.0" trailing="3"/>
+                                    </stackView>
                                     <stackView opaque="NO" contentMode="scaleToFill" distribution="fillProportionally" translatesAutoresizingMaskIntoConstraints="NO" id="GgE-i9-KDU" userLabel="Rotation HStack">
-                                        <rect key="frame" x="0.0" y="169.5" width="375" height="17.5"/>
+                                        <rect key="frame" x="0.0" y="166.5" width="375" height="17.5"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" text="Rotation  6.107 h" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iG2-N3-nzj">
                                                 <rect key="frame" x="3" y="0.0" width="182" height="17.5"/>
@@ -1833,7 +1838,7 @@
                                         <directionalEdgeInsets key="directionalLayoutMargins" top="0.0" leading="3" bottom="0.0" trailing="3"/>
                                     </stackView>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="WrZ-vQ-H69" userLabel="Bottom Pad View">
-                                        <rect key="frame" x="0.0" y="187" width="375" height="387"/>
+                                        <rect key="frame" x="0.0" y="184" width="375" height="390"/>
                                         <constraints>
                                             <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="1" id="BIv-Gz-dRf"/>
                                         </constraints>
@@ -1842,19 +1847,18 @@
                                 <color key="backgroundColor" red="0.1884797215" green="0.27445071939999999" blue="0.28627580400000002" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 <constraints>
                                     <constraint firstItem="WrZ-vQ-H69" firstAttribute="leading" secondItem="gE8-wy-Wpl" secondAttribute="leading" id="3hJ-pl-ZLA"/>
-                                    <constraint firstItem="EYo-j8-VAk" firstAttribute="leading" secondItem="gE8-wy-Wpl" secondAttribute="leading" id="4g0-R2-52L"/>
                                     <constraint firstItem="BOt-Xz-Vv8" firstAttribute="leading" secondItem="gE8-wy-Wpl" secondAttribute="leading" id="5Hz-6R-8Hb"/>
                                     <constraint firstAttribute="trailing" secondItem="HuD-ai-6Aw" secondAttribute="trailing" id="6py-My-Egd"/>
                                     <constraint firstAttribute="trailing" secondItem="Rdg-PA-2Mk" secondAttribute="trailing" id="9Wg-QU-14B"/>
                                     <constraint firstItem="Rdg-PA-2Mk" firstAttribute="top" secondItem="gE8-wy-Wpl" secondAttribute="top" id="9cN-Dd-4ao"/>
-                                    <constraint firstAttribute="trailing" secondItem="46l-Gg-6LX" secondAttribute="trailing" id="9lZ-Gr-TFK"/>
+                                    <constraint firstItem="46l-Gg-6LX" firstAttribute="leading" secondItem="gE8-wy-Wpl" secondAttribute="leading" id="EWN-CW-Aqp"/>
                                     <constraint firstAttribute="trailing" secondItem="WrZ-vQ-H69" secondAttribute="trailing" id="GUX-f0-r8s"/>
                                     <constraint firstItem="Rdg-PA-2Mk" firstAttribute="leading" secondItem="gE8-wy-Wpl" secondAttribute="leading" id="IVQ-b1-Zhx"/>
                                     <constraint firstAttribute="trailing" secondItem="BOt-Xz-Vv8" secondAttribute="trailing" id="Nbj-mG-xuB"/>
                                     <constraint firstAttribute="trailing" secondItem="SeI-hh-4GI" secondAttribute="trailing" id="Opo-8d-wb6"/>
                                     <constraint firstItem="uVe-H2-ekN" firstAttribute="leading" secondItem="gE8-wy-Wpl" secondAttribute="leading" id="POv-JJ-JPd"/>
                                     <constraint firstItem="PkI-Hu-aI0" firstAttribute="leading" secondItem="gE8-wy-Wpl" secondAttribute="leading" id="Qei-QB-yFt"/>
-                                    <constraint firstItem="46l-Gg-6LX" firstAttribute="leading" secondItem="gE8-wy-Wpl" secondAttribute="leading" id="VPp-dK-kPG"/>
+                                    <constraint firstAttribute="trailing" secondItem="46l-Gg-6LX" secondAttribute="trailing" id="ZGI-dx-WFi"/>
                                     <constraint firstAttribute="trailing" secondItem="bux-Q1-B81" secondAttribute="trailing" id="cgf-SK-Nau"/>
                                     <constraint firstAttribute="bottom" secondItem="WrZ-vQ-H69" secondAttribute="bottom" id="jG7-2p-2eX"/>
                                     <constraint firstItem="GgE-i9-KDU" firstAttribute="leading" secondItem="gE8-wy-Wpl" secondAttribute="leading" id="k4V-vI-sED"/>
@@ -1863,7 +1867,6 @@
                                     <constraint firstItem="HuD-ai-6Aw" firstAttribute="leading" secondItem="gE8-wy-Wpl" secondAttribute="leading" id="pfm-e6-ASm"/>
                                     <constraint firstAttribute="trailing" secondItem="PkI-Hu-aI0" secondAttribute="trailing" id="qTB-g0-PMa"/>
                                     <constraint firstAttribute="trailing" secondItem="GgE-i9-KDU" secondAttribute="trailing" id="upr-mH-dub"/>
-                                    <constraint firstAttribute="trailing" secondItem="EYo-j8-VAk" secondAttribute="trailing" id="usz-QP-vrO"/>
                                     <constraint firstAttribute="trailing" secondItem="uVe-H2-ekN" secondAttribute="trailing" id="y52-CF-pzO"/>
                                 </constraints>
                             </stackView>
@@ -1924,6 +1927,7 @@
                         <outlet property="eventDetailView" destination="qQd-SM-58Q" id="IAG-Qf-9OZ"/>
                         <outlet property="eventFeed" destination="Sfx-M4-Kzx" id="lfz-mI-Wat"/>
                         <outlet property="eventMagnitudeDrop" destination="cqt-Iv-OMa" id="g4O-c1-tMU"/>
+                        <outlet property="eventMaxDur" destination="NIk-Fp-lz0" id="nnw-4Z-ov1"/>
                         <outlet property="eventRA" destination="qHW-5v-fWt" id="C9B-HQ-d3g"/>
                         <outlet property="eventRank" destination="b2e-3J-HL7" id="MQO-t1-nor"/>
                         <outlet property="eventStarBV" destination="4Oq-hn-pVL" id="GBh-7a-vFh"/>

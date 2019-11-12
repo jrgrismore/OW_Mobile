@@ -112,7 +112,7 @@ class OccultationEvent: NSObject
         //******convert decimal degrees to dd:mm:ss
         let decTuple = floatDecToDMS(floatDegrees: item.DEJ2000Deg!)
         let decFldStr = String(format: "%+03d° %02d' %04.1f\"",decTuple.degrees,labs(decTuple.minutes),fabs(decTuple.seconds))
-        decAttrStr = self.formatLabelandField(label:"DE: ", field: decFldStr, units:"")
+        decAttrStr = self.formatLabelandField(label:"Dec: ", field: decFldStr, units:"")
       }
     } else {
       if item.DEDeg != nil
@@ -139,7 +139,7 @@ class OccultationEvent: NSObject
   
   func updateStarDiamFld(_ item: EventWithDetails) -> NSAttributedString
   {
-    var starDiamAttrStr: NSAttributedString = NSMutableAttributedString(string: "Stellar Dia.          —")
+    var starDiamAttrStr: NSAttributedString = NSMutableAttributedString(string: "Stellar Dia:          —")
     if item.StellarDiaMas != nil
     {
       starDiamAttrStr = self.formatLabelandField(label:"Stellar Dia: ", field: String(format: "%0.1f",item.StellarDiaMas!), units:" mas")
@@ -211,6 +211,17 @@ class OccultationEvent: NSObject
     return magDropAttrStr
   }
   
+  func updateMaxDurFld(_ item: EventWithDetails) -> NSAttributedString
+  {
+    var maxDurAttrStr: NSAttributedString = NSMutableAttributedString(string: "Max Dur:       —")
+    if item.MaxDurSec != nil
+    {
+      maxDurAttrStr = self.formatLabelandField(label:"Max Dur: ", field: String(format: "%0.2f",item.MaxDurSec!), units:"")
+    }
+    DispatchQueue.main.async{}
+    return maxDurAttrStr
+  }
+
   func updateAsteroidRotationFld(_ item: EventWithDetails) -> NSAttributedString
   {
     var asterRotationAttrStr: NSAttributedString = NSMutableAttributedString(string: "Rotation       —")

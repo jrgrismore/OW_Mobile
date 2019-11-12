@@ -75,6 +75,7 @@ class DetailViewController: UIViewController
   @IBOutlet weak var eventAsteroidMagnitude: UILabel!
   @IBOutlet weak var eventCombinedMagnitude: UILabel!
   @IBOutlet weak var eventMagnitudeDrop: UILabel!
+  @IBOutlet weak var eventMaxDur: UILabel!
   
   @IBOutlet weak var eventCameraSectionTitle: UILabel!
   @IBOutlet weak var eventCamCombinedMag: UILabel!
@@ -266,6 +267,7 @@ class DetailViewController: UIViewController
         self.eventAsteroidMagnitude.attributedText = self.event.updateAsteroidMagFld(item)
         self.eventCombinedMagnitude.attributedText = self.event.updateCombinedMagFld(item)
         self.eventMagnitudeDrop.attributedText = self.event.updateMagDropFld(item)
+        self.eventMaxDur.attributedText = self.event.updateMaxDurFld(item)
         self.bvStarDiamView.isHidden = self.event.hideBVStarDiamView(item)
         //hide BV ad star diameter if both are nil
         if self.bvStarDiamView.isHidden == false
