@@ -97,6 +97,9 @@ struct ObserverStation: Codable
   var ReportedDuration: Double?
   var ReportComment: String?
   var CountryCode: String?
+  var StateCode: String?
+  var Longitude: Double?
+  var Latitude: Double?
 }
 
 var eventsWithDetails = [EventWithDetails]()  //event array of unified data

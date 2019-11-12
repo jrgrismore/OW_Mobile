@@ -211,4 +211,19 @@ class AccountViewController: UIViewController, UITextFieldDelegate
     return "v\(version)b\(build)"
   }
   
+  
+  @IBAction func launchAppleMaps(_ sender: Any)
+  {
+    print("launchAppleMaps")
+//     let myAddress = "2201+Heidi+Ct,Bartlesville,OK,USA"
+    let myAddress = "36.717936,-95.95281"
+    if let url = URL(string:"http://maps.apple.com/?address=\(myAddress)") {
+      print("url=",url)
+        UIApplication.shared.open(url)
+    }
+
+  }
+  
+  
+  
 }

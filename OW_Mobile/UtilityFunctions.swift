@@ -122,6 +122,22 @@ func utcStrToLocalDate(eventTimeStr: String) -> Date?
   return nil
 }
 
+func utcStrToLocalDayOfMonth(eventTimeStr: String) -> String?
+{
+//  print("utcStrToLocalDayOfMonth")
+//  print("eventTimeStr=",eventTimeStr)
+  let eventTimeFormatter = DateFormatter()
+  eventTimeFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSS"
+  eventTimeFormatter.timeZone = TimeZone(abbreviation: "UTC")
+  let originalDate = eventTimeFormatter.date(from: eventTimeStr)!
+//  print("original date =",originalDate)
+  eventTimeFormatter.timeZone = TimeZone.current
+  eventTimeFormatter.dateFormat = "dd MMM"
+  let localDateStr = eventTimeFormatter.string(from: originalDate)
+//  print("localDateStr=",localDateStr)
+  return localDateStr
+}
+
 func starColorIcon(_ starColorIconVal: Int?) -> UIImage
 {
   var starColorImage: UIImage

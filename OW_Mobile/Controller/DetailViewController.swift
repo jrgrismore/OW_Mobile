@@ -236,22 +236,37 @@ class DetailViewController: UIViewController
     DispatchQueue.main.async
       {
         let primaryStationIndex = OccultationEvent.primaryStationIndex(self.selectedStations)
+        
+        let primaryStationEventTime = self.selectedStations[primaryStationIndex!].EventTimeUtc
+        print("primaryStationEventTime=",primaryStationEventTime)
+        
         let timeTuple = currentEvent.updateUTCEventTimeFlds(&item,stationIndex: primaryStationIndex!)
-        var remainingTime: NSMutableAttributedString = timeTuple.remainingTime as! NSMutableAttributedString
-        if remainingTime.string == "completed"
+//        var remainingTime: NSMutableAttributedString = timeTuple.remainingTime as! NSMutableAttributedString
+        var remainingTime = timeTuple.remainingTime.string
+//        if remainingTime.string == "completed"
+        if remainingTime == "completed"
         {
 //          print("Detail > found completed")
-          remainingTime = NSMutableAttributedString(string: "")
+//          remainingTime = NSMutableAttributedString(string: "")
+          remainingTime = ""
           //dim/gray out asteriod hame, date and time
           self.eventTitle.textColor = self.dimGray
           self.eventRank.textColor = self.dimGray
           self.eventFeed.textColor = self.dimGray
+        } else {
+          let onDayOfMonth = " on " + utcStrToLocalDayOfMonth(eventTimeStr: primaryStationEventTime!)!
+          print("onDayOfMonth=",onDayOfMonth)
+//          let dayOfMonthAttrStr: NSAttributedString = NSAttributedString(string: onDayOfMonth)
+          let dayOfMonthAttrStr = onDayOfMonth
+//          let dayOfMonthAttrStr: NSMutableAttributedString = onDayOfMonth as! NSMutableAttributedString
+          remainingTime.append(dayOfMonthAttrStr)
         }
+        
         //this does not take effect until return to previous view controller
         self.navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.black,
                                                                         NSAttributedString.Key.font: UIFont.preferredFont(forTextStyle: .title3)]
         
-        self.eventTimeRemaining.attributedText = remainingTime
+        self.eventTimeRemaining.attributedText = self.formatLabelandField(label: "", field: remainingTime, units: "")
         self.eventFeed.attributedText = self.event.updateFeedFld(item)
         self.eventRA.attributedText = self.event.updateRAFld(item)
         if appSettings.starEpochIsJ2000
@@ -288,7 +303,7 @@ class DetailViewController: UIViewController
   
   func updateStationFlds(cell: inout StationCell, indexPath: IndexPath, stations: [ObserverStation], itm: EventWithDetails)
   {
-//    print("updateStationFlds")
+    print("updateStationFlds")
     var item = itm
     
     cell.sigmaImg.accessibilityIdentifier = "sigmaImg"
@@ -317,6 +332,8 @@ class DetailViewController: UIViewController
     
     let stationIndex = indexPath.item
 //    print("updateStationFlds > stations[stationIndex].StationId=",stations[stationIndex].StationId)
+    print("station latitude=",stations[stationIndex].Latitude,"   longitude=",stations[stationIndex].Longitude)
+    
     var stationPosIconVal : Int?
     stationPosIconVal = 0
     if stations[stationIndex].StationPos != nil
