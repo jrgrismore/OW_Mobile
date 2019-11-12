@@ -27,11 +27,40 @@ func formatLocalEventTime(timeString: String) -> String
   let eventTimeFormatter = DateFormatter()
   eventTimeFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSS"
   eventTimeFormatter.timeZone = TimeZone(abbreviation: "UTC")
-  if let formattedDate = eventTimeFormatter.date(from: timeString)
+  switch appSettings.eventDayFormat
   {
-    eventTimeFormatter.dateFormat = "dd MMM, HH:mm:ss"
-    eventTimeFormatter.timeZone = TimeZone.current
-    return eventTimeFormatter.string(from: formattedDate)
+  case 0:   //Thursday (Evening/Night/Morning, dd mmm, HH:mm)
+    print("day format is: Thursday (Evening/Night/Morning), dd mmm, HH:mm")
+    if let formattedDate = eventTimeFormatter.date(from: timeString)
+    {
+      eventTimeFormatter.dateFormat = "EEEE ???, dd MMM, HH:mm"
+      eventTimeFormatter.timeZone = TimeZone.current
+      return eventTimeFormatter.string(from: formattedDate)
+    }
+  case 1:   //Thursday (Evening/Night), dd mmm, HH:mm
+    print("day format is: Thursday (Evening/Night), dd mmm, HH:mm")
+    if let formattedDate = eventTimeFormatter.date(from: timeString)
+    {
+      eventTimeFormatter.dateFormat = "EEEE ??, dd MMM, HH:mm"
+      eventTimeFormatter.timeZone = TimeZone.current
+      return eventTimeFormatter.string(from: formattedDate)
+    }
+  case 2:   //07 November 2019, HH:mm:ss
+    print("day format is: 07 November 2019, HH:mm:ss")
+    if let formattedDate = eventTimeFormatter.date(from: timeString)
+    {
+      eventTimeFormatter.dateFormat = "dd MMMM yyyy, HH:mm:ss"
+      eventTimeFormatter.timeZone = TimeZone.current
+      return eventTimeFormatter.string(from: formattedDate)
+    }
+  default:   //07 November, HH:mm:ss
+    print("day format is: 07 November, HH:mm:ss")
+    if let formattedDate = eventTimeFormatter.date(from: timeString)
+    {
+      eventTimeFormatter.dateFormat = "dd MMM, HH:mm:ss"
+      eventTimeFormatter.timeZone = TimeZone.current
+      return eventTimeFormatter.string(from: formattedDate)
+    }
   }
   return timeString
 }

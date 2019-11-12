@@ -429,6 +429,7 @@ extension MyEventsViewController
     let magAttrStr = NSMutableAttributedString(string:"m", attributes:[NSAttributedString.Key.font : captionFont,
                                                                        NSAttributedString.Key.baselineOffset: 5])
     
+    cell.numberOfStationsText.text = String(format: "x%d",cellEventDetailArray[indexPath.row].Stations!.count)
     //   use combined mag rather than star mag
     let combMag = primaryStation!.CombMag
     let combMagStr = String(format: "%0.1f",combMag!)
@@ -455,6 +456,7 @@ extension MyEventsViewController
       cell.starMagText.textColor = #colorLiteral(red: 0.6666666667, green: 0.6666666667, blue: 0.6666666667, alpha: 1)
       cell.tempText.textColor = #colorLiteral(red: 0.6666666667, green: 0.6666666667, blue: 0.6666666667, alpha: 1)
       cell.timeError.textColor = #colorLiteral(red: 0.6666666667, green: 0.6666666667, blue: 0.6666666667, alpha: 1)
+      cell.numberOfStationsText.textColor = #colorLiteral(red: 0.6666666667, green: 0.6666666667, blue: 0.6666666667, alpha: 1)
     } else {
       cell.objectText.textColor = .white
       cell.cloudText.textColor = .white
@@ -466,6 +468,7 @@ extension MyEventsViewController
       cell.starMagText.textColor = .white
       cell.tempText.textColor = .white
       cell.timeError.textColor = .white
+      cell.numberOfStationsText.textColor = .white
     }
     
     if appSettings.summaryTimeIsLocal

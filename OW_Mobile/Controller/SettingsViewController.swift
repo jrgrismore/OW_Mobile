@@ -48,6 +48,7 @@ class SettingsViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
 //    print("appSettings=",appSettings)
     tempSeg.selectedSegmentIndex = appSettings.tempIsCelsius ? 0 : 1
     azimuthSeg.selectedSegmentIndex = appSettings.azimuthIsDegrees ? 0 : 1
+    eventDayFormatPicker.selectRow(appSettings.eventDayFormat, inComponent: 0, animated: true)
     summaryTimeSeg.selectedSegmentIndex = appSettings.summaryTimeIsLocal ? 0 : 1
     detailTimeSeg.selectedSegmentIndex = appSettings.detailTimeIsLocal ? 0 : 1
     starEpochSeg.selectedSegmentIndex = appSettings.starEpochIsJ2000 ? 0 : 1
@@ -191,7 +192,8 @@ class SettingsViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
   func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int)
   {
     print("eventDayFormatPicker row=",row,"   eventDayFormatPicker value=",pickerData[row])
-    
+    appSettings.eventDayFormat = row
+    saveSettings(appSettings)
   }
   
   func pickerView(_ pickerView: UIPickerView, viewForRow row: Int, forComponent component: Int, reusing view: UIView?) -> UIView
@@ -204,6 +206,7 @@ class SettingsViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
     label.font = UIFont (name: "Helvetica", size: 17)
     label.text =  pickerData[row]
     label.textAlignment = .center
+
     return label
   }
   

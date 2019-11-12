@@ -30,6 +30,7 @@ class MyEventsCollectionViewCell: UICollectionViewCell
   @IBOutlet weak var timeError: UILabel!
   
   //bottom view text
+  @IBOutlet weak var numberOfStationsText: UILabel!  
   @IBOutlet weak var starMagText: UILabel!
   @IBOutlet weak var maxDurText: UILabel!
   @IBOutlet weak var magDropText: UILabel!
