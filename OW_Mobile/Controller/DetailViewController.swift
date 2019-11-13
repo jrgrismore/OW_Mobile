@@ -127,7 +127,7 @@ class DetailViewController: UIViewController
   
   override func viewWillAppear(_ animated: Bool)
   {
-//    print("viewWillAppear")
+    print("viewWillAppear")
     print("selectedEvent=",selectedEvent)
     stationCollectionView.isHidden = true
     
@@ -152,17 +152,18 @@ class DetailViewController: UIViewController
   
   override func viewDidAppear(_ animated: Bool)
   {
+    print("viewDidAppear")
     eventDetailView.isHidden = false
-//    print("viewDidAppear")
     adjustCellWidth()
     let primaryIndex = OccultationEvent.primaryStationIndex(selectedStations)
     currentStationIndexPath = IndexPath(item:primaryIndex!, section: 0)
     updateEventInfoFields(eventItem: selectedEvent)
     updateShadowPlot(self.selectedEvent)
     stationCollectionView.scrollToItem(at: IndexPath(item: primaryIndex!, section: 0), at: .centeredHorizontally, animated: false)
-//    stationCollectionView.isHidden = false
-    shadowSigmaView.isHidden = false
     
+    stationCollectionView.reloadData()
+    
+    shadowSigmaView.isHidden = false
     stationCollectionView.isHidden = false
    }
   
