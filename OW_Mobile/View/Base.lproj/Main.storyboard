@@ -1572,7 +1572,7 @@
                                                                                         <constraint firstAttribute="height" constant="16" id="dib-D9-XKr"/>
                                                                                     </constraints>
                                                                                 </imageView>
-                                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="39°S" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Xs3-z6-Cbd" userLabel="Moon Alt Text">
+                                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="39°S" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Xs3-z6-Cbd" userLabel="Moon Alt Text">
                                                                                     <rect key="frame" x="21" y="0.0" width="66.5" height="2"/>
                                                                                     <fontDescription key="fontDescription" style="UICTFontTextStyleSubhead"/>
                                                                                     <nil key="textColor"/>
@@ -1624,6 +1624,7 @@
                                                     <outlet property="eventCloudImg" destination="7HC-cr-fTP" id="4mA-eU-iFI"/>
                                                     <outlet property="eventClouds" destination="Axo-nV-uZo" id="sgK-J9-4J9"/>
                                                     <outlet property="eventMoonAlt" destination="Xs3-z6-Cbd" id="KXC-eV-xOA"/>
+                                                    <outlet property="eventMoonSepImg" destination="1jg-jx-wnq" id="Z5C-SH-sFP"/>
                                                     <outlet property="eventMoonSeparation" destination="BAi-Tz-6Bf" id="aXw-Nh-IEX"/>
                                                     <outlet property="eventStarAlt" destination="wp1-Nk-bLl" id="jDJ-mQ-PXJ"/>
                                                     <outlet property="eventStationID" destination="Fd3-bb-f4o" id="OhN-tm-4e8"/>
@@ -1666,10 +1667,10 @@
                                         </constraints>
                                     </pageControl>
                                     <stackView opaque="NO" contentMode="scaleToFill" distribution="fillProportionally" translatesAutoresizingMaskIntoConstraints="NO" id="EYo-j8-VAk" userLabel="RA/Dec HStack">
-                                        <rect key="frame" x="0.0" y="96" width="375" height="16.5"/>
+                                        <rect key="frame" x="0.0" y="96" width="375" height="17"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" text="RA  07h 08m 05.6s" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qHW-5v-fWt">
-                                                <rect key="frame" x="3" y="0.0" width="184" height="16.5"/>
+                                                <rect key="frame" x="3" y="0.0" width="184" height="17"/>
                                                 <fontDescription key="fontDescription" style="UICTFontTextStyleCallout"/>
                                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <nil key="highlightedColor"/>
@@ -1678,13 +1679,13 @@
                                                 </variation>
                                             </label>
                                             <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" verticalCompressionResistancePriority="751" text="(J2000)" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aAX-sW-kWg" userLabel="J2000">
-                                                <rect key="frame" x="187" y="0.0" width="0.0" height="16.5"/>
+                                                <rect key="frame" x="187" y="0.0" width="0.0" height="17"/>
                                                 <fontDescription key="fontDescription" style="UICTFontTextStyleCaption2"/>
                                                 <color key="textColor" systemColor="systemYellowColor" red="1" green="0.80000000000000004" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" text="Dec  +20° 06' 50.9&quot;" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QrG-cJ-86B">
-                                                <rect key="frame" x="187" y="0.0" width="185" height="16.5"/>
+                                                <rect key="frame" x="187" y="0.0" width="185" height="17"/>
                                                 <fontDescription key="fontDescription" style="UICTFontTextStyleCallout"/>
                                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <nil key="highlightedColor"/>
@@ -1699,10 +1700,10 @@
                                         <directionalEdgeInsets key="directionalLayoutMargins" top="0.0" leading="3" bottom="0.0" trailing="3"/>
                                     </stackView>
                                     <stackView opaque="NO" contentMode="scaleToFill" distribution="fillProportionally" translatesAutoresizingMaskIntoConstraints="NO" id="SeI-hh-4GI" userLabel="BV HStack">
-                                        <rect key="frame" x="0.0" y="112.5" width="375" height="17"/>
+                                        <rect key="frame" x="0.0" y="113" width="375" height="16.5"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" text="BV  0.861" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4Oq-hn-pVL">
-                                                <rect key="frame" x="3" y="0.0" width="125.5" height="17"/>
+                                                <rect key="frame" x="3" y="0.0" width="125.5" height="16.5"/>
                                                 <fontDescription key="fontDescription" style="UICTFontTextStyleCallout"/>
                                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <nil key="highlightedColor"/>
@@ -1711,7 +1712,7 @@
                                                 </variation>
                                             </label>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" text="Stella Dia.  0.0 mas" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vPb-Rx-DhT">
-                                                <rect key="frame" x="128.5" y="0.0" width="243.5" height="17"/>
+                                                <rect key="frame" x="128.5" y="0.0" width="243.5" height="16.5"/>
                                                 <fontDescription key="fontDescription" style="UICTFontTextStyleCallout"/>
                                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <nil key="highlightedColor"/>

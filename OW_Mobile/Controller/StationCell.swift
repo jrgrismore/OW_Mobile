@@ -36,6 +36,7 @@ class StationCell: UICollectionViewCell
   @IBOutlet weak var moonAltImg: UIImageView!
   
   @IBOutlet weak var eventMoonSeparation: UILabel!
+  @IBOutlet weak var eventMoonSepImg: UIImageView!
   
   //@IBOutlet weak var reportImg: UIImageView!
   @IBOutlet weak var reportImg: UIImageView!

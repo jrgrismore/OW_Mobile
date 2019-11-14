@@ -89,7 +89,8 @@ func leadTime(timeString: String) -> String
     if leadTimeSeconds <= 0 { return "completed" }
     let leadTimeMinutes = leadTimeSeconds / 60
     let leadTimeHours = leadTimeMinutes / 60
-    let leadTimeDays = leadTimeHours / 24
+    let leadTimeDays = Double(leadTimeHours) / 24.0
+    print("leadTimeDays=",leadTimeDays)
     if leadTimeMinutes > 0
     {
       if leadTimeMinutes < 90
@@ -102,7 +103,12 @@ func leadTime(timeString: String) -> String
       }
       else
       {
-        leadTimeString = String(format: "in \(leadTimeDays) days")
+        if leadTimeDays < 7.0
+        {
+          leadTimeString = String(format: "in %0.1f days",leadTimeDays)
+        } else {
+          leadTimeString = String(format: "in %0.0f days",leadTimeDays)
+        }
       }
     }
     return leadTimeString

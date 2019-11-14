@@ -591,15 +591,26 @@ class DetailViewController: UIViewController
         cell.moonAltImg.image = moonPhaseImage
       }
     }
-    cell.eventMoonAlt.text = moonAltStr
-    
+
     var moonDist = "—"
     if stations[stationIndex].MoonDist != nil
     {
       moonDist = String(format: "%0.0f°", stations[stationIndex].MoonDist!)
     }
     cell.eventMoonSeparation.text = moonDist
-    
+    if stations[stationIndex].MoonAlt! >= 0.0
+    {
+      cell.eventMoonAlt.text = moonAltStr
+//      cell.eventMoonSeparation.isHidden = false
+//      cell.eventMoonSepImg.isHidden = false
+      cell.moonSepStack.isHidden = false
+    } else {
+      cell.eventMoonAlt.text = "(below horizon)"
+//      cell.eventMoonSeparation.isHidden = true
+//      cell.eventMoonSepImg.isHidden = true
+      cell.moonSepStack.isHidden = true
+    }
+
     var starColorImage: UIImage
     if stations[stationIndex].StarColour != nil
     {
