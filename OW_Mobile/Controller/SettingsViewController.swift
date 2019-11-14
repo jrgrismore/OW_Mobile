@@ -101,11 +101,7 @@ class SettingsViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
     }
     saveSettings(appSettings)
   }
-  
-  
-  
-  
-  
+ 
   
   @IBAction func toggleSummaryTime(_ sender: Any) {
     switch summaryTimeSeg.selectedSegmentIndex
@@ -113,12 +109,19 @@ class SettingsViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
     case 0:
       print("show summary time as Local")
       appSettings.summaryTimeIsLocal = true
+      eventDayFormatPicker.isUserInteractionEnabled = true
+      eventDayFormatPicker.alpha = 1.0
     case 1:
       print("show summary time as UT")
       appSettings.summaryTimeIsLocal = false
+      eventDayFormatPicker.isUserInteractionEnabled = false
+      eventDayFormatPicker.selectRow(2, inComponent: 0, animated: true)
+      eventDayFormatPicker.alpha = 0.5
     default:
       print("default summary time is Local")
       appSettings.summaryTimeIsLocal = true
+      eventDayFormatPicker.isUserInteractionEnabled = true
+      eventDayFormatPicker.alpha = 1.0
     }
     saveSettings(appSettings)
   }

@@ -27,26 +27,38 @@ func formatLocalEventTime(timeString: String) -> String
   let eventTimeFormatter = DateFormatter()
   eventTimeFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSS"
   eventTimeFormatter.timeZone = TimeZone(abbreviation: "UTC")
+  let utcTimeDate = eventTimeFormatter.date(from: timeString)!
+  print("utcTimeDate=",utcTimeDate)
   switch appSettings.eventDayFormat
   {
   case 0:   //Thursday (Evening/Night/Morning, dd mmm, HH:mm)
-    print("day format is: Thursday (Evening/Night/Morning), dd mmm, HH:mm")
-    if let formattedDate = eventTimeFormatter.date(from: timeString)
+//    print("day format is: Thursday (Evening/Night/Morning), dd mmm, HH:mm")
+    eventTimeFormatter.timeZone = TimeZone.current
+    let localTimeStr = eventTimeFormatter.string(from: utcTimeDate)
+    print("localTimeStr=",localTimeStr)
+    let eveNightMorn = eveningNightMorning(localDateStr: localTimeStr)
+    if let formattedDate = eventTimeFormatter.date(from: localTimeStr)
     {
-      eventTimeFormatter.dateFormat = "EEEE ???, dd MMM, HH:mm"
-      eventTimeFormatter.timeZone = TimeZone.current
-      return eventTimeFormatter.string(from: formattedDate)
+      let dayStr = eveNightMorn.dayName + " " + eveNightMorn.eveNight
+      print("dayStr=",dayStr)
+      eventTimeFormatter.dateFormat = "dd MMM, HH:mm"
+      return dayStr +  ", " + eventTimeFormatter.string(from: formattedDate)
     }
   case 1:   //Thursday (Evening/Night), dd mmm, HH:mm
-    print("day format is: Thursday (Evening/Night), dd mmm, HH:mm")
-    if let formattedDate = eventTimeFormatter.date(from: timeString)
+//    print("day format is: Thursday (Evening/Night), dd mmm, HH:mm")
+    eventTimeFormatter.timeZone = TimeZone.current
+    let localTimeStr = eventTimeFormatter.string(from: utcTimeDate)
+    print("localTimeStr=",localTimeStr)
+    let eveNight = eveningNight(localDateStr: localTimeStr)
+    if let formattedDate = eventTimeFormatter.date(from: localTimeStr)
     {
-      eventTimeFormatter.dateFormat = "EEEE ??, dd MMM, HH:mm"
-      eventTimeFormatter.timeZone = TimeZone.current
-      return eventTimeFormatter.string(from: formattedDate)
+      let dayStr = eveNight.dayName + " " + eveNight.eveNight
+      print("dayStr=",dayStr)
+      eventTimeFormatter.dateFormat = "dd MMM, HH:mm"
+      return dayStr +  ", " + eventTimeFormatter.string(from: formattedDate)
     }
   case 2:   //07 November 2019, HH:mm:ss
-    print("day format is: 07 November 2019, HH:mm:ss")
+//    print("day format is: 07 November 2019, HH:mm:ss")
     if let formattedDate = eventTimeFormatter.date(from: timeString)
     {
       eventTimeFormatter.dateFormat = "dd MMMM yyyy, HH:mm:ss"
@@ -54,7 +66,7 @@ func formatLocalEventTime(timeString: String) -> String
       return eventTimeFormatter.string(from: formattedDate)
     }
   default:   //07 November, HH:mm:ss
-    print("day format is: 07 November, HH:mm:ss")
+//    print("day format is: 07 November, HH:mm:ss")
     if let formattedDate = eventTimeFormatter.date(from: timeString)
     {
       eventTimeFormatter.dateFormat = "dd MMM, HH:mm:ss"
@@ -124,19 +136,78 @@ func utcStrToLocalDate(eventTimeStr: String) -> Date?
 
 func utcStrToLocalDayOfMonth(eventTimeStr: String) -> String?
 {
-//  print("utcStrToLocalDayOfMonth")
-//  print("eventTimeStr=",eventTimeStr)
+  //  print("utcStrToLocalDayOfMonth")
+  //  print("eventTimeStr=",eventTimeStr)
   let eventTimeFormatter = DateFormatter()
   eventTimeFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSS"
   eventTimeFormatter.timeZone = TimeZone(abbreviation: "UTC")
   let originalDate = eventTimeFormatter.date(from: eventTimeStr)!
-//  print("original date =",originalDate)
+  //  print("original date =",originalDate)
   eventTimeFormatter.timeZone = TimeZone.current
   eventTimeFormatter.dateFormat = "dd MMM"
   let localDateStr = eventTimeFormatter.string(from: originalDate)
-//  print("localDateStr=",localDateStr)
+  //  print("localDateStr=",localDateStr)
   return localDateStr
 }
+
+func eveningNightMorning(localDateStr: String) -> (eveNight: String, dayName: String)
+{
+  var eveOrNightOrMorn = "Evening"
+  let dateFormatter = DateFormatter()
+  dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSS"
+  dateFormatter.timeZone = .current
+  let localDate = dateFormatter.date(from: localDateStr)
+  let dateComp = Calendar.current.dateComponents([.hour], from: localDate ?? Date())
+  let hour = dateComp.hour!
+  let hourValue = hour
+  dateFormatter.dateFormat = "EEEE"
+  var dayOfWeek = dateFormatter.string(from: localDate!)
+  switch hourValue
+  {
+  case 0..<5:
+    eveOrNightOrMorn = "Night"
+    let toDate = Calendar.current.date(byAdding: .day, value: -1, to: localDate!)
+    dateFormatter.dateFormat = "EEEE"
+    dayOfWeek = dateFormatter.string(from: toDate!)
+  case 5..<12:
+    eveOrNightOrMorn = "Morning"
+  case 12...24:
+    eveOrNightOrMorn = "Evening"
+  default:
+    eveOrNightOrMorn = "Evening"
+  }
+  return (eveOrNightOrMorn, dayOfWeek)
+}
+
+
+func eveningNight(localDateStr: String) -> (eveNight: String, dayName: String)
+{
+  var eveOrNight = "Evening"
+  var dayOfWeek = ""
+  let dateFormatter = DateFormatter()
+  dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSS"
+  dateFormatter.timeZone = .current
+  let localDate = dateFormatter.date(from: localDateStr)
+  let dateComp = Calendar.current.dateComponents([.hour], from: localDate ?? Date())
+  let hour = dateComp.hour!
+  let hourValue = hour
+  switch hourValue
+  {
+  case 0..<12:
+    eveOrNight = "Night"
+    let toDate = Calendar.current.date(byAdding: .day, value: -1, to: localDate!)
+    dateFormatter.dateFormat = "EEEE"
+    dayOfWeek = dateFormatter.string(from: toDate!)
+  case 12...24:
+    eveOrNight = "Evening"
+    dateFormatter.dateFormat = "EEEE"
+    dayOfWeek = dateFormatter.string(from: localDate!)
+  default:
+    eveOrNight = "Evening"
+  }
+  return (eveOrNight,dayOfWeek)
+}
+
 
 func starColorIcon(_ starColorIconVal: Int?) -> UIImage
 {
@@ -545,7 +616,7 @@ func pathBarsTotalWidth(astDiamKm: Double, sigma1WidthKm: Double, stationsExistP
   var totalWidth = sigma1BarWidth
   if stationsExistPastSigma1
   {
-//    print("total plot width includes sigma2 and sigma3")
+    //    print("total plot width includes sigma2 and sigma3")
     totalWidth = sigma1BarWidth + (4 * sigma1WidthKm)
   }
   return totalWidth
@@ -610,13 +681,13 @@ func totalPlotWidthKm(_ item: EventWithDetails, scale: PlotScale) -> Double
   let sigma2TotalWidth = sigma2WidthKm(item)
   let sigma3TotalWidth = sigma3WidthKm(item)
   var farthestTotalWidth = farthestChordWidth(item)
-//  print("shadowWidth=",shadowWidth)
-//  print("OneSigmaErrorWidthKm=",item.OneSigmaErrorWidthKm)
-//  print("sigma1TotalWidth=",sigma1TotalWidth)
-//  print("sigma2TotalWidth=",sigma2TotalWidth)
-//  print("sigma3TotalWidth=",sigma3TotalWidth)
-//  print("farthestTotalWidth=",farthestTotalWidth)
-//  print("PlotScale=",scale)
+  //  print("shadowWidth=",shadowWidth)
+  //  print("OneSigmaErrorWidthKm=",item.OneSigmaErrorWidthKm)
+  //  print("sigma1TotalWidth=",sigma1TotalWidth)
+  //  print("sigma2TotalWidth=",sigma2TotalWidth)
+  //  print("sigma3TotalWidth=",sigma3TotalWidth)
+  //  print("farthestTotalWidth=",farthestTotalWidth)
+  //  print("PlotScale=",scale)
   switch scale
   {
   case .shadowEdge:
@@ -636,28 +707,28 @@ func totalPlotWidthKm(_ item: EventWithDetails, scale: PlotScale) -> Double
 
 func plotBarsWidthFactors(_ item: EventWithDetails, totalPlotWidthKm: Double) -> (shadowBarFactor:Double,sigma1BarFactor:Double,sigma2BarFactor:Double,sigma3BarFactor:Double)
 {
-//  print("plotBarsWidthFactors")
-//  print("totalPlotWidthKm=",totalPlotWidthKm)
+  //  print("plotBarsWidthFactors")
+  //  print("totalPlotWidthKm=",totalPlotWidthKm)
   let shadowWidth = item.AstDiaKm!
   let sigma1ErrorWidth = item.OneSigmaErrorWidthKm!   //shadow edge to sigma1 edge
   let sigma1TotalWidth = shadowWidth + sigma1ErrorWidth * 2
   let sigma2TotalWidth = sigma1TotalWidth + sigma1ErrorWidth * 2
   let sigma3TotalWidth = sigma2TotalWidth + sigma1ErrorWidth * 2
-//  print("shadowWidth=",shadowWidth)
-//  print("sigma1TotalWidth=",sigma1TotalWidth)
-//  print("sigma2TotalWidth=",sigma2TotalWidth)
-//  print("sigma3TotalWidth=",sigma3TotalWidth)
-
-
+  //  print("shadowWidth=",shadowWidth)
+  //  print("sigma1TotalWidth=",sigma1TotalWidth)
+  //  print("sigma2TotalWidth=",sigma2TotalWidth)
+  //  print("sigma3TotalWidth=",sigma3TotalWidth)
+  
+  
   let shadowBarWidthFactor = shadowWidth / totalPlotWidthKm
   let sigma1BarWidthFactor = sigma1TotalWidth / totalPlotWidthKm
   let sigma2BarWidthFactor = sigma2TotalWidth / totalPlotWidthKm
   let sigma3BarWidthFactor = sigma3TotalWidth / totalPlotWidthKm
-//  print("shadowBarWidthFactor=",shadowBarWidthFactor)
-//  print("sigma1BarWidthFactor=",sigma1BarWidthFactor)
-//  print("sigma2BarWidthFactor=",sigma2BarWidthFactor)
-//  print("sigma3BarWidthFactor=",sigma3BarWidthFactor)
-
+  //  print("shadowBarWidthFactor=",shadowBarWidthFactor)
+  //  print("sigma1BarWidthFactor=",sigma1BarWidthFactor)
+  //  print("sigma2BarWidthFactor=",sigma2BarWidthFactor)
+  //  print("sigma3BarWidthFactor=",sigma3BarWidthFactor)
+  
   return (shadowBarWidthFactor, sigma1BarWidthFactor, sigma2BarWidthFactor, sigma3BarWidthFactor)
 }
 
@@ -668,21 +739,21 @@ func plotStationBarFactor(station: ObserverStation, totalPlotWidthKm: Double) ->
 }
 
 
-  func loadSettings() -> Settings
-  {
-    guard let encodedSettings = UserDefaults.standard.data(forKey: UDKeys.settings) else {
-      return Settings()
-    }
-    let decodedSettings = try! JSONDecoder().decode(Settings.self, from: encodedSettings)
-    return decodedSettings
+func loadSettings() -> Settings
+{
+  guard let encodedSettings = UserDefaults.standard.data(forKey: UDKeys.settings) else {
+    return Settings()
   }
+  let decodedSettings = try! JSONDecoder().decode(Settings.self, from: encodedSettings)
+  return decodedSettings
+}
 
-  func saveSettings(_ settings: Settings)
-  {
-    let data = try? JSONEncoder().encode(settings)
-    UserDefaults.standard.set(data, forKey: UDKeys.settings)
-//    print("saved and reloaded settings = ",loadSettings())
-  }
+func saveSettings(_ settings: Settings)
+{
+  let data = try? JSONEncoder().encode(settings)
+  UserDefaults.standard.set(data, forKey: UDKeys.settings)
+  //    print("saved and reloaded settings = ",loadSettings())
+}
 
 
 func assignAzIndicatorStr(azimuth: Double, azFormat: Bool) -> String
