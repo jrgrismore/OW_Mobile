@@ -63,6 +63,7 @@ class DetailViewController: UIViewController
   @IBOutlet weak var eventTimeRemaining: UILabel!
   @IBOutlet weak var eventFeed: UILabel!
   
+  @IBOutlet weak var stationPageControl: UIPageControl!
   @IBOutlet weak var eventRA: UILabel!
   @IBOutlet weak var j2000Lbl: UILabel!
   @IBOutlet weak var eventDec: UILabel!
@@ -163,6 +164,9 @@ class DetailViewController: UIViewController
     
     stationCollectionView.reloadData()
     
+    stationPageControl.numberOfPages = selectedStations.count
+    stationPageControl.currentPage = currentStationIndexPath.row
+    
     shadowSigmaView.isHidden = false
     stationCollectionView.isHidden = false
    }
@@ -212,6 +216,8 @@ class DetailViewController: UIViewController
       self.adjustCellWidth()
       self.updateShadowPlot(self.selectedEvent)
       self.stationCollectionView.scrollToItem(at: self.currentStationIndexPath, at: .centeredHorizontally, animated: false)
+      self.stationPageControl.currentPage = self.currentStationIndexPath.row
+      
       //move primary here?  need selected event and plot width
 //      self.moveCursorToStation(indexPath: self.currentStationIndexPath)
     }
@@ -849,7 +855,8 @@ extension DetailViewController: UICollectionViewDataSource,UICollectionViewDeleg
   {
 //    print("cellForItemAt")
     var cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as! StationCell
-    cell.backgroundColor = #colorLiteral(red: 0.2043271959, green: 0.620110333, blue: 0.6497597098, alpha: 1)
+//    cell.backgroundColor = #colorLiteral(red: 0.2043271959, green: 0.620110333, blue: 0.6497597098, alpha: 1)
+    cell.backgroundColor = #colorLiteral(red: 0.3866960108, green: 0.623185575, blue: 0.6741087437, alpha: 1)
     updateStationFlds(cell: &cell, indexPath: indexPath, stations: selectedStations, itm: selectedEvent)
     return cell
   }
@@ -874,6 +881,7 @@ extension DetailViewController: UICollectionViewDataSource,UICollectionViewDeleg
 //    DispatchQueue.main.async {print("scrollViewDidEndDecelerating")}
     currentStationIndexPath = visibleStationIndexPath()
     moveCursorToStation(indexPath: visibleStationIndexPath())
+    stationPageControl.currentPage = currentStationIndexPath.row
   }
 }
 
