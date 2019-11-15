@@ -33,6 +33,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 //    UserDefaults.standard.removeObject(forKey: UDKeys.settings)
     appSettings = loadSettings()
     
+//    window!.rootViewController = AccountViewController()
+//    window!.makeKeyAndVisible()
+
     return true
   }
 
