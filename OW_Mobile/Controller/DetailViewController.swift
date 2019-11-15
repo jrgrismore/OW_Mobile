@@ -130,6 +130,8 @@ class DetailViewController: UIViewController
   {
     print("viewWillAppear")
     print("selectedEvent=",selectedEvent)
+    UIApplication.shared.isIdleTimerDisabled = true
+    
     stationCollectionView.isHidden = true
     
     eventDetailView.isHidden = false
@@ -226,6 +228,7 @@ class DetailViewController: UIViewController
   override func viewWillDisappear(_ animated: Bool)
   {
 //    print("viewWillDisappear")
+    UIApplication.shared.isIdleTimerDisabled = false
     eventDetailView.isHidden = true
 //printShadowPlotDiagnostics(headerStr: "viewWillDisappear end")
   }
@@ -929,7 +932,7 @@ extension DetailViewController
     self.eventRA.text = "RA —"
     self.eventDec.text = "DE   —"
     self.eventStarBV.text = "B-V   —"
-    self.eventStarDiameter.text = "Stellar Dia.          —"
+    self.eventStarDiameter.text = "Stellar Dia.          -"
     self.eventAsteroidOrigin.text = "—"
     self.eventAsteroidDiameter.text = "Diameter        —"
     self.eventStarMagnitude.text = "Star Mag     —"

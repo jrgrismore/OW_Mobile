@@ -158,7 +158,7 @@ func utcStrToLocalDayOfMonth(eventTimeStr: String) -> String?
 
 func eveningNightMorning(localDateStr: String) -> (eveNight: String, dayName: String)
 {
-  var eveOrNightOrMorn = "Evening"
+  var eveOrNightOrMorn = "Eve"
   let dateFormatter = DateFormatter()
   dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSS"
   dateFormatter.timeZone = .current
@@ -166,21 +166,21 @@ func eveningNightMorning(localDateStr: String) -> (eveNight: String, dayName: St
   let dateComp = Calendar.current.dateComponents([.hour], from: localDate ?? Date())
   let hour = dateComp.hour!
   let hourValue = hour
-  dateFormatter.dateFormat = "EEEE"
+  dateFormatter.dateFormat = "EEE"
   var dayOfWeek = dateFormatter.string(from: localDate!)
   switch hourValue
   {
   case 0..<5:
     eveOrNightOrMorn = "Night"
     let toDate = Calendar.current.date(byAdding: .day, value: -1, to: localDate!)
-    dateFormatter.dateFormat = "EEEE"
+    dateFormatter.dateFormat = "EEE"
     dayOfWeek = dateFormatter.string(from: toDate!)
   case 5..<12:
-    eveOrNightOrMorn = "Morning"
+    eveOrNightOrMorn = "Morn"
   case 12...24:
-    eveOrNightOrMorn = "Evening"
+    eveOrNightOrMorn = "Eve"
   default:
-    eveOrNightOrMorn = "Evening"
+    eveOrNightOrMorn = "Eve"
   }
   return (eveOrNightOrMorn, dayOfWeek)
 }
@@ -188,7 +188,7 @@ func eveningNightMorning(localDateStr: String) -> (eveNight: String, dayName: St
 
 func eveningNight(localDateStr: String) -> (eveNight: String, dayName: String)
 {
-  var eveOrNight = "Evening"
+  var eveOrNight = "Eve"
   var dayOfWeek = ""
   let dateFormatter = DateFormatter()
   dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSS"
@@ -202,14 +202,14 @@ func eveningNight(localDateStr: String) -> (eveNight: String, dayName: String)
   case 0..<12:
     eveOrNight = "Night"
     let toDate = Calendar.current.date(byAdding: .day, value: -1, to: localDate!)
-    dateFormatter.dateFormat = "EEEE"
+    dateFormatter.dateFormat = "EEE"
     dayOfWeek = dateFormatter.string(from: toDate!)
   case 12...24:
-    eveOrNight = "Evening"
-    dateFormatter.dateFormat = "EEEE"
+    eveOrNight = "Eve"
+    dateFormatter.dateFormat = "EEE"
     dayOfWeek = dateFormatter.string(from: localDate!)
   default:
-    eveOrNight = "Evening"
+    eveOrNight = "Eve"
   }
   return (eveOrNight,dayOfWeek)
 }

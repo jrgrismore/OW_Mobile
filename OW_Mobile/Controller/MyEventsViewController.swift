@@ -426,8 +426,7 @@ extension MyEventsViewController
     
     cell.objectText.text = cellEventDetailStringArray[indexPath.row].Object
     //create "m" superscript for star magnitude and magnitude drop
-    let magAttrStr = NSMutableAttributedString(string:"m", attributes:[NSAttributedString.Key.font : captionFont,
-                                                                       NSAttributedString.Key.baselineOffset: 5])
+    let magAttrStr = NSMutableAttributedString(string:"m", attributes:[NSAttributedString.Key.font : captionFont,NSAttributedString.Key.baselineOffset: 5])
     
     cell.numberOfStationsText.text = String(format: "x%d",cellEventDetailArray[indexPath.row].Stations!.count)
     //   use combined mag rather than star mag
@@ -536,7 +535,7 @@ extension MyEventsViewController
           //set weather text to appropriate text
           if appSettings.tempIsCelsius
           {
-          cell.tempText.text = String(format: "%d°",(primaryStation?.TempDegC)!)
+          cell.tempText.text = String(format: "%d°C",(primaryStation?.TempDegC)!)
           } else {
             var tempF = celsiusToFahrenheit(degreesC: Double((primaryStation?.TempDegC)!))
             cell.tempText.text = String(format: "%d°F",Int(tempF.rounded()))

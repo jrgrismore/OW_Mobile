@@ -139,7 +139,7 @@ class OccultationEvent: NSObject
   
   func updateStarDiamFld(_ item: EventWithDetails) -> NSAttributedString
   {
-    var starDiamAttrStr: NSAttributedString = NSMutableAttributedString(string: "Stellar Dia:          —")
+    var starDiamAttrStr: NSAttributedString = NSMutableAttributedString(string: "Stellar Dia:          -")
     if item.StellarDiaMas != nil
     {
       starDiamAttrStr = self.formatLabelandField(label:"Stellar Dia: ", field: String(format: "%0.1f",item.StellarDiaMas!), units:" mas")
@@ -465,7 +465,8 @@ class OccultationEvent: NSObject
       eventDateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSS"
       eventDateFormatter.timeZone = TimeZone(abbreviation: "UTC")
       let completionDate = eventDateFormatter.date(from: item.Stations![stationIndex].EventTimeUtc!)!
-      eventDateFormatter.dateFormat = "dd MMM, HH:mm:ss' UT'"
+//      eventDateFormatter.dateFormat = "dd MMM, HH:mm:ss' UT'"
+      eventDateFormatter.dateFormat = "HH:mm:ss' UT'"
       completionDateStr = eventDateFormatter.string(from: completionDate )
     }
     return (completionDateStr,leadTimeAttrStr)
@@ -484,7 +485,8 @@ class OccultationEvent: NSObject
       eventDateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSS"
       eventDateFormatter.timeZone = TimeZone(abbreviation: "UTC")
       let completionDate = eventDateFormatter.date(from: item.Stations![stationIndex].EventTimeUtc!)!
-      eventDateFormatter.dateFormat = "dd MMM, HH:mm:ss"
+//      eventDateFormatter.dateFormat = "dd MMM, HH:mm:ss"
+      eventDateFormatter.dateFormat = "HH:mm:ss"
       eventDateFormatter.timeZone = TimeZone.current
 
       completionDateStr = eventDateFormatter.string(from: completionDate )
