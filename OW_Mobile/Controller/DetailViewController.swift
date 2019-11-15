@@ -83,6 +83,8 @@ class DetailViewController: UIViewController
   @IBOutlet weak var eventCamMagDrop: UILabel!
   @IBOutlet weak var eventCamAseroidRotation: UILabel!
   @IBOutlet weak var eventCamRotationAmplitude: UILabel!
+  @IBOutlet weak var eventLat: UILabel!
+  @IBOutlet weak var eventLon: UILabel!
   
   // MARK: - View Outlets
   @IBOutlet var eventDetailView: UIView!
@@ -101,8 +103,10 @@ class DetailViewController: UIViewController
   @IBOutlet weak var bvStarDiamView: UIStackView!
   @IBOutlet weak var bottomGrayBar: UIView!
   
-  
   @IBOutlet weak var reportBtn: UIButton!
+  
+  @IBOutlet weak var latLonStack: UIStackView!
+  
   
   // MARK: - Constraint Outlets
   @IBOutlet weak var shadowBarWidth: NSLayoutConstraint!
