@@ -133,7 +133,7 @@ class DetailViewController: UIViewController
   override func viewWillAppear(_ animated: Bool)
   {
     print("viewWillAppear")
-    print("selectedEvent=",selectedEvent)
+//    print("selectedEvent=",selectedEvent)
     UIApplication.shared.isIdleTimerDisabled = true
     
     stationCollectionView.isHidden = true
@@ -175,6 +175,7 @@ class DetailViewController: UIViewController
     
     shadowSigmaView.isHidden = false
     stationCollectionView.isHidden = false
+    updateLatLonFlds()
    }
   
   override func viewWillLayoutSubviews()
@@ -252,7 +253,7 @@ class DetailViewController: UIViewController
         let primaryStationIndex = OccultationEvent.primaryStationIndex(self.selectedStations)
         
         let primaryStationEventTime = self.selectedStations[primaryStationIndex!].EventTimeUtc
-        print("primaryStationEventTime=",primaryStationEventTime)
+//        print("primaryStationEventTime=",primaryStationEventTime)
         
         let timeTuple = currentEvent.updateUTCEventTimeFlds(&item,stationIndex: primaryStationIndex!)
 //        var remainingTime: NSMutableAttributedString = timeTuple.remainingTime as! NSMutableAttributedString
@@ -269,7 +270,7 @@ class DetailViewController: UIViewController
           self.eventFeed.textColor = self.dimGray
         } else {
           let onDayOfMonth = " on " + utcStrToLocalDayOfMonth(eventTimeStr: primaryStationEventTime!)!
-          print("onDayOfMonth=",onDayOfMonth)
+//          print("onDayOfMonth=",onDayOfMonth)
 //          let dayOfMonthAttrStr: NSAttributedString = NSAttributedString(string: onDayOfMonth)
           let dayOfMonthAttrStr = onDayOfMonth
 //          let dayOfMonthAttrStr: NSMutableAttributedString = onDayOfMonth as! NSMutableAttributedString
@@ -311,13 +312,13 @@ class DetailViewController: UIViewController
           self.eventCamAseroidRotation.attributedText = self.event.updateAsteroidRotationFld(item)
           self.eventCamRotationAmplitude.attributedText = self.event.updateAsteroidRotationAmpFld(item)
         }
-//        self.updateShadowPlot(item)
+
     }   // end DispatchQueue.main.async
   }
   
   func updateStationFlds(cell: inout StationCell, indexPath: IndexPath, stations: [ObserverStation], itm: EventWithDetails)
   {
-    print("updateStationFlds")
+//    print("updateStationFlds")
     var item = itm
     
     cell.sigmaImg.accessibilityIdentifier = "sigmaImg"
@@ -628,6 +629,7 @@ class DetailViewController: UIViewController
     {
       cell.starAltImg.image = nil
     }
+     
   }
     
   func printShadowPlotDiagnostics(headerStr: String)
@@ -875,6 +877,7 @@ extension DetailViewController: UICollectionViewDataSource,UICollectionViewDeleg
     var cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as! StationCell
 //    cell.backgroundColor = #colorLiteral(red: 0.2043271959, green: 0.620110333, blue: 0.6497597098, alpha: 1)
     cell.backgroundColor = #colorLiteral(red: 0.3866960108, green: 0.623185575, blue: 0.6741087437, alpha: 1)
+//    print("indexPath=",indexPath)
     updateStationFlds(cell: &cell, indexPath: indexPath, stations: selectedStations, itm: selectedEvent)
     return cell
   }
@@ -894,12 +897,34 @@ extension DetailViewController: UICollectionViewDataSource,UICollectionViewDeleg
     }
   }
   
+  func updateLatLonFlds()
+  {
+    //update event fields with station latitude and longitude
+    print()
+    print("station index=",currentStationIndexPath.row,"   IsOwnStation=",selectedStations[currentStationIndexPath.row].IsOwnStation!)
+    print("station name=",selectedStations[currentStationIndexPath.row].StationName!)
+    print("chord=",selectedStations[currentStationIndexPath.row].ChordOffsetKm!)
+    print("lat=",selectedStations[currentStationIndexPath.row].Latitude,"   lon=",selectedStations[currentStationIndexPath.row].Longitude)
+    print()
+    if selectedStations[currentStationIndexPath.row].IsOwnStation!
+    {
+      self.eventLat.attributedText = self.event.updateLatitudeFld(selectedStations[currentStationIndexPath.row])
+      self.eventLon.attributedText = self.event.updateLongitudeFld(selectedStations[currentStationIndexPath.row])
+      self.latLonStack.isHidden = false
+    } else {
+      self.eventLat.attributedText = NSAttributedString(string: "")
+      self.eventLon.attributedText = NSAttributedString(string: "")
+      self.latLonStack.isHidden = true
+    }
+  }
+  
   func scrollViewDidEndDecelerating(_ scrollView: UIScrollView)
   {
-//    DispatchQueue.main.async {print("scrollViewDidEndDecelerating")}
+    //    DispatchQueue.main.async {print("scrollViewDidEndDecelerating")}
     currentStationIndexPath = visibleStationIndexPath()
     moveCursorToStation(indexPath: visibleStationIndexPath())
     stationPageControl.currentPage = currentStationIndexPath.row
+    updateLatLonFlds()
   }
 }
 

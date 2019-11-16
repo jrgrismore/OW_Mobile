@@ -242,6 +242,26 @@ class OccultationEvent: NSObject
     return asterAmpAttrStr
   }
   
+  func updateLatitudeFld(_ station: ObserverStation) -> NSAttributedString
+  {
+    var latitudeAttrStr: NSAttributedString = NSMutableAttributedString(string: "Latitude       —")
+    if station.Latitude != nil
+    {
+      latitudeAttrStr = self.formatLabelandField(label:"Latitude: ", field: String(format: "%0.5f",station.Latitude!), units:"")
+    }
+    return latitudeAttrStr
+  }
+  
+  func updateLongitudeFld(_ station: ObserverStation) -> NSAttributedString
+  {
+    var longitudeAttrStr: NSAttributedString = NSMutableAttributedString(string: "Longitude       —")
+    if station.Longitude != nil
+    {
+      longitudeAttrStr = self.formatLabelandField(label:"Longitude: ", field: String(format: "%0.5f",station.Longitude!), units:"")
+    }
+    return longitudeAttrStr
+  }
+
   func hideBVStarDiamView(_ item: EventWithDetails) -> Bool
   {
     if item.BV == nil && item.StellarDiaMas == nil
@@ -353,7 +373,7 @@ class OccultationEvent: NSObject
     return nil
   }
   
-  func myStations(_ item: EventWithDetails) -> [ObserverStation]?
+  static func myStations(_ item: EventWithDetails) -> [ObserverStation]?
   {
     var myStations: [ObserverStation] = []
     for station in item.Stations!

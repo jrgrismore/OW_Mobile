@@ -28,19 +28,19 @@ func formatLocalEventTime(timeString: String) -> String
   eventTimeFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSS"
   eventTimeFormatter.timeZone = TimeZone(abbreviation: "UTC")
   let utcTimeDate = eventTimeFormatter.date(from: timeString)!
-  print("utcTimeDate=",utcTimeDate)
+//  print("utcTimeDate=",utcTimeDate)
   switch appSettings.eventDayFormat
   {
   case 0:   //Thursday (Evening/Night/Morning, dd mmm, HH:mm)
 //    print("day format is: Thursday (Evening/Night/Morning), dd mmm, HH:mm")
     eventTimeFormatter.timeZone = TimeZone.current
     let localTimeStr = eventTimeFormatter.string(from: utcTimeDate)
-    print("localTimeStr=",localTimeStr)
+//    print("localTimeStr=",localTimeStr)
     let eveNightMorn = eveningNightMorning(localDateStr: localTimeStr)
     if let formattedDate = eventTimeFormatter.date(from: localTimeStr)
     {
       let dayStr = eveNightMorn.dayName + " " + eveNightMorn.eveNight
-      print("dayStr=",dayStr)
+//      print("dayStr=",dayStr)
       eventTimeFormatter.dateFormat = "dd MMM, HH:mm"
       return dayStr +  ", " + eventTimeFormatter.string(from: formattedDate)
     }
@@ -48,12 +48,12 @@ func formatLocalEventTime(timeString: String) -> String
 //    print("day format is: Thursday (Evening/Night), dd mmm, HH:mm")
     eventTimeFormatter.timeZone = TimeZone.current
     let localTimeStr = eventTimeFormatter.string(from: utcTimeDate)
-    print("localTimeStr=",localTimeStr)
+//    print("localTimeStr=",localTimeStr)
     let eveNight = eveningNight(localDateStr: localTimeStr)
     if let formattedDate = eventTimeFormatter.date(from: localTimeStr)
     {
       let dayStr = eveNight.dayName + " " + eveNight.eveNight
-      print("dayStr=",dayStr)
+//      print("dayStr=",dayStr)
       eventTimeFormatter.dateFormat = "dd MMM, HH:mm"
       return dayStr +  ", " + eventTimeFormatter.string(from: formattedDate)
     }
@@ -90,7 +90,7 @@ func leadTime(timeString: String) -> String
     let leadTimeMinutes = leadTimeSeconds / 60
     let leadTimeHours = leadTimeMinutes / 60
     let leadTimeDays = Double(leadTimeHours) / 24.0
-    print("leadTimeDays=",leadTimeDays)
+//    print("leadTimeDays=",leadTimeDays)
     if leadTimeMinutes > 0
     {
       if leadTimeMinutes < 90
