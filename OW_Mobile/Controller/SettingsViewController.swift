@@ -52,6 +52,7 @@ class SettingsViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
     summaryTimeSeg.selectedSegmentIndex = appSettings.summaryTimeIsLocal ? 0 : 1
     detailTimeSeg.selectedSegmentIndex = appSettings.detailTimeIsLocal ? 0 : 1
     starEpochSeg.selectedSegmentIndex = appSettings.starEpochIsJ2000 ? 0 : 1
+    latlonFormatSeg.selectedSegmentIndex = appSettings.latlonFormatIsDMS ? 0 : 1
   }
   
   override func viewDidAppear(_ animated: Bool) {
@@ -59,17 +60,15 @@ class SettingsViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
   }
   
   override func viewWillDisappear(_ animated: Bool) {
-//    print("viewWillDisappear")
-//    appSettings.tempIsCelsius = tempSeg.selectedSegmentIndex == 0 ? true : false
-//    appSettings.azimuthIsDegrees = azimuthSeg.selectedSegmentIndex == 0 ? true : false
-//    appSettings.summaryTimeIsLocal = summaryTimeSeg.selectedSegmentIndex == 0 ? true : false
-//    appSettings.detailTimeIsLocal = detailTimeSeg.selectedSegmentIndex == 0 ? true : false
-//    appSettings.starEpochIsJ2000 = starEpochSeg.selectedSegmentIndex == 0 ? true : false
-//    print("appSettings=",appSettings)
     saveSettings(appSettings)
-//    print("reloaded Settings=",loadSettings())
   }
-    
+
+  @objc func deviceRotated()
+  {
+  }
+
+  
+  
   @IBAction func toggleTemp(_ sender: Any) {
     switch tempSeg.selectedSegmentIndex
     {
@@ -163,16 +162,18 @@ class SettingsViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
    {
    case 0:
      print("show lat/lon format as DMS")
-//     appSettings.latlonFormatIsDMS = true
+     appSettings.latlonFormatIsDMS = true
    case 1:
      print("show lat/lon format as decimal")
-//     appSettings.latlonFormatIsDMS = false
+     appSettings.latlonFormatIsDMS = false
    default:
      print("show lat/lon format as DMS")
-//     appSettings.latlonFormatIsDMS = true
+     appSettings.latlonFormatIsDMS = true
    }
    saveSettings(appSettings)
-}
+      let pointXY:CGPoint = (self.latlonFormatSeg.superview?.convert(self.latlonFormatSeg.frame.origin, to: nil))!
+      self.scrollView.contentOffset = CGPoint(x:0, y:pointXY.y)
+ }
   
   
   

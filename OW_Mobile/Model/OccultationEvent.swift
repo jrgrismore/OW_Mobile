@@ -244,20 +244,34 @@ class OccultationEvent: NSObject
   
   func updateLatitudeFld(_ station: ObserverStation) -> NSAttributedString
   {
-    var latitudeAttrStr: NSAttributedString = NSMutableAttributedString(string: "Latitude       —")
+    var latitudeAttrStr: NSAttributedString = NSMutableAttributedString(string: "Lat:       —")
     if station.Latitude != nil
     {
-      latitudeAttrStr = self.formatLabelandField(label:"Latitude: ", field: String(format: "%0.5f",station.Latitude!), units:"")
+      if appSettings.latlonFormatIsDMS
+      {
+        let dmsLatTuple = floatDegreesToDMS(floatDeg: station.Latitude!)
+        let dmsLatStr = String(format: "%d° %d' %0.00f\"",dmsLatTuple.degrees,abs(dmsLatTuple.minutes),fabs(dmsLatTuple.seconds))
+        latitudeAttrStr = self.formatLabelandField(label: "Lat: ", field: dmsLatStr, units: "")
+      } else {
+        latitudeAttrStr = self.formatLabelandField(label:"Lat: ", field: String(format: "%0.5f",station.Latitude!), units:"")
+      }
     }
     return latitudeAttrStr
   }
   
   func updateLongitudeFld(_ station: ObserverStation) -> NSAttributedString
   {
-    var longitudeAttrStr: NSAttributedString = NSMutableAttributedString(string: "Longitude       —")
+    var longitudeAttrStr: NSAttributedString = NSMutableAttributedString(string: "Lon:       —")
     if station.Longitude != nil
     {
-      longitudeAttrStr = self.formatLabelandField(label:"Longitude: ", field: String(format: "%0.5f",station.Longitude!), units:"")
+      if appSettings.latlonFormatIsDMS
+      {
+        let dmsLonTuple = floatDegreesToDMS(floatDeg: station.Longitude!)
+        let dmsLonStr = String(format: "%d° %d' %0.00f\"",dmsLonTuple.degrees,abs(dmsLonTuple.minutes),fabs(dmsLonTuple.seconds))
+      longitudeAttrStr = self.formatLabelandField(label:"Lon: ", field: dmsLonStr, units:"")
+      } else {
+        longitudeAttrStr = self.formatLabelandField(label:"Lon: ", field: String(format: "%0.5f",station.Longitude!), units:"")
+      }
     }
     return longitudeAttrStr
   }

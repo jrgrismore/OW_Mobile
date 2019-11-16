@@ -252,7 +252,7 @@
                                 <rect key="frame" x="16" y="50" width="343" height="518"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="equalSpacing" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="8T8-GZ-Lcn" userLabel="Settings Stack View">
-                                        <rect key="frame" x="0.0" y="0.0" width="343" height="856"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="343" height="1176"/>
                                         <subviews>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hAp-M7-UOG" userLabel="View 1 - Temp">
                                                 <rect key="frame" x="0.0" y="0.0" width="343" height="80"/>
@@ -286,7 +286,7 @@
                                                 <viewLayoutGuide key="safeArea" id="XbC-5C-B8l"/>
                                             </view>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="zdT-b5-ogC" userLabel="View 2 - Azimuth">
-                                                <rect key="frame" x="0.0" y="96" width="343" height="80"/>
+                                                <rect key="frame" x="0.0" y="126" width="343" height="80"/>
                                                 <subviews>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Azimuth: " textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Wi7-qA-wDk">
                                                         <rect key="frame" x="10" y="29.5" width="72" height="20.5"/>
@@ -316,7 +316,7 @@
                                                 <viewLayoutGuide key="safeArea" id="JrH-AT-dKd"/>
                                             </view>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hTL-3w-Wad" userLabel="View 3 - Summary Day">
-                                                <rect key="frame" x="0.0" y="191.5" width="343" height="170"/>
+                                                <rect key="frame" x="0.0" y="251.5" width="343" height="170"/>
                                                 <subviews>
                                                     <pickerView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ZSD-db-zdY">
                                                         <rect key="frame" x="15" y="35.5" width="300" height="120"/>
@@ -344,7 +344,7 @@
                                                 </constraints>
                                             </view>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4cc-aW-FLs" userLabel="View 4 - Summary Time">
-                                                <rect key="frame" x="0.0" y="377.5" width="343" height="80"/>
+                                                <rect key="frame" x="0.0" y="467.5" width="343" height="80"/>
                                                 <subviews>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Summary Event Time:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QMh-5j-ctw">
                                                         <rect key="frame" x="10" y="29.5" width="167" height="20.5"/>
@@ -374,7 +374,7 @@
                                                 <viewLayoutGuide key="safeArea" id="vxN-Po-xpt"/>
                                             </view>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="buS-v8-Ts3" userLabel="View 5 - Detail Time">
-                                                <rect key="frame" x="0.0" y="473" width="343" height="80"/>
+                                                <rect key="frame" x="0.0" y="593" width="343" height="80"/>
                                                 <subviews>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Detail Event Time:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5E9-xq-xrA">
                                                         <rect key="frame" x="10" y="30" width="138" height="20.5"/>
@@ -404,7 +404,7 @@
                                                 <viewLayoutGuide key="safeArea" id="Qgr-XA-Gbv"/>
                                             </view>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="atx-Kf-g08" userLabel="View 6 - Star Epoch">
-                                                <rect key="frame" x="0.0" y="569" width="343" height="80"/>
+                                                <rect key="frame" x="0.0" y="719" width="343" height="80"/>
                                                 <subviews>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Star Coordinates" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7py-aD-UX6">
                                                         <rect key="frame" x="10" y="29.5" width="128.5" height="20.5"/>
@@ -433,15 +433,15 @@
                                                 </constraints>
                                             </view>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xi5-17-G1h" userLabel="View 7 - Lat/Lon Format">
-                                                <rect key="frame" x="0.0" y="664.5" width="343" height="80"/>
+                                                <rect key="frame" x="0.0" y="844.5" width="343" height="80"/>
                                                 <subviews>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Lat/Lon Format" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ITW-ye-Q33">
                                                         <rect key="frame" x="10" y="30" width="116.5" height="20.5"/>
                                                         <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
-                                                        <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                        <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
-                                                    <segmentedControl opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="c9C-Vo-QLl">
+                                                    <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="c9C-Vo-QLl">
                                                         <rect key="frame" x="181.5" y="24.5" width="137" height="32"/>
                                                         <segments>
                                                             <segment title="DMS"/>
@@ -463,11 +463,11 @@
                                                 </constraints>
                                             </view>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="10M-uv-39f" userLabel="View 8">
-                                                <rect key="frame" x="0.0" y="760.5" width="343" height="80"/>
+                                                <rect key="frame" x="0.0" y="970.5" width="343" height="80"/>
                                                 <color key="backgroundColor" red="0.18823529410000001" green="0.2784313725" blue="0.2901960784" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                             </view>
                                             <view contentMode="scaleToFill" id="HjN-8D-zrl" userLabel="View 9 - Bottom">
-                                                <rect key="frame" x="0.0" y="856" width="343" height="0.0"/>
+                                                <rect key="frame" x="0.0" y="1096" width="343" height="0.0"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 <color key="backgroundColor" red="0.18823529410000001" green="0.2784313725" blue="0.2901960784" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                                 <viewLayoutGuide key="safeArea" id="KGg-Qy-8S0"/>
@@ -475,6 +475,7 @@
                                         </subviews>
                                         <constraints>
                                             <constraint firstItem="10M-uv-39f" firstAttribute="height" secondItem="hAp-M7-UOG" secondAttribute="height" id="1vl-R0-lrj"/>
+                                            <constraint firstItem="HjN-8D-zrl" firstAttribute="height" secondItem="hAp-M7-UOG" secondAttribute="height" id="ESP-sc-B3x"/>
                                             <constraint firstItem="buS-v8-Ts3" firstAttribute="height" secondItem="hAp-M7-UOG" secondAttribute="height" id="UpC-lE-ekS"/>
                                             <constraint firstItem="atx-Kf-g08" firstAttribute="height" secondItem="hAp-M7-UOG" secondAttribute="height" id="cfs-3r-hcb"/>
                                             <constraint firstItem="zdT-b5-ogC" firstAttribute="height" secondItem="hAp-M7-UOG" secondAttribute="height" id="dHX-oR-LkR"/>

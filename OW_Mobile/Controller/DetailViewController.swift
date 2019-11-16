@@ -900,11 +900,24 @@ extension DetailViewController: UICollectionViewDataSource,UICollectionViewDeleg
   func updateLatLonFlds()
   {
     //update event fields with station latitude and longitude
+    let decimalLat = selectedStations[currentStationIndexPath.row].Latitude
+    let decimalLon = selectedStations[currentStationIndexPath.row].Longitude
+    var dmsLatTuple = (0,0,0.0)
+    var dmsLonTuple = (0,0,0.0)
+    if decimalLat != nil
+    {
+      dmsLatTuple = floatDegreesToDMS(floatDeg: decimalLat!)
+    }
+    if decimalLon != nil
+    {
+      dmsLonTuple = floatDegreesToDMS(floatDeg: decimalLon!)
+    }
     print()
     print("station index=",currentStationIndexPath.row,"   IsOwnStation=",selectedStations[currentStationIndexPath.row].IsOwnStation!)
     print("station name=",selectedStations[currentStationIndexPath.row].StationName!)
     print("chord=",selectedStations[currentStationIndexPath.row].ChordOffsetKm!)
-    print("lat=",selectedStations[currentStationIndexPath.row].Latitude,"   lon=",selectedStations[currentStationIndexPath.row].Longitude)
+    print("decimalLat=",decimalLat,"   decimalLon=",decimalLon)
+    print("dmsLat=",dmsLatTuple,"   dmsLon=",dmsLonTuple)
     print()
     if selectedStations[currentStationIndexPath.row].IsOwnStation!
     {
