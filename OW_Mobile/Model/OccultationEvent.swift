@@ -87,7 +87,7 @@ class OccultationEvent: NSObject
       {
         //******convert decimal hours to hh:mm:ss
         let raTuple = floatRAtoHMS(floatRA: item.RAJ2000Hours!)
-        let raFldStr = String(format: "%02dh %02dm %04.1fs",raTuple.hours,raTuple.minutes,raTuple.seconds)
+        let raFldStr = String(format: "%02dh%02dm%04.1fs",raTuple.hours,raTuple.minutes,raTuple.seconds)
         raAttrStr = self.formatLabelandField(label:"RA: ", field: raFldStr, units:" ")
       }
     } else {
@@ -95,7 +95,7 @@ class OccultationEvent: NSObject
       {
         //******convert decimal hours to hh:mm:ss
         let raTuple = floatRAtoHMS(floatRA: item.RAHours!)
-        let raFldStr = String(format: "%02dh %02dm %04.1fs",raTuple.hours,raTuple.minutes,raTuple.seconds)
+        let raFldStr = String(format: "%02dh%02dm%04.1fs",raTuple.hours,raTuple.minutes,raTuple.seconds)
         raAttrStr = self.formatLabelandField(label:"RA: ", field: raFldStr, units:"")
       }
     }
@@ -111,7 +111,7 @@ class OccultationEvent: NSObject
       {
         //******convert decimal degrees to dd:mm:ss
         let decTuple = floatDecToDMS(floatDegrees: item.DEJ2000Deg!)
-        let decFldStr = String(format: "%+03d° %02d' %04.1f\"",decTuple.degrees,labs(decTuple.minutes),fabs(decTuple.seconds))
+        let decFldStr = String(format: "%+03d°%02d'%04.1f\"",decTuple.degrees,labs(decTuple.minutes),fabs(decTuple.seconds))
         decAttrStr = self.formatLabelandField(label:"Dec: ", field: decFldStr, units:"")
       }
     } else {
@@ -119,7 +119,7 @@ class OccultationEvent: NSObject
       {
         //******convert decimal degrees to dd:mm:ss
         let decTuple = floatDecToDMS(floatDegrees: item.DEDeg!)
-        let decFldStr = String(format: "%+03d° %02d' %04.1f\"",decTuple.degrees,labs(decTuple.minutes),fabs(decTuple.seconds))
+        let decFldStr = String(format: "%+03d°%02d'%04.1f\"",decTuple.degrees,labs(decTuple.minutes),fabs(decTuple.seconds))
         decAttrStr = self.formatLabelandField(label:"DE: ", field: decFldStr, units:"")
       }
     }
@@ -250,7 +250,7 @@ class OccultationEvent: NSObject
       if appSettings.latlonFormatIsDMS
       {
         let dmsLatTuple = floatDegreesToDMS(floatDeg: station.Latitude!)
-        let dmsLatStr = String(format: "%d° %d' %0.00f\"",dmsLatTuple.degrees,abs(dmsLatTuple.minutes),fabs(dmsLatTuple.seconds))
+        let dmsLatStr = String(format: "%d°%d'%0.00f\"",dmsLatTuple.degrees,abs(dmsLatTuple.minutes),fabs(dmsLatTuple.seconds))
         latitudeAttrStr = self.formatLabelandField(label: "Lat: ", field: dmsLatStr, units: "")
       } else {
         latitudeAttrStr = self.formatLabelandField(label:"Lat: ", field: String(format: "%0.5f",station.Latitude!), units:"")
@@ -267,7 +267,7 @@ class OccultationEvent: NSObject
       if appSettings.latlonFormatIsDMS
       {
         let dmsLonTuple = floatDegreesToDMS(floatDeg: station.Longitude!)
-        let dmsLonStr = String(format: "%d° %d' %0.00f\"",dmsLonTuple.degrees,abs(dmsLonTuple.minutes),fabs(dmsLonTuple.seconds))
+        let dmsLonStr = String(format: "%d°%d'%0.00f\"",dmsLonTuple.degrees,abs(dmsLonTuple.minutes),fabs(dmsLonTuple.seconds))
       longitudeAttrStr = self.formatLabelandField(label:"Lon: ", field: dmsLonStr, units:"")
       } else {
         longitudeAttrStr = self.formatLabelandField(label:"Lon: ", field: String(format: "%0.5f",station.Longitude!), units:"")

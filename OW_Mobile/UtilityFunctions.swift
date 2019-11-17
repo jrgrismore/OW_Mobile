@@ -61,7 +61,7 @@ func formatLocalEventTime(timeString: String) -> String
 //    print("day format is: 07 November 2019, HH:mm:ss")
     if let formattedDate = eventTimeFormatter.date(from: timeString)
     {
-      eventTimeFormatter.dateFormat = "dd MMMM yyyy, HH:mm:ss"
+      eventTimeFormatter.dateFormat = "dd MMMM yyyy, HH:mm"
       eventTimeFormatter.timeZone = TimeZone.current
       return eventTimeFormatter.string(from: formattedDate)
     }
@@ -69,7 +69,7 @@ func formatLocalEventTime(timeString: String) -> String
 //    print("day format is: 07 November, HH:mm:ss")
     if let formattedDate = eventTimeFormatter.date(from: timeString)
     {
-      eventTimeFormatter.dateFormat = "dd MMM, HH:mm:ss"
+      eventTimeFormatter.dateFormat = "dd MMM, HH:mm"
       eventTimeFormatter.timeZone = TimeZone.current
       return eventTimeFormatter.string(from: formattedDate)
     }
