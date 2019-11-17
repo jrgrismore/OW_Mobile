@@ -469,8 +469,7 @@ extension MyEventsViewController
       cell.timeError.textColor = .white
       cell.numberOfStationsText.textColor = .white
     }
-    
-    if appSettings.summaryTimeIsLocal
+     if appSettings.summaryTimeIsLocal
     {
       cell.eventTime.text = formatLocalEventTime(timeString: (primaryStation?.EventTimeUtc!)!)
     } else {      

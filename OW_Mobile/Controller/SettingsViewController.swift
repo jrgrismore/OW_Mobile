@@ -28,8 +28,9 @@ class SettingsViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
   
   override func viewDidLoad() {
     super.viewDidLoad()
-    var segmentFont =   UIFont.preferredFont(forTextStyle: .body)
-    
+    UISegmentedControl.appearance().setTitleTextAttributes([NSAttributedString.Key.foregroundColor: UIColor.black], for: .selected)
+    UISegmentedControl.appearance().setTitleTextAttributes([NSAttributedString.Key.foregroundColor: UIColor.gray], for: .normal)
+
     eventDayFormatPicker.delegate = self
     eventDayFormatPicker.dataSource = self
     eventDayFormatPicker.backgroundColor = .lightGray
@@ -39,7 +40,6 @@ class SettingsViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
   }
   
   override func viewWillAppear(_ animated: Bool) {
-//    print("viewWillAppear")
     //temporarily remove settings from user defaults
 //    UserDefaults.standard.removeObject(forKey: UDKeys.settings)
     
@@ -195,7 +195,7 @@ class SettingsViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
 
   func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int)
   {
-    print("eventDayFormatPicker row=",row,"   eventDayFormatPicker value=",pickerData[row])
+//    print("eventDayFormatPicker row=",row,"   eventDayFormatPicker value=",pickerData[row])
     appSettings.eventDayFormat = row
     saveSettings(appSettings)
   }
