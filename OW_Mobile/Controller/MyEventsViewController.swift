@@ -119,7 +119,7 @@ class MyEventsViewController: UIViewController, UICollectionViewDataSource,UICol
   //temporarily disabled
 //    eventUpdateTimer = Timer.scheduledTimer(timeInterval: 5.0, target: self, selector: #selector(handleEventTimer), userInfo: nil, repeats: true)
     
-    eventUpdateTimer = Timer.scheduledTimer(timeInterval: 30.0, target: self, selector: #selector(handleEventTimer), userInfo: nil, repeats: true)
+//    eventUpdateTimer = Timer.scheduledTimer(timeInterval: 30.0, target: self, selector: #selector(handleEventTimer), userInfo: nil, repeats: true)
 
 }
   
@@ -209,6 +209,7 @@ class MyEventsViewController: UIViewController, UICollectionViewDataSource,UICol
 
   fileprivate func updateMyEventsCells()
 {
+  print("updateMyEventsCells")
     //data assigned
     //              self.cellEventDetailArray = eventsWithDetailsData!
     self.cellEventDetailArray = eventsWithDetails
@@ -232,6 +233,7 @@ class MyEventsViewController: UIViewController, UICollectionViewDataSource,UICol
     //              self.cellEventDetailArray = eventsWithDetailsData!
     self.cellEventDetailArray = eventsWithDetails
     self.cellEventDetailStringArray = self.assignEventDetailStrings(eventPlusDetails: self.cellEventDetailArray)
+  print("end updateMyEventsCells")
   }
   
   func getEventsWithDetails()
@@ -276,6 +278,10 @@ class MyEventsViewController: UIViewController, UICollectionViewDataSource,UICol
               usleep(useconds_t(0.5 * 1000000)) //will sleep for 0.5 seconds)
               DispatchQueue.main.async {self.stopSpinner()}
               DispatchQueue.main.async{self.myEventsCollection.reloadData()}
+              
+              //start data refresh timer
+              eventUpdateTimer.invalidate()
+              eventUpdateTimer = Timer.scheduledTimer(timeInterval: 30.0, target: self, selector: #selector(self.handleEventTimer), userInfo: nil, repeats: true)
 
             } else {
               // eventsWithDetailsData is nil
