@@ -19,6 +19,11 @@ struct UDKeys
   static let settings = "settings"
 }
 
+struct NotificationKeys
+{
+  static let dataRefreshed = "dataRefreshed"
+}
+
 var eventUpdateTimer = Timer()
 
 //Unified event with details structure matching JSON keys

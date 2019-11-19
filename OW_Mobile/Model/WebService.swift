@@ -84,6 +84,7 @@ class OWWebAPI: NSObject
   
   func retrieveEventsWithDetails( completion: @escaping ([EventWithDetails]?, Error?) -> Void)
   {
+    print("retrieveEventsWithDetails")
     delegate?.webLogTextDidChange(text: "Connecting to OW")
     usleep(useconds_t(0.5 * 1000000)) //will sleep for 0.5 seconds)
     let config = URLSessionConfiguration.default
@@ -96,14 +97,18 @@ class OWWebAPI: NSObject
         else
       {
         print("\n*******Error:", error as Any)
-        self.delegate?.webLogTextDidChange(text: "\n*******Error:" + error!.localizedDescription)
+        self.delegate?.webLogTextDidChange(text: "Error Trying to Access OW Server!")
         usleep(useconds_t(0.5 * 1000000)) //will sleep for 0.5 seconds)
+//        print("found error -- invoke completion")
+        completion(nil,error)
         return
       }
-      self.delegate?.webLogTextDidChange(text: "Data Retrieved")
+     print("Data Retrieved")
+     self.delegate?.webLogTextDidChange(text: "Data Retrieved")
       usleep(useconds_t(0.5 * 1000000)) //will sleep for 0.5 seconds)
       let eventWithDetail = self.parseEventsWithDetails(jsonData: dataResponse)
       
+      print("eventWithDetails.count=",eventWithDetail.count)
       self.delegate?.webLogTextDidChange(text: "eventWithDetails List count = \(eventWithDetail.count)")
       usleep(useconds_t(1.0 * 1000000)) //will sleep for 1.0 seconds)
       completion(eventWithDetail,nil)

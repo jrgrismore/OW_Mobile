@@ -815,3 +815,48 @@ func fahrenheitToCelsius(degreesF: Double) -> Double
   return (degreesF - 32) * 5 / 9
 }
 
+
+
+
+
+func refreshEventsWithDetails()
+{
+  print("refreshEventsWithDetails")
+  //  DispatchQueue.main.async {self.startSpinner()}
+  OWWebAPI.shared.retrieveEventsWithDetails(completion: { (eventsWithDetailsData, error) in
+    DispatchQueue.main.async
+      {
+        print("begin completion")
+        if error != nil
+        {
+          print("error=",error)
+           //need to show alert about no connection
+          //or trigger notification about no connection
+          NotificationCenter.default.post(name: Notification.Name(NotificationKeys.dataRefreshed), object: nil)
+          
+          print("\n\n\n\n\n")
+          return
+        } else {
+          print("eventsWithDetailData.count=",eventsWithDetailsData!.count)
+          print("\n\n\n\n\n")
+//          print("refreshEventsWithDetails > eventsWithDetails=",eventsWithDetailsData!)
+          // no errors
+          if eventsWithDetailsData!.count < 1
+          {
+            eventsWithDetails = eventsWithDetailsData!
+            DispatchQueue.main.async
+              {
+                //save empty array to userdefaults
+                OWWebAPI.shared.saveEventsWithDetails([])
+            }
+            return
+          }
+        }
+        //store update date in userDefaults
+        UserDefaults.standard.set(Date(), forKey: UDKeys.lastEventListUpdate)
+        OWWebAPI.shared.saveEventsWithDetails(eventsWithDetailsData!)
+        //      let loadedEventDetailData = OWWebAPI.shared.loadEventsWithDetails()
+    } //end of no errors block
+  })
+}
+

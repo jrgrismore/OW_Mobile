@@ -118,11 +118,15 @@ class MyEventsViewController: UIViewController, UICollectionViewDataSource,UICol
                                                                     NSAttributedString.Key.font: UIFont.preferredFont(forTextStyle: .title3)]
   //temporarily disabled
 //    eventUpdateTimer = Timer.scheduledTimer(timeInterval: 5.0, target: self, selector: #selector(handleEventTimer), userInfo: nil, repeats: true)
+    
+    eventUpdateTimer = Timer.scheduledTimer(timeInterval: 30.0, target: self, selector: #selector(handleEventTimer), userInfo: nil, repeats: true)
+
 }
   
   @objc func handleEventTimer()
   {
     print("eventUpdateTimer Triggered: ",Date())
+    refreshEventsWithDetails()
   }
   
   override func viewWillAppear(_ animated: Bool)
@@ -190,57 +194,104 @@ class MyEventsViewController: UIViewController, UICollectionViewDataSource,UICol
   // MARK: - Event data functions
   //retrieve json, parse json, use closure to fill cells
   
+  
+  func startSpinner()
+  {
+    self.spinnerView.isHidden = false
+    self.activitySpinner.startAnimating()
+  }
+  
+  func stopSpinner()
+  {
+    self.activitySpinner.stopAnimating()
+    self.spinnerView.isHidden = true
+  }
+
+  fileprivate func updateMyEventsCells()
+{
+    //data assigned
+    //              self.cellEventDetailArray = eventsWithDetailsData!
+    self.cellEventDetailArray = eventsWithDetails
+    //              if eventsWithDetailsData!.count < 1
+    if eventsWithDetails.count < 1
+    {
+      //                eventsWithDetails = eventsWithDetailsData!
+      DispatchQueue.main.async
+        {// no data dispatch
+          self.cellEventDetailArray = []
+          self.cellEventDetailStringArray = []
+          self.myEventsCollection.reloadData()
+          //save empty array to userdefaults
+          OWWebAPI.shared.saveEventsWithDetails([])
+          self.activitySpinner.stopAnimating()
+          self.spinnerView.isHidden = true
+      }  //end of no data dispatch
+      return
+    }  // eventsWithDetailsData!.count < 1
+    //              self.cellEventDetailArray = eventsWithDetailsData!
+    //              self.cellEventDetailArray = eventsWithDetailsData!
+    self.cellEventDetailArray = eventsWithDetails
+    self.cellEventDetailStringArray = self.assignEventDetailStrings(eventPlusDetails: self.cellEventDetailArray)
+  }
+  
   func getEventsWithDetails()
   {
-    //***********************************************
-    //Need to add eventsWithDetailsData save and load
-    //***********************************************
-    DispatchQueue.main.async
-      {
-        self.spinnerView.isHidden = false
-        self.activitySpinner.startAnimating()
-    }
+    DispatchQueue.main.async {self.startSpinner()}
     OWWebAPI.shared.retrieveEventsWithDetails(completion: { (eventsWithDetailsData, error) in
       DispatchQueue.main.async
-        {
-          //          print("event count =",eventsWithDetailsData!.count)
-          //          print("eventsWithDetalsData=",eventsWithDetailsData!)
+        { //inner dispatch
+          if error != nil
+          {
+            DispatchQueue.main.async {self.stopSpinner()}
+            
+            //need to show alert about no connection
+            let inetConnectionAlert = UIAlertController(title: "No Internet Connection!", message: "What do you want to do?", preferredStyle: .alert)
+            let retryAction = UIAlertAction(title: "Retry", style: .default) { _ in
+                print("retry")
+            }
+            inetConnectionAlert.addAction(retryAction)
+            let suspendAction = UIAlertAction(title: "Suspend", style: .default) { _ in
+            print("suspend")
+            }
+            inetConnectionAlert.addAction(suspendAction)
+            let cancelAction = UIAlertAction(title: "Cancel", style: .cancel) { _ in
+              print("cancel")
+            }
+            inetConnectionAlert.addAction(cancelAction)
+            
+            self.present(inetConnectionAlert, animated: true, completion: nil)
+             return
+          } else {
+            // no errors
           self.spinnerLbl.text = "Event List \n Download Complete..."
           //fill cells
-          if eventsWithDetailsData!.count < 1
-          {
-            eventsWithDetails = eventsWithDetailsData!
-            DispatchQueue.main.async
-              {
-                self.cellEventDetailArray = []
-                self.cellEventDetailStringArray = []
-                self.myEventsCollection.reloadData()
-                //save empty array to userdefaults
-                OWWebAPI.shared.saveEventsWithDetails([])
-                self.activitySpinner.stopAnimating()
-                self.spinnerView.isHidden = true
-            }
-            return
-          }
-          self.cellEventDetailArray = eventsWithDetailsData!
-          self.cellEventDetailStringArray = self.assignEventDetailStrings(eventPlusDetails: self.cellEventDetailArray)
-          
-          DispatchQueue.main.async{self.spinnerLbl.text = "Updating Events..."}
-          DispatchQueue.main.async{self.myEventsCollection.reloadData()}
-          usleep(useconds_t(0.5 * 1000000)) //will sleep for 0.5 seconds)
-          DispatchQueue.main.async
+            if eventsWithDetails != nil
             {
-              self.activitySpinner.stopAnimating()
-              self.spinnerView.isHidden = true
-          }
-          DispatchQueue.main.async{self.myEventsCollection.reloadData()}
+              eventsWithDetails = eventsWithDetailsData!
+              
+              self.updateMyEventsCells()
+              
+              DispatchQueue.main.async{self.spinnerLbl.text = "Updating Events..."}
+              DispatchQueue.main.async{self.myEventsCollection.reloadData()}
+              usleep(useconds_t(0.5 * 1000000)) //will sleep for 0.5 seconds)
+              DispatchQueue.main.async {self.stopSpinner()}
+              DispatchQueue.main.async{self.myEventsCollection.reloadData()}
+
+            } else {
+              // eventsWithDetailsData is nil
+            }
           
-      }
+      }  //end of no errors block
       //store update date in userDefaults
       UserDefaults.standard.set(Date(), forKey: UDKeys.lastEventListUpdate)
+//      OWWebAPI.shared.saveEventsWithDetails(eventsWithDetailsData!)
+      OWWebAPI.shared.saveEventsWithDetails(eventsWithDetailsData!)
       OWWebAPI.shared.saveEventsWithDetails(eventsWithDetailsData!)
       //      let loadedEventDetailData = OWWebAPI.shared.loadEventsWithDetails()
+      } //end of dispatch block
+      
     })
+    
   }
   
   func printEventWithDetails(_ eventAndDetails: EventWithDetails)

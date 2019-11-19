@@ -8,6 +8,7 @@
 
 import UIKit
 import Foundation
+import SystemConfiguration
 
 
 
@@ -225,5 +226,10 @@ class AccountViewController: UIViewController, UITextFieldDelegate
   }
   
   
+  @IBAction func testDataRefresh(_ sender: Any)
+  {
+    print("testDataRefresh")
+    refreshEventsWithDetails()
+  }
   
 }
