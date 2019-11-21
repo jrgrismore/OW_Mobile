@@ -25,6 +25,13 @@ class MyEventsViewController: UIViewController, UICollectionViewDataSource,UICol
   
   var eventCompleted: Bool = false
   
+  let redDot: String = "🔴"
+  let yellowDot: String = "🟡"
+  let greenDot: String = "🟢"
+  let linkSymbol: String = "🔗"
+  let circleSlashSymbol: String = "🚫"
+  
+  
   @IBAction func switchToLogin(_ sender: Any)
   {
     tabBarController?.selectedIndex = 1
@@ -126,7 +133,53 @@ class MyEventsViewController: UIViewController, UICollectionViewDataSource,UICol
   @objc func handleEventTimer()
   {
     print("eventUpdateTimer Triggered: ",Date())
-    refreshEventsWithDetails()
+    refreshEventsWithDetails(completionHandler: { () in
+      
+      //need to handle no data case
+      print()
+      print("*****************************************************")
+      print("*****************************************************")
+      print("*****************************************************")
+      print("Need to handle case where no data is returned")
+      print("This includes saving empty data to user defaults")
+      print("*****************************************************")
+      print("*****************************************************")
+      print("*****************************************************")
+      print()
+
+      
+      DispatchQueue.main.async {
+        print("eventsWithDetails.count=",eventsWithDetails.count)
+        self.cellEventDetailArray = eventsWithDetails
+        print("cellEventDetailArray.count=",self.cellEventDetailArray.count)
+        print("cellEventDetailArray",self.cellEventDetailArray)
+
+        
+        //test empty data handling code
+        //eventsWithDetails = []  // test case for empty data handling code
+        if eventsWithDetails.count < 1
+        {
+          self.cellEventDetailArray = []
+          self.cellEventDetailStringArray = []
+          self.myEventsCollection.reloadData()
+          //save empty array to userdefaults
+          OWWebAPI.shared.saveEventsWithDetails([])
+          self.activitySpinner.stopAnimating()
+          self.spinnerView.isHidden = true
+          return
+        }
+        //end test empty data handling code
+
+        
+        self.cellEventDetailStringArray = self.assignEventDetailStrings(eventPlusDetails: self.cellEventDetailArray)
+        print("cellEventDetailStringArray.count=",self.cellEventDetailStringArray.count)
+        print("cellEventDetailStringArray",self.cellEventDetailStringArray)
+        print("MyEventsViewController > refreshEventsWithDetails completionHandler")
+        self.myEventsCollection.reloadData()
+        print("myEventsCollection reloaded")
+        
+      }
+    })
   }
   
   override func viewWillAppear(_ animated: Bool)
@@ -233,6 +286,7 @@ class MyEventsViewController: UIViewController, UICollectionViewDataSource,UICol
     //              self.cellEventDetailArray = eventsWithDetailsData!
     self.cellEventDetailArray = eventsWithDetails
     self.cellEventDetailStringArray = self.assignEventDetailStrings(eventPlusDetails: self.cellEventDetailArray)
+  DispatchQueue.main.async{self.myEventsCollection.reloadData()}
   print("end updateMyEventsCells")
   }
   
@@ -274,14 +328,15 @@ class MyEventsViewController: UIViewController, UICollectionViewDataSource,UICol
               self.updateMyEventsCells()
               
               DispatchQueue.main.async{self.spinnerLbl.text = "Updating Events..."}
-              DispatchQueue.main.async{self.myEventsCollection.reloadData()}
+//              DispatchQueue.main.async{self.myEventsCollection.reloadData()}
               usleep(useconds_t(0.5 * 1000000)) //will sleep for 0.5 seconds)
               DispatchQueue.main.async {self.stopSpinner()}
-              DispatchQueue.main.async{self.myEventsCollection.reloadData()}
+//              DispatchQueue.main.async{self.myEventsCollection.reloadData()}
               
               //start data refresh timer
               eventUpdateTimer.invalidate()
-              eventUpdateTimer = Timer.scheduledTimer(timeInterval: 30.0, target: self, selector: #selector(self.handleEventTimer), userInfo: nil, repeats: true)
+              eventUpdateInterval = 2 * 60  //override default interval
+              eventUpdateTimer = Timer.scheduledTimer(timeInterval: eventUpdateInterval, target: self, selector: #selector(self.handleEventTimer), userInfo: nil, repeats: true)
 
             } else {
               // eventsWithDetailsData is nil
@@ -403,6 +458,7 @@ extension MyEventsViewController
   {
     var cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as! MyEventsCollectionViewCell
     cell.backgroundColor = #colorLiteral(red: 0.3058823529, green: 0.4941176471, blue: 0.5333333333, alpha: 0.67)
+    print("call fillCellFields")
     fillCellFields(cell: &cell, indexPath: indexPath)
     let longPress = UILongPressGestureRecognizer(target: self, action: #selector(handleLongPress))
     cell.addGestureRecognizer(longPress)

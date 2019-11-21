@@ -229,7 +229,9 @@ class AccountViewController: UIViewController, UITextFieldDelegate
   @IBAction func testDataRefresh(_ sender: Any)
   {
     print("testDataRefresh")
-    refreshEventsWithDetails()
+    refreshEventsWithDetails(completionHandler: { () in
+      print("Account > refreshEventsWithDetails completionHandler")
+    })
   }
   
 }

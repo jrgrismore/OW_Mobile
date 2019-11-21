@@ -25,6 +25,7 @@ struct NotificationKeys
 }
 
 var eventUpdateTimer = Timer()
+var eventUpdateInterval: TimeInterval = 3 * 60  //in seconds
 
 //Unified event with details structure matching JSON keys
 struct EventWithDetails: Codable

@@ -819,7 +819,7 @@ func fahrenheitToCelsius(degreesF: Double) -> Double
 
 
 
-func refreshEventsWithDetails()
+func refreshEventsWithDetails(completionHandler: @escaping () ->())
 {
   print("refreshEventsWithDetails")
   //  DispatchQueue.main.async {self.startSpinner()}
@@ -841,9 +841,9 @@ func refreshEventsWithDetails()
           print("\n\n\n\n\n")
 //          print("refreshEventsWithDetails > eventsWithDetails=",eventsWithDetailsData!)
           // no errors
+          eventsWithDetails = eventsWithDetailsData!
           if eventsWithDetailsData!.count < 1
           {
-            eventsWithDetails = eventsWithDetailsData!
             DispatchQueue.main.async
               {
                 //save empty array to userdefaults
@@ -855,6 +855,7 @@ func refreshEventsWithDetails()
         //store update date in userDefaults
         UserDefaults.standard.set(Date(), forKey: UDKeys.lastEventListUpdate)
         OWWebAPI.shared.saveEventsWithDetails(eventsWithDetailsData!)
+        completionHandler()
         //      let loadedEventDetailData = OWWebAPI.shared.loadEventsWithDetails()
     } //end of no errors block
   })
