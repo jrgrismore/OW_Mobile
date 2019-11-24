@@ -25,11 +25,11 @@ class MyEventsViewController: UIViewController, UICollectionViewDataSource,UICol
   
   var eventCompleted: Bool = false
   
-  let redDot: String = "🔴"
-  let yellowDot: String = "🟡"
-  let greenDot: String = "🟢"
-  let linkSymbol: String = "🔗"
-  let circleSlashSymbol: String = "🚫"
+//  let redDot: String = "🔴"
+//  let yellowDot: String = "🟡"
+//  let greenDot: String = "🟢"
+//  let linkSymbol: String = "🔗"
+//  let circleSlashSymbol: String = "🚫"
   
   
   @IBAction func switchToLogin(_ sender: Any)
@@ -71,7 +71,8 @@ class MyEventsViewController: UIViewController, UICollectionViewDataSource,UICol
     super.viewDidLoad()
     let refreshControl = UIRefreshControl()
     refreshControl.addTarget(self, action: #selector(testRefresh), for: .valueChanged)
-   myEventsCollection.refreshControl = refreshControl
+    myEventsCollection.refreshControl = refreshControl
+    eventUpdateIntervalSeconds = 1 * 60  //override default interval for testing
     
     self.spinnerView.layer.cornerRadius = 20
     OWWebAPI.shared.delegate = self
@@ -123,31 +124,49 @@ class MyEventsViewController: UIViewController, UICollectionViewDataSource,UICol
     self.present(lastUpdateAlert, animated: true, completion: nil)
     self.navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.black,
                                                                     NSAttributedString.Key.font: UIFont.preferredFont(forTextStyle: .title3)]
-  //temporarily disabled
-//    eventUpdateTimer = Timer.scheduledTimer(timeInterval: 5.0, target: self, selector: #selector(handleEventTimer), userInfo: nil, repeats: true)
-    
-//    eventUpdateTimer = Timer.scheduledTimer(timeInterval: 30.0, target: self, selector: #selector(handleEventTimer), userInfo: nil, repeats: true)
-
 }
   
   @objc func handleEventTimer()
   {
     print("eventUpdateTimer Triggered: ",Date())
-    refreshEventsWithDetails(completionHandler: { () in
+    refreshEventsWithDetails(completionHandler: { () -> () in
       
-      //need to handle no data case
-      print()
-      print("*****************************************************")
-      print("*****************************************************")
-      print("*****************************************************")
-      print("Need to handle case where no data is returned")
-      print("This includes saving empty data to user defaults")
-      print("*****************************************************")
-      print("*****************************************************")
-      print("*****************************************************")
-      print()
+      
+      print("handleEventTimer > eventUpdateTimer=",eventUpdateTimer)
+      if eventUpdateTimer == nil
+      {
+        //terminate automatic update activities and show alert
+        DispatchQueue.main.async {self.stopSpinner()}
+        
+        //show automatic update failed alert
+        var autoUpdateAlert = UIAlertController(title: "Automatic Update Failed!  No Internet Connection.", message: "Cancel Automatic Updating, or Retry?", preferredStyle: .alert)
+        var retryAction = UIAlertAction(title: "Retry", style: .default) { _ in
+            print("retry")
+          //what in place of this???
+          self.updateCellArray()
+          //start data refresh timer
+//           eventUpdateTimer?.invalidate()
+//           eventUpdateTimer = Timer.scheduledTimer(timeInterval: eventUpdateIntervalSeconds, target: self, selector: #selector(self.handleEventTimer), userInfo: nil, repeats: true)
 
+        }
+        autoUpdateAlert.addAction(retryAction)
+//            var suspendAction = UIAlertAction(title: "Suspend", style: .default) { _ in
+//            print("suspend")
+//            }
+//            inetConnectionAlert.addAction(suspendAction)
+        var cancelAction = UIAlertAction(title: "Cancel", style: .cancel) { _ in
+          print("cancel")
+        }
+        autoUpdateAlert.addAction(cancelAction)
+        
+        self.present(autoUpdateAlert, animated: true, completion: nil)
+
+      } else {
+      //continue with automatic updates
+      }
       
+      
+      //handle no data case
       DispatchQueue.main.async {
         print("eventsWithDetails.count=",eventsWithDetails.count)
         self.cellEventDetailArray = eventsWithDetails
@@ -300,17 +319,18 @@ class MyEventsViewController: UIViewController, UICollectionViewDataSource,UICol
           {
             DispatchQueue.main.async {self.stopSpinner()}
             
-            //need to show alert about no connection
-            let inetConnectionAlert = UIAlertController(title: "No Internet Connection!", message: "What do you want to do?", preferredStyle: .alert)
-            let retryAction = UIAlertAction(title: "Retry", style: .default) { _ in
+            //show no connection alert
+            var inetConnectionAlert = UIAlertController(title: "No Internet Connection!", message: "Cancel the Update, or Retry?", preferredStyle: .alert)
+            var retryAction = UIAlertAction(title: "Retry", style: .default) { _ in
                 print("retry")
+              self.updateCellArray()
             }
             inetConnectionAlert.addAction(retryAction)
-            let suspendAction = UIAlertAction(title: "Suspend", style: .default) { _ in
-            print("suspend")
-            }
-            inetConnectionAlert.addAction(suspendAction)
-            let cancelAction = UIAlertAction(title: "Cancel", style: .cancel) { _ in
+//            var suspendAction = UIAlertAction(title: "Suspend", style: .default) { _ in
+//            print("suspend")
+//            }
+//            inetConnectionAlert.addAction(suspendAction)
+            var cancelAction = UIAlertAction(title: "Cancel", style: .cancel) { _ in
               print("cancel")
             }
             inetConnectionAlert.addAction(cancelAction)
@@ -334,9 +354,8 @@ class MyEventsViewController: UIViewController, UICollectionViewDataSource,UICol
 //              DispatchQueue.main.async{self.myEventsCollection.reloadData()}
               
               //start data refresh timer
-              eventUpdateTimer.invalidate()
-              eventUpdateInterval = 2 * 60  //override default interval
-              eventUpdateTimer = Timer.scheduledTimer(timeInterval: eventUpdateInterval, target: self, selector: #selector(self.handleEventTimer), userInfo: nil, repeats: true)
+              eventUpdateTimer?.invalidate()
+              eventUpdateTimer = Timer.scheduledTimer(timeInterval: eventUpdateIntervalSeconds, target: self, selector: #selector(self.handleEventTimer), userInfo: nil, repeats: true)
 
             } else {
               // eventsWithDetailsData is nil
@@ -347,12 +366,12 @@ class MyEventsViewController: UIViewController, UICollectionViewDataSource,UICol
       UserDefaults.standard.set(Date(), forKey: UDKeys.lastEventListUpdate)
 //      OWWebAPI.shared.saveEventsWithDetails(eventsWithDetailsData!)
       OWWebAPI.shared.saveEventsWithDetails(eventsWithDetailsData!)
-      OWWebAPI.shared.saveEventsWithDetails(eventsWithDetailsData!)
+//      OWWebAPI.shared.saveEventsWithDetails(eventsWithDetailsData!)
       //      let loadedEventDetailData = OWWebAPI.shared.loadEventsWithDetails()
       } //end of dispatch block
-      
+      print("exiting getEventsWithDetails > retrieveEventsWithDetails completion closure")
     })
-    
+    print("exiting getEventsWithDetails")
   }
   
   func printEventWithDetails(_ eventAndDetails: EventWithDetails)

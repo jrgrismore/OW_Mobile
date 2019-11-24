@@ -24,8 +24,8 @@ struct NotificationKeys
   static let dataRefreshed = "dataRefreshed"
 }
 
-var eventUpdateTimer = Timer()
-var eventUpdateInterval: TimeInterval = 3 * 60  //in seconds
+var eventUpdateTimer: Timer?
+var eventUpdateIntervalSeconds: TimeInterval = 3 * 60  //in seconds
 
 //Unified event with details structure matching JSON keys
 struct EventWithDetails: Codable

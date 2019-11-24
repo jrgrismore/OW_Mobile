@@ -819,7 +819,7 @@ func fahrenheitToCelsius(degreesF: Double) -> Double
 
 
 
-func refreshEventsWithDetails(completionHandler: @escaping () ->())
+func refreshEventsWithDetails(completionHandler: @escaping () -> ())
 {
   print("refreshEventsWithDetails")
   //  DispatchQueue.main.async {self.startSpinner()}
@@ -835,6 +835,11 @@ func refreshEventsWithDetails(completionHandler: @escaping () ->())
           NotificationCenter.default.post(name: Notification.Name(NotificationKeys.dataRefreshed), object: nil)
           
           print("\n\n\n\n\n")
+          
+          //invalidate eventUpdateTimer since no internet connection
+          eventUpdateTimer?.invalidate()
+          eventUpdateTimer = nil
+          completionHandler()
           return
         } else {
           print("eventsWithDetailData.count=",eventsWithDetailsData!.count)
@@ -849,7 +854,7 @@ func refreshEventsWithDetails(completionHandler: @escaping () ->())
                 //save empty array to userdefaults
                 OWWebAPI.shared.saveEventsWithDetails([])
             }
-            return
+             return
           }
         }
         //store update date in userDefaults

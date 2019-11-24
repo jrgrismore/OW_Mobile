@@ -226,12 +226,12 @@ class AccountViewController: UIViewController, UITextFieldDelegate
   }
   
   
-  @IBAction func testDataRefresh(_ sender: Any)
-  {
-    print("testDataRefresh")
-    refreshEventsWithDetails(completionHandler: { () in
-      print("Account > refreshEventsWithDetails completionHandler")
-    })
-  }
+//  @IBAction func testDataRefresh(_ sender: Any)
+//  {
+//    print("testDataRefresh")
+//    refreshEventsWithDetails(completionHandler: { () in
+//      print("Account > refreshEventsWithDetails completionHandler")
+//    })
+//  }
   
 }
