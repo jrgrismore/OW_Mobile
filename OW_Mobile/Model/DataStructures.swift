@@ -128,6 +128,8 @@ public struct ObservationReport: Codable   //OWObservationReport ???
 
 struct Settings: Codable
 {
+  var autoUpdateIsOn = true
+  var autoUpdateValue = 3
   var tempIsCelsius = true
   var azimuthIsDegrees = true
   var summaryTimeIsLocal = true

@@ -31,6 +31,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     //temporary
 //    UserDefaults.standard.removeObject(forKey: UDKeys.settings)
+    
     appSettings = loadSettings()
     
 //    window!.rootViewController = AccountViewController()

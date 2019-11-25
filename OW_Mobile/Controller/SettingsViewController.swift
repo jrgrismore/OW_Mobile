@@ -17,6 +17,8 @@ class SettingsViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
   @IBOutlet weak var scrollView: UIScrollView!
   @IBOutlet weak var settingsStackView: UIStackView!
   
+  @IBOutlet weak var autoUpdateSwitch: UISwitch!
+  @IBOutlet weak var autoUpdateSeg: UISegmentedControl!
   @IBOutlet weak var tempSeg: UISegmentedControl!
   @IBOutlet weak var azimuthSeg: UISegmentedControl!
   @IBOutlet weak var summaryTimeSeg: UISegmentedControl!
@@ -46,6 +48,19 @@ class SettingsViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
 //    print("appSettings=",appSettings)
     appSettings = loadSettings()
 //    print("appSettings=",appSettings)
+    autoUpdateSwitch.isOn = appSettings.autoUpdateIsOn
+    print("appSettings.autoUpdateValue=",appSettings.autoUpdateValue)
+    if autoUpdateSwitch.isOn
+    {
+      autoUpdateSeg.isUserInteractionEnabled = true
+      autoUpdateSeg.alpha = 1.0
+    } else {
+      autoUpdateSeg.isUserInteractionEnabled = false
+      autoUpdateSeg.alpha = 0.5
+    }
+    autoUpdateSeg.selectedSegmentIndex = appSettings.autoUpdateValue
+    
+ 
     tempSeg.selectedSegmentIndex = appSettings.tempIsCelsius ? 0 : 1
     azimuthSeg.selectedSegmentIndex = appSettings.azimuthIsDegrees ? 0 : 1
     eventDayFormatPicker.selectRow(appSettings.eventDayFormat, inComponent: 0, animated: true)
@@ -67,7 +82,58 @@ class SettingsViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
   {
   }
 
+  @IBAction func toggleAutoUpdateSwitch(_ sender: Any)
+  {
+    switch autoUpdateSwitch.isOn
+    {
+    case false:
+      print("autoUpdate is off")
+      appSettings.autoUpdateIsOn = false
+      autoUpdateSeg.isUserInteractionEnabled = false
+      autoUpdateSeg.alpha = 0.5
+    case true:
+      print("autoUpdate is on")
+      appSettings.autoUpdateIsOn = true
+      autoUpdateSeg.isUserInteractionEnabled = true
+      autoUpdateSeg.alpha = 1.0
+    default:
+      print("default autoUpdate is on")
+      appSettings.autoUpdateIsOn = true
+      autoUpdateSeg.isUserInteractionEnabled = true
+      autoUpdateSeg.alpha = 1.0
+    }
+    saveSettings(appSettings)
+  }
   
+  @IBAction func assignAutoUpdateSeg(_ sender: Any)
+  {
+//    switch  autoUpdateSeg.selectedSegmentIndex
+//    {
+//    case 0:
+//      print("set autoUpdate to 1 minute")
+//      appSettings.autoUpdateValue = 60
+//    case 1:
+//      print("set autoUpdate to 10 minute")
+//      appSettings.autoUpdateValue = 10 * 60
+//    case 2:
+//      print("set autoUpdate to 30 minute")
+//      appSettings.autoUpdateValue = 30 * 60
+//    case 3:
+//      print("set autoUpdate to 1 hour")
+//      appSettings.autoUpdateValue = 1 * 3600
+//    case 4:
+//      print("set autoUpdate to 3 hours")
+//      appSettings.autoUpdateValue = 3 * 3600
+//    case 5:
+//      print("set autoUpdate to 6 hours")
+//      appSettings.autoUpdateValue = 6 * 3600
+//    default:
+//      print("set autoUpdate to 1 hour")
+//      appSettings.autoUpdateValue = 1 * 3600
+//    }
+    appSettings.autoUpdateValue = autoUpdateSeg.selectedSegmentIndex
+    saveSettings(appSettings)
+  }
   
   @IBAction func toggleTemp(_ sender: Any) {
     switch tempSeg.selectedSegmentIndex

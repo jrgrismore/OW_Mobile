@@ -758,7 +758,7 @@ func saveSettings(_ settings: Settings)
 {
   let data = try? JSONEncoder().encode(settings)
   UserDefaults.standard.set(data, forKey: UDKeys.settings)
-  //    print("saved and reloaded settings = ",loadSettings())
+      print("saved and reloaded settings = ",loadSettings())
 }
 
 

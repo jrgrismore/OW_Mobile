@@ -73,7 +73,35 @@ class MyEventsViewController: UIViewController, UICollectionViewDataSource,UICol
     refreshControl.addTarget(self, action: #selector(testRefresh), for: .valueChanged)
     myEventsCollection.refreshControl = refreshControl
     eventUpdateIntervalSeconds = 1 * 60  //override default interval for testing
-    
+    //assign event update interval value from settings
+    switch  appSettings.autoUpdateValue
+     {
+     case 0:
+       print("set autoUpdate to 1 minute")
+       eventUpdateIntervalSeconds = 60
+     case 1:
+       print("set autoUpdate to 10 minute")
+       eventUpdateIntervalSeconds = 10 * 60
+     case 2:
+       print("set autoUpdate to 30 minute")
+       eventUpdateIntervalSeconds = 30 * 60
+     case 3:
+       print("set autoUpdate to 1 hour")
+       eventUpdateIntervalSeconds = 1 * 3600
+     case 4:
+       print("set autoUpdate to 3 hours")
+       eventUpdateIntervalSeconds = 3 * 3600
+     case 5:
+       print("set autoUpdate to 6 hours")
+       eventUpdateIntervalSeconds = 6 * 3600
+     default:
+       print("set autoUpdate to 1 hour")
+       eventUpdateIntervalSeconds = 1 * 3600
+     }
+    //test update interval
+//    eventUpdateIntervalSeconds = 1 * 60  //override default interval for testing
+    print("MyEventsController > viewDidLoad > eventUpdateIntervalSeconds=",eventUpdateIntervalSeconds)
+
     self.spinnerView.layer.cornerRadius = 20
     OWWebAPI.shared.delegate = self
     myEventsCollection.backgroundColor =  #colorLiteral(red: 0.1621451974, green: 0.2774310112, blue: 0.2886824906, alpha: 1)
@@ -156,6 +184,8 @@ class MyEventsViewController: UIViewController, UICollectionViewDataSource,UICol
 //            inetConnectionAlert.addAction(suspendAction)
         var cancelAction = UIAlertAction(title: "Cancel", style: .cancel) { _ in
           print("cancel")
+          appSettings.autoUpdateIsOn = false
+          saveSettings(appSettings)
         }
         autoUpdateAlert.addAction(cancelAction)
         
