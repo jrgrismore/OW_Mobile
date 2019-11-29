@@ -100,7 +100,7 @@ class MyEventsViewController: UIViewController, UICollectionViewDataSource,UICol
      }
     //test update interval
 //    eventUpdateIntervalSeconds = 1 * 60  //override default interval for testing
-    print("MyEventsController > viewDidLoad > eventUpdateIntervalSeconds=",eventUpdateIntervalSeconds)
+//    print("MyEventsController > viewDidLoad > eventUpdateIntervalSeconds=",eventUpdateIntervalSeconds)
 
     self.spinnerView.layer.cornerRadius = 20
     OWWebAPI.shared.delegate = self
@@ -152,84 +152,91 @@ class MyEventsViewController: UIViewController, UICollectionViewDataSource,UICol
     self.present(lastUpdateAlert, animated: true, completion: nil)
     self.navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.black,
                                                                     NSAttributedString.Key.font: UIFont.preferredFont(forTextStyle: .title3)]
-}
-  
-  @objc func handleEventTimer()
-  {
-    print("eventUpdateTimer Triggered: ",Date())
-    refreshEventsWithDetails(completionHandler: { () -> () in
-      
-      
-      print("handleEventTimer > eventUpdateTimer=",eventUpdateTimer)
-      if eventUpdateTimer == nil
-      {
-        //terminate automatic update activities and show alert
-        DispatchQueue.main.async {self.stopSpinner()}
-        
-        //show automatic update failed alert
-        var autoUpdateAlert = UIAlertController(title: "Automatic Update Failed!  No Internet Connection.", message: "Cancel Automatic Updating, or Retry?", preferredStyle: .alert)
-        var retryAction = UIAlertAction(title: "Retry", style: .default) { _ in
-            print("retry")
-          //what in place of this???
-          self.updateCellArray()
-          //start data refresh timer
-//           eventUpdateTimer?.invalidate()
-//           eventUpdateTimer = Timer.scheduledTimer(timeInterval: eventUpdateIntervalSeconds, target: self, selector: #selector(self.handleEventTimer), userInfo: nil, repeats: true)
-
-        }
-        autoUpdateAlert.addAction(retryAction)
-//            var suspendAction = UIAlertAction(title: "Suspend", style: .default) { _ in
-//            print("suspend")
-//            }
-//            inetConnectionAlert.addAction(suspendAction)
-        var cancelAction = UIAlertAction(title: "Cancel", style: .cancel) { _ in
-          print("cancel")
-          appSettings.autoUpdateIsOn = false
-          saveSettings(appSettings)
-        }
-        autoUpdateAlert.addAction(cancelAction)
-        
-        self.present(autoUpdateAlert, animated: true, completion: nil)
-
-      } else {
-      //continue with automatic updates
-      }
-      
-      
-      //handle no data case
-      DispatchQueue.main.async {
-        print("eventsWithDetails.count=",eventsWithDetails.count)
-        self.cellEventDetailArray = eventsWithDetails
-        print("cellEventDetailArray.count=",self.cellEventDetailArray.count)
-        print("cellEventDetailArray",self.cellEventDetailArray)
-
-        
-        //test empty data handling code
-        //eventsWithDetails = []  // test case for empty data handling code
-        if eventsWithDetails.count < 1
-        {
-          self.cellEventDetailArray = []
-          self.cellEventDetailStringArray = []
-          self.myEventsCollection.reloadData()
-          //save empty array to userdefaults
-          OWWebAPI.shared.saveEventsWithDetails([])
-          self.activitySpinner.stopAnimating()
-          self.spinnerView.isHidden = true
-          return
-        }
-        //end test empty data handling code
-
-        
-        self.cellEventDetailStringArray = self.assignEventDetailStrings(eventPlusDetails: self.cellEventDetailArray)
-        print("cellEventDetailStringArray.count=",self.cellEventDetailStringArray.count)
-        print("cellEventDetailStringArray",self.cellEventDetailStringArray)
-        print("MyEventsViewController > refreshEventsWithDetails completionHandler")
-        self.myEventsCollection.reloadData()
-        print("myEventsCollection reloaded")
-        
-      }
-    })
+  NotificationCenter.default.addObserver(self, selector: #selector(testHandleEventTimer), name: NSNotification.Name(rawValue: NotificationKeys.dataRefreshIsDone), object: nil)
   }
+  
+  @objc func testHandleEventTimer()
+  {
+    print("MyEventViewController > testHandleEventTimer")
+  }
+
+//  @objc func handleEventTimer()
+//  {
+//    print("\n\n\neventUpdateTimer Triggered: ",Date())
+//    refreshEventsWithDetails(completionHandler: { () -> () in
+//      
+//      
+//      print("handleEventTimer > eventUpdateTimer=",eventUpdateTimer)
+//
+//      if eventUpdateTimer == nil
+//      {
+//        //terminate automatic update activities and show alert
+//        DispatchQueue.main.async {self.stopSpinner()}
+//        
+//        //show automatic update failed alert
+//        var autoUpdateAlert = UIAlertController(title: "Automatic Events Update Failed!  No Internet Connection.", message: "Cancel Automatic Updating, or Retry?\n(You can re-enable automatic updates in Settings)", preferredStyle: .alert)
+//        var retryAction = UIAlertAction(title: "Retry", style: .default) { _ in
+//            print("retry")
+//          //what in place of this???
+//          self.updateCellArray()
+//          //start data refresh timer
+////           eventUpdateTimer?.invalidate()
+////           eventUpdateTimer = Timer.scheduledTimer(timeInterval: eventUpdateIntervalSeconds, target: self, selector: #selector(self.handleEventTimer), userInfo: nil, repeats: true)
+//
+//        }
+//        autoUpdateAlert.addAction(retryAction)
+////            var suspendAction = UIAlertAction(title: "Suspend", style: .default) { _ in
+////            print("suspend")
+////            }
+////            inetConnectionAlert.addAction(suspendAction)
+//        var cancelAction = UIAlertAction(title: "Cancel", style: .cancel) { _ in
+////          print("cancel")
+//          appSettings.autoUpdateIsOn = false
+//          saveSettings(appSettings)
+//        }
+//        autoUpdateAlert.addAction(cancelAction)
+//        
+//        self.present(autoUpdateAlert, animated: true, completion: nil)
+//
+//      } else {
+//      //continue with automatic updates
+//      }
+//      
+//      
+//      //handle no data case
+//      DispatchQueue.main.async {
+//        print("eventsWithDetails.count=",eventsWithDetails.count)
+//        self.cellEventDetailArray = eventsWithDetails
+////        print("cellEventDetailArray.count=",self.cellEventDetailArray.count)
+////        print("cellEventDetailArray",self.cellEventDetailArray)
+//
+//        
+//        //test empty data handling code
+//        //eventsWithDetails = []  // test case for empty data handling code
+//        if eventsWithDetails.count < 1
+//        {
+//          self.cellEventDetailArray = []
+//          self.cellEventDetailStringArray = []
+//          self.myEventsCollection.reloadData()
+//          //save empty array to userdefaults
+//          OWWebAPI.shared.saveEventsWithDetails([])
+//          self.activitySpinner.stopAnimating()
+//          self.spinnerView.isHidden = true
+//          return
+//        }
+//        //end test empty data handling code
+//
+//        
+//        self.cellEventDetailStringArray = self.assignEventDetailStrings(eventPlusDetails: self.cellEventDetailArray)
+////        print("cellEventDetailStringArray.count=",self.cellEventDetailStringArray.count)
+////        print("cellEventDetailStringArray",self.cellEventDetailStringArray)
+//        print("MyEventsViewController > refreshEventsWithDetails completionHandler")
+//        self.myEventsCollection.reloadData()
+//        print("myEventsCollection reloaded")
+//        
+//      }
+//    })
+//  }
   
   override func viewWillAppear(_ animated: Bool)
   {
@@ -361,7 +368,7 @@ class MyEventsViewController: UIViewController, UICollectionViewDataSource,UICol
 //            }
 //            inetConnectionAlert.addAction(suspendAction)
             var cancelAction = UIAlertAction(title: "Cancel", style: .cancel) { _ in
-              print("cancel")
+//              print("cancel")
             }
             inetConnectionAlert.addAction(cancelAction)
             
@@ -384,8 +391,9 @@ class MyEventsViewController: UIViewController, UICollectionViewDataSource,UICol
 //              DispatchQueue.main.async{self.myEventsCollection.reloadData()}
               
               //start data refresh timer
-              eventUpdateTimer?.invalidate()
-              eventUpdateTimer = Timer.scheduledTimer(timeInterval: eventUpdateIntervalSeconds, target: self, selector: #selector(self.handleEventTimer), userInfo: nil, repeats: true)
+//              eventUpdateTimer?.invalidate()
+//              eventUpdateTimer = Timer.scheduledTimer(timeInterval: eventUpdateIntervalSeconds, target: self, selector: #selector(self.handleEventTimer), userInfo: nil, repeats: true)
+              startEventUpdateTimer()
 
             } else {
               // eventsWithDetailsData is nil
@@ -399,9 +407,9 @@ class MyEventsViewController: UIViewController, UICollectionViewDataSource,UICol
 //      OWWebAPI.shared.saveEventsWithDetails(eventsWithDetailsData!)
       //      let loadedEventDetailData = OWWebAPI.shared.loadEventsWithDetails()
       } //end of dispatch block
-      print("exiting getEventsWithDetails > retrieveEventsWithDetails completion closure")
+//      print("exiting getEventsWithDetails > retrieveEventsWithDetails completion closure")
     })
-    print("exiting getEventsWithDetails")
+//    print("exiting getEventsWithDetails")
   }
   
   func printEventWithDetails(_ eventAndDetails: EventWithDetails)
@@ -507,7 +515,7 @@ extension MyEventsViewController
   {
     var cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as! MyEventsCollectionViewCell
     cell.backgroundColor = #colorLiteral(red: 0.3058823529, green: 0.4941176471, blue: 0.5333333333, alpha: 0.67)
-    print("call fillCellFields")
+//    print("call fillCellFields")
     fillCellFields(cell: &cell, indexPath: indexPath)
     let longPress = UILongPressGestureRecognizer(target: self, action: #selector(handleLongPress))
     cell.addGestureRecognizer(longPress)

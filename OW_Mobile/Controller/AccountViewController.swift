@@ -140,7 +140,66 @@ class AccountViewController: UIViewController, UITextFieldDelegate
     passwordView.layer.cornerRadius = 10
     emailFld.textContentType = .username
     passwordFld.textContentType = .password
+    
+    NotificationCenter.default.addObserver(self, selector: #selector(handleEventTimer), name: NSNotification.Name(rawValue: NotificationKeys.dataRefreshIsDone), object: nil)
   }
+  
+  @objc func handleEventTimer()
+  {
+    print("AccountViewController > handleEventTimer")
+    print("AccountViewController > eventRefreshFailed=",eventRefreshFailed)
+    if eventRefreshFailed
+    {
+      //terminate automatic update activities and show alert
+      var autoUpdateAlert = UIAlertController(title: "Automatic Events Update Failed!  No Internet Connection.", message: "Cancel Automatic Updating, or Retry?\n(You can re-enable automatic updates in Settings)", preferredStyle: .alert)
+      var retryAction = UIAlertAction(title: "Retry", style: .default) { _ in
+        print("retry")
+        refreshEventsWithDetails(completionHandler: {() -> () in
+          print("Account > refreshEventsWithDetails > completionHandler")
+          print("start refresh timer")
+          //start data refresh timer
+          startEventUpdateTimer()
+        })
+      }
+      autoUpdateAlert.addAction(retryAction)
+      var cancelAction = UIAlertAction(title: "Cancel", style: .cancel) { _ in
+        appSettings.autoUpdateIsOn = false
+        saveSettings(appSettings)
+      }
+      autoUpdateAlert.addAction(cancelAction)
+      self.present(autoUpdateAlert, animated: true, completion: nil)
+    }
+  }
+  
+//  @objc func handleEventTimer()
+//  {
+//    print("AccountViewController > handleEventTimer")
+//    //show automatic update failed alert
+//    if eventUpdateTimer == nil
+//    {
+//      //terminate automatic update activities and show alert
+//      var autoUpdateAlert = UIAlertController(title: "Automatic Events Update Failed!  No Internet Connection.", message: "Cancel Automatic Updating, or Retry?\n(You can re-enable automatic updates in Settings)", preferredStyle: .alert)
+//      var retryAction = UIAlertAction(title: "Retry", style: .default) { _ in
+//        print("retry")
+//        refreshEventsWithDetails(completionHandler: {() -> () in
+//          print("Account > refreshEventsWithDetails > completionHandler")
+//          print("start refresh timer")
+//          //start data refresh timer
+//          //            eventUpdateTimer?.invalidate()
+//          //            eventUpdateTimer = Timer.scheduledTimer(timeInterval: eventUpdateIntervalSeconds, target: self, selector: #selector(MyEventsViewController.handleEventTimer), userInfo: nil, repeats: true)
+//        })
+//      }
+//      autoUpdateAlert.addAction(retryAction)
+//      var cancelAction = UIAlertAction(title: "Cancel", style: .cancel) { _ in
+//        //          print("cancel")
+//        appSettings.autoUpdateIsOn = false
+//        saveSettings(appSettings)
+//      }
+//      autoUpdateAlert.addAction(cancelAction)
+//      self.present(autoUpdateAlert, animated: true, completion: nil)
+//    }
+//  }
+  
   
   override func viewWillAppear(_ animated: Bool)
   {
@@ -212,26 +271,5 @@ class AccountViewController: UIViewController, UITextFieldDelegate
     return "v\(version)b\(build)"
   }
   
-  
-  @IBAction func launchAppleMaps(_ sender: Any)
-  {
-    print("launchAppleMaps")
-//     let myAddress = "2201+Heidi+Ct,Bartlesville,OK,USA"
-    let myAddress = "36.717936,-95.95281"
-    if let url = URL(string:"http://maps.apple.com/?address=\(myAddress)") {
-      print("url=",url)
-        UIApplication.shared.open(url)
-    }
-
-  }
-  
-  
-//  @IBAction func testDataRefresh(_ sender: Any)
-//  {
-//    print("testDataRefresh")
-//    refreshEventsWithDetails(completionHandler: { () in
-//      print("Account > refreshEventsWithDetails completionHandler")
-//    })
-//  }
   
 }

@@ -758,7 +758,7 @@ func saveSettings(_ settings: Settings)
 {
   let data = try? JSONEncoder().encode(settings)
   UserDefaults.standard.set(data, forKey: UDKeys.settings)
-      print("saved and reloaded settings = ",loadSettings())
+//      print("saved and reloaded settings = ",loadSettings())
 }
 
 
@@ -816,35 +816,56 @@ func fahrenheitToCelsius(degreesF: Double) -> Double
 }
 
 
+func startEventUpdateTimer()
+{
+  //stop running data refresh timer
+  eventUpdateTimer?.invalidate()
+  eventUpdateTimer = Timer.scheduledTimer(withTimeInterval: eventUpdateIntervalSeconds, repeats: true, block: { eventUpdateTimer in
+    print("\n\neventUpdateTimer Fired!")
+    refreshEventsWithDetails(completionHandler: { })
+  })
+}
 
+func stopEventUpdateTimer()
+{
+  eventUpdateTimer?.invalidate()
+}
+
+//func handleEventUpdateTimer()
+//{
+//  
+//}
 
 
 func refreshEventsWithDetails(completionHandler: @escaping () -> ())
 {
   print("refreshEventsWithDetails")
   //  DispatchQueue.main.async {self.startSpinner()}
+  eventRefreshFailed = false
   OWWebAPI.shared.retrieveEventsWithDetails(completion: { (eventsWithDetailsData, error) in
     DispatchQueue.main.async
       {
-        print("begin completion")
+//        print("begin completion")
         if error != nil
         {
-          print("error=",error)
-           //need to show alert about no connection
-          //or trigger notification about no connection
-          NotificationCenter.default.post(name: Notification.Name(NotificationKeys.dataRefreshed), object: nil)
-          
-          print("\n\n\n\n\n")
-          
+          print("\n\n")
+          print("refreshEventsWithDetails > error != nil")
+          print("refreshEventsWithDetails > error=",error)
+
+          eventRefreshFailed = true
           //invalidate eventUpdateTimer since no internet connection
-          eventUpdateTimer?.invalidate()
-          eventUpdateTimer = nil
+//          eventUpdateTimer?.invalidate()
+//          eventUpdateTimer = nil
+          stopEventUpdateTimer()
           completionHandler()
+          print("refreshEventsWithDetails > post dataRefreshIsDone")
+          NotificationCenter.default.post(name: Notification.Name(NotificationKeys.dataRefreshIsDone), object: nil)
           return
         } else {
+          eventRefreshFailed = false
+          print("refreshEventsWithDetails > error == nil")
           print("eventsWithDetailData.count=",eventsWithDetailsData!.count)
-          print("\n\n\n\n\n")
-//          print("refreshEventsWithDetails > eventsWithDetails=",eventsWithDetailsData!)
+//          print("\n\n")
           // no errors
           eventsWithDetails = eventsWithDetailsData!
           if eventsWithDetailsData!.count < 1
@@ -854,10 +875,15 @@ func refreshEventsWithDetails(completionHandler: @escaping () -> ())
                 //save empty array to userdefaults
                 OWWebAPI.shared.saveEventsWithDetails([])
             }
+             print("refreshEventsWithDetails > post dataRefreshIsDone")
+             NotificationCenter.default.post(name: Notification.Name(NotificationKeys.dataRefreshIsDone), object: nil)
              return
           }
         }
         //store update date in userDefaults
+        print("refreshEventsWithDetails > store data")
+        print("refreshEventsWithDetails > post dataRefreshIsDone")
+        NotificationCenter.default.post(name: Notification.Name(NotificationKeys.dataRefreshIsDone), object: nil)
         UserDefaults.standard.set(Date(), forKey: UDKeys.lastEventListUpdate)
         OWWebAPI.shared.saveEventsWithDetails(eventsWithDetailsData!)
         completionHandler()

@@ -96,7 +96,7 @@ class OWWebAPI: NSObject
       guard let dataResponse = data, error == nil
         else
       {
-        print("\n*******Error:", error as Any)
+//        print("\n*******Error:", error as Any)
         self.delegate?.webLogTextDidChange(text: "Error Trying to Access OW Server!")
         usleep(useconds_t(0.5 * 1000000)) //will sleep for 0.5 seconds)
 //        print("found error -- invoke completion")
@@ -165,7 +165,7 @@ class OWWebAPI: NSObject
       guard let dataResponse = data, error == nil
         else
       {
-        print("\n*******Error:", error as Any)
+//        print("\n*******Error:", error as Any)
         self.delegate?.webLogTextDidChange(text: "\n*******Error:" + error!.localizedDescription)
         usleep(useconds_t(0.5 * 1000000)) //will sleep for 0.5 seconds)
         return
@@ -305,7 +305,7 @@ class OWWebAPI: NSObject
       guard let dataResponse = data, error == nil
         else
       {
-        print("\n*******Error:", error as Any)
+//        print("\n*******Error:", error as Any)
         self.delegate?.webLogTextDidChange(text: "\n*******Error:" + error!.localizedDescription)
         usleep(useconds_t(0.5 * 1000000)) //will sleep for 0.5 seconds)
         return

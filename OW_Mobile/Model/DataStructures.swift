@@ -21,11 +21,12 @@ struct UDKeys
 
 struct NotificationKeys
 {
-  static let dataRefreshed = "dataRefreshed"
+  static let dataRefreshIsDone = "dataRefreshIsDone"
 }
 
 var eventUpdateTimer: Timer?
 var eventUpdateIntervalSeconds: TimeInterval = 3 * 60  //in seconds
+var eventRefreshFailed: Bool = true
 
 //Unified event with details structure matching JSON keys
 struct EventWithDetails: Codable

@@ -128,7 +128,14 @@ class DetailViewController: UIViewController
       sizeClassIsRR = true
     }
     self.navigationController?.navigationBar.tintColor = #colorLiteral(red: 0.01680417731, green: 0.1983509958, blue: 1, alpha: 1)
+    NotificationCenter.default.addObserver(self, selector: #selector(testHandleEventTimer), name: NSNotification.Name(rawValue: NotificationKeys.dataRefreshIsDone), object: nil)
   }
+  
+  @objc func testHandleEventTimer()
+  {
+    print("DetailViewController > testHandleEventTimer")
+  }
+  
   
   override func viewWillAppear(_ animated: Bool)
   {

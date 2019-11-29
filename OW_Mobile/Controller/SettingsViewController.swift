@@ -39,8 +39,41 @@ class SettingsViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
 
     
     pickerData = ["Thursday (Evening/Night/Morning)","Thursday (Evening/Night)","07 November 2019"]
+    NotificationCenter.default.addObserver(self, selector: #selector(handleEventTimer), name: NSNotification.Name(rawValue: NotificationKeys.dataRefreshIsDone), object: nil)
   }
   
+  @objc func handleEventTimer()
+  {
+    print("AccountViewController > handleEventTimer")
+    print("AccountViewController > eventRefreshFailed=",eventRefreshFailed)
+    if eventRefreshFailed
+    {
+      //terminate automatic update activities and show alert
+      var autoUpdateAlert = UIAlertController(title: "Automatic Events Update Failed!  No Internet Connection.", message: "Cancel Automatic Updating, or Retry?\n(You can re-enable automatic updates in Settings)", preferredStyle: .alert)
+      var retryAction = UIAlertAction(title: "Retry", style: .default) { _ in
+        print("retry")
+        refreshEventsWithDetails(completionHandler: {() -> () in
+          print("Account > refreshEventsWithDetails > completionHandler")
+          print("start refresh timer")
+          //start data refresh timer
+          startEventUpdateTimer()
+        })
+      }
+      autoUpdateAlert.addAction(retryAction)
+      var cancelAction = UIAlertAction(title: "Cancel", style: .cancel) { _ in
+        appSettings.autoUpdateIsOn = false
+        saveSettings(appSettings)
+      }
+      autoUpdateAlert.addAction(cancelAction)
+      self.present(autoUpdateAlert, animated: true, completion: nil)
+    }
+  }
+
+  @objc func testHandleEventTimer()
+  {
+    print("SettingsViewController > testHandleEventTimer")
+  }
+
   override func viewWillAppear(_ animated: Bool) {
     //temporarily remove settings from user defaults
 //    UserDefaults.standard.removeObject(forKey: UDKeys.settings)
@@ -107,30 +140,6 @@ class SettingsViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
   
   @IBAction func assignAutoUpdateSeg(_ sender: Any)
   {
-//    switch  autoUpdateSeg.selectedSegmentIndex
-//    {
-//    case 0:
-//      print("set autoUpdate to 1 minute")
-//      appSettings.autoUpdateValue = 60
-//    case 1:
-//      print("set autoUpdate to 10 minute")
-//      appSettings.autoUpdateValue = 10 * 60
-//    case 2:
-//      print("set autoUpdate to 30 minute")
-//      appSettings.autoUpdateValue = 30 * 60
-//    case 3:
-//      print("set autoUpdate to 1 hour")
-//      appSettings.autoUpdateValue = 1 * 3600
-//    case 4:
-//      print("set autoUpdate to 3 hours")
-//      appSettings.autoUpdateValue = 3 * 3600
-//    case 5:
-//      print("set autoUpdate to 6 hours")
-//      appSettings.autoUpdateValue = 6 * 3600
-//    default:
-//      print("set autoUpdate to 1 hour")
-//      appSettings.autoUpdateValue = 1 * 3600
-//    }
     appSettings.autoUpdateValue = autoUpdateSeg.selectedSegmentIndex
     saveSettings(appSettings)
   }
