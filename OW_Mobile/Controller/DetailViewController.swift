@@ -139,15 +139,16 @@ class DetailViewController: UIViewController
   @objc func handleEventTimer()
   {
     print("DetailViewController > handleEventTimer")
-    eventsWithDetails = OWWebAPI.shared.loadEventsWithDetails()
-    print("eventsWithDetails.count=",eventsWithDetails.count)
-    print("originalSelectedEventId=",originalSelectedEventId)
-    let selectedEventIndex = eventsWithDetails.index(where: { $0.Id == originalSelectedEventId })
+    DispatchQueue.main.async {
+      self.eventsWithDetails = OWWebAPI.shared.loadEventsWithDetails()
+      print("eventsWithDetails.count=",self.eventsWithDetails.count)
+      print("originalSelectedEventId=",self.originalSelectedEventId)
+      let selectedEventIndex = self.eventsWithDetails.index(where: { $0.Id == self.originalSelectedEventId })
     print("selectedEventIndex=",selectedEventIndex)
 //    print("eventsWithDetails[selectedEventIndex!].Id=",eventsWithDetails[selectedEventIndex!].Id)
-    if selectedEventIndex != nil
+      if selectedEventIndex != nil && self.eventsWithDetails.count > 0
     {
-      selectedEvent = eventsWithDetails[selectedEventIndex!]
+      self.selectedEvent = self.eventsWithDetails[selectedEventIndex!]
 //      print("selectedEvent=",selectedEvent)
     } else {
       print("!#!#!# Event Missing !#!#!#")
@@ -164,8 +165,9 @@ class DetailViewController: UIViewController
       missingEventAlert.addAction(cancelAction)
       //show alert
       self.present(missingEventAlert, animated: true, completion: nil)
-    }
-    
+    }//end if
+    }//end dispatch
+
     print("DetailViewController > eventRefreshFailed=",eventRefreshFailed)
     if eventRefreshFailed
     {
@@ -191,23 +193,25 @@ class DetailViewController: UIViewController
       //show alert
       self.present(autoUpdateAlert, animated: true, completion: nil)
     } else {
-      print("updateDetails")
-      eventDetailView.isHidden = false
-      adjustCellWidth()
-      let primaryIndex = OccultationEvent.primaryStationIndex(selectedStations)
-      currentStationIndexPath = IndexPath(item:primaryIndex!, section: 0)
-      updateEventInfoFields(eventItem: selectedEvent)
-      updateShadowPlot(self.selectedEvent)
-      stationCollectionView.scrollToItem(at: IndexPath(item: primaryIndex!, section: 0), at: .centeredHorizontally, animated: false)
-      
-      stationCollectionView.reloadData()
-      
-      stationPageControl.numberOfPages = selectedStations.count
-      stationPageControl.currentPage = currentStationIndexPath.row
-      
-      shadowSigmaView.isHidden = false
-      stationCollectionView.isHidden = false
-      updateLatLonFlds()
+      DispatchQueue.main.async {
+              print("updateDetails")
+        self.eventDetailView.isHidden = false
+        self.adjustCellWidth()
+        let primaryIndex = OccultationEvent.primaryStationIndex(self.selectedStations)
+        self.currentStationIndexPath = IndexPath(item:primaryIndex!, section: 0)
+        self.updateEventInfoFields(eventItem: self.selectedEvent)
+        self.updateShadowPlot(self.selectedEvent)
+        self.stationCollectionView.scrollToItem(at: IndexPath(item: primaryIndex!, section: 0), at: .centeredHorizontally, animated: false)
+        
+        self.stationCollectionView.reloadData()
+        
+        self.stationPageControl.numberOfPages = self.selectedStations.count
+        self.stationPageControl.currentPage = self.currentStationIndexPath.row
+        
+        self.shadowSigmaView.isHidden = false
+        self.stationCollectionView.isHidden = false
+        self.updateLatLonFlds()
+      }
     }
   }
 

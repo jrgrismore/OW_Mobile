@@ -159,6 +159,11 @@ class MyEventsViewController: UIViewController, UICollectionViewDataSource,UICol
   {
     print("MyEventViewController > handleEventTimer")
     print("MyEventViewController > eventsWithDetails.count=",eventsWithDetails.count)
+    if eventsWithDetails.count < 1
+    {
+      handleEmptyEventList()
+      return
+    }
     print("MyEventViewController > eventRefreshFailed=",eventRefreshFailed)
     if eventRefreshFailed
     {
@@ -271,6 +276,20 @@ class MyEventsViewController: UIViewController, UICollectionViewDataSource,UICol
     self.spinnerView.isHidden = true
   }
 
+  func handleEmptyEventList()
+  {
+    DispatchQueue.main.async
+      {// no data dispatch
+        self.cellEventDetailArray = []
+        self.cellEventDetailStringArray = []
+        self.myEventsCollection.reloadData()
+        //save empty array to userdefaults
+        OWWebAPI.shared.saveEventsWithDetails([])
+        self.activitySpinner.stopAnimating()
+        self.spinnerView.isHidden = true
+    }
+  }
+  
   fileprivate func updateMyEventsCells()
 {
   print("updateMyEventsCells")
@@ -280,17 +299,7 @@ class MyEventsViewController: UIViewController, UICollectionViewDataSource,UICol
     //              if eventsWithDetailsData!.count < 1
     if eventsWithDetails.count < 1
     {
-      //                eventsWithDetails = eventsWithDetailsData!
-      DispatchQueue.main.async
-        {// no data dispatch
-          self.cellEventDetailArray = []
-          self.cellEventDetailStringArray = []
-          self.myEventsCollection.reloadData()
-          //save empty array to userdefaults
-          OWWebAPI.shared.saveEventsWithDetails([])
-          self.activitySpinner.stopAnimating()
-          self.spinnerView.isHidden = true
-      }  //end of no data dispatch
+      handleEmptyEventList()  //end of no data dispatch
       return
     }  // eventsWithDetailsData!.count < 1
     //              self.cellEventDetailArray = eventsWithDetailsData!

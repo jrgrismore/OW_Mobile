@@ -883,6 +883,7 @@ func refreshEventsWithDetails(completionHandler: @escaping () -> ())
             }
              print("refreshEventsWithDetails > post dataRefreshIsDone")
 //             NotificationCenter.default.post(name: Notification.Name(NotificationKeys.dataRefreshIsDone), object: nil)
+             completionHandler()
              return
           }
         } //end of no error block
