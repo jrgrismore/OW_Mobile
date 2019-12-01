@@ -31,6 +31,7 @@ class DetailViewController: UIViewController
           StarColour:0
   )
   
+  var originalSelectedEventId = ""
   var selectionObject: String!
   var detailStr: String = ""
   var eventID: String = ""
@@ -128,20 +129,96 @@ class DetailViewController: UIViewController
       sizeClassIsRR = true
     }
     self.navigationController?.navigationBar.tintColor = #colorLiteral(red: 0.01680417731, green: 0.1983509958, blue: 1, alpha: 1)
-    NotificationCenter.default.addObserver(self, selector: #selector(testHandleEventTimer), name: NSNotification.Name(rawValue: NotificationKeys.dataRefreshIsDone), object: nil)
+    NotificationCenter.default.addObserver(self, selector: #selector(handleEventTimer), name: NSNotification.Name(rawValue: NotificationKeys.dataRefreshIsDone), object: nil)
   }
   
-  @objc func testHandleEventTimer()
+//  @objc func testHandleEventTimer()
+//  {
+//    print("DetailViewController > testHandleEventTimer")
+//  }
+  @objc func handleEventTimer()
   {
-    print("DetailViewController > testHandleEventTimer")
+    print("DetailViewController > handleEventTimer")
+    eventsWithDetails = OWWebAPI.shared.loadEventsWithDetails()
+    print("eventsWithDetails.count=",eventsWithDetails.count)
+    print("originalSelectedEventId=",originalSelectedEventId)
+    let selectedEventIndex = eventsWithDetails.index(where: { $0.Id == originalSelectedEventId })
+    print("selectedEventIndex=",selectedEventIndex)
+//    print("eventsWithDetails[selectedEventIndex!].Id=",eventsWithDetails[selectedEventIndex!].Id)
+    if selectedEventIndex != nil
+    {
+      selectedEvent = eventsWithDetails[selectedEventIndex!]
+//      print("selectedEvent=",selectedEvent)
+    } else {
+      print("!#!#!# Event Missing !#!#!#")
+      //event no longer in MyEvents list, display alert
+      var missingEventAlert = UIAlertController(title: "This event is no longer in the MyEvents List", message: "Returning to MyEvents List", preferredStyle: .alert)
+      //cancdl
+      var cancelAction = UIAlertAction(title: "OK", style: .cancel) { _ in
+        //go back to MyEvents
+         _ = self.navigationController?.popToRootViewController(animated: false)
+//        DispatchQueue.main.async {
+//                  self.tabBarController!.selectedIndex = 0
+//        }
+      }
+      missingEventAlert.addAction(cancelAction)
+      //show alert
+      self.present(missingEventAlert, animated: true, completion: nil)
+    }
+    
+    print("DetailViewController > eventRefreshFailed=",eventRefreshFailed)
+    if eventRefreshFailed
+    {
+      //terminate automatic update activities and show alert
+      var autoUpdateAlert = UIAlertController(title: "Automatic Events Update Failed!  No Internet Connection.", message: "Cancel Automatic Updating, or Retry?\n(You can re-enable automatic updates in Settings)", preferredStyle: .alert)
+      //retry
+      var retryAction = UIAlertAction(title: "Retry", style: .default) { _ in
+        print("retry")
+        refreshEventsWithDetails(completionHandler: {() -> () in
+          print("DetailViewController > refreshEventsWithDetails > completionHandler")
+          print("start refresh timer")
+          //start data refresh timer
+          startEventUpdateTimer()
+        })
+      }
+      autoUpdateAlert.addAction(retryAction)
+      //cancdl
+      var cancelAction = UIAlertAction(title: "Cancel", style: .cancel) { _ in
+        appSettings.autoUpdateIsOn = false
+        saveSettings(appSettings)
+      }
+      autoUpdateAlert.addAction(cancelAction)
+      //show alert
+      self.present(autoUpdateAlert, animated: true, completion: nil)
+    } else {
+      print("updateDetails")
+      eventDetailView.isHidden = false
+      adjustCellWidth()
+      let primaryIndex = OccultationEvent.primaryStationIndex(selectedStations)
+      currentStationIndexPath = IndexPath(item:primaryIndex!, section: 0)
+      updateEventInfoFields(eventItem: selectedEvent)
+      updateShadowPlot(self.selectedEvent)
+      stationCollectionView.scrollToItem(at: IndexPath(item: primaryIndex!, section: 0), at: .centeredHorizontally, animated: false)
+      
+      stationCollectionView.reloadData()
+      
+      stationPageControl.numberOfPages = selectedStations.count
+      stationPageControl.currentPage = currentStationIndexPath.row
+      
+      shadowSigmaView.isHidden = false
+      stationCollectionView.isHidden = false
+      updateLatLonFlds()
+    }
   }
-  
+
   
   override func viewWillAppear(_ animated: Bool)
   {
     print("viewWillAppear")
 //    print("selectedEvent=",selectedEvent)
     UIApplication.shared.isIdleTimerDisabled = true
+    
+    originalSelectedEventId = selectedEvent.Id!
     
     stationCollectionView.isHidden = true
     

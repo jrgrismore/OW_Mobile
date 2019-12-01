@@ -818,12 +818,18 @@ func fahrenheitToCelsius(degreesF: Double) -> Double
 
 func startEventUpdateTimer()
 {
-  //stop running data refresh timer
-  eventUpdateTimer?.invalidate()
-  eventUpdateTimer = Timer.scheduledTimer(withTimeInterval: eventUpdateIntervalSeconds, repeats: true, block: { eventUpdateTimer in
-    print("\n\neventUpdateTimer Fired!")
-    refreshEventsWithDetails(completionHandler: { })
-  })
+  if appSettings.autoUpdateIsOn
+  {
+    //stop running data refresh timer
+    eventUpdateTimer?.invalidate()
+    eventUpdateTimer = Timer.scheduledTimer(withTimeInterval: eventUpdateIntervalSeconds, repeats: true, block: { eventUpdateTimer in
+      print("\n\neventUpdateTimer Fired!")
+      refreshEventsWithDetails(completionHandler: {
+        print("refreshEventsWithDetails > completionHandler")
+        NotificationCenter.default.post(name: Notification.Name(NotificationKeys.dataRefreshIsDone), object: nil)
+      })
+    })
+  }// end if
 }
 
 func stopEventUpdateTimer()
@@ -857,9 +863,9 @@ func refreshEventsWithDetails(completionHandler: @escaping () -> ())
 //          eventUpdateTimer?.invalidate()
 //          eventUpdateTimer = nil
           stopEventUpdateTimer()
-          completionHandler()
           print("refreshEventsWithDetails > post dataRefreshIsDone")
-          NotificationCenter.default.post(name: Notification.Name(NotificationKeys.dataRefreshIsDone), object: nil)
+          completionHandler()
+//          NotificationCenter.default.post(name: Notification.Name(NotificationKeys.dataRefreshIsDone), object: nil)
           return
         } else {
           eventRefreshFailed = false
@@ -876,19 +882,19 @@ func refreshEventsWithDetails(completionHandler: @escaping () -> ())
                 OWWebAPI.shared.saveEventsWithDetails([])
             }
              print("refreshEventsWithDetails > post dataRefreshIsDone")
-             NotificationCenter.default.post(name: Notification.Name(NotificationKeys.dataRefreshIsDone), object: nil)
+//             NotificationCenter.default.post(name: Notification.Name(NotificationKeys.dataRefreshIsDone), object: nil)
              return
           }
-        }
+        } //end of no error block
         //store update date in userDefaults
         print("refreshEventsWithDetails > store data")
         print("refreshEventsWithDetails > post dataRefreshIsDone")
-        NotificationCenter.default.post(name: Notification.Name(NotificationKeys.dataRefreshIsDone), object: nil)
-        UserDefaults.standard.set(Date(), forKey: UDKeys.lastEventListUpdate)
+         UserDefaults.standard.set(Date(), forKey: UDKeys.lastEventListUpdate)
         OWWebAPI.shared.saveEventsWithDetails(eventsWithDetailsData!)
+//        NotificationCenter.default.post(name: Notification.Name(NotificationKeys.dataRefreshIsDone), object: nil)
         completionHandler()
         //      let loadedEventDetailData = OWWebAPI.shared.loadEventsWithDetails()
-    } //end of no errors block
+    } //end of dispatch
   })
 }
 

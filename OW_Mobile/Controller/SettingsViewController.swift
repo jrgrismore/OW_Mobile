@@ -50,6 +50,7 @@ class SettingsViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
     {
       //terminate automatic update activities and show alert
       var autoUpdateAlert = UIAlertController(title: "Automatic Events Update Failed!  No Internet Connection.", message: "Cancel Automatic Updating, or Retry?\n(You can re-enable automatic updates in Settings)", preferredStyle: .alert)
+      //retry
       var retryAction = UIAlertAction(title: "Retry", style: .default) { _ in
         print("retry")
         refreshEventsWithDetails(completionHandler: {() -> () in
@@ -60,18 +61,15 @@ class SettingsViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
         })
       }
       autoUpdateAlert.addAction(retryAction)
+      //cancel
       var cancelAction = UIAlertAction(title: "Cancel", style: .cancel) { _ in
         appSettings.autoUpdateIsOn = false
         saveSettings(appSettings)
       }
       autoUpdateAlert.addAction(cancelAction)
+      //show alert
       self.present(autoUpdateAlert, animated: true, completion: nil)
     }
-  }
-
-  @objc func testHandleEventTimer()
-  {
-    print("SettingsViewController > testHandleEventTimer")
   }
 
   override func viewWillAppear(_ animated: Bool) {
@@ -124,16 +122,19 @@ class SettingsViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
       appSettings.autoUpdateIsOn = false
       autoUpdateSeg.isUserInteractionEnabled = false
       autoUpdateSeg.alpha = 0.5
+      stopEventUpdateTimer()
     case true:
       print("autoUpdate is on")
       appSettings.autoUpdateIsOn = true
       autoUpdateSeg.isUserInteractionEnabled = true
       autoUpdateSeg.alpha = 1.0
+      startEventUpdateTimer()
     default:
       print("default autoUpdate is on")
       appSettings.autoUpdateIsOn = true
       autoUpdateSeg.isUserInteractionEnabled = true
       autoUpdateSeg.alpha = 1.0
+      startEventUpdateTimer()
     }
     saveSettings(appSettings)
   }

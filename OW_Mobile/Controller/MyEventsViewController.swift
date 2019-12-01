@@ -152,99 +152,54 @@ class MyEventsViewController: UIViewController, UICollectionViewDataSource,UICol
     self.present(lastUpdateAlert, animated: true, completion: nil)
     self.navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.black,
                                                                     NSAttributedString.Key.font: UIFont.preferredFont(forTextStyle: .title3)]
-  NotificationCenter.default.addObserver(self, selector: #selector(testHandleEventTimer), name: NSNotification.Name(rawValue: NotificationKeys.dataRefreshIsDone), object: nil)
+  NotificationCenter.default.addObserver(self, selector: #selector(handleEventTimer), name: NSNotification.Name(rawValue: NotificationKeys.dataRefreshIsDone), object: nil)
   }
-  
-  @objc func testHandleEventTimer()
+    
+  @objc func handleEventTimer()
   {
-    print("MyEventViewController > testHandleEventTimer")
+    print("MyEventViewController > handleEventTimer")
+    print("MyEventViewController > eventsWithDetails.count=",eventsWithDetails.count)
+    print("MyEventViewController > eventRefreshFailed=",eventRefreshFailed)
+    if eventRefreshFailed
+    {
+      //terminate automatic update activities and show alert
+      var autoUpdateAlert = UIAlertController(title: "Automatic Events Update Failed!  No Internet Connection.", message: "Cancel Automatic Updating, or Retry?\n(You can re-enable automatic updates in Settings)", preferredStyle: .alert)
+      //retry
+      var retryAction = UIAlertAction(title: "Retry", style: .default) { _ in
+        print("retry")
+        refreshEventsWithDetails(completionHandler: {() -> () in
+          print("MyEventViewController > refreshEventsWithDetails > completionHandler")
+
+          print("start refresh timer")
+          //start data refresh timer
+          startEventUpdateTimer()
+        })
+      }
+      autoUpdateAlert.addAction(retryAction)
+      //cancdl
+      var cancelAction = UIAlertAction(title: "Cancel", style: .cancel) { _ in
+        appSettings.autoUpdateIsOn = false
+        saveSettings(appSettings)
+      }
+      autoUpdateAlert.addAction(cancelAction)
+      //show alert
+      self.present(autoUpdateAlert, animated: true, completion: nil)
+    } else {
+      print("updateMyEventsCells")
+      updateMyEventsCells()
+    }
   }
 
-//  @objc func handleEventTimer()
-//  {
-//    print("\n\n\neventUpdateTimer Triggered: ",Date())
-//    refreshEventsWithDetails(completionHandler: { () -> () in
-//      
-//      
-//      print("handleEventTimer > eventUpdateTimer=",eventUpdateTimer)
-//
-//      if eventUpdateTimer == nil
-//      {
-//        //terminate automatic update activities and show alert
-//        DispatchQueue.main.async {self.stopSpinner()}
-//        
-//        //show automatic update failed alert
-//        var autoUpdateAlert = UIAlertController(title: "Automatic Events Update Failed!  No Internet Connection.", message: "Cancel Automatic Updating, or Retry?\n(You can re-enable automatic updates in Settings)", preferredStyle: .alert)
-//        var retryAction = UIAlertAction(title: "Retry", style: .default) { _ in
-//            print("retry")
-//          //what in place of this???
-//          self.updateCellArray()
-//          //start data refresh timer
-////           eventUpdateTimer?.invalidate()
-////           eventUpdateTimer = Timer.scheduledTimer(timeInterval: eventUpdateIntervalSeconds, target: self, selector: #selector(self.handleEventTimer), userInfo: nil, repeats: true)
-//
-//        }
-//        autoUpdateAlert.addAction(retryAction)
-////            var suspendAction = UIAlertAction(title: "Suspend", style: .default) { _ in
-////            print("suspend")
-////            }
-////            inetConnectionAlert.addAction(suspendAction)
-//        var cancelAction = UIAlertAction(title: "Cancel", style: .cancel) { _ in
-////          print("cancel")
-//          appSettings.autoUpdateIsOn = false
-//          saveSettings(appSettings)
-//        }
-//        autoUpdateAlert.addAction(cancelAction)
-//        
-//        self.present(autoUpdateAlert, animated: true, completion: nil)
-//
-//      } else {
-//      //continue with automatic updates
-//      }
-//      
-//      
-//      //handle no data case
-//      DispatchQueue.main.async {
-//        print("eventsWithDetails.count=",eventsWithDetails.count)
-//        self.cellEventDetailArray = eventsWithDetails
-////        print("cellEventDetailArray.count=",self.cellEventDetailArray.count)
-////        print("cellEventDetailArray",self.cellEventDetailArray)
-//
-//        
-//        //test empty data handling code
-//        //eventsWithDetails = []  // test case for empty data handling code
-//        if eventsWithDetails.count < 1
-//        {
-//          self.cellEventDetailArray = []
-//          self.cellEventDetailStringArray = []
-//          self.myEventsCollection.reloadData()
-//          //save empty array to userdefaults
-//          OWWebAPI.shared.saveEventsWithDetails([])
-//          self.activitySpinner.stopAnimating()
-//          self.spinnerView.isHidden = true
-//          return
-//        }
-//        //end test empty data handling code
-//
-//        
-//        self.cellEventDetailStringArray = self.assignEventDetailStrings(eventPlusDetails: self.cellEventDetailArray)
-////        print("cellEventDetailStringArray.count=",self.cellEventDetailStringArray.count)
-////        print("cellEventDetailStringArray",self.cellEventDetailStringArray)
-//        print("MyEventsViewController > refreshEventsWithDetails completionHandler")
-//        self.myEventsCollection.reloadData()
-//        print("myEventsCollection reloaded")
-//        
-//      }
-//    })
-//  }
   
   override func viewWillAppear(_ animated: Bool)
   {
+    print("MyEventsViewController > viewWillAppear")
     self.navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.black,
                                                                     NSAttributedString.Key.font: UIFont.preferredFont(forTextStyle: .title3)]
     loadCredentailsFromKeyChain()
     self.cellEventDetailStringArray = self.assignEventDetailStrings(eventPlusDetails: self.cellEventDetailArray)
     
+//    self.updateMyEventsCells()
   }
   
   override func viewDidAppear(_ animated: Bool)
