@@ -66,6 +66,56 @@ class MyEventsViewController: UIViewController, UICollectionViewDataSource,UICol
   }
   
   
+  fileprivate func showLastUpdateAlert()
+  {
+    var alertTitle = ""
+    var alertMsg = ""
+    var alertExistingBtn = ""
+
+    var lastUpdateAlert = UIAlertController()
+    if let lastUpdate = UserDefaults.standard.object(forKey: UDKeys.lastEventListUpdate) as? Date
+    {
+      // lastUpdate is valid, therefore previous event list is stored in UserDefaults
+      // show alert asking update or use existing
+      let updateTimeFormatter = DateFormatter()
+      updateTimeFormatter.dateFormat = "MM-dd-yy'   'HH:mm:ss"
+      let lastUpdateStr = updateTimeFormatter.string(from: lastUpdate)
+      
+      alertTitle = String(format:"Event List for User\n" + Credentials.username + "\nLast Updated\n%@",lastUpdateStr)
+      alertMsg = "Update Event List or\nUse Existing List?"
+      alertExistingBtn = "Use Existing"
+    }
+    else
+    {
+      //lastUpdate is nil, therefore no previous event list data is available
+      DispatchQueue.main.async{print("else > ")}
+      
+      alertTitle = "Event List for User \n" + Credentials.username + "\nNot Updated"
+      alertMsg = "Update Now?"
+    }
+    
+    lastUpdateAlert = UIAlertController(title: alertTitle, message: alertMsg, preferredStyle: .alert)
+    lastUpdateAlert.addAction(UIAlertAction(title: "Update", style: .default, handler: {_ in
+      //handle the update
+      self.updateCellArray()
+    }))
+    if alertExistingBtn == "Use Existing"
+    {
+      lastUpdateAlert.addAction(UIAlertAction(title: alertExistingBtn, style: .default, handler: {_ in
+        //restore existing list
+        self.cellEventDetailArray = OWWebAPI.shared.loadEventsWithDetails()
+        self.cellEventDetailStringArray = self.assignEventDetailStrings(eventPlusDetails: self.cellEventDetailArray)
+        DispatchQueue.main.async{self.myEventsCollection.reloadData()}
+      }))
+    }
+    
+    
+    lastUpdateAlert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: {_ in
+    }) )
+    
+    self.present(lastUpdateAlert, animated: true, completion: nil)
+  }
+  
   override func viewDidLoad()
   {
     super.viewDidLoad()
@@ -106,50 +156,14 @@ class MyEventsViewController: UIViewController, UICollectionViewDataSource,UICol
     OWWebAPI.shared.delegate = self
     myEventsCollection.backgroundColor =  #colorLiteral(red: 0.1621451974, green: 0.2774310112, blue: 0.2886824906, alpha: 1)
     // show alert displaying last update and asking update or use existing event list
-    var alertTitle = ""
-    var alertMsg = ""
-    var alertExistingBtn = ""
     loadCredentailsFromKeyChain()
-    var lastUpdateAlert = UIAlertController()
-    if let lastUpdate = UserDefaults.standard.object(forKey: UDKeys.lastEventListUpdate) as? Date
-    {
-      // lastUpdate is valid, therefore previous event list is stored in UserDefaults
-      // show alert asking update or use existing
-      let updateTimeFormatter = DateFormatter()
-      updateTimeFormatter.dateFormat = "MM-dd-yy'   'HH:mm:ss"
-      let lastUpdateStr = updateTimeFormatter.string(from: lastUpdate)
-      
-      alertTitle = String(format:"Event List for User\n" + Credentials.username + "\nLast Updated\n%@",lastUpdateStr)
-      alertMsg = "Update Event List or\nUse Existing List?"
-      alertExistingBtn = "Use Existing"
-    }
-    else
-    {
-      //lastUpdate is nil, therefore no previous event list data is available
-      DispatchQueue.main.async{print("else > ")}
-      
-      alertTitle = "Event List for User \n" + Credentials.username + "\nNot Updated"
-      alertMsg = "Update Now?"
-    }
     
-    lastUpdateAlert = UIAlertController(title: alertTitle, message: alertMsg, preferredStyle: .alert)
-    lastUpdateAlert.addAction(UIAlertAction(title: "Update", style: .default, handler: {_ in
-      //handle the update
-      self.updateCellArray()
-    }))
-    if alertExistingBtn == "Use Existing"
-    {
-      lastUpdateAlert.addAction(UIAlertAction(title: alertExistingBtn, style: .default, handler: {_ in
-        //restore existing list
-        self.cellEventDetailArray = OWWebAPI.shared.loadEventsWithDetails()
-        self.cellEventDetailStringArray = self.assignEventDetailStrings(eventPlusDetails: self.cellEventDetailArray)
-        DispatchQueue.main.async{self.myEventsCollection.reloadData()}
-      }))
-    }
-    lastUpdateAlert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: {_ in
-    }) )
+    //assume update is expected
+    updateCellArray()
     
-    self.present(lastUpdateAlert, animated: true, completion: nil)
+    //give choice to update list, uses existing or cancel
+//    showLastUpdateAlert()
+    
     self.navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.black,
                                                                     NSAttributedString.Key.font: UIFont.preferredFont(forTextStyle: .title3)]
   NotificationCenter.default.addObserver(self, selector: #selector(handleEventTimer), name: NSNotification.Name(rawValue: NotificationKeys.dataRefreshIsDone), object: nil)
@@ -320,17 +334,44 @@ class MyEventsViewController: UIViewController, UICollectionViewDataSource,UICol
           {
             DispatchQueue.main.async {self.stopSpinner()}
             
+            //determine last user update
+            var lastUserUpdateStr = ""
+            if let lastUpdate = UserDefaults.standard.object(forKey: UDKeys.lastEventListUpdate) as? Date
+            {
+              // lastUpdate is valid, therefore previous event list is stored in UserDefaults
+              // show alert asking update or use existing
+              let updateTimeFormatter = DateFormatter()
+              updateTimeFormatter.dateFormat = "MM-dd-yy'   'HH:mm:ss"
+              let lastUpdateStr = updateTimeFormatter.string(from: lastUpdate)
+              
+             lastUserUpdateStr = String(format:"Event List for User\n" + Credentials.username + "\nLast Updated\n%@",lastUpdateStr)
+             }
+            else
+            {
+              //lastUpdate is nil, therefore no previous event list data is available
+              //???
+            }
+            
             //show no connection alert
-            var inetConnectionAlert = UIAlertController(title: "No Internet Connection!", message: "Cancel the Update, or Retry?", preferredStyle: .alert)
+            var inetConnectionAlert = UIAlertController(title: "No Internet Connection!\n" + lastUserUpdateStr, message: "Retry, Use Exising List, or Cancel Update?", preferredStyle: .alert)
             var retryAction = UIAlertAction(title: "Retry", style: .default) { _ in
                 print("retry")
               self.updateCellArray()
             }
             inetConnectionAlert.addAction(retryAction)
-//            var suspendAction = UIAlertAction(title: "Suspend", style: .default) { _ in
-//            print("suspend")
-//            }
-//            inetConnectionAlert.addAction(suspendAction)
+
+            var useExistingAction = UIAlertAction(title: "Use Existing", style: .default) { _ in
+              print("use existing")
+              // what goes here???
+              //restore existing list
+              self.cellEventDetailArray = OWWebAPI.shared.loadEventsWithDetails()
+              self.cellEventDetailStringArray = self.assignEventDetailStrings(eventPlusDetails: self.cellEventDetailArray)
+              DispatchQueue.main.async{self.myEventsCollection.reloadData()}
+              
+            } //end of useExistingAction closure
+            inetConnectionAlert.addAction(useExistingAction)
+
+
             var cancelAction = UIAlertAction(title: "Cancel", style: .cancel) { _ in
 //              print("cancel")
             }
