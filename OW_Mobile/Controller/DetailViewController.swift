@@ -701,7 +701,7 @@ class DetailViewController: UIViewController
 //      cell.eventMoonSepImg.isHidden = false
       cell.moonSepStack.isHidden = false
     } else {
-      cell.eventMoonAlt.text = "(below horizon)"
+      cell.eventMoonAlt.text = "(below hzn)"
 //      cell.eventMoonSeparation.isHidden = true
 //      cell.eventMoonSepImg.isHidden = true
       cell.moonSepStack.isHidden = true
