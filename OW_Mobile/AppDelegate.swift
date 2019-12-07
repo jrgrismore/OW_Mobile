@@ -63,6 +63,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     // Saves changes in the application's managed object context before the application terminates.
     self.saveContext()
     eventUpdateTimer?.invalidate()
+    timeSinceUpdateTimer?.invalidate()
     
     saveSettings(appSettings)
   }

@@ -143,6 +143,7 @@ class SettingsViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
   {
     appSettings.autoUpdateValue = autoUpdateSeg.selectedSegmentIndex
     saveSettings(appSettings)
+    startEventUpdateTimer()
   }
   
   @IBAction func toggleTemp(_ sender: Any) {

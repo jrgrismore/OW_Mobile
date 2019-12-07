@@ -28,6 +28,8 @@ var eventUpdateTimer: Timer?
 var eventUpdateIntervalSeconds: TimeInterval = 3 * 60  //in seconds
 var eventRefreshFailed: Bool = true
 
+var timeSinceUpdateTimer: Timer?
+
 //Unified event with details structure matching JSON keys
 struct EventWithDetails: Codable
 {

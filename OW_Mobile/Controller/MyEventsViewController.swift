@@ -16,7 +16,8 @@ class MyEventsViewController: UIViewController, UICollectionViewDataSource,UICol
   @IBOutlet weak var activitySpinner: UIActivityIndicatorView!
   @IBOutlet weak var spinnerLbl: UILabel!
   @IBOutlet weak var spinnerView: UIView!
-    
+  @IBOutlet weak var timeSinceFld: UIBarButtonItem!
+  
   let reuseIdentifier = "MyEventCell"
   var cellEventDetailArray = [EventWithDetails]()  //for rework
   var cellEventDetailStringArray = [EventDetailStrings]()
@@ -116,38 +117,15 @@ class MyEventsViewController: UIViewController, UICollectionViewDataSource,UICol
     self.present(lastUpdateAlert, animated: true, completion: nil)
   }
   
+  
   override func viewDidLoad()
   {
     super.viewDidLoad()
     let refreshControl = UIRefreshControl()
     refreshControl.addTarget(self, action: #selector(testRefresh), for: .valueChanged)
     myEventsCollection.refreshControl = refreshControl
-    eventUpdateIntervalSeconds = 1 * 60  //override default interval for testing
-    //assign event update interval value from settings
-    switch  appSettings.autoUpdateValue
-     {
-     case 0:
-       print("set autoUpdate to 1 minute")
-       eventUpdateIntervalSeconds = 60
-     case 1:
-       print("set autoUpdate to 10 minute")
-       eventUpdateIntervalSeconds = 10 * 60
-     case 2:
-       print("set autoUpdate to 30 minute")
-       eventUpdateIntervalSeconds = 30 * 60
-     case 3:
-       print("set autoUpdate to 1 hour")
-       eventUpdateIntervalSeconds = 1 * 3600
-     case 4:
-       print("set autoUpdate to 3 hours")
-       eventUpdateIntervalSeconds = 3 * 3600
-     case 5:
-       print("set autoUpdate to 6 hours")
-       eventUpdateIntervalSeconds = 6 * 3600
-     default:
-       print("set autoUpdate to 1 hour")
-       eventUpdateIntervalSeconds = 1 * 3600
-     }
+    eventUpdateIntervalSeconds = TimeInterval(convertAutoUpdateValueToSeconds())
+    print("eventUpdateIntervalSeconds=",eventUpdateIntervalSeconds)
     //test update interval
 //    eventUpdateIntervalSeconds = 1 * 60  //override default interval for testing
 //    print("MyEventsController > viewDidLoad > eventUpdateIntervalSeconds=",eventUpdateIntervalSeconds)
@@ -321,6 +299,9 @@ class MyEventsViewController: UIViewController, UICollectionViewDataSource,UICol
     self.cellEventDetailArray = eventsWithDetails
     self.cellEventDetailStringArray = self.assignEventDetailStrings(eventPlusDetails: self.cellEventDetailArray)
   DispatchQueue.main.async{self.myEventsCollection.reloadData()}
+  //start time since last update timer
+  //this invalidates the previously running timer, so it's like a reset
+  startTimeSinceUpdateTimer()
   print("end updateMyEventsCells")
   }
   
@@ -502,8 +483,65 @@ class MyEventsViewController: UIViewController, UICollectionViewDataSource,UICol
     //get cookie info
     OWWebAPI.shared.getCookieData()
   }
+
+  func startTimeSinceUpdateTimer()
+  {
+  //  print("startTimeSinceUpdateTimer   ", Date())
+    timeSinceFld.title = "0d 00:00"
+    let darkGrayValue = 100.0
+    let reddishValue = 160.0
+    let colorValueInterval = reddishValue - darkGrayValue
+    let colorValueIncrement = colorValueInterval / 10
+//    let settings = UserDefaults.standard.object(forKey: UDKeys.settings)
+      
+    var redValue = darkGrayValue
+    timeSinceUpdateTimer?.invalidate()
+    timeSinceUpdateTimer = Timer.scheduledTimer(withTimeInterval: 10, repeats: true, block: { timeSinceUpdateTimer in
+      print("timeSinceUpdateTimer Fired! -- ",Date())
+      if let lastUpdate = UserDefaults.standard.object(forKey: UDKeys.lastEventListUpdate) as? Date
+      {
+        print("lastUpate: ",lastUpdate)
+        let colorIncrementSeconds = convertAutoUpdateValueToSeconds() * 10
+        var secondsSinceUpdate: TimeInterval = Date().timeIntervalSince(lastUpdate)
+//        secondsSinceUpdate = secondsSinceUpdate + 3500
+        print("seconds since update = ",secondsSinceUpdate)
+        var colorIncrementRatio = secondsSinceUpdate / Double(colorIncrementSeconds)
+        if colorIncrementRatio > 1.0 { colorIncrementRatio = 1.0}
+        redValue = darkGrayValue + colorValueInterval * colorIncrementRatio
+        print("appSettings.autoUpdateValue=",appSettings.autoUpdateValue)
+        print("colorIncrementSeconds=",colorIncrementSeconds)
+        print("colorValueInterval=",colorValueInterval)
+        print("colorIncrementRatio=",colorIncrementRatio)
+        print("redValue=",redValue)
+        self.timeSinceFld.title = self.formatTimeInterval(seconds: secondsSinceUpdate)
+        self.timeSinceFld.tintColor = UIColor(red: CGFloat(1.0 * redValue/255), green: CGFloat(1.0 * darkGrayValue/255), blue: CGFloat(1.0 * darkGrayValue/255), alpha: 1.0)
+      } else {
+        print("no last update")
+      }
+    })
+  }
+
+  func formatTimeInterval(seconds: TimeInterval) -> String
+  {
+    let intervalFomatter = DateComponentsFormatter()
+    intervalFomatter.unitsStyle = .positional
+    intervalFomatter.allowedUnits = [.day,.hour,.minute]
+    intervalFomatter.zeroFormattingBehavior = .pad
+    return intervalFomatter.string(from: seconds)!
+  }
+
+  func stopTimeSinceUpdateTimer()
+  {
+    timeSinceUpdateTimer?.invalidate()
+  }
+
   
 }
+
+
+
+
+
 
 
 

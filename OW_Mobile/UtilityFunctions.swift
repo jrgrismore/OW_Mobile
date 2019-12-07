@@ -77,6 +77,12 @@ func formatLocalEventTime(timeString: String) -> String
   return timeString
 }
 
+func timeSinceUpdate(timeString: String) -> String
+{
+  print("timeSinceUpdate")
+  return "temporary string"
+}
+
 func leadTime(timeString: String) -> String
 {
   var leadTimeString = ""
@@ -814,18 +820,17 @@ func fahrenheitToCelsius(degreesF: Double) -> Double
 {
   return (degreesF - 32) * 5 / 9
 }
-
-
 func startEventUpdateTimer()
 {
   if appSettings.autoUpdateIsOn
   {
+    eventUpdateIntervalSeconds = TimeInterval(convertAutoUpdateValueToSeconds())
     //stop running data refresh timer
     eventUpdateTimer?.invalidate()
     eventUpdateTimer = Timer.scheduledTimer(withTimeInterval: eventUpdateIntervalSeconds, repeats: true, block: { eventUpdateTimer in
-      print("\n\neventUpdateTimer Fired!")
+      print("\n\n***********eventUpdateTimer Fired!")
       refreshEventsWithDetails(completionHandler: {
-        print("refreshEventsWithDetails > completionHandler")
+        print("***********refreshEventsWithDetails > completionHandler")
         NotificationCenter.default.post(name: Notification.Name(NotificationKeys.dataRefreshIsDone), object: nil)
       })
     })
@@ -837,10 +842,38 @@ func stopEventUpdateTimer()
   eventUpdateTimer?.invalidate()
 }
 
-//func handleEventUpdateTimer()
-//{
-//  
-//}
+
+func convertAutoUpdateValueToSeconds() -> Int
+{
+  //    eventUpdateIntervalSeconds = 1 * 60  //override default interval for testing
+  //assign event update interval value from settings
+  var updateSeconds = 0
+  switch  appSettings.autoUpdateValue
+  {
+  case 0:
+    print("set autoUpdate to 1 minute")
+    updateSeconds = 60
+  case 1:
+    print("set autoUpdate to 10 minute")
+    updateSeconds = 10 * 60
+  case 2:
+    print("set autoUpdate to 30 minute")
+    updateSeconds = 30 * 60
+  case 3:
+    print("set autoUpdate to 1 hour")
+    updateSeconds = 1 * 3600
+  case 4:
+    print("set autoUpdate to 3 hours")
+    updateSeconds = 3 * 3600
+  case 5:
+    print("set autoUpdate to 6 hours")
+    updateSeconds = 6 * 3600
+  default:
+    print("set autoUpdate to 1 hour")
+    updateSeconds = 1 * 3600
+  }
+  return updateSeconds
+}
 
 
 func refreshEventsWithDetails(completionHandler: @escaping () -> ())
