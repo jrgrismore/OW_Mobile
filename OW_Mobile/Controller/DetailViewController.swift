@@ -310,7 +310,10 @@ class DetailViewController: UIViewController
       self.stationCollectionView.setNeedsLayout()
       self.adjustCellWidth()
       self.updateShadowPlot(self.selectedEvent)
+      let primaryIndex = OccultationEvent.primaryStationIndex(self.selectedStations)
+      self.currentStationIndexPath = IndexPath(item:primaryIndex!, section: 0)
       self.stationCollectionView.scrollToItem(at: self.currentStationIndexPath, at: .centeredHorizontally, animated: false)
+
       self.stationPageControl.currentPage = self.currentStationIndexPath.row
       
       //move primary here?  need selected event and plot width
