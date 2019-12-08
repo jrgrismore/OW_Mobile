@@ -28,37 +28,30 @@ func formatLocalEventTime(timeString: String) -> String
   eventTimeFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSS"
   eventTimeFormatter.timeZone = TimeZone(abbreviation: "UTC")
   let utcTimeDate = eventTimeFormatter.date(from: timeString)!
-//  print("utcTimeDate=",utcTimeDate)
   switch appSettings.eventDayFormat
   {
   case 0:   //Thursday (Evening/Night/Morning, dd mmm, HH:mm)
-//    print("day format is: Thursday (Evening/Night/Morning), dd mmm, HH:mm")
     eventTimeFormatter.timeZone = TimeZone.current
     let localTimeStr = eventTimeFormatter.string(from: utcTimeDate)
-//    print("localTimeStr=",localTimeStr)
     let eveNightMorn = eveningNightMorning(localDateStr: localTimeStr)
     if let formattedDate = eventTimeFormatter.date(from: localTimeStr)
     {
       let dayStr = eveNightMorn.dayName + " " + eveNightMorn.eveNight
-//      print("dayStr=",dayStr)
       eventTimeFormatter.dateFormat = "dd MMM, HH:mm"
       return dayStr +  ", " + eventTimeFormatter.string(from: formattedDate)
     }
   case 1:   //Thursday (Evening/Night), dd mmm, HH:mm
-//    print("day format is: Thursday (Evening/Night), dd mmm, HH:mm")
     eventTimeFormatter.timeZone = TimeZone.current
     let localTimeStr = eventTimeFormatter.string(from: utcTimeDate)
-//    print("localTimeStr=",localTimeStr)
     let eveNight = eveningNight(localDateStr: localTimeStr)
     if let formattedDate = eventTimeFormatter.date(from: localTimeStr)
     {
       let dayStr = eveNight.dayName + " " + eveNight.eveNight
-//      print("dayStr=",dayStr)
+
       eventTimeFormatter.dateFormat = "dd MMM, HH:mm"
       return dayStr +  ", " + eventTimeFormatter.string(from: formattedDate)
     }
   case 2:   //07 November 2019, HH:mm:ss
-//    print("day format is: 07 November 2019, HH:mm:ss")
     if let formattedDate = eventTimeFormatter.date(from: timeString)
     {
       eventTimeFormatter.dateFormat = "dd MMMM yyyy, HH:mm"
@@ -66,7 +59,6 @@ func formatLocalEventTime(timeString: String) -> String
       return eventTimeFormatter.string(from: formattedDate)
     }
   default:   //07 November, HH:mm:ss
-//    print("day format is: 07 November, HH:mm:ss")
     if let formattedDate = eventTimeFormatter.date(from: timeString)
     {
       eventTimeFormatter.dateFormat = "dd MMM, HH:mm"
@@ -79,7 +71,6 @@ func formatLocalEventTime(timeString: String) -> String
 
 func timeSinceUpdate(timeString: String) -> String
 {
-  print("timeSinceUpdate")
   return "temporary string"
 }
 
@@ -96,7 +87,6 @@ func leadTime(timeString: String) -> String
     let leadTimeMinutes = leadTimeSeconds / 60
     let leadTimeHours = leadTimeMinutes / 60
     let leadTimeDays = Double(leadTimeHours) / 24.0
-//    print("leadTimeDays=",leadTimeDays)
     if leadTimeMinutes > 0
     {
       if leadTimeMinutes < 90
@@ -148,17 +138,13 @@ func utcStrToLocalDate(eventTimeStr: String) -> Date?
 
 func utcStrToLocalDayOfMonth(eventTimeStr: String) -> String?
 {
-  //  print("utcStrToLocalDayOfMonth")
-  //  print("eventTimeStr=",eventTimeStr)
   let eventTimeFormatter = DateFormatter()
   eventTimeFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSS"
   eventTimeFormatter.timeZone = TimeZone(abbreviation: "UTC")
   let originalDate = eventTimeFormatter.date(from: eventTimeStr)!
-  //  print("original date =",originalDate)
   eventTimeFormatter.timeZone = TimeZone.current
   eventTimeFormatter.dateFormat = "dd MMM"
   let localDateStr = eventTimeFormatter.string(from: originalDate)
-  //  print("localDateStr=",localDateStr)
   return localDateStr
 }
 
@@ -628,7 +614,6 @@ func pathBarsTotalWidth(astDiamKm: Double, sigma1WidthKm: Double, stationsExistP
   var totalWidth = sigma1BarWidth
   if stationsExistPastSigma1
   {
-    //    print("total plot width includes sigma2 and sigma3")
     totalWidth = sigma1BarWidth + (4 * sigma1WidthKm)
   }
   return totalWidth
@@ -693,13 +678,6 @@ func totalPlotWidthKm(_ item: EventWithDetails, scale: PlotScale) -> Double
   let sigma2TotalWidth = sigma2WidthKm(item)
   let sigma3TotalWidth = sigma3WidthKm(item)
   var farthestTotalWidth = farthestChordWidth(item)
-  //  print("shadowWidth=",shadowWidth)
-  //  print("OneSigmaErrorWidthKm=",item.OneSigmaErrorWidthKm)
-  //  print("sigma1TotalWidth=",sigma1TotalWidth)
-  //  print("sigma2TotalWidth=",sigma2TotalWidth)
-  //  print("sigma3TotalWidth=",sigma3TotalWidth)
-  //  print("farthestTotalWidth=",farthestTotalWidth)
-  //  print("PlotScale=",scale)
   switch scale
   {
   case .shadowEdge:
@@ -719,27 +697,16 @@ func totalPlotWidthKm(_ item: EventWithDetails, scale: PlotScale) -> Double
 
 func plotBarsWidthFactors(_ item: EventWithDetails, totalPlotWidthKm: Double) -> (shadowBarFactor:Double,sigma1BarFactor:Double,sigma2BarFactor:Double,sigma3BarFactor:Double)
 {
-  //  print("plotBarsWidthFactors")
-  //  print("totalPlotWidthKm=",totalPlotWidthKm)
   let shadowWidth = item.AstDiaKm!
   let sigma1ErrorWidth = item.OneSigmaErrorWidthKm!   //shadow edge to sigma1 edge
   let sigma1TotalWidth = shadowWidth + sigma1ErrorWidth * 2
   let sigma2TotalWidth = sigma1TotalWidth + sigma1ErrorWidth * 2
   let sigma3TotalWidth = sigma2TotalWidth + sigma1ErrorWidth * 2
-  //  print("shadowWidth=",shadowWidth)
-  //  print("sigma1TotalWidth=",sigma1TotalWidth)
-  //  print("sigma2TotalWidth=",sigma2TotalWidth)
-  //  print("sigma3TotalWidth=",sigma3TotalWidth)
-  
   
   let shadowBarWidthFactor = shadowWidth / totalPlotWidthKm
   let sigma1BarWidthFactor = sigma1TotalWidth / totalPlotWidthKm
   let sigma2BarWidthFactor = sigma2TotalWidth / totalPlotWidthKm
   let sigma3BarWidthFactor = sigma3TotalWidth / totalPlotWidthKm
-  //  print("shadowBarWidthFactor=",shadowBarWidthFactor)
-  //  print("sigma1BarWidthFactor=",sigma1BarWidthFactor)
-  //  print("sigma2BarWidthFactor=",sigma2BarWidthFactor)
-  //  print("sigma3BarWidthFactor=",sigma3BarWidthFactor)
   
   return (shadowBarWidthFactor, sigma1BarWidthFactor, sigma2BarWidthFactor, sigma3BarWidthFactor)
 }
@@ -764,7 +731,6 @@ func saveSettings(_ settings: Settings)
 {
   let data = try? JSONEncoder().encode(settings)
   UserDefaults.standard.set(data, forKey: UDKeys.settings)
-//      print("saved and reloaded settings = ",loadSettings())
 }
 
 
@@ -828,9 +794,8 @@ func startEventUpdateTimer()
     //stop running data refresh timer
     eventUpdateTimer?.invalidate()
     eventUpdateTimer = Timer.scheduledTimer(withTimeInterval: eventUpdateIntervalSeconds, repeats: true, block: { eventUpdateTimer in
-      print("\n\n***********eventUpdateTimer Fired!")
+//      print("\n\n***********eventUpdateTimer Fired!")
       refreshEventsWithDetails(completionHandler: {
-        print("***********refreshEventsWithDetails > completionHandler")
         NotificationCenter.default.post(name: Notification.Name(NotificationKeys.dataRefreshIsDone), object: nil)
       })
     })
@@ -845,31 +810,23 @@ func stopEventUpdateTimer()
 
 func convertAutoUpdateValueToSeconds() -> Int
 {
-  //    eventUpdateIntervalSeconds = 1 * 60  //override default interval for testing
   //assign event update interval value from settings
   var updateSeconds = 0
   switch  appSettings.autoUpdateValue
   {
   case 0:
-    print("set autoUpdate to 1 minute")
     updateSeconds = 60
   case 1:
-    print("set autoUpdate to 10 minute")
     updateSeconds = 10 * 60
   case 2:
-    print("set autoUpdate to 30 minute")
     updateSeconds = 30 * 60
   case 3:
-    print("set autoUpdate to 1 hour")
     updateSeconds = 1 * 3600
   case 4:
-    print("set autoUpdate to 3 hours")
     updateSeconds = 3 * 3600
   case 5:
-    print("set autoUpdate to 6 hours")
     updateSeconds = 6 * 3600
   default:
-    print("set autoUpdate to 1 hour")
     updateSeconds = 1 * 3600
   }
   return updateSeconds
@@ -878,33 +835,19 @@ func convertAutoUpdateValueToSeconds() -> Int
 
 func refreshEventsWithDetails(completionHandler: @escaping () -> ())
 {
-  print("refreshEventsWithDetails")
-  //  DispatchQueue.main.async {self.startSpinner()}
   eventRefreshFailed = false
   OWWebAPI.shared.retrieveEventsWithDetails(completion: { (eventsWithDetailsData, error) in
     DispatchQueue.main.async
       {
-//        print("begin completion")
         if error != nil
         {
-          print("\n\n")
-          print("refreshEventsWithDetails > error != nil")
-          print("refreshEventsWithDetails > error=",error)
-
           eventRefreshFailed = true
           //invalidate eventUpdateTimer since no internet connection
-//          eventUpdateTimer?.invalidate()
-//          eventUpdateTimer = nil
           stopEventUpdateTimer()
-          print("refreshEventsWithDetails > post dataRefreshIsDone")
           completionHandler()
-//          NotificationCenter.default.post(name: Notification.Name(NotificationKeys.dataRefreshIsDone), object: nil)
           return
         } else {
           eventRefreshFailed = false
-          print("refreshEventsWithDetails > error == nil")
-          print("eventsWithDetailData.count=",eventsWithDetailsData!.count)
-//          print("\n\n")
           // no errors
           eventsWithDetails = eventsWithDetailsData!
           if eventsWithDetailsData!.count < 1
@@ -914,20 +857,14 @@ func refreshEventsWithDetails(completionHandler: @escaping () -> ())
                 //save empty array to userdefaults
                 OWWebAPI.shared.saveEventsWithDetails([])
             }
-             print("refreshEventsWithDetails > post dataRefreshIsDone")
-//             NotificationCenter.default.post(name: Notification.Name(NotificationKeys.dataRefreshIsDone), object: nil)
              completionHandler()
              return
           }
         } //end of no error block
         //store update date in userDefaults
-        print("refreshEventsWithDetails > store data")
-        print("refreshEventsWithDetails > post dataRefreshIsDone")
          UserDefaults.standard.set(Date(), forKey: UDKeys.lastEventListUpdate)
         OWWebAPI.shared.saveEventsWithDetails(eventsWithDetailsData!)
-//        NotificationCenter.default.post(name: Notification.Name(NotificationKeys.dataRefreshIsDone), object: nil)
         completionHandler()
-        //      let loadedEventDetailData = OWWebAPI.shared.loadEventsWithDetails()
     } //end of dispatch
   })
 }

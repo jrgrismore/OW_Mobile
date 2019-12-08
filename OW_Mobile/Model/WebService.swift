@@ -84,7 +84,6 @@ class OWWebAPI: NSObject
   
   func retrieveEventsWithDetails( completion: @escaping ([EventWithDetails]?, Error?) -> Void)
   {
-    print("retrieveEventsWithDetails")
     delegate?.webLogTextDidChange(text: "Connecting to OW")
     usleep(useconds_t(0.5 * 1000000)) //will sleep for 0.5 seconds)
     let config = URLSessionConfiguration.default
@@ -99,7 +98,6 @@ class OWWebAPI: NSObject
 //        print("\n*******Error:", error as Any)
         self.delegate?.webLogTextDidChange(text: "Error Trying to Access OW Server!")
         usleep(useconds_t(0.5 * 1000000)) //will sleep for 0.5 seconds)
-//        print("found error -- invoke completion")
         completion(nil,error)
         return
       }
@@ -108,7 +106,7 @@ class OWWebAPI: NSObject
       usleep(useconds_t(0.5 * 1000000)) //will sleep for 0.5 seconds)
       let eventWithDetail = self.parseEventsWithDetails(jsonData: dataResponse)
       
-      print("eventWithDetails.count=",eventWithDetail.count)
+//      print("eventWithDetails.count=",eventWithDetail.count)
       self.delegate?.webLogTextDidChange(text: "Event List count = \(eventWithDetail.count)")
       usleep(useconds_t(1.0 * 1000000)) //will sleep for 1.0 seconds)
       completion(eventWithDetail,nil)
@@ -191,7 +189,7 @@ class OWWebAPI: NSObject
       //sort by event data/time (earliest first)
       parsedJSON.sort(by: { $0.EventTimeUtc! < $1.EventTimeUtc! })
     } catch let error {
-      print(error as Any)
+//      print(error as Any)
     }
     return parsedEventsWithDetails
   }
@@ -209,7 +207,7 @@ class OWWebAPI: NSObject
       //sort by event data/time (earliest first)
       parsedJSON.sort(by: { $0.EventTimeUtc! < $1.EventTimeUtc! })
     } catch let error {
-      print(error as Any)
+//      print(error as Any)
     }
     return parsedJSON
   }
@@ -225,7 +223,7 @@ class OWWebAPI: NSObject
       //apply decoder to json data to create entire array of To Do items
       parsedDetails = try decoder.decode(EventDetails.self, from: jsonData)
     } catch let error {
-      print(error as Any)
+//      print(error as Any)
     }
     return parsedDetails
   }
@@ -319,38 +317,26 @@ class OWWebAPI: NSObject
 //  func postReport(reportCode: Int, duration: Double?, completion: @escaping (Data?, Error?) -> () )
   func postReport(eventId: String, stationId: Int, reportData: ObservationReport, completion: @escaping (Data?, Error?) -> () )
   {
-    print("do urlsession datatask")
-    print("eventId=",eventId)
-    print("stationId=",stationId)
     let postReportURL = createPostReportURL(eventId: eventId, stationId: stationId, owSession: OWWebAPI.owmSession)
-    print("postReportURL=",postReportURL)
     var request = URLRequest(url: postReportURL)
     request.httpMethod = "POST"
     request.setValue("application/json", forHTTPHeaderField: "Content-Type")   //added on advice from Hristo
     
     //json encode data
-    print("reportData=",reportData)
     let jsonPostData = try! JSONEncoder().encode(reportData)
-    print("jsonPostData=",jsonPostData)
     let jsonPostString = String(data: jsonPostData, encoding: .utf8)
-    print("jsonPostString=",jsonPostString!)
-    
-    //temporary break
-//    return
-    
-//    let jsonPostData = "tempPost".data(using: .utf8)  //need to use json serialization
 
     let owmTask = OWWebAPI.owmSession.uploadTask(with: request, from: jsonPostData)
     {
       (data,response,error) in
       if let error = error {
-        print("error: \(error)")
+//        print("error: \(error)")
       } else {
         if let response = response as? HTTPURLResponse {
-          print("statusCode: \(response.statusCode)")
+//          print("statusCode: \(response.statusCode)")
         }
         if let data = data, let dataString = String(data: data, encoding: .utf8) {
-          print("data: \(dataString)")
+//          print("data: \(dataString)")
         }
       }
       completion(data,error)

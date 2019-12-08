@@ -47,8 +47,6 @@ class ReportViewController: UIViewController,UIPickerViewDelegate,UIPickerViewDa
   
   override func viewWillAppear(_ animated: Bool)
   {
-    print("astroName=",astroName!)
-    print("observedLocation=",observedLocation!)
     astroNameLbl.text = astroName!
     observedAtLbl.text = "Observed at " + observedLocation!
     posDurStackView.isHidden = true
@@ -72,7 +70,6 @@ class ReportViewController: UIViewController,UIPickerViewDelegate,UIPickerViewDa
   }
   
   func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-    print("observationPicker row=",row,"   observationPicker value=",pickerData[row])
     if row == 4
     {
       posDurStackView.isHidden = false
@@ -90,7 +87,7 @@ class ReportViewController: UIViewController,UIPickerViewDelegate,UIPickerViewDa
   {
     if durationFld == sender as! UITextField
     {
-//      print("durationFld.text=",durationFld.text)
+
     }
   }
   
@@ -113,12 +110,9 @@ class ReportViewController: UIViewController,UIPickerViewDelegate,UIPickerViewDa
   
   @IBAction func submitReport(_ sender: Any)
   {
-    
-    print("observation code=",selectedRow,"   observation string=",pickerData[selectedRow])
     var duration: Double? = nil
     if selectedRow == 4
     {
-      print("duration=",durationFld.text)
       duration = Double(durationFld.text!)
     }
     //populate data structure
@@ -126,12 +120,9 @@ class ReportViewController: UIViewController,UIPickerViewDelegate,UIPickerViewDa
     //submit report
 //    OWWebAPI.shared.postReport(reportCode: 99, duration: 99.99, completion: { (data, error) in
     OWWebAPI.shared.postReport(eventId: eventId!, stationId: stationId!, reportData: postReportData, completion: { (data, error) in
-      print("do completion closure")
     })
-    
     dismissVC(ReportViewController.self)
   }
-
   
   
 }

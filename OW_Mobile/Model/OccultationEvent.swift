@@ -320,11 +320,6 @@ class OccultationEvent: NSObject
     let stationChordOffset = station.ChordOffsetKm!
     let barPlotTotalWidth = pathBarsTotalWidth(astDiamKm: item.AstDiaKm!, sigma1WidthKm: item.OneSigmaErrorWidthKm!, stationsExistPastSigma1: stationsExistPastSigma1)
     let stationFactor = stationChordOffset / (barPlotTotalWidth / 2)
-//    print()
-//    print("#######")
-//    print("station.ChordOffsetKm=",station.ChordOffsetKm!)
-//    print("barPlotTotalWidth=",barPlotTotalWidth)
-//    print("stationFactor=",stationFactor)
     
     return stationFactor
   }

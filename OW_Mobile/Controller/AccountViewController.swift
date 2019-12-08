@@ -61,7 +61,6 @@ func deleteCredentailsFromKeyChain()
 
 func updateCredentailsOnKeyChain()
 {
-  print("updateCredentailsOnKeyChain")
   let server = "www.occultwatcher.net"
   let username = Credentials.username
   let password = Credentials.password.data(using: .utf8)
@@ -70,7 +69,6 @@ func updateCredentailsOnKeyChain()
       (kSecClass as String): kSecClassInternetPassword,
       (kSecAttrServer as String): server
   ]
-  
   let updateAttributes: [String: Any] =
     [
       kSecAttrAccount as String: username,
@@ -146,18 +144,13 @@ class AccountViewController: UIViewController, UITextFieldDelegate
   
   @objc func handleEventTimer()
   {
-    print("AccountViewController > handleEventTimer")
-    print("AccountViewController > eventRefreshFailed=",eventRefreshFailed)
     if eventRefreshFailed
     {
       //terminate automatic update activities and show alert
       var autoUpdateAlert = UIAlertController(title: "Automatic Events Update Failed!  No Internet Connection.", message: "Cancel Automatic Updating, or Retry?\n(You can re-enable automatic updates in Settings)", preferredStyle: .alert)
       //retry
       var retryAction = UIAlertAction(title: "Retry", style: .default) { _ in
-        print("retry")
         refreshEventsWithDetails(completionHandler: {() -> () in
-          print("Account > refreshEventsWithDetails > completionHandler")
-          print("start refresh timer")
           //start data refresh timer
           startEventUpdateTimer()
         })

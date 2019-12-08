@@ -59,7 +59,6 @@ class MyEventsViewController: UIViewController, UICollectionViewDataSource,UICol
   
   @objc func testRefresh()
   {
-    print("testRefresh called")
     updateCellArray()
     //get cookie info
     OWWebAPI.shared.getCookieData()
@@ -89,7 +88,6 @@ class MyEventsViewController: UIViewController, UICollectionViewDataSource,UICol
     else
     {
       //lastUpdate is nil, therefore no previous event list data is available
-      DispatchQueue.main.async{print("else > ")}
       
       alertTitle = "Event List for User \n" + Credentials.username + "\nNot Updated"
       alertMsg = "Update Now?"
@@ -125,22 +123,14 @@ class MyEventsViewController: UIViewController, UICollectionViewDataSource,UICol
     refreshControl.addTarget(self, action: #selector(testRefresh), for: .valueChanged)
     myEventsCollection.refreshControl = refreshControl
     eventUpdateIntervalSeconds = TimeInterval(convertAutoUpdateValueToSeconds())
-    print("eventUpdateIntervalSeconds=",eventUpdateIntervalSeconds)
-    //test update interval
-//    eventUpdateIntervalSeconds = 1 * 60  //override default interval for testing
-//    print("MyEventsController > viewDidLoad > eventUpdateIntervalSeconds=",eventUpdateIntervalSeconds)
 
     self.spinnerView.layer.cornerRadius = 20
     OWWebAPI.shared.delegate = self
     myEventsCollection.backgroundColor =  #colorLiteral(red: 0.1621451974, green: 0.2774310112, blue: 0.2886824906, alpha: 1)
-    // show alert displaying last update and asking update or use existing event list
     loadCredentailsFromKeyChain()
     
     //assume update is expected
     updateCellArray()
-    
-    //give choice to update list, uses existing or cancel
-//    showLastUpdateAlert()
     
     self.navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.black,
                                                                     NSAttributedString.Key.font: UIFont.preferredFont(forTextStyle: .title3)]
@@ -149,25 +139,18 @@ class MyEventsViewController: UIViewController, UICollectionViewDataSource,UICol
     
   @objc func handleEventTimer()
   {
-    print("MyEventViewController > handleEventTimer")
-    print("MyEventViewController > eventsWithDetails.count=",eventsWithDetails.count)
     if eventsWithDetails.count < 1
     {
       handleEmptyEventList()
       return
     }
-    print("MyEventViewController > eventRefreshFailed=",eventRefreshFailed)
     if eventRefreshFailed
     {
       //terminate automatic update activities and show alert
       var autoUpdateAlert = UIAlertController(title: "Automatic Events Update Failed!  No Internet Connection.", message: "Cancel Automatic Updating, or Retry?\n(You can re-enable automatic updates in Settings)", preferredStyle: .alert)
       //retry
       var retryAction = UIAlertAction(title: "Retry", style: .default) { _ in
-        print("retry")
         refreshEventsWithDetails(completionHandler: {() -> () in
-          print("MyEventViewController > refreshEventsWithDetails > completionHandler")
-
-          print("start refresh timer")
           //start data refresh timer
           startEventUpdateTimer()
         })
@@ -182,21 +165,16 @@ class MyEventsViewController: UIViewController, UICollectionViewDataSource,UICol
       //show alert
       self.present(autoUpdateAlert, animated: true, completion: nil)
     } else {
-      print("updateMyEventsCells")
       updateMyEventsCells()
     }
   }
-
   
   override func viewWillAppear(_ animated: Bool)
   {
-    print("MyEventsViewController > viewWillAppear")
     self.navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.black,
                                                                     NSAttributedString.Key.font: UIFont.preferredFont(forTextStyle: .title3)]
     loadCredentailsFromKeyChain()
     self.cellEventDetailStringArray = self.assignEventDetailStrings(eventPlusDetails: self.cellEventDetailArray)
-    
-//    self.updateMyEventsCells()
   }
   
   override func viewDidAppear(_ animated: Bool)
@@ -284,25 +262,19 @@ class MyEventsViewController: UIViewController, UICollectionViewDataSource,UICol
   
   fileprivate func updateMyEventsCells()
 {
-  print("updateMyEventsCells")
     //data assigned
-    //              self.cellEventDetailArray = eventsWithDetailsData!
     self.cellEventDetailArray = eventsWithDetails
-    //              if eventsWithDetailsData!.count < 1
     if eventsWithDetails.count < 1
     {
       handleEmptyEventList()  //end of no data dispatch
       return
     }  // eventsWithDetailsData!.count < 1
-    //              self.cellEventDetailArray = eventsWithDetailsData!
-    //              self.cellEventDetailArray = eventsWithDetailsData!
     self.cellEventDetailArray = eventsWithDetails
     self.cellEventDetailStringArray = self.assignEventDetailStrings(eventPlusDetails: self.cellEventDetailArray)
   DispatchQueue.main.async{self.myEventsCollection.reloadData()}
   //start time since last update timer
   //this invalidates the previously running timer, so it's like a reset
   startTimeSinceUpdateTimer()
-  print("end updateMyEventsCells")
   }
   
   func getEventsWithDetails()
@@ -332,32 +304,24 @@ class MyEventsViewController: UIViewController, UICollectionViewDataSource,UICol
               //lastUpdate is nil, therefore no previous event list data is available
               //???
             }
-            
             //show no connection alert
             var inetConnectionAlert = UIAlertController(title: "No Internet Connection!\n" + lastUserUpdateStr, message: "Retry, Use Exising List, or Cancel Update?", preferredStyle: .alert)
             var retryAction = UIAlertAction(title: "Retry", style: .default) { _ in
-                print("retry")
               self.updateCellArray()
             }
             inetConnectionAlert.addAction(retryAction)
 
             var useExistingAction = UIAlertAction(title: "Use Existing", style: .default) { _ in
-              print("use existing")
-              // what goes here???
               //restore existing list
               self.cellEventDetailArray = OWWebAPI.shared.loadEventsWithDetails()
               self.cellEventDetailStringArray = self.assignEventDetailStrings(eventPlusDetails: self.cellEventDetailArray)
               DispatchQueue.main.async{self.myEventsCollection.reloadData()}
-              
             } //end of useExistingAction closure
             inetConnectionAlert.addAction(useExistingAction)
 
-
             var cancelAction = UIAlertAction(title: "Cancel", style: .cancel) { _ in
-//              print("cancel")
             }
             inetConnectionAlert.addAction(cancelAction)
-            
             self.present(inetConnectionAlert, animated: true, completion: nil)
              return
           } else {
@@ -371,31 +335,19 @@ class MyEventsViewController: UIViewController, UICollectionViewDataSource,UICol
               self.updateMyEventsCells()
               
               DispatchQueue.main.async{self.spinnerLbl.text = "Updating Events..."}
-//              DispatchQueue.main.async{self.myEventsCollection.reloadData()}
               usleep(useconds_t(0.5 * 1000000)) //will sleep for 0.5 seconds)
               DispatchQueue.main.async {self.stopSpinner()}
-//              DispatchQueue.main.async{self.myEventsCollection.reloadData()}
-              
               //start data refresh timer
-//              eventUpdateTimer?.invalidate()
-//              eventUpdateTimer = Timer.scheduledTimer(timeInterval: eventUpdateIntervalSeconds, target: self, selector: #selector(self.handleEventTimer), userInfo: nil, repeats: true)
               startEventUpdateTimer()
-
             } else {
               // eventsWithDetailsData is nil
             }
-          
       }  //end of no errors block
       //store update date in userDefaults
       UserDefaults.standard.set(Date(), forKey: UDKeys.lastEventListUpdate)
-//      OWWebAPI.shared.saveEventsWithDetails(eventsWithDetailsData!)
       OWWebAPI.shared.saveEventsWithDetails(eventsWithDetailsData!)
-//      OWWebAPI.shared.saveEventsWithDetails(eventsWithDetailsData!)
-      //      let loadedEventDetailData = OWWebAPI.shared.loadEventsWithDetails()
       } //end of dispatch block
-//      print("exiting getEventsWithDetails > retrieveEventsWithDetails completion closure")
     })
-//    print("exiting getEventsWithDetails")
   }
   
   func printEventWithDetails(_ eventAndDetails: EventWithDetails)
@@ -486,37 +438,26 @@ class MyEventsViewController: UIViewController, UICollectionViewDataSource,UICol
 
   func startTimeSinceUpdateTimer()
   {
-  //  print("startTimeSinceUpdateTimer   ", Date())
     timeSinceFld.title = "0d 00:00"
     let darkGrayValue = 100.0
     let reddishValue = 160.0
     let colorValueInterval = reddishValue - darkGrayValue
     let colorValueIncrement = colorValueInterval / 10
-//    let settings = UserDefaults.standard.object(forKey: UDKeys.settings)
       
     var redValue = darkGrayValue
     timeSinceUpdateTimer?.invalidate()
     timeSinceUpdateTimer = Timer.scheduledTimer(withTimeInterval: 10, repeats: true, block: { timeSinceUpdateTimer in
-      print("timeSinceUpdateTimer Fired! -- ",Date())
       if let lastUpdate = UserDefaults.standard.object(forKey: UDKeys.lastEventListUpdate) as? Date
       {
-        print("lastUpate: ",lastUpdate)
         let colorIncrementSeconds = convertAutoUpdateValueToSeconds() * 10
         var secondsSinceUpdate: TimeInterval = Date().timeIntervalSince(lastUpdate)
-//        secondsSinceUpdate = secondsSinceUpdate + 3500
-        print("seconds since update = ",secondsSinceUpdate)
         var colorIncrementRatio = secondsSinceUpdate / Double(colorIncrementSeconds)
         if colorIncrementRatio > 1.0 { colorIncrementRatio = 1.0}
         redValue = darkGrayValue + colorValueInterval * colorIncrementRatio
-        print("appSettings.autoUpdateValue=",appSettings.autoUpdateValue)
-        print("colorIncrementSeconds=",colorIncrementSeconds)
-        print("colorValueInterval=",colorValueInterval)
-        print("colorIncrementRatio=",colorIncrementRatio)
-        print("redValue=",redValue)
         self.timeSinceFld.title = self.formatTimeInterval(seconds: secondsSinceUpdate)
         self.timeSinceFld.tintColor = UIColor(red: CGFloat(1.0 * redValue/255), green: CGFloat(1.0 * darkGrayValue/255), blue: CGFloat(1.0 * darkGrayValue/255), alpha: 1.0)
       } else {
-        print("no last update")
+        // no last update
       }
     })
   }
@@ -539,13 +480,6 @@ class MyEventsViewController: UIViewController, UICollectionViewDataSource,UICol
 }
 
 
-
-
-
-
-
-
-
 extension MyEventsViewController
 {
   // MARK: - Collection delegate functions
@@ -558,7 +492,6 @@ extension MyEventsViewController
   {
     var cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as! MyEventsCollectionViewCell
     cell.backgroundColor = #colorLiteral(red: 0.3058823529, green: 0.4941176471, blue: 0.5333333333, alpha: 0.67)
-//    print("call fillCellFields")
     fillCellFields(cell: &cell, indexPath: indexPath)
     let longPress = UILongPressGestureRecognizer(target: self, action: #selector(handleLongPress))
     cell.addGestureRecognizer(longPress)
@@ -627,7 +560,7 @@ extension MyEventsViewController
     }
     if gesture.state == UIGestureRecognizer.State.ended
     {
-      print("long press gesture ended")
+//      print("long press gesture ended")
     }
   }
   

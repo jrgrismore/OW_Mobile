@@ -22,7 +22,6 @@ class TabBarController: UITabBarController {
   override func viewWillAppear(_ animated: Bool)
   {
     loadCredentailsFromKeyChain()
-    print("Credentials.username=",Credentials.username,"   Credentials.password=",Credentials.password)
     if Credentials.username == "" || Credentials.password == ""
     {
       self.selectedIndex = 1

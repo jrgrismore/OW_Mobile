@@ -44,18 +44,13 @@ class SettingsViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
   
   @objc func handleEventTimer()
   {
-    print("AccountViewController > handleEventTimer")
-    print("AccountViewController > eventRefreshFailed=",eventRefreshFailed)
     if eventRefreshFailed
     {
       //terminate automatic update activities and show alert
       var autoUpdateAlert = UIAlertController(title: "Automatic Events Update Failed!  No Internet Connection.", message: "Cancel Automatic Updating, or Retry?\n(You can re-enable automatic updates in Settings)", preferredStyle: .alert)
       //retry
       var retryAction = UIAlertAction(title: "Retry", style: .default) { _ in
-        print("retry")
         refreshEventsWithDetails(completionHandler: {() -> () in
-          print("Account > refreshEventsWithDetails > completionHandler")
-          print("start refresh timer")
           //start data refresh timer
           startEventUpdateTimer()
         })
@@ -73,14 +68,8 @@ class SettingsViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
   }
 
   override func viewWillAppear(_ animated: Bool) {
-    //temporarily remove settings from user defaults
-//    UserDefaults.standard.removeObject(forKey: UDKeys.settings)
-    
-//    print("appSettings=",appSettings)
     appSettings = loadSettings()
-//    print("appSettings=",appSettings)
     autoUpdateSwitch.isOn = appSettings.autoUpdateIsOn
-    print("appSettings.autoUpdateValue=",appSettings.autoUpdateValue)
     if autoUpdateSwitch.isOn
     {
       autoUpdateSeg.isUserInteractionEnabled = true
@@ -118,19 +107,16 @@ class SettingsViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
     switch autoUpdateSwitch.isOn
     {
     case false:
-      print("autoUpdate is off")
       appSettings.autoUpdateIsOn = false
       autoUpdateSeg.isUserInteractionEnabled = false
       autoUpdateSeg.alpha = 0.5
       stopEventUpdateTimer()
     case true:
-      print("autoUpdate is on")
       appSettings.autoUpdateIsOn = true
       autoUpdateSeg.isUserInteractionEnabled = true
       autoUpdateSeg.alpha = 1.0
       startEventUpdateTimer()
     default:
-      print("default autoUpdate is on")
       appSettings.autoUpdateIsOn = true
       autoUpdateSeg.isUserInteractionEnabled = true
       autoUpdateSeg.alpha = 1.0
@@ -150,13 +136,10 @@ class SettingsViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
     switch tempSeg.selectedSegmentIndex
     {
     case 0:
-      print("show temperature in Celsius")
       appSettings.tempIsCelsius = true
     case 1:
-      print("show temperature in Fahrenheit")
       appSettings.tempIsCelsius = false
     default:
-      print("default temperature is Fahrenheit")
       appSettings.tempIsCelsius = false
     }
     saveSettings(appSettings)
@@ -166,13 +149,10 @@ class SettingsViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
     switch azimuthSeg.selectedSegmentIndex
     {
     case 0:
-      print("show azimuth as Degrees")
       appSettings.azimuthIsDegrees = true
     case 1:
-      print("show azimuth as Compass directions")
       appSettings.azimuthIsDegrees = false
     default:
-      print("default azimuth is Degrees")
       appSettings.azimuthIsDegrees = true
     }
     saveSettings(appSettings)
@@ -183,18 +163,15 @@ class SettingsViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
     switch summaryTimeSeg.selectedSegmentIndex
     {
     case 0:
-      print("show summary time as Local")
       appSettings.summaryTimeIsLocal = true
       eventDayFormatPicker.isUserInteractionEnabled = true
       eventDayFormatPicker.alpha = 1.0
     case 1:
-      print("show summary time as UT")
       appSettings.summaryTimeIsLocal = false
       eventDayFormatPicker.isUserInteractionEnabled = false
       eventDayFormatPicker.selectRow(2, inComponent: 0, animated: true)
       eventDayFormatPicker.alpha = 0.5
     default:
-      print("default summary time is Local")
       appSettings.summaryTimeIsLocal = true
       eventDayFormatPicker.isUserInteractionEnabled = true
       eventDayFormatPicker.alpha = 1.0
@@ -206,13 +183,10 @@ class SettingsViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
     switch detailTimeSeg.selectedSegmentIndex
     {
     case 0:
-      print("show detail time as Local")
       appSettings.detailTimeIsLocal = true
     case 1:
-      print("show detail time as UT")
       appSettings.detailTimeIsLocal = false
     default:
-      print("default detail time is Local")
       appSettings.detailTimeIsLocal = true
     }
     saveSettings(appSettings)
@@ -222,13 +196,10 @@ class SettingsViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
     switch starEpochSeg.selectedSegmentIndex
     {
     case 0:
-      print("show star epoch as J2000")
       appSettings.starEpochIsJ2000 = true
     case 1:
-      print("show star epoch as JNow")
       appSettings.starEpochIsJ2000 = false
     default:
-      print("show star epoch as J2000")
       appSettings.starEpochIsJ2000 = true
     }
     saveSettings(appSettings)
@@ -238,23 +209,17 @@ class SettingsViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
    switch latlonFormatSeg.selectedSegmentIndex
    {
    case 0:
-     print("show lat/lon format as DMS")
      appSettings.latlonFormatIsDMS = true
    case 1:
-     print("show lat/lon format as decimal")
      appSettings.latlonFormatIsDMS = false
    default:
-     print("show lat/lon format as DMS")
      appSettings.latlonFormatIsDMS = true
    }
    saveSettings(appSettings)
       let pointXY:CGPoint = (self.latlonFormatSeg.superview?.convert(self.latlonFormatSeg.frame.origin, to: nil))!
       self.scrollView.contentOffset = CGPoint(x:0, y:pointXY.y)
  }
-  
-  
-  
-  
+
   func numberOfComponents(in pickerView: UIPickerView) -> Int
   {
     return 1
@@ -264,15 +229,9 @@ class SettingsViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
   {
     return pickerData.count
   }
-  
-//  func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String?
-//  {
-//       return pickerData[row]
-//   }
 
   func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int)
   {
-//    print("eventDayFormatPicker row=",row,"   eventDayFormatPicker value=",pickerData[row])
     appSettings.eventDayFormat = row
     saveSettings(appSettings)
   }
