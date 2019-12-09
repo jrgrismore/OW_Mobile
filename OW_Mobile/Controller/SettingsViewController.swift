@@ -13,10 +13,9 @@ var appSettings = Settings()
 class SettingsViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource {
   
   var pickerData: [String] = []
-
+  
   @IBOutlet weak var scrollView: UIScrollView!
   @IBOutlet weak var settingsStackView: UIStackView!
-  
   @IBOutlet weak var autoUpdateSwitch: UISwitch!
   @IBOutlet weak var autoUpdateSeg: UISegmentedControl!
   @IBOutlet weak var tempSeg: UISegmentedControl!
@@ -25,48 +24,22 @@ class SettingsViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
   @IBOutlet weak var detailTimeSeg: UISegmentedControl!
   @IBOutlet weak var starEpochSeg: UISegmentedControl!
   @IBOutlet weak var latlonFormatSeg: UISegmentedControl!
-  
   @IBOutlet weak var eventDayFormatPicker: UIPickerView!
   
+  // MARK: - View functions
   override func viewDidLoad() {
     super.viewDidLoad()
     UISegmentedControl.appearance().setTitleTextAttributes([NSAttributedString.Key.foregroundColor: UIColor.black], for: .selected)
     UISegmentedControl.appearance().setTitleTextAttributes([NSAttributedString.Key.foregroundColor: UIColor.gray], for: .normal)
-
+    
     eventDayFormatPicker.delegate = self
     eventDayFormatPicker.dataSource = self
     eventDayFormatPicker.backgroundColor = .lightGray
-
     
     pickerData = ["Thursday (Evening/Night/Morning)","Thursday (Evening/Night)","07 November 2019"]
     NotificationCenter.default.addObserver(self, selector: #selector(handleEventTimer), name: NSNotification.Name(rawValue: NotificationKeys.dataRefreshIsDone), object: nil)
   }
   
-  @objc func handleEventTimer()
-  {
-    if eventRefreshFailed
-    {
-      //terminate automatic update activities and show alert
-      var autoUpdateAlert = UIAlertController(title: "Automatic Events Update Failed!  No Internet Connection.", message: "Cancel Automatic Updating, or Retry?\n(You can re-enable automatic updates in Settings)", preferredStyle: .alert)
-      //retry
-      var retryAction = UIAlertAction(title: "Retry", style: .default) { _ in
-        refreshEventsWithDetails(completionHandler: {() -> () in
-          //start data refresh timer
-          startEventUpdateTimer()
-        })
-      }
-      autoUpdateAlert.addAction(retryAction)
-      //cancel
-      var cancelAction = UIAlertAction(title: "Cancel", style: .cancel) { _ in
-        appSettings.autoUpdateIsOn = false
-        saveSettings(appSettings)
-      }
-      autoUpdateAlert.addAction(cancelAction)
-      //show alert
-      self.present(autoUpdateAlert, animated: true, completion: nil)
-    }
-  }
-
   override func viewWillAppear(_ animated: Bool) {
     appSettings = loadSettings()
     autoUpdateSwitch.isOn = appSettings.autoUpdateIsOn
@@ -80,7 +53,6 @@ class SettingsViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
     }
     autoUpdateSeg.selectedSegmentIndex = appSettings.autoUpdateValue
     
- 
     tempSeg.selectedSegmentIndex = appSettings.tempIsCelsius ? 0 : 1
     azimuthSeg.selectedSegmentIndex = appSettings.azimuthIsDegrees ? 0 : 1
     eventDayFormatPicker.selectRow(appSettings.eventDayFormat, inComponent: 0, animated: true)
@@ -97,11 +69,12 @@ class SettingsViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
   override func viewWillDisappear(_ animated: Bool) {
     saveSettings(appSettings)
   }
-
+  
   @objc func deviceRotated()
   {
   }
-
+  
+  // MARK: - Settings functions
   @IBAction func toggleAutoUpdateSwitch(_ sender: Any)
   {
     switch autoUpdateSwitch.isOn
@@ -157,7 +130,6 @@ class SettingsViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
     }
     saveSettings(appSettings)
   }
- 
   
   @IBAction func toggleSummaryTime(_ sender: Any) {
     switch summaryTimeSeg.selectedSegmentIndex
@@ -178,7 +150,7 @@ class SettingsViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
     }
     saveSettings(appSettings)
   }
- 
+  
   @IBAction func toggleDetailTime(_ sender: Any) {
     switch detailTimeSeg.selectedSegmentIndex
     {
@@ -206,20 +178,21 @@ class SettingsViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
   }
   
   @IBAction func toggleLatLonFormat(_ sender: Any) {
-   switch latlonFormatSeg.selectedSegmentIndex
-   {
-   case 0:
-     appSettings.latlonFormatIsDMS = true
-   case 1:
-     appSettings.latlonFormatIsDMS = false
-   default:
-     appSettings.latlonFormatIsDMS = true
-   }
-   saveSettings(appSettings)
-      let pointXY:CGPoint = (self.latlonFormatSeg.superview?.convert(self.latlonFormatSeg.frame.origin, to: nil))!
-      self.scrollView.contentOffset = CGPoint(x:0, y:pointXY.y)
- }
-
+    switch latlonFormatSeg.selectedSegmentIndex
+    {
+    case 0:
+      appSettings.latlonFormatIsDMS = true
+    case 1:
+      appSettings.latlonFormatIsDMS = false
+    default:
+      appSettings.latlonFormatIsDMS = true
+    }
+    saveSettings(appSettings)
+    let pointXY:CGPoint = (self.latlonFormatSeg.superview?.convert(self.latlonFormatSeg.frame.origin, to: nil))!
+    self.scrollView.contentOffset = CGPoint(x:0, y:pointXY.y)
+  }
+  
+  // MARK: - Picker functions
   func numberOfComponents(in pickerView: UIPickerView) -> Int
   {
     return 1
@@ -229,7 +202,7 @@ class SettingsViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
   {
     return pickerData.count
   }
-
+  
   func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int)
   {
     appSettings.eventDayFormat = row
@@ -246,8 +219,34 @@ class SettingsViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
     label.font = UIFont (name: "Helvetica", size: 17)
     label.text =  pickerData[row]
     label.textAlignment = .center
-
+    
     return label
+  }
+  
+  // MARK: - Timer functions
+  @objc func handleEventTimer()
+  {
+    if eventRefreshFailed
+    {
+      //terminate automatic update activities and show alert
+      var autoUpdateAlert = UIAlertController(title: "Automatic Events Update Failed!  No Internet Connection.", message: "Cancel Automatic Updating, or Retry?\n(You can re-enable automatic updates in Settings)", preferredStyle: .alert)
+      //retry
+      var retryAction = UIAlertAction(title: "Retry", style: .default) { _ in
+        refreshEventsWithDetails(completionHandler: {() -> () in
+          //start data refresh timer
+          startEventUpdateTimer()
+        })
+      }
+      autoUpdateAlert.addAction(retryAction)
+      //cancel
+      var cancelAction = UIAlertAction(title: "Cancel", style: .cancel) { _ in
+        appSettings.autoUpdateIsOn = false
+        saveSettings(appSettings)
+      }
+      autoUpdateAlert.addAction(cancelAction)
+      //show alert
+      self.present(autoUpdateAlert, animated: true, completion: nil)
+    }
   }
   
   

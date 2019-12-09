@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		52180DC922C4636B003A2397 /* TestViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52180DC822C4636B003A2397 /* TestViewController.swift */; };
-		5222086823900AFE005D2804 /* UpdateTimerController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5222086723900AFE005D2804 /* UpdateTimerController.swift */; };
 		5249BF972298A05E0006D200 /* UtilityFunctions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5249BF962298A05E0006D200 /* UtilityFunctions.swift */; };
 		52693C41236C8E1700AD2EB6 /* ReportViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52693C40236C8E1700AD2EB6 /* ReportViewController.swift */; };
 		52730A33237613CA0022FEEC /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52730A32237613CA0022FEEC /* SettingsViewController.swift */; };
@@ -52,7 +51,6 @@
 
 /* Begin PBXFileReference section */
 		52180DC822C4636B003A2397 /* TestViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestViewController.swift; sourceTree = "<group>"; };
-		5222086723900AFE005D2804 /* UpdateTimerController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateTimerController.swift; sourceTree = "<group>"; };
 		5249BF962298A05E0006D200 /* UtilityFunctions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UtilityFunctions.swift; sourceTree = "<group>"; };
 		52693C40236C8E1700AD2EB6 /* ReportViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportViewController.swift; sourceTree = "<group>"; };
 		52730A32237613CA0022FEEC /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SettingsViewController.swift; path = OW_Mobile/Controller/SettingsViewController.swift; sourceTree = SOURCE_ROOT; };
@@ -149,7 +147,6 @@
 				52B2BE3A22C5B9430082852F /* StationCell.swift */,
 				5292753B220DD0CF009AD6D5 /* TabBarController.swift */,
 				52180DC822C4636B003A2397 /* TestViewController.swift */,
-				5222086723900AFE005D2804 /* UpdateTimerController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -359,7 +356,6 @@
 				529AD05B2207C8BC001BEFC9 /* MyEventsCollectionViewCell.swift in Sources */,
 				529AD0592207C576001BEFC9 /* MyEventsViewController.swift in Sources */,
 				5287623F220266BB00BDABEC /* ReminderViewController.swift in Sources */,
-				5222086823900AFE005D2804 /* UpdateTimerController.swift in Sources */,
 				5287622F2202107100BDABEC /* AccountViewController.swift in Sources */,
 				5283C09522C0720E00BDB2CA /* EventStation.swift in Sources */,
 				52C8020921F9510D00E66A13 /* AppDelegate.swift in Sources */,
