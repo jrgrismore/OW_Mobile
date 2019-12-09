@@ -48,8 +48,6 @@ func saveCredentailsToKeyChain()
 func deleteCredentailsFromKeyChain()
 {
   let server = "www.occultwatcher.net"
-  //  let username = Credentials.username
-  //  let password = Credentials.password.data(using: .utf8)
   let attributes: [String : Any] =
     [
       (kSecClass as String): kSecClassInternetPassword,
@@ -74,7 +72,6 @@ func updateCredentailsOnKeyChain()
       kSecAttrAccount as String: username,
       kSecValueData as String: password as Any
   ]
-  
   //update existingbitem on keychain
   let itemUpdateStatus = SecItemUpdate(query as CFDictionary, updateAttributes as CFDictionary)
   
@@ -95,7 +92,6 @@ func loadCredentailsFromKeyChain()
   var item: CFTypeRef?
   
   let itemCopyMatchingStatus = SecItemCopyMatching(query as CFDictionary, &item )
-  
   
   if let existingItem = item as? [String: Any],
     let username = existingItem[kSecAttrAccount as String] as? String,
@@ -119,7 +115,6 @@ func deleteAllSecItemsFromKeychain()
 
 class AccountViewController: UIViewController, UITextFieldDelegate
 {
-  
   @IBOutlet weak var emailView: UIView!
   @IBOutlet weak var passwordView: UIView!
   @IBOutlet weak var emailFld: UITextField!
@@ -228,7 +223,6 @@ class AccountViewController: UIViewController, UITextFieldDelegate
   {
     print("reset password tapped")
   }
-  
   
   func versionBuild() -> String {
     let dictionary = Bundle.main.infoDictionary!

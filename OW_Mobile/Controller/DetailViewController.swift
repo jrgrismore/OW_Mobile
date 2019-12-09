@@ -50,7 +50,6 @@ class DetailViewController: UIViewController
   var stationCursorExists = false
   var dimGray = #colorLiteral(red: 0.6666666667, green: 0.6666666667, blue: 0.6666666667, alpha: 1)
   let tickBar = UIView()
-
   
   
   // MARK: - Spinner Outlets
@@ -97,15 +96,13 @@ class DetailViewController: UIViewController
   @IBOutlet weak var sigma1BarView: UIView!
   @IBOutlet weak var shadowBarView: UIView!
   @IBOutlet weak var centerBarView: UIView!
-//  @IBOutlet weak var userBarView: UIView!
+  //  @IBOutlet weak var userBarView: UIView!
   @IBOutlet weak var userBarView: UIView!
   
   @IBOutlet weak var asterRotAmpView: UIStackView!
   @IBOutlet weak var bvStarDiamView: UIStackView!
   @IBOutlet weak var bottomGrayBar: UIView!
-  
   @IBOutlet weak var reportBtn: UIButton!
-  
   @IBOutlet weak var latLonStack: UIStackView!
   
   
@@ -138,23 +135,20 @@ class DetailViewController: UIViewController
       print("eventsWithDetails.count=",self.eventsWithDetails.count)
       let selectedEventIndex = self.eventsWithDetails.index(where: { $0.Id == self.originalSelectedEventId })
       if selectedEventIndex != nil && self.eventsWithDetails.count > 0
-    {
-      self.selectedEvent = self.eventsWithDetails[selectedEventIndex!]
-    } else {
-      //event no longer in MyEvents list, display alert
-      var missingEventAlert = UIAlertController(title: "This event is no longer in the MyEvents List", message: "Returning to MyEvents List", preferredStyle: .alert)
-      //cancdl
-      var cancelAction = UIAlertAction(title: "OK", style: .cancel) { _ in
-        //go back to MyEvents
-         _ = self.navigationController?.popToRootViewController(animated: false)
-//        DispatchQueue.main.async {
-//                  self.tabBarController!.selectedIndex = 0
-//        }
-      }
-      missingEventAlert.addAction(cancelAction)
-      //show alert
-      self.present(missingEventAlert, animated: true, completion: nil)
-    }//end if
+      {
+        self.selectedEvent = self.eventsWithDetails[selectedEventIndex!]
+      } else {
+        //event no longer in MyEvents list, display alert
+        var missingEventAlert = UIAlertController(title: "This event is no longer in the MyEvents List", message: "Returning to MyEvents List", preferredStyle: .alert)
+        //cancdl
+        var cancelAction = UIAlertAction(title: "OK", style: .cancel) { _ in
+          //go back to MyEvents
+          _ = self.navigationController?.popToRootViewController(animated: false)
+        }
+        missingEventAlert.addAction(cancelAction)
+        //show alert
+        self.present(missingEventAlert, animated: true, completion: nil)
+      }//end if
     }//end dispatch
     if eventRefreshFailed
     {
@@ -168,7 +162,7 @@ class DetailViewController: UIViewController
         })
       }
       autoUpdateAlert.addAction(retryAction)
-      //cancdl
+      //cancel
       var cancelAction = UIAlertAction(title: "Cancel", style: .cancel) { _ in
         appSettings.autoUpdateIsOn = false
         saveSettings(appSettings)
@@ -185,7 +179,6 @@ class DetailViewController: UIViewController
         self.updateEventInfoFields(eventItem: self.selectedEvent)
         self.updateShadowPlot(self.selectedEvent)
         self.stationCollectionView.scrollToItem(at: IndexPath(item: primaryIndex!, section: 0), at: .centeredHorizontally, animated: false)
-        
         self.stationCollectionView.reloadData()
         
         self.stationPageControl.numberOfPages = self.selectedStations.count
@@ -197,26 +190,22 @@ class DetailViewController: UIViewController
       }
     }
   }
-
+  
   
   override func viewWillAppear(_ animated: Bool)
   {
     UIApplication.shared.isIdleTimerDisabled = true
     
     originalSelectedEventId = selectedEvent.Id!
-    
     stationCollectionView.isHidden = true
-    
     eventDetailView.isHidden = false
     shadowSigmaView.isHidden = true
-//    stationCollectionView.isHidden = true
     stationBarSubViewsExist = false
     stationCursorExists = false
     self.title = selectionObject
     let chordSortedStations = OccultationEvent.stationsSortedByChordOffset(selectedEvent, order: .ascending)
-
+    
     selectedStations = chordSortedStations
-
     let primaryIndex = OccultationEvent.primaryStationIndex(selectedEvent)
     if complete
     {
@@ -224,7 +213,7 @@ class DetailViewController: UIViewController
     } else {
       self.navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.black, NSAttributedString.Key.font: UIFont.preferredFont(forTextStyle: .title3)]
     }
-   }
+  }
   
   override func viewDidAppear(_ animated: Bool)
   {
@@ -244,7 +233,7 @@ class DetailViewController: UIViewController
     shadowSigmaView.isHidden = false
     stationCollectionView.isHidden = false
     updateLatLonFlds()
-   }
+  }
   
   override func viewWillLayoutSubviews()
   {
@@ -271,10 +260,10 @@ class DetailViewController: UIViewController
       let primaryIndex = OccultationEvent.primaryStationIndex(self.selectedStations)
       self.currentStationIndexPath = IndexPath(item:primaryIndex!, section: 0)
       self.stationCollectionView.scrollToItem(at: self.currentStationIndexPath, at: .centeredHorizontally, animated: false)
-
+      
       self.stationPageControl.currentPage = self.currentStationIndexPath.row
     }
-   }
+  }
   
   override func viewWillDisappear(_ animated: Bool)
   {
@@ -288,14 +277,13 @@ class DetailViewController: UIViewController
     var item = itm
     
     selectedStations = OccultationEvent.stationsSortedByChordOffset(item, order: .ascending)
-    
     self.eventTitle.attributedText = self.event.updateObjectFld(item)
     self.eventRank.attributedText = self.event.updateRankFld(item)
     DispatchQueue.main.async
       {
         let primaryStationIndex = OccultationEvent.primaryStationIndex(self.selectedStations)
         let primaryStationEventTime = self.selectedStations[primaryStationIndex!].EventTimeUtc
-        let timeTuple = currentEvent.updateUTCEventTimeFlds(&item,stationIndex: primaryStationIndex!)//        var remainingTime: NSMutableAttributedString = timeTuple.remainingTime as! NSMutableAttributedString
+        let timeTuple = currentEvent.updateUTCEventTimeFlds(&item,stationIndex: primaryStationIndex!)
         var remainingTime = timeTuple.remainingTime.string
         if remainingTime == "completed"
         {
@@ -351,6 +339,7 @@ class DetailViewController: UIViewController
   {
     var item = itm
     
+    //add accessibilityIdentifier to aid debugging
     cell.sigmaImg.accessibilityIdentifier = "sigmaImg"
     cell.eventCloudImg.accessibilityIdentifier = "cloudImg"
     cell.eventWindSignImg.accessibilityIdentifier = "windSignImg"
@@ -359,7 +348,6 @@ class DetailViewController: UIViewController
     cell.sunAltImg.accessibilityIdentifier = "sunAltImg"
     cell.moonAltImg.accessibilityIdentifier = "moonAltImg"
     cell.eventMoonSeparation.accessibilityIdentifier = "moonSepImg"
-    //add accessibilityIdentifier to aid debugging
     cell.stationStack.accessibilityIdentifier = "stationStack"
     cell.topStack.accessibilityIdentifier = "topStack"
     cell.locationStack.accessibilityIdentifier = "locationStack"
@@ -373,12 +361,8 @@ class DetailViewController: UIViewController
     cell.sunAltStack.accessibilityIdentifier = "sunAltStack"
     cell.moonAltStack.accessibilityIdentifier = "moonAltStack"
     cell.moonSepStack.accessibilityIdentifier = "moonAltStack"
-
     
     let stationIndex = indexPath.item
-//    print("updateStationFlds > stations[stationIndex].StationId=",stations[stationIndex].StationId)
-    print("station latitude=",stations[stationIndex].Latitude,"   longitude=",stations[stationIndex].Longitude)
-    
     var stationPosIconVal : Int?
     stationPosIconVal = 0
     if stations[stationIndex].StationPos != nil
@@ -413,7 +397,7 @@ class DetailViewController: UIViewController
       let timeTuple = event.updateUTCEventTimeFlds(&item, stationIndex: indexPath.row)
       cell.eventTime.text = timeTuple.eventTime
     }
-
+    
     var errorTimeStr = "—"
     if item.ErrorInTimeSec != nil
     {
@@ -442,7 +426,6 @@ class DetailViewController: UIViewController
           cell.eventTimeError.isHidden = false
           cell.reportBtn.isHidden = true
         }
-//        }
       case 1:
         //Miss
         //show negative icon and hide event time and time error
@@ -514,7 +497,6 @@ class DetailViewController: UIViewController
       default:
         //NotReported
         //leave event time and time error visible
-        //      cell.reportImg.image = nil
         cell.reportImg.isHidden = true
         cell.eventTime.isHidden = false
         cell.eventTimeError.isHidden = false
@@ -573,7 +555,6 @@ class DetailViewController: UIViewController
         highCloudStr = String(format: "%@",stations[stationIndex].HighCloud!.description)
       }
     } else {
-//      print("not complete")
       cell.eventCloudImg.image = nil
       cell.eventClouds.text = ""
       cell.eventWindStrengthImg.image = nil
@@ -629,7 +610,7 @@ class DetailViewController: UIViewController
         cell.moonAltImg.image = moonPhaseImage
       }
     }
-
+    
     var moonDist = "—"
     if stations[stationIndex].MoonDist != nil
     {
@@ -639,16 +620,12 @@ class DetailViewController: UIViewController
     if stations[stationIndex].MoonAlt! >= 0.0
     {
       cell.eventMoonAlt.text = moonAltStr
-//      cell.eventMoonSeparation.isHidden = false
-//      cell.eventMoonSepImg.isHidden = false
       cell.moonSepStack.isHidden = false
     } else {
       cell.eventMoonAlt.text = "(below hzn)"
-//      cell.eventMoonSeparation.isHidden = true
-//      cell.eventMoonSepImg.isHidden = true
       cell.moonSepStack.isHidden = true
     }
-
+    
     var starColorImage: UIImage
     if stations[stationIndex].StarColour != nil
     {
@@ -659,23 +636,6 @@ class DetailViewController: UIViewController
     {
       cell.starAltImg.image = nil
     }
-     
-  }
-    
-  func printShadowPlotDiagnostics(headerStr: String)
-  {
-    print()
-    print(headerStr)
-    print("shadowBarView.frame.size.width=",shadowBarView.frame.size.width)
-    print("sigma1BarView.frame.size.width=",sigma1BarView.frame.size.width)
-    print("sigma2BarView.frame.size.width=",sigma2BarView.frame.size.width)
-    print("sigma3BarView.frame.size.width=",sigma3BarView.frame.size.width)
-    print("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
-    print("shadowBarView.bounds.size.width=",shadowBarView.bounds.size.width)
-    print("sigma1BarView.bounds.size.width=",sigma1BarView.bounds.size.width)
-    print("sigma2BarView.bounds.size.width=",sigma2BarView.bounds.size.width)
-    print("sigma3BarView.bounds.size.width=",sigma3BarView.bounds.size.width)
-    print()
   }
   
   func updateShadowPlot(_ item: EventWithDetails)
@@ -700,7 +660,7 @@ class DetailViewController: UIViewController
         } else if outerChordWidth > shadowWidthKm(item)
         {
           plotWidthKm = totalPlotWidthKm(item, scale: .sigma1Edge)
-           self.sigma2BarView.isHidden = true
+          self.sigma2BarView.isHidden = true
           self.sigma3BarView.isHidden = true
         } else if outerChordWidth <= shadowWidthKm(item)
         {
@@ -710,16 +670,16 @@ class DetailViewController: UIViewController
           self.sigma3BarView.isHidden = true
         }
         let plotBarFactors = plotBarsWidthFactors(item, totalPlotWidthKm: plotWidthKm)
-
+        
         self.shadowBarWidth.constant = self.weatherBarView.bounds.width * CGFloat(plotBarFactors.shadowBarFactor)
         self.sigma1Width.constant = self.weatherBarView.bounds.width * CGFloat(plotBarFactors.sigma1BarFactor)
         self.sigma2Width.constant = self.weatherBarView.bounds.width * CGFloat(plotBarFactors.sigma2BarFactor)
         self.sigma3Width.constant = self.weatherBarView.bounds.width * CGFloat(plotBarFactors.sigma3BarFactor)
-
+        
         self.weatherBarView.subviews.forEach( { $0 .removeFromSuperview() })
         self.addStationsSubviews(plotWidthKm)
         self.addStationCursor()
-
+        
         self.moveCursorToStation(indexPath: self.visibleStationIndexPath())
         self.movePrimaryStationBar(item, plotWidthKm)
         self.addPlotTicks(plotWidthKM: plotWidthKm)
@@ -729,27 +689,27 @@ class DetailViewController: UIViewController
   func moveCursorToStation(indexPath: IndexPath)
   {
     let currentIndex = indexPath.item
-        if self.weatherBarView.subviews[currentIndex].frame.origin.x >= self.weatherBarView.frame.minX
-          && self.weatherBarView.subviews[currentIndex].frame.origin.x < self.weatherBarView.frame.maxX
-        {
-          self.stationCursor.isHidden = false
-          let currentStationView = self.weatherBarView.subviews[currentIndex]
-          self.stationCursor.frame.origin.x = currentStationView.frame.origin.x + (currentStationView.frame.width / 2) - self.stationCursor.frame.width / 2
-        } else {
-          self.stationCursor.isHidden = true
-        }
+    if self.weatherBarView.subviews[currentIndex].frame.origin.x >= self.weatherBarView.frame.minX
+      && self.weatherBarView.subviews[currentIndex].frame.origin.x < self.weatherBarView.frame.maxX
+    {
+      self.stationCursor.isHidden = false
+      let currentStationView = self.weatherBarView.subviews[currentIndex]
+      self.stationCursor.frame.origin.x = currentStationView.frame.origin.x + (currentStationView.frame.width / 2) - self.stationCursor.frame.width / 2
+    } else {
+      self.stationCursor.isHidden = true
+    }
   }
-
-   func movePrimaryStationBar(_ item: EventWithDetails, _ plotWidthKm: Double)
-   {
-       var primaryStation = OccultationEvent.primaryStation(item)!
-          let primaryFactor = plotStationBarFactor(station: primaryStation, totalPlotWidthKm: plotWidthKm)
-          DispatchQueue.main.async
-            {
-              self.userBarView.frame.origin.x = self.centerBarView.frame.origin.x + (self.weatherBarView.bounds.width / 2) * CGFloat(primaryFactor)
-          }
+  
+  func movePrimaryStationBar(_ item: EventWithDetails, _ plotWidthKm: Double)
+  {
+    var primaryStation = OccultationEvent.primaryStation(item)!
+    let primaryFactor = plotStationBarFactor(station: primaryStation, totalPlotWidthKm: plotWidthKm)
+    DispatchQueue.main.async
+      {
+        self.userBarView.frame.origin.x = self.centerBarView.frame.origin.x + (self.weatherBarView.bounds.width / 2) * CGFloat(primaryFactor)
+    }
   }
-
+  
   func visibleStationIndexPath() -> IndexPath
   {
     let visibleRect = CGRect(origin: stationCollectionView.contentOffset, size: stationCollectionView.bounds.size)
@@ -760,23 +720,23 @@ class DetailViewController: UIViewController
   
   func addStationsSubviews(_ plotWidthKm: Double)
   {
-        for station in self.selectedStations
+    for station in self.selectedStations
+    {
+      let stationFactor = plotStationBarFactor(station: station, totalPlotWidthKm: plotWidthKm)
+      let stationView = UIView()
+      stationView.frame.size.width = 2
+      stationView.frame.size.height = self.weatherBarView.frame.height
+      let stationViewHalfWidth = (stationView.frame.size.width / 2)
+      stationView.frame.origin.x = self.centerBarView.frame.origin.x + (self.centerBarView.frame.size.width / 2) - stationViewHalfWidth + (self.weatherBarView.bounds.width / 2) * CGFloat(stationFactor)
+      stationView.frame.origin.y = self.weatherBarView.frame.origin.y
+      if self.detailData.WeatherInfoAvailable!
       {
-        let stationFactor = plotStationBarFactor(station: station, totalPlotWidthKm: plotWidthKm)
-        let stationView = UIView()
-        stationView.frame.size.width = 2
-        stationView.frame.size.height = self.weatherBarView.frame.height
-        let stationViewHalfWidth = (stationView.frame.size.width / 2)
-        stationView.frame.origin.x = self.centerBarView.frame.origin.x + (self.centerBarView.frame.size.width / 2) - stationViewHalfWidth + (self.weatherBarView.bounds.width / 2) * CGFloat(stationFactor)
-        stationView.frame.origin.y = self.weatherBarView.frame.origin.y
-        if self.detailData.WeatherInfoAvailable!
-        {
-          stationView.backgroundColor = cloudColor(station.CloudCover)
-        } else {
-          stationView.backgroundColor = .gray
-        }
-        self.weatherBarView.addSubview(stationView)
+        stationView.backgroundColor = cloudColor(station.CloudCover)
+      } else {
+        stationView.backgroundColor = .gray
       }
+      self.weatherBarView.addSubview(stationView)
+    }
   }
   
   func addStationCursor()
@@ -817,29 +777,27 @@ class DetailViewController: UIViewController
     zeroTick.frame.origin.x = self.centerBarView.frame.origin.x + (self.centerBarView.frame.size.width / 2) - (zeroTick.frame.size.width / 2)
     zeroTick.frame.origin.y = self.tickBar.bounds.origin.y
     self.tickBar.addSubview(zeroTick)
-
+    
     if plotWidthKM > tickStep
     {
-
+      
       for tickKM in stride(from: 0,to: tickEnd, by: tickStep)
       {
         if tickKM > 0
         {
           let positiveTick = UIView()
           let negativeTick = UIView()
-
+          
           positiveTick.frame.size.width = CGFloat(tickWidth)
           positiveTick.frame.size.height = CGFloat(tickHeight)
           positiveTick.backgroundColor = tickColor
-//          positiveTick.frame.origin.x = self.centerBarView.frame.origin.x + (self.weatherBarView.bounds.width / 2) * CGFloat(tickKM / (plotWidthKM / 2))
           positiveTick.frame.origin.x = self.centerBarView.frame.origin.x + (self.centerBarView.frame.size.width / 2) - (zeroTick.frame.size.width / 2) + (self.weatherBarView.bounds.width / 2) * CGFloat(tickKM / (plotWidthKM / 2))
           positiveTick.frame.origin.y = self.tickBar.bounds.origin.y
           self.tickBar.addSubview(positiveTick)
-
+          
           negativeTick.frame.size.width = CGFloat(tickWidth)
           negativeTick.frame.size.height = CGFloat(tickHeight)
           negativeTick.backgroundColor = tickColor
-//          negativeTick.frame.origin.x = self.centerBarView.frame.origin.x - (self.weatherBarView.bounds.width / 2) * CGFloat(tickKM / (plotWidthKM / 2))
           negativeTick.frame.origin.x = self.centerBarView.frame.origin.x + (self.centerBarView.frame.size.width / 2) - (zeroTick.frame.size.width / 2) - (self.weatherBarView.bounds.width / 2) * CGFloat(tickKM / (plotWidthKM / 2))
           negativeTick.frame.origin.y = self.tickBar.bounds.origin.y
           self.tickBar.addSubview(negativeTick)
@@ -848,7 +806,7 @@ class DetailViewController: UIViewController
     }
     self.tickBar.setNeedsLayout()
   }
-
+  
   override func prepare(for segue: UIStoryboardSegue, sender: Any?)
   {
     if segue.identifier == "SubmitReportSegue"
@@ -862,19 +820,34 @@ class DetailViewController: UIViewController
       }
     }
   }
-
+  
   @IBAction func mapLatLon(_ sender: Any)
   {
     //launch Apple Maps
     let latStr = String(format: "%0.5f",selectedStations[currentStationIndexPath.row].Latitude!)
     let lonStr = String(format: "%0.5f",selectedStations[currentStationIndexPath.row].Longitude!)
     
-        let locationStr = latStr + "," + lonStr
-        if let url = URL(string:"http://maps.apple.com/?address=\(locationStr)") {
-            UIApplication.shared.open(url)
-        }
+    let locationStr = latStr + "," + lonStr
+    if let url = URL(string:"http://maps.apple.com/?address=\(locationStr)") {
+      UIApplication.shared.open(url)
+    }
   }
   
+  func printShadowPlotDiagnostics(headerStr: String)
+  {
+    print()
+    print(headerStr)
+    print("shadowBarView.frame.size.width=",shadowBarView.frame.size.width)
+    print("sigma1BarView.frame.size.width=",sigma1BarView.frame.size.width)
+    print("sigma2BarView.frame.size.width=",sigma2BarView.frame.size.width)
+    print("sigma3BarView.frame.size.width=",sigma3BarView.frame.size.width)
+    print("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
+    print("shadowBarView.bounds.size.width=",shadowBarView.bounds.size.width)
+    print("sigma1BarView.bounds.size.width=",sigma1BarView.bounds.size.width)
+    print("sigma2BarView.bounds.size.width=",sigma2BarView.bounds.size.width)
+    print("sigma3BarView.bounds.size.width=",sigma3BarView.bounds.size.width)
+    print()
+  }
   
   
 }

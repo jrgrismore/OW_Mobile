@@ -9,6 +9,8 @@
 import Foundation
 import UIKit
 
+// MARK: - Time Functions
+
 func formatUTCEventTime(timeString: String) -> String
 {
   let eventTimeFormatter = DateFormatter()
@@ -206,6 +208,7 @@ func eveningNight(localDateStr: String) -> (eveNight: String, dayName: String)
   return (eveOrNight,dayOfWeek)
 }
 
+// MARK: - Icon Functions
 
 func starColorIcon(_ starColorIconVal: Int?) -> UIImage
 {
@@ -494,6 +497,8 @@ func moonAltIcon(_ moonAltIconValue: Double?) -> UIImage
   return moonAltIconImage
 }
 
+// MARK: - Coordinate Functions
+
 //********************************************
 // RA HH.hhh -> HH MM SS
 //********************************************
@@ -590,6 +595,7 @@ func remainderCycles(dividend: Double, divisor: Double) -> (remainder: Double, c
   return (remainder, cycles)
 }
 
+// MARK: - Shadow Plot Functions
 
 //calculate shadow and sigma bar width scales
 func shadowSigmaBarScales(astDiam: Double, sigma1Width: Double, stationsExistPastSigma1: Bool) -> (shadowBarWidthFactor: Double, sigma1BarWidthFactor: Double, sigma2BarWidthFactor: Double, totalWidthKm: Double)
@@ -717,6 +723,7 @@ func plotStationBarFactor(station: ObserverStation, totalPlotWidthKm: Double) ->
   return stationBarFactor
 }
 
+// MARK: - Settings Functions
 
 func loadSettings() -> Settings
 {
@@ -786,6 +793,9 @@ func fahrenheitToCelsius(degreesF: Double) -> Double
 {
   return (degreesF - 32) * 5 / 9
 }
+
+// MARK: - Event Update Timer Functions
+
 func startEventUpdateTimer()
 {
   if appSettings.autoUpdateIsOn

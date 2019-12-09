@@ -42,7 +42,7 @@ class OWWebAPI: NSObject
   let second: Double = 1000000
   
   // MARK: - OW Web Service Functions
-  
+  // MARK: - URL Functions
   func createEventWithDetailsilURL(owSession: URLSession) -> URL
   {
     let user = Credentials.username
@@ -77,41 +77,9 @@ class OWWebAPI: NSObject
     urlComponents.path = "/api/v1/events/" + eventId + "/" + String(stationId) + "/report-observation"
     urlComponents.user = user
     urlComponents.password = password
-
+    
     let postReportURL = urlComponents.url!
     return postReportURL
-  }
-  
-  func retrieveEventsWithDetails( completion: @escaping ([EventWithDetails]?, Error?) -> Void)
-  {
-    delegate?.webLogTextDidChange(text: "Connecting to OW")
-    usleep(useconds_t(0.5 * 1000000)) //will sleep for 0.5 seconds)
-    let config = URLSessionConfiguration.default
-    OWWebAPI.owSession = URLSession(configuration: config)
-    let owURL = createEventWithDetailsilURL(owSession: OWWebAPI.owSession)
-    let owTask = OWWebAPI.owSession.dataTask(with: owURL)
-    {
-      (data,response,error) in
-      guard let dataResponse = data, error == nil
-        else
-      {
-//        print("\n*******Error:", error as Any)
-        self.delegate?.webLogTextDidChange(text: "Error Trying to Access OW Server!")
-        usleep(useconds_t(0.5 * 1000000)) //will sleep for 0.5 seconds)
-        completion(nil,error)
-        return
-      }
-     print("Data Retrieved")
-     self.delegate?.webLogTextDidChange(text: "Data Retrieved")
-      usleep(useconds_t(0.5 * 1000000)) //will sleep for 0.5 seconds)
-      let eventWithDetail = self.parseEventsWithDetails(jsonData: dataResponse)
-      
-//      print("eventWithDetails.count=",eventWithDetail.count)
-      self.delegate?.webLogTextDidChange(text: "Event List count = \(eventWithDetail.count)")
-      usleep(useconds_t(1.0 * 1000000)) //will sleep for 1.0 seconds)
-      completion(eventWithDetail,nil)
-    }
-    owTask.resume()
   }
   
   func createMyEventsURL(owSession: URLSession) -> URL
@@ -151,6 +119,39 @@ class OWWebAPI: NSObject
     return detailURL
   }
   
+  // MARK: - Retrieval Functions
+  func retrieveEventsWithDetails( completion: @escaping ([EventWithDetails]?, Error?) -> Void)
+  {
+    delegate?.webLogTextDidChange(text: "Connecting to OW")
+    usleep(useconds_t(0.5 * 1000000)) //will sleep for 0.5 seconds)
+    let config = URLSessionConfiguration.default
+    OWWebAPI.owSession = URLSession(configuration: config)
+    let owURL = createEventWithDetailsilURL(owSession: OWWebAPI.owSession)
+    let owTask = OWWebAPI.owSession.dataTask(with: owURL)
+    {
+      (data,response,error) in
+      guard let dataResponse = data, error == nil
+        else
+      {
+        //        print("\n*******Error:", error as Any)
+        self.delegate?.webLogTextDidChange(text: "Error Trying to Access OW Server!")
+        usleep(useconds_t(0.5 * 1000000)) //will sleep for 0.5 seconds)
+        completion(nil,error)
+        return
+      }
+      print("Data Retrieved")
+      self.delegate?.webLogTextDidChange(text: "Data Retrieved")
+      usleep(useconds_t(0.5 * 1000000)) //will sleep for 0.5 seconds)
+      let eventWithDetail = self.parseEventsWithDetails(jsonData: dataResponse)
+      
+      //      print("eventWithDetails.count=",eventWithDetail.count)
+      self.delegate?.webLogTextDidChange(text: "Event List count = \(eventWithDetail.count)")
+      usleep(useconds_t(1.0 * 1000000)) //will sleep for 1.0 seconds)
+      completion(eventWithDetail,nil)
+    }
+    owTask.resume()
+  }
+  
   func retrieveEventList( completion: @escaping ([Event]?, Error?) -> Void)
   {
     delegate?.webLogTextDidChange(text: "Connecting to OW")
@@ -163,7 +164,7 @@ class OWWebAPI: NSObject
       guard let dataResponse = data, error == nil
         else
       {
-//        print("\n*******Error:", error as Any)
+        //        print("\n*******Error:", error as Any)
         self.delegate?.webLogTextDidChange(text: "\n*******Error:" + error!.localizedDescription)
         usleep(useconds_t(0.5 * 1000000)) //will sleep for 0.5 seconds)
         return
@@ -176,6 +177,29 @@ class OWWebAPI: NSObject
     owTask.resume()
   }
   
+  func retrieveEventDetails(eventID: String,  completion: @escaping (EventDetails?, Error?) -> Void)
+  {
+    delegate?.webLogTextDidChange(text: "Connecting to OW")
+    let config = URLSessionConfiguration.default
+    let owDetailURL = createEventDetailURL(owSession: OWWebAPI.owSession, eventID: eventID)
+    let owDetailTask = OWWebAPI.owSession.dataTask(with: owDetailURL)
+    {
+      (data,response,error) in
+      guard let dataResponse = data, error == nil
+        else
+      {
+        //        print("\n*******Error:", error as Any)
+        self.delegate?.webLogTextDidChange(text: "\n*******Error:" + error!.localizedDescription)
+        usleep(useconds_t(0.5 * 1000000)) //will sleep for 0.5 seconds)
+        return
+      }
+      let detailEvents = self.parseDetailData(jsonData: dataResponse)
+      completion(detailEvents,nil)
+    }
+    owDetailTask.resume()
+  }
+  
+  // MARK: - JSON Parsing Functions
   func parseEventsWithDetails(jsonData: Data) -> [EventWithDetails]
   {
     //create decoder instance
@@ -189,7 +213,7 @@ class OWWebAPI: NSObject
       //sort by event data/time (earliest first)
       parsedJSON.sort(by: { $0.EventTimeUtc! < $1.EventTimeUtc! })
     } catch let error {
-//      print(error as Any)
+      //      print(error as Any)
     }
     return parsedEventsWithDetails
   }
@@ -207,7 +231,7 @@ class OWWebAPI: NSObject
       //sort by event data/time (earliest first)
       parsedJSON.sort(by: { $0.EventTimeUtc! < $1.EventTimeUtc! })
     } catch let error {
-//      print(error as Any)
+      //      print(error as Any)
     }
     return parsedJSON
   }
@@ -223,12 +247,12 @@ class OWWebAPI: NSObject
       //apply decoder to json data to create entire array of To Do items
       parsedDetails = try decoder.decode(EventDetails.self, from: jsonData)
     } catch let error {
-//      print(error as Any)
+      //      print(error as Any)
     }
     return parsedDetails
   }
   
-  
+  // MARK: - Data Save and Load Functions
   func loadEvents() -> [Event]
   {
     guard let encodedData = UserDefaults.standard.array(forKey: UDKeys.myEventList) as? [Data] else {
@@ -272,6 +296,37 @@ class OWWebAPI: NSObject
     UserDefaults.standard.set(data, forKey: UDKeys.myEventDetails)
   }
   
+  // MARK: - Report Posting Functions
+  func postReport(eventId: String, stationId: Int, reportData: ObservationReport, completion: @escaping (Data?, Error?) -> () )
+  {
+    let postReportURL = createPostReportURL(eventId: eventId, stationId: stationId, owSession: OWWebAPI.owmSession)
+    var request = URLRequest(url: postReportURL)
+    request.httpMethod = "POST"
+    request.setValue("application/json", forHTTPHeaderField: "Content-Type")   //added on advice from Hristo
+    
+    //json encode data
+    let jsonPostData = try! JSONEncoder().encode(reportData)
+    let jsonPostString = String(data: jsonPostData, encoding: .utf8)
+    
+    let owmTask = OWWebAPI.owmSession.uploadTask(with: request, from: jsonPostData)
+    {
+      (data,response,error) in
+      if let error = error {
+        //        print("error: \(error)")
+      } else {
+        if let response = response as? HTTPURLResponse {
+          //          print("statusCode: \(response.statusCode)")
+        }
+        if let data = data, let dataString = String(data: data, encoding: .utf8) {
+          //          print("data: \(dataString)")
+        }
+      }
+      completion(data,error)
+    }
+    owmTask.resume()
+  }
+  
+  // MARK: - Cookie Functions
   func getCookieData()
   {
     let cookieStorage = HTTPCookieStorage.shared
@@ -289,59 +344,6 @@ class OWWebAPI: NSObject
     {
       HTTPCookieStorage.shared.deleteCookie(cookie)
     }
-  }
-  
-  
-  func retrieveEventDetails(eventID: String,  completion: @escaping (EventDetails?, Error?) -> Void)
-  {
-    delegate?.webLogTextDidChange(text: "Connecting to OW")
-    let config = URLSessionConfiguration.default
-    let owDetailURL = createEventDetailURL(owSession: OWWebAPI.owSession, eventID: eventID)
-    let owDetailTask = OWWebAPI.owSession.dataTask(with: owDetailURL)
-    {
-      (data,response,error) in
-      guard let dataResponse = data, error == nil
-        else
-      {
-//        print("\n*******Error:", error as Any)
-        self.delegate?.webLogTextDidChange(text: "\n*******Error:" + error!.localizedDescription)
-        usleep(useconds_t(0.5 * 1000000)) //will sleep for 0.5 seconds)
-        return
-      }
-      let detailEvents = self.parseDetailData(jsonData: dataResponse)
-      completion(detailEvents,nil)
-    }
-    owDetailTask.resume()
-  }
-  
-//  func postReport(reportCode: Int, duration: Double?, completion: @escaping (Data?, Error?) -> () )
-  func postReport(eventId: String, stationId: Int, reportData: ObservationReport, completion: @escaping (Data?, Error?) -> () )
-  {
-    let postReportURL = createPostReportURL(eventId: eventId, stationId: stationId, owSession: OWWebAPI.owmSession)
-    var request = URLRequest(url: postReportURL)
-    request.httpMethod = "POST"
-    request.setValue("application/json", forHTTPHeaderField: "Content-Type")   //added on advice from Hristo
-    
-    //json encode data
-    let jsonPostData = try! JSONEncoder().encode(reportData)
-    let jsonPostString = String(data: jsonPostData, encoding: .utf8)
-
-    let owmTask = OWWebAPI.owmSession.uploadTask(with: request, from: jsonPostData)
-    {
-      (data,response,error) in
-      if let error = error {
-//        print("error: \(error)")
-      } else {
-        if let response = response as? HTTPURLResponse {
-//          print("statusCode: \(response.statusCode)")
-        }
-        if let data = data, let dataString = String(data: data, encoding: .utf8) {
-//          print("data: \(dataString)")
-        }
-      }
-      completion(data,error)
-    }
-    owmTask.resume()
   }
   
   

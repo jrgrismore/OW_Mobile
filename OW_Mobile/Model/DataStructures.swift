@@ -26,9 +26,8 @@ struct NotificationKeys
 
 var eventUpdateTimer: Timer?
 var eventUpdateIntervalSeconds: TimeInterval = 3 * 60  //in seconds
-var eventRefreshFailed: Bool = true
-
 var timeSinceUpdateTimer: Timer?
+var eventRefreshFailed: Bool = true
 
 //Unified event with details structure matching JSON keys
 struct EventWithDetails: Codable
@@ -114,14 +113,6 @@ struct ObserverStation: Codable
 var eventsWithDetails = [EventWithDetails]()  //event array of unified data
 var currentEvent = OccultationEvent()   //event
 
-
-//Observation Report Post Structure
-//struct ObservationReport: Codable
-//{
-//  var Outcome: Int?   // ObservationOutcome     from enum???
-//  var Duration: Double?
-//  var Comment: String?
-//}
 public struct ObservationReport: Codable   //OWObservationReport ???
 {
   public var Outcome: Int?
@@ -142,7 +133,6 @@ struct Settings: Codable
   var eventDayFormat = 0
 }
 
-
 //Event structure matching JSON keys
 struct Event: Codable 
 {
@@ -160,7 +150,6 @@ struct Event: Codable
   var HighCloud: Bool?
   var BestStationPos: Int?
   var StarColour: Int?
-//  var Details: EventDetails
 }
 
 struct EventDetails: Codable
@@ -235,6 +224,6 @@ struct EventDetailStrings: Codable
   var HighCloud: String = ""
   var BestStationPos: String = ""
   var StarColour: String = ""
- }
+}
 
 var eventDetailStrings = EventDetailStrings()

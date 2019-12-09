@@ -12,10 +12,6 @@ import UIKit
 
 class OccultationEvent: NSObject
 {
-  
-//  var details = EventDetails()
-//  var stations = [Station]()
-  
   var eventData = EventWithDetails()
   
   
@@ -75,12 +71,12 @@ class OccultationEvent: NSObject
       feedAttrStr = self.formatLabelandField(label:"", field: shortFeed, units:"")
     }
     return feedAttrStr
-   }
+  }
   
   func updateRAFld(_ item: EventWithDetails) -> NSAttributedString
   {
     var raAttrStr: NSAttributedString = NSMutableAttributedString(string: "RA   —")
- 
+    
     if appSettings.starEpochIsJ2000
     {
       if item.RAJ2000Hours != nil
@@ -192,7 +188,7 @@ class OccultationEvent: NSObject
   {
     var combMagAttrStr: NSAttributedString = NSMutableAttributedString(string: "Comb. Mag       —")
     let primaryStation = OccultationEvent.primaryStation(item)!
-
+    
     if primaryStation.CombMag != nil
     {
       combMagAttrStr = self.formatLabelandField(label:"Comb. Mag:  ", field: String(format: "%0.2f",primaryStation.CombMag!), units:"")
@@ -221,7 +217,7 @@ class OccultationEvent: NSObject
     DispatchQueue.main.async{}
     return maxDurAttrStr
   }
-
+  
   func updateAsteroidRotationFld(_ item: EventWithDetails) -> NSAttributedString
   {
     var asterRotationAttrStr: NSAttributedString = NSMutableAttributedString(string: "Rotation       —")
@@ -268,14 +264,14 @@ class OccultationEvent: NSObject
       {
         let dmsLonTuple = floatDegreesToDMS(floatDeg: station.Longitude!)
         let dmsLonStr = String(format: "%d°%d'%0.00f\"",dmsLonTuple.degrees,abs(dmsLonTuple.minutes),fabs(dmsLonTuple.seconds))
-      longitudeAttrStr = self.formatLabelandField(label:"Lon: ", field: dmsLonStr, units:"")
+        longitudeAttrStr = self.formatLabelandField(label:"Lon: ", field: dmsLonStr, units:"")
       } else {
         longitudeAttrStr = self.formatLabelandField(label:"Lon: ", field: String(format: "%0.5f",station.Longitude!), units:"")
       }
     }
     return longitudeAttrStr
   }
-
+  
   func hideBVStarDiamView(_ item: EventWithDetails) -> Bool
   {
     if item.BV == nil && item.StellarDiaMas == nil
@@ -494,7 +490,7 @@ class OccultationEvent: NSObject
       eventDateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSS"
       eventDateFormatter.timeZone = TimeZone(abbreviation: "UTC")
       let completionDate = eventDateFormatter.date(from: item.Stations![stationIndex].EventTimeUtc!)!
-//      eventDateFormatter.dateFormat = "dd MMM, HH:mm:ss' UT'"
+      //      eventDateFormatter.dateFormat = "dd MMM, HH:mm:ss' UT'"
       eventDateFormatter.dateFormat = "HH:mm:ss' UT'"
       completionDateStr = eventDateFormatter.string(from: completionDate )
     }
@@ -514,10 +510,10 @@ class OccultationEvent: NSObject
       eventDateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSS"
       eventDateFormatter.timeZone = TimeZone(abbreviation: "UTC")
       let completionDate = eventDateFormatter.date(from: item.Stations![stationIndex].EventTimeUtc!)!
-//      eventDateFormatter.dateFormat = "dd MMM, HH:mm:ss"
+      //      eventDateFormatter.dateFormat = "dd MMM, HH:mm:ss"
       eventDateFormatter.dateFormat = "HH:mm:ss"
       eventDateFormatter.timeZone = TimeZone.current
-
+      
       completionDateStr = eventDateFormatter.string(from: completionDate )
     }
     return (completionDateStr,leadTimeAttrStr)
