@@ -826,7 +826,7 @@ class DetailViewController: UIViewController
     //launch Apple Maps
     let latStr = String(format: "%0.5f",selectedStations[currentStationIndexPath.row].Latitude!)
     let lonStr = String(format: "%0.5f",selectedStations[currentStationIndexPath.row].Longitude!)
-    
+
     let locationStr = latStr + "," + lonStr
     if let url = URL(string:"http://maps.apple.com/?address=\(locationStr)") {
       UIApplication.shared.open(url)
