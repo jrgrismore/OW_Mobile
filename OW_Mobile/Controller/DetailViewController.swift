@@ -65,7 +65,7 @@ class DetailViewController: UIViewController
   
   @IBOutlet weak var stationPageControl: UIPageControl!
   @IBOutlet weak var eventRA: UILabel!
-  @IBOutlet weak var j2000Lbl: UILabel!
+  @IBOutlet weak var jepoch: UILabel!
   @IBOutlet weak var eventDec: UILabel!
   @IBOutlet weak var eventStarBV: UILabel!
   @IBOutlet weak var eventStarDiameter: UILabel!
@@ -306,9 +306,9 @@ class DetailViewController: UIViewController
         self.eventRA.attributedText = self.event.updateRAFld(item)
         if appSettings.starEpochIsJ2000
         {
-          self.j2000Lbl.isHidden = false
+          self.jepoch.text = "(J2000)"
         } else {
-          self.j2000Lbl.isHidden = true
+          self.jepoch.text = "(JNow)"
         }
         self.eventDec.attributedText = self.event.updateDecFld(item)
         self.eventAsteroidOrigin.attributedText = self.event.updateAsteroidClassFld(item)
@@ -949,7 +949,7 @@ extension DetailViewController
     self.eventTimeRemaining.text = "_"
     self.eventFeed.text = "—"
     self.eventRA.text = "RA —"
-    self.eventDec.text = "DE   —"
+    self.eventDec.text = "Dec   —"
     self.eventStarBV.text = "B-V   —"
     self.eventStarDiameter.text = "Stellar Dia.          -"
     self.eventAsteroidOrigin.text = "—"

@@ -237,12 +237,14 @@ class MyEventsViewController: UIViewController, UICollectionViewDataSource,UICol
   func getEventsWithDetails()
   {
     DispatchQueue.main.async {self.startSpinner()}
-    OWWebAPI.shared.retrieveEventsWithDetails(completion: { (eventsWithDetailsData, error) in
+    OWWebAPI.shared.retrieveEventsWithDetails(completion: { (eventsWithDetailsData, error, statusCode) in
       DispatchQueue.main.async
         { //inner dispatch
+          print("getEventsWithDetails > statusCode=",statusCode)
           if error != nil
           {
             DispatchQueue.main.async {self.stopSpinner()}
+              print("getEventsWithDetails > error=",error)
             
             //determine last user update
             var lastUserUpdateStr = ""
@@ -282,11 +284,33 @@ class MyEventsViewController: UIViewController, UICollectionViewDataSource,UICol
             return
           } else {
             // no errors
+            //check respose for authorization failure
+            if statusCode == 401
+            {
+              print("authorization failure, check userid and password")
+              print("eventsWithDetails count =",eventsWithDetails.count)
+              self.stopSpinner()
+              //show no connection alert
+              var authFailureAlert = UIAlertController(title: "Authorization Failed", message: "Check Userid and Password.", preferredStyle: .alert)
+              authFailureAlert.addAction(UIAlertAction(title: "OK", style: .cancel, handler: {_ in return}))
+              self.present(authFailureAlert, animated: true, completion: nil)
+              return  //???
+            }
             self.spinnerLbl.text = "Event List \n Download Complete..."
             //fill cells
             if eventsWithDetails != nil
             {
               eventsWithDetails = eventsWithDetailsData!
+              print("eventsWithDetails count =",eventsWithDetails.count)
+              if eventsWithDetails.count == 0
+              {
+                self.stopSpinner()
+                //show no events in list alert
+                var zeroEventsAlert = UIAlertController(title: "Stations for asteroidal events announced in OccultWatcher Desktop as My Events (excluding Follow Ups) will be listed here.  You currently have no submitted stations.", message: "", preferredStyle: .alert)
+                zeroEventsAlert.addAction(UIAlertAction(title: "OK", style: .cancel, handler: {_ in return}))
+                self.present(zeroEventsAlert, animated: true, completion: nil)
+                return  //???
+              }
               self.updateMyEventsCells()
               DispatchQueue.main.async{self.spinnerLbl.text = "Updating Events..."}
               usleep(useconds_t(0.5 * 1000000)) //will sleep for 0.5 seconds)
@@ -295,6 +319,7 @@ class MyEventsViewController: UIViewController, UICollectionViewDataSource,UICol
               startEventUpdateTimer()
             } else {
               // eventsWithDetailsData is nil
+              print("eventsWithDetailsData is nil")
             }
           }  //end of no errors block
           //store update date in userDefaults

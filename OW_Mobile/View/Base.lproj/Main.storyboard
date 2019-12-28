@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15505" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="Hul-Nf-7m4">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15702" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="Hul-Nf-7m4">
     <device id="retina5_5" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15510"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15704"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="Stack View standard spacing" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -46,7 +46,7 @@
                                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" adjustsFontForContentSizeCategory="YES" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="KOM-E2-56Z" userLabel="Email Field">
                                                 <rect key="frame" x="57" y="11" width="333" height="34"/>
                                                 <fontDescription key="fontDescription" style="UICTFontTextStyleSubhead"/>
-                                                <textInputTraits key="textInputTraits" enablesReturnKeyAutomatically="YES" textContentType="username"/>
+                                                <textInputTraits key="textInputTraits" keyboardType="emailAddress" enablesReturnKeyAutomatically="YES" textContentType="username"/>
                                                 <variation key="heightClass=regular-widthClass=regular">
                                                     <fontDescription key="fontDescription" style="UICTFontTextStyleTitle2"/>
                                                 </variation>
@@ -244,7 +244,7 @@
                                 <rect key="frame" x="20" y="50" width="374" height="518"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="equalSpacing" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="8T8-GZ-Lcn" userLabel="Settings Stack View">
-                                        <rect key="frame" x="0.0" y="0.0" width="343" height="8620"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="343" height="8700"/>
                                         <subviews>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fMx-wz-xZp" userLabel="View 0 - AutoUpdate">
                                                 <rect key="frame" x="0.0" y="0.0" width="343" height="110"/>
@@ -291,16 +291,16 @@
                                                 <viewLayoutGuide key="safeArea" id="ief-bc-K05"/>
                                             </view>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hAp-M7-UOG" userLabel="View 1 - Temp">
-                                                <rect key="frame" x="0.0" y="965.66666666666663" width="343" height="79.999999999999886"/>
+                                                <rect key="frame" x="0.0" y="974.33333333333326" width="343" height="80"/>
                                                 <subviews>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Temperature:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5UM-7w-IUU">
-                                                        <rect key="frame" x="10" y="29.666666666666629" width="102" height="20.333333333333329"/>
+                                                        <rect key="frame" x="10" y="30" width="102" height="20.333333333333329"/>
                                                         <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                     <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="3ZQ-p8-mXp">
-                                                        <rect key="frame" x="215.66666666666666" y="24.333333333333371" width="68.999999999999972" height="32"/>
+                                                        <rect key="frame" x="215.66666666666666" y="24.666666666666742" width="68.999999999999972" height="32"/>
                                                         <color key="backgroundColor" red="0.24313725490196078" green="0.34901960784313724" blue="0.36862745098039218" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                                         <segments>
                                                             <segment title="°C"/>
@@ -324,16 +324,16 @@
                                                 <viewLayoutGuide key="safeArea" id="XbC-5C-B8l"/>
                                             </view>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="zdT-b5-ogC" userLabel="View 2 - Azimuth">
-                                                <rect key="frame" x="0.0" y="1901" width="343" height="80"/>
+                                                <rect key="frame" x="0.0" y="1919" width="343" height="80"/>
                                                 <subviews>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Azimuth: " textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Wi7-qA-wDk">
-                                                        <rect key="frame" x="10" y="30" width="72" height="20.333333333333329"/>
+                                                        <rect key="frame" x="10" y="29.666666666666742" width="72" height="20.333333333333329"/>
                                                         <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                     <segmentedControl contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="7cN-7h-Gza">
-                                                        <rect key="frame" x="173.66666666666666" y="24.666666666666742" width="152.99999999999997" height="32"/>
+                                                        <rect key="frame" x="173.66666666666666" y="24.333333333333258" width="152.99999999999997" height="32"/>
                                                         <color key="backgroundColor" red="0.24313725490196078" green="0.34901960784313724" blue="0.36862745098039218" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                                         <segments>
                                                             <segment title="Degrees"/>
@@ -356,10 +356,10 @@
                                                 <viewLayoutGuide key="safeArea" id="JrH-AT-dKd"/>
                                             </view>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hTL-3w-Wad" userLabel="View 3 - Summary Day">
-                                                <rect key="frame" x="0.0" y="2836.6666666666665" width="343" height="170"/>
+                                                <rect key="frame" x="0.0" y="2863.3333333333335" width="343" height="170"/>
                                                 <subviews>
                                                     <pickerView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ZSD-db-zdY">
-                                                        <rect key="frame" x="15" y="35.333333333333485" width="300" height="120"/>
+                                                        <rect key="frame" x="15" y="35.33333333333303" width="300" height="120"/>
                                                         <color key="tintColor" cocoaTouchSystemColor="darkTextColor"/>
                                                         <constraints>
                                                             <constraint firstAttribute="height" constant="120" id="DDw-0e-Zoz"/>
@@ -384,16 +384,16 @@
                                                 </constraints>
                                             </view>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4cc-aW-FLs" userLabel="View 4 - Summary Time">
-                                                <rect key="frame" x="0.0" y="3862.3333333333335" width="343" height="80"/>
+                                                <rect key="frame" x="0.0" y="3897.6666666666665" width="343" height="80"/>
                                                 <subviews>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Summary Event Time:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QMh-5j-ctw">
-                                                        <rect key="frame" x="10" y="29.666666666666515" width="167" height="20.333333333333329"/>
+                                                        <rect key="frame" x="10" y="30" width="167" height="20.333333333333329"/>
                                                         <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                     <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="Spe-CB-8cj">
-                                                        <rect key="frame" x="198.66666666666666" y="24.33333333333303" width="102.99999999999997" height="32"/>
+                                                        <rect key="frame" x="198.66666666666666" y="24.66666666666697" width="102.99999999999997" height="32"/>
                                                         <color key="backgroundColor" red="0.24313725490196078" green="0.34901960784313724" blue="0.36862745098039218" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                                         <segments>
                                                             <segment title="Local"/>
@@ -416,16 +416,16 @@
                                                 <viewLayoutGuide key="safeArea" id="vxN-Po-xpt"/>
                                             </view>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="buS-v8-Ts3" userLabel="View 5 - Detail Time">
-                                                <rect key="frame" x="0.0" y="4797.666666666667" width="343" height="80"/>
+                                                <rect key="frame" x="0.0" y="4842.333333333333" width="343" height="80"/>
                                                 <subviews>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Detail Event Time:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5E9-xq-xrA">
-                                                        <rect key="frame" x="10" y="30" width="138" height="20.333333333333329"/>
+                                                        <rect key="frame" x="10" y="29.66666666666697" width="138" height="20.333333333333329"/>
                                                         <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                     <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="Ex1-T4-gcQ">
-                                                        <rect key="frame" x="198.66666666666666" y="24.66666666666606" width="102.99999999999997" height="32"/>
+                                                        <rect key="frame" x="198.66666666666666" y="24.33333333333394" width="102.99999999999997" height="32"/>
                                                         <color key="backgroundColor" red="0.24313725490196078" green="0.34901960784313724" blue="0.36862745098039218" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                                         <segments>
                                                             <segment title="Local"/>
@@ -448,7 +448,7 @@
                                                 <viewLayoutGuide key="safeArea" id="Qgr-XA-Gbv"/>
                                             </view>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="atx-Kf-g08" userLabel="View 6 - Star Epoch">
-                                                <rect key="frame" x="0.0" y="5733.333333333333" width="343" height="80"/>
+                                                <rect key="frame" x="0.0" y="5786.666666666667" width="343" height="80"/>
                                                 <subviews>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Star Coordinates:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7py-aD-UX6">
                                                         <rect key="frame" x="10" y="30" width="133.33333333333334" height="20.333333333333329"/>
@@ -457,7 +457,7 @@
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                     <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="nP6-hc-xnC">
-                                                        <rect key="frame" x="190.66666666666666" y="24.66666666666697" width="118.99999999999997" height="32"/>
+                                                        <rect key="frame" x="190.66666666666666" y="24.66666666666606" width="118.99999999999997" height="32"/>
                                                         <color key="backgroundColor" red="0.24313725490196078" green="0.34901960784313724" blue="0.36862745098039218" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                                         <segments>
                                                             <segment title="J2000"/>
@@ -479,16 +479,16 @@
                                                 </constraints>
                                             </view>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xi5-17-G1h" userLabel="View 7 - Lat/Lon Format">
-                                                <rect key="frame" x="0.0" y="6669" width="343" height="80"/>
+                                                <rect key="frame" x="0.0" y="6731" width="343" height="80"/>
                                                 <subviews>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Lat/Lon Format:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ITW-ye-Q33">
-                                                        <rect key="frame" x="10" y="29.66666666666697" width="121" height="20.333333333333329"/>
+                                                        <rect key="frame" x="10" y="30" width="121" height="20.333333333333329"/>
                                                         <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                     <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="c9C-Vo-QLl">
-                                                        <rect key="frame" x="181.66666666666666" y="24.33333333333303" width="136.99999999999997" height="32"/>
+                                                        <rect key="frame" x="181.66666666666666" y="24.66666666666697" width="136.99999999999997" height="32"/>
                                                         <color key="backgroundColor" red="0.24313725490196078" green="0.34901960784313724" blue="0.36862745098039218" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                                         <segments>
                                                             <segment title="DMS"/>
@@ -511,11 +511,11 @@
                                                 </constraints>
                                             </view>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="10M-uv-39f" userLabel="View 8">
-                                                <rect key="frame" x="0.0" y="7604.333333333333" width="343" height="80"/>
+                                                <rect key="frame" x="0.0" y="7675.666666666667" width="343" height="80"/>
                                                 <color key="backgroundColor" red="0.18823529410000001" green="0.2784313725" blue="0.2901960784" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                             </view>
                                             <view contentMode="scaleToFill" id="HjN-8D-zrl" userLabel="View 9 - Bottom">
-                                                <rect key="frame" x="0.0" y="8540" width="343" height="0.0"/>
+                                                <rect key="frame" x="0.0" y="8620" width="343" height="0.0"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 <color key="backgroundColor" red="0.18823529410000001" green="0.2784313725" blue="0.2901960784" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                                 <viewLayoutGuide key="safeArea" id="KGg-Qy-8S0"/>
@@ -1737,8 +1737,8 @@
                                                     <fontDescription key="fontDescription" style="UICTFontTextStyleTitle2"/>
                                                 </variation>
                                             </label>
-                                            <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" text="(J2000)" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aAX-sW-kWg" userLabel="J2000">
-                                                <rect key="frame" x="142" y="0.0" width="0.0" height="16.666666666666668"/>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" text="(J2000)" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aAX-sW-kWg" userLabel="J2000/JNow">
+                                                <rect key="frame" x="183.33333333333334" y="0.0" width="42.333333333333343" height="16.666666666666668"/>
                                                 <fontDescription key="fontDescription" style="UICTFontTextStyleCaption2"/>
                                                 <color key="textColor" systemColor="systemYellowColor" red="1" green="0.80000000000000004" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <nil key="highlightedColor"/>
@@ -2048,7 +2048,7 @@
                         <outlet property="eventStarMagnitude" destination="7hI-nL-0Ep" id="dE2-vB-bF8"/>
                         <outlet property="eventTimeRemaining" destination="HIB-G2-7ts" id="Od8-TO-c2K"/>
                         <outlet property="eventTitle" destination="Bxb-g6-GRG" id="mlk-Bq-qVg"/>
-                        <outlet property="j2000Lbl" destination="aAX-sW-kWg" id="RVf-hR-uOh"/>
+                        <outlet property="jepoch" destination="aAX-sW-kWg" id="RVf-hR-uOh"/>
                         <outlet property="latLonStack" destination="lVu-TP-reu" id="ndZ-81-xaA"/>
                         <outlet property="shadowBarView" destination="c4Z-ek-M3c" id="Nyi-hp-bUY"/>
                         <outlet property="shadowBarWidth" destination="Dpo-AN-iF1" id="36i-FK-4bM"/>

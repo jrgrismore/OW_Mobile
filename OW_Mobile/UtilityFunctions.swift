@@ -846,9 +846,10 @@ func convertAutoUpdateValueToSeconds() -> Int
 func refreshEventsWithDetails(completionHandler: @escaping () -> ())
 {
   eventRefreshFailed = false
-  OWWebAPI.shared.retrieveEventsWithDetails(completion: { (eventsWithDetailsData, error) in
+  OWWebAPI.shared.retrieveEventsWithDetails(completion: { (eventsWithDetailsData, error, statusCode) in
     DispatchQueue.main.async
       {
+        print("refreshEventsWithDetails > statusCode =",statusCode)
         if error != nil
         {
           eventRefreshFailed = true

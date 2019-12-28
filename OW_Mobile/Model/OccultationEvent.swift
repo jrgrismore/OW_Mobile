@@ -116,7 +116,7 @@ class OccultationEvent: NSObject
         //******convert decimal degrees to dd:mm:ss
         let decTuple = floatDecToDMS(floatDegrees: item.DEDeg!)
         let decFldStr = String(format: "%+03d°%02d'%04.1f\"",decTuple.degrees,labs(decTuple.minutes),fabs(decTuple.seconds))
-        decAttrStr = self.formatLabelandField(label:"DE: ", field: decFldStr, units:"")
+        decAttrStr = self.formatLabelandField(label:"Dec: ", field: decFldStr, units:"")
       }
     }
     return decAttrStr

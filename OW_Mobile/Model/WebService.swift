@@ -120,7 +120,7 @@ class OWWebAPI: NSObject
   }
   
   // MARK: - Retrieval Functions
-  func retrieveEventsWithDetails( completion: @escaping ([EventWithDetails]?, Error?) -> Void)
+  func retrieveEventsWithDetails( completion: @escaping ([EventWithDetails]?, Error?,Int?) -> Void)
   {
     delegate?.webLogTextDidChange(text: "Connecting to OW")
     usleep(useconds_t(0.5 * 1000000)) //will sleep for 0.5 seconds)
@@ -130,24 +130,32 @@ class OWWebAPI: NSObject
     let owTask = OWWebAPI.owSession.dataTask(with: owURL)
     {
       (data,response,error) in
+      //if successful login, statusCode will be 200
+      //if authorization failure, statusCode will be 401
+      let statusCode = (response as! HTTPURLResponse).statusCode
+      print("retrieveEventsWithDetails > statusCode=",statusCode)
       guard let dataResponse = data, error == nil
         else
       {
         //        print("\n*******Error:", error as Any)
         self.delegate?.webLogTextDidChange(text: "Error Trying to Access OW Server!")
         usleep(useconds_t(0.5 * 1000000)) //will sleep for 0.5 seconds)
-        completion(nil,error)
+        completion(nil,error,statusCode)
         return
       }
-      print("Data Retrieved")
-      self.delegate?.webLogTextDidChange(text: "Data Retrieved")
-      usleep(useconds_t(0.5 * 1000000)) //will sleep for 0.5 seconds)
+      if statusCode != 401
+      {
+        print("Data Retrieved")
+        self.delegate?.webLogTextDidChange(text: "Data Retrieved")
+        usleep(useconds_t(0.5 * 1000000)) //will sleep for 0.5 seconds)
+      }
       let eventWithDetail = self.parseEventsWithDetails(jsonData: dataResponse)
-      
-      //      print("eventWithDetails.count=",eventWithDetail.count)
-      self.delegate?.webLogTextDidChange(text: "Event List count = \(eventWithDetail.count)")
-      usleep(useconds_t(1.0 * 1000000)) //will sleep for 1.0 seconds)
-      completion(eventWithDetail,nil)
+      if statusCode != 401
+      {
+        self.delegate?.webLogTextDidChange(text: "Event List count = \(eventWithDetail.count)")
+        usleep(useconds_t(1.0 * 1000000)) //will sleep for 1.0 seconds)
+      }
+      completion(eventWithDetail,nil,statusCode)
     }
     owTask.resume()
   }
